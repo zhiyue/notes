@@ -636,22 +636,31 @@ _tm_sync() {
 
     echo "$src ---> $dst"
 
-    local UTILS="yes"
-    local M2="yes"
+    local UTILS="no"
+    local M2="no"
+    local KP="no"
+    local VM="no"
     while test $# -gt 0
     do
         case $1 in
-	    --no-utils)
-	        UTILS="no"
+	    --utils)
+	        UTILS="yes"
 	        ;;
-	    --no-m2)
-	        M2="no"
+	    --m2)
+	        M2="yes"
 	        ;;
+            --kp)
+                KP="yes"
+                ;;
+            --vm)
+                VM="yes"
         esac
         shift 1
     done
     if [ $UTILS = "yes" ] ; then _tm_sync_utils $src $dst; fi
     if [ $M2 = "yes" ] ; then _tm_sync_dir $src $dst ".m2" ; fi
+    if [ $KP = "yes" ] ; then _tm_sync_dir $src $dst "KuaiPan"; fi
+    if [ $VM = "yes" ]; then _tm_sync_dir $src $dst "VirtualBox VMs"; fi
 }
 
 tm_backup() {
