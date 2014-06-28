@@ -431,12 +431,6 @@ cxx_indent() {
         --convert-tabs --verbose --lineend=linux --align-pointer=type --pad-oper $@
 }
 
-vpn_umeng_dp() {
-    cd ~/.private/vpn-umeng-dp
-    sudo openvpn --config client.conf
-    cd -
-}
-
 install_files() {
     for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf
     do
@@ -498,21 +492,25 @@ install_files() {
     echo "installing .emacs.d"
     rm -rf ~/.emacs.d
     ln -s ~/.private/emacs.d ~/.emacs.d
-}
 
-install_hosts() {
-    echo "installing hosts..."
-    sudo cp ~/.private/files/hosts /etc/hosts
-}
-
-install_tc_env() {
     echo "installing tcenv..."
     rm -rf ~/contestapplet.conf
     ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
 }
 
+vpn_umeng_dp() {
+    cd ~/.private/vpn-umeng-dp
+    sudo openvpn --config client.conf
+    cd -
+}
+
 start_tc_env() {
     (javaws "$HOME/repo/tc-env/ContestAppletProd.jnlp" &)
+}
+
+install_hosts() {
+    echo "installing hosts..."
+    sudo cp ~/.private/files/hosts /etc/hosts
 }
 
 update_hosts() {
@@ -542,32 +540,32 @@ shadowsocks_once() {
 }
 shadowsocks_once
 
-# deprecated now !!!
-easy_oprofile() {
-    if [ $# -lt 5 ]; then
-        echo "easy_oprofile image-file(ELF) command"
-        exit 1
-    fi
-    local ifile=$1; shift
-    local rfile="oprof.rpt"
-    local srcdir="."
-    local afile="oprof.asm"
-    local command=$@
-    echo "Image file: $ifile"
-    echo "Report file: $rfile"
-    echo "Source directory: $srcdir"
-    echo "Assembly file: $afile"
-    echo "Command: $command"
+# # deprecated now !!!
+# easy_oprofile() {
+#     if [ $# -lt 5 ]; then
+#         echo "easy_oprofile image-file(ELF) command"
+#         exit 1
+#     fi
+#     local ifile=$1; shift
+#     local rfile="oprof.rpt"
+#     local srcdir="."
+#     local afile="oprof.asm"
+#     local command=$@
+#     echo "Image file: $ifile"
+#     echo "Report file: $rfile"
+#     echo "Source directory: $srcdir"
+#     echo "Assembly file: $afile"
+#     echo "Command: $command"
 
-    sudo opcontrol --reset
-    sudo opcontrol --no-vmlinux --separate=lib --start --image=$ifile
-    $command
-    sudo opcontrol --dump
-    sudo opcontrol --shutdown
-    sudo opreport -l image:$ifile -o $rfile
-    sudo opannotate -s --output-dir=$srcdir $ifile
-    sudo opannotate -a $ifile > $afile
-}
+#     sudo opcontrol --reset
+#     sudo opcontrol --no-vmlinux --separate=lib --start --image=$ifile
+#     $command
+#     sudo opcontrol --dump
+#     sudo opcontrol --shutdown
+#     sudo opreport -l image:$ifile -o $rfile
+#     sudo opannotate -s --output-dir=$srcdir $ifile
+#     sudo opannotate -a $ifile > $afile
+# }
 
 package_install() {
     if [ $# -lt 2 ]; then
@@ -609,7 +607,7 @@ install_ubuntu_packages() {
         awk '{print $5;}' | xargs sudo apt-get install -y
 }
 
-_time_machine_sync_dir() {
+_tm_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
@@ -618,7 +616,7 @@ _time_machine_sync_dir() {
     rsync -arz --no-times "$src/$d/" "$dst/$d/"
 }
 
-_time_machine_sync_utils() {
+_tm_sync_utils() {
     local src=$1
     local dst=$2
     mkdir -p "$dst/utils" 2>/dev/null
@@ -630,29 +628,11 @@ _time_machine_sync_utils() {
     done
 }
 
-time_machine() {
-    local disk=${TIME_MACHINE_DISK:-"/media/Expansion Drive/Ubuntu Backup/"}
-    rm -f /tmp/ubuntu-backup
-    ln -s "$disk" /tmp/ubuntu-backup
-
-    PWD=$(pwd)
-    if [ ! -d "$PWD/dirlt" ]; then
-        echo "are you at right directory?($PWD)"
-        return
-    fi
-
-    # determine source and destination.
-    local base=`basename "$PWD"`
-    local home=/home/dirlt/
-    local backup=/tmp/ubuntu-backup/dirlt
-
-    if [ "X$base" = "Xhome" ]; then
-        local src=$backup
-        local dst=$home
-    else
-        local src=$home
-        local dst=$backup
-    fi
+_tm_sync() {
+    local src=$1
+    shift 1
+    local dst=$1
+    shift 1
 
     echo "$src ---> $dst"
 
@@ -670,8 +650,20 @@ time_machine() {
         esac
         shift 1
     done
-    if [ $UTILS = "yes" ] ; then _time_machine_sync_utils $src $dst; fi
-    if [ $M2 = "yes" ] ; then _time_machine_sync_dir $src $dst ".m2" ; fi
+    if [ $UTILS = "yes" ] ; then _tm_sync_utils $src $dst; fi
+    if [ $M2 = "yes" ] ; then _tm_sync_dir $src $dst ".m2" ; fi
+}
+
+tm_backup() {
+    local home=/home/dirlt/
+    local backup=/tmp/ubuntu-backup/dirlt
+    _tm_sync $home $backup $@
+}
+
+tm_restore() {
+    local home=/home/dirlt/
+    local backup=/tmp/ubuntu-backup/dirlt
+    _tm_sync $backup $home $@
 }
 
 print_proc_netstat() {
