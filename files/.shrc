@@ -505,6 +505,16 @@ install_hosts() {
     sudo cp ~/.private/files/hosts /etc/hosts
 }
 
+install_tc_env() {
+    echo "installing tcenv..."
+    rm -rf ~/contestapplet.conf
+    ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
+}
+
+start_tc_env() {
+    (javaws "$HOME/repo/tc-env/ContestAppletProd.jnlp" &)
+}
+
 update_hosts() {
     local url=${SMART_HOSTS_URL:-"http://smarthosts.googlecode.com/svn/trunk/hosts"}
     local hosts="$HOME/.private/files/hosts"
@@ -621,12 +631,13 @@ _time_machine_sync_utils() {
 }
 
 time_machine() {
+    local disk=${TIME_MACHINE_DISK:-"/media/Expansion Drive/Ubuntu Backup/"}
     rm -f /tmp/ubuntu-backup
-    ln -s "/media/Expansion Drive/Ubuntu Backup/" /tmp/ubuntu-backup
+    ln -s "$disk" /tmp/ubuntu-backup
 
     PWD=$(pwd)
     if [ ! -d "$PWD/dirlt" ]; then
-        echo "are you at right directory???"
+        echo "are you at right directory?($PWD)"
         return
     fi
 
@@ -646,16 +657,12 @@ time_machine() {
     echo "$src ---> $dst"
 
     local UTILS="yes"
-    local SHARE="yes"
     local M2="yes"
     while test $# -gt 0
     do
         case $1 in
 	    --no-utils)
 	        UTILS="no"
-	        ;;
-	    --no-share)
-	        SHARE="no"
 	        ;;
 	    --no-m2)
 	        M2="no"
@@ -664,7 +671,6 @@ time_machine() {
         shift 1
     done
     if [ $UTILS = "yes" ] ; then _time_machine_sync_utils $src $dst; fi
-    if [ $SHARE = "yes" ] ; then _time_machine_sync_dir $src $dst "share" ; fi
     if [ $M2 = "yes" ] ; then _time_machine_sync_dir $src $dst ".m2" ; fi
 }
 
