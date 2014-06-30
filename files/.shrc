@@ -103,14 +103,7 @@ configure_utils() {
     PATH=$SBT_HOME/bin:$PATH
     export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt -Dsbt.ivy.home=$HOME/.ivy2"
 
-    # ccache
-    PATH=/usr/lib/ccache:$PATH
-
-    # utils/bin
-    PATH=$HOME/utils/bin:$PATH
-
     export PATH
-    export MANPATH
 }
 configure_utils
 
