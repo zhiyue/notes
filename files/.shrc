@@ -657,13 +657,13 @@ _tm_sync() {
 }
 
 tm_backup() {
-    local home=/home/dirlt/
+    local home=$HOME
     local backup=/tmp/ubuntu-backup/dirlt
     _tm_sync $home $backup $@
 }
 
 tm_restore() {
-    local home=/home/dirlt/
+    local home=$HOME
     local backup=/tmp/ubuntu-backup/dirlt
     _tm_sync $backup $home $@
 }
