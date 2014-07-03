@@ -486,7 +486,7 @@ install_files() {
     rm -rf ~/.emacs.d
     ln -s ~/.private/emacs.d ~/.emacs.d
 
-    echo "installing tcenv..."
+    echo "installing tc-env..."
     rm -rf ~/contestapplet.conf
     ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
 }
