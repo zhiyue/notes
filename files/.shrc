@@ -123,7 +123,7 @@ configure_git() {
 configure_git
 
 # private key.
-configure_pkey() {
+configure_key() {
     ssh-add ~/.ssh/id_rsa 2>/dev/null
     ssh-add ~/.ssh/github 2>/dev/null
 }
