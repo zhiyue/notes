@@ -145,6 +145,10 @@ start_idea() {
     (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
 }
 
+start_ibus() {
+    (ibus-daemon &)
+}
+
 #echo "configuring galera part..."
 # galera
 # export MYSQL_SRC=$HOME/repo/wsrep-5.6
