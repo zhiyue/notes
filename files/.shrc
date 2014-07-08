@@ -330,10 +330,20 @@ bzr_commit() {
     local message=$2
     bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
 }
-galera_debug_build() {
+galera_build() {
+    local ok=0
     cd $GALERA_SRC
+    rm -f libgalera_smm.so
     scons debug=0 -j8
+    if [ $? = 0 ]; then ok=1; fi
     cd -
+    if [ $ok = 0 ]; then return ; fi
+    local num=$(cat $GALERA_SRC/tests/conf/nodes.conf | grep "NODE_NUM=" | awk -F= '{print $2;}')
+    for ((i=0;i<$num;i++))
+    do
+        echo "copy libgalera_smm.so to instance $i"
+        cp $GALERA_SRC/libgalera_smm.so /tmp/galera$i/galera/lib/libgalera_smm.so
+    done
 }
 
 #echo "configuring utility part..."
