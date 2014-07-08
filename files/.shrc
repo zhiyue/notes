@@ -5,6 +5,7 @@
 # basic path.
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:$PATH
 export MANPATH=/usr/local/share/man:/usr/share/man:$MANPATH
+export EDITOR=vim
 
 # mac or ubuntu.
 is_mac() {
@@ -108,21 +109,26 @@ configure_utils() {
 configure_utils
 
 # git related.
-git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
-git config --global color.ui true
-git config --global core.autocrlf false
-git config --global user.name "dirtysalt"
-git config --global user.email "dirtysalt1987@gmail.com"
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.ci commit
-git config --global alias.st status
-git config --global alias.unstage 'reset'
-git config --global alias.last 'log -1 HEAD'
+configure_git() {
+    git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+    git config --global color.ui true
+    git config --global core.autocrlf false
+    git config --global user.name "dirtysalt"
+    git config --global user.email "dirtysalt1987@gmail.com"
+    git config --global alias.co checkout
+    git config --global alias.br branch
+    git config --global alias.ci commit
+    git config --global alias.st status
+}
+configure_git
 
 # private key.
-ssh-add ~/.ssh/id_rsa 2>/dev/null
-ssh-add ~/.ssh/github 2>/dev/null
+configure_key() {
+    ssh-add ~/.ssh/id_rsa 2>/dev/null
+    ssh-add ~/.ssh/github 2>/dev/null
+}
+configure_key
+
 lp_login() {
     bzr launchpad-login yan.zhang
 }
@@ -137,6 +143,10 @@ export IDEA_HOME=$HOME/utils/idea-IC-123.72
 # intellij IDEA !!!
 start_idea() {
     (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
+}
+
+start_ibus() {
+    (ibus-daemon &)
 }
 
 #echo "configuring galera part..."
@@ -347,9 +357,6 @@ galera_build() {
 }
 
 #echo "configuring utility part..."
-# others
-export EDITOR=vim
-
 alias dstat='dstat -cdlmnpsy'
 
 pgrep() {
@@ -496,7 +503,7 @@ install_files() {
     rm -rf ~/.emacs.d
     ln -s ~/.private/emacs.d ~/.emacs.d
 
-    echo "installing tcenv..."
+    echo "installing tc-env..."
     rm -rf ~/contestapplet.conf
     ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
 }
