@@ -1,4 +1,113 @@
 * numa-an-overview
 http://queue.acm.org/detail.cfm?id=2513149
 
+NUMA (non-uniform memory access) is the phenomenon that memory at various points in the
+address space of a processor have different performance characteristics.（对于一个处理器来说，访问不同内存地址性能特征是不同的）
+
+Today, processors are so fast that they usually require memory to be directly attached to the socket
+that they are on. A memory access from one socket to memory from another has additional latency
+overhead to accessing local memory—it requires the traversal of the memory interconnect first.
+On the other hand, accesses from a single processor to local memory not only have lower latency
+compared to remote memory accesses but do not cause contention on the interconnect and the
+remote memory controllers. It is good to avoid remote memory accesses. Proper placement of data
+will increase the overall bandwidth and improve the latency to memory.（访问同一个插槽上的内存，不仅延迟更低，访问冲突也会更少）
+
+NUMA systems today (2013) are mostly encountered on multisocket systems. A typical high-
+end business-class server today comes with two sockets and will therefore have two NUMA nodes.
+Latency for a memory access (random access) is about 100 ns. Access to memory on a remote node
+adds another 50 percent to that number.（常见商用级别服务器提供两个插槽，也就是提供了两个NUMA节点。随机访问本地内存延迟在100ns，而访问远端内存延迟增加50%）
+
+Performance-sensitive applications can require complex logic to handle memory with diverging
+performance characteristics. If a developer needs explicit control of the placement of memory for
+performance reasons, some operating systems provide APIs for this (for example, Linux, Solaris,
+and Microsoft Windows provide system calls for NUMA). However, various heuristics have
+been developed in the operating systems that manage memory access to allow applications to
+transparently utilize the NUMA characteristics of the underlying hardware.（操作系统会提供特定的API来支持应用程序显式使用NUMA。
+同时操作系统内部也会隐式地使用启发式方法来使用NUMA，提高内存访问性能，而不需要应用程序来控制）
+
+A NUMA system classifies memory into NUMA nodes (which Solaris calls locality groups). All
+memory available in one node has the same access characteristics for a particular processor. Nodes
+have an affinity to processors and to devices. These are the devices that can use memory on a NUMA
+node with the best performance since they are locally attached. Memory is called node local if it
+was allocated from the NUMA node that is best for the processor. For example, the NUMA system
+exhibited in Figure 1 has one node belonging to each socket, with four cores each.（NUMA系统将内存归类为NUMA节点，同一个节点内所有内存对于处理器来说，
+访问速度是相同的。节点和处理器之间需要设置亲和性）
+
+The process of assigning memory from the NUMA nodes available in the system is called NUMA
+placement. As placement influences only performance and not the correctness of the code, heuristic
+approaches can yield acceptable performance. In the special case of noncache-coherent NUMA
+systems, this may not be true since writes may not arrive in the proper sequence in memory.
+However, there are multiple challenges in coding for noncache-coherent NUMA systems. We restrict
+ourselves here to the common cache-coherent NUMA systems.（进程决定如何将内存分配给NUMA节点成为NUMA放置，这个只会影响到性能而不会影响到正确性。
+但是对于noncache-coherent NUMA系统来说是不成立的，因为对于不同节点写入顺序不同会造成结果不同。我们这里只考虑cache-coherent NUMA系统）
+
+file:./images/numa-illustrated.png
+
+-----
+*HOW OPERATING SYSTEMS HANDLE NUMA MEMORY*
+
+There are several broad categories in which modern production operating systems allow for the
+management of NUMA: （总的来说操作系统使用NUMA的方式是下面5类）
+   - accepting the performance mismatch, （啥都不做，效果取决于运气）
+   - hardware memory striping, （硬件按照cache line作为单元，然后在NUMA nodes上以round robin方式做placement，效果相同于local/remote均分，效果可能最差）
+   - heuristic memory placement, 
+   - a static NUMA configurations, 
+   - and application-controlled NUMA placement.
+
+启发式如何工作：
+
+The most common assumptions made by the operating system are that the application will run
+on the local node and that memory from the local node is to be preferred. If possible, all memory
+requested by a process will be allocated from the local node, thereby avoiding the use of the cross-
+connect. The approach does not work, though, if the number of required processors is higher than
+the number of hardware contexts available on a socket (when processors on both NUMA nodes
+must be used); if the application uses more memory than available on a node; or if the application
+programmer or the scheduler decides to move application threads to processors on a different socket
+after memory allocation has occurred.（假设进程通常访问自己开辟的内存，因为在放置内存时候选择开辟内存线程所在的处理器所在单元。
+但是某些情况下这个方法也行不通，比如应用程序使用超过单节点总量内存）
+
+In general, small Unix tools and small applications work very well with this approach. Large
+applications that make use of a significant percentage of total system memory and of a majority of
+the processors on the system will often benefit from explicit tuning or software modifications that
+take advantage of NUMA.（通常来说Unix工具或者是小应用程序比较适合，但是需要占用大量内存的应用程序则不太适合）
+
+-----
+*HOW DOES LINUX HANDLE NUMA?*
+
+Linux manages memory in zones. In a non-NUMA Linux system, zones are used to describe memory
+ranges required to support devices that are not able to perform DMA (direct memory access) to all
+memory locations. Zones are also used to mark memory for other special needs such as movable
+memory or memory that requires explicit mappings for access by the kernel (HIGHMEM), but that
+is not relevant to the discussion here.（Linux使用zone方式来管理内存。对于non-NUMA系统来说，zone用来描述一段内存区域，
+这段内存区域可以用来支持哪些不支持DMA到所有内存区域的设备） note(dirlt): 可以将这个设备单独映射到独立内存区域？
+
+When NUMA is enabled, more memory zones are created and
+they are also associated with NUMA nodes. A NUMA node can have multiple zones since it may be
+able to serve multiple DMA areas. How Linux has arranged memory can be determined by looking
+at /proc/zoneinfo. The NUMA node association of the zones allows the kernel to make decisions
+involving the memory latency relative to cores.（对于NUMA系统来说，linux使用zone来管理NUMA节点。一个NUMA节点会分配多个zone，
+这个映射关系可以从/proc/zoneinfo看到）
+
+On boot-up, Linux will detect the organization of memory via the ACPI (Advanced Configuration
+and Power Interface) tables provided by the firmware and then create zones that map to the NUMA
+nodes and DMA areas as needed. Memory allocation then occurs from the zones. Should memory
+in one zone become exhausted, then memory reclaim occurs: the system will scan through the least
+recently used pages trying to free a certain number of pages. Counters that show the current status
+of memory in various nodes/zones can also be seen in /proc/zoneinfo. Figure 2 shows types of
+memory in a zone/node.（看上去每个zone都是独立管理内存区域）
+
+file:./images/numa-linux-zone.png
+
+-----
+*MEMORY POLICIES*
+
+
+
+
+
+
+
+
+
+
 
