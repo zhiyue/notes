@@ -67,6 +67,7 @@ git本地仓库由下面三棵树构成：
      - --squash 将多个commit合并在一起放在WD, 之后需要用户手动发起commit.
    - git cherry-pick <commit-id> # pick commit to merge
    - git fetch <repo> <branch> 将远程repo的branch拉到本地但是并不进行任何修改
+     - -p/--prune 如果远端删除分支的话，那么也删除本地分支
 
 如果合并过来的分支，是当前分支的child的话，那么执行fast-forward合并（除非指定--no-ff)，否则会执行普通的合并生成一个新的node，这个node是两个分支的共同child。
 

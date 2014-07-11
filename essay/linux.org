@@ -2161,7 +2161,10 @@ sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
 -P FORWARD ACCEPT
 -P OUTPUT ACCEPT
 #+END_EXAMPLE
+*** tc
+traffic control http://www.lartc.org/
 
+todo(dirlt):
 
 *** /HTTP BENCH TOOL/
 *** httperf

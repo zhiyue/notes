@@ -551,6 +551,8 @@ binlog & relaylog
 | table_cache/table_open_cache | 数据表文件句柄最大数                 |
 
 *** 存储引擎
+http://dev.mysql.com/doc/refman/5.6/en/innodb-parameters.html
+
 | 选项                            | 内容                                        |
 |---------------------------------+---------------------------------------------|
 | default-storage-engine[=innodb] | 默认存储引擎                                |
@@ -563,6 +565,8 @@ binlog & relaylog
 | innodb_log_group_home_dir       | 事务日志文件(ib_)存放目录（默认是数据目录） |
 | innodb_log_file_size            | 单个事务日志文件长度                        |
 | innodb_log_files_in_group       | 事务日志文件数量（？？？）                  |
+| innodb_flush_log_at_trx_commit  | 控制事务提交刷日志方式                      |
+| innodb_flush_log_at_timeout     | 控制刷日志时间间隔                          |
 
 innodb_data_file_path的格式这里需要详细解释，每个文件之间通过;分隔，每个文件规格说明如下
    - path:size # 文件初始大小size字节，并且不可扩展
@@ -574,6 +578,12 @@ InnoDB可以使用未经过格式化的硬盘分区，有几个理由值得考�
    - 保证整个存储空间连续性，减少存储空间碎片化
    - 减少文件系统管理层开销
 但是考虑不要使用硬盘分区来构成表空间时，有个很重要的因素： *有许多系统备份软件只针对文件系统，不能对硬盘分区进行备份* 。这意味着使用硬盘分区来构成表空间将会给系统备份工作增加困难。
+
+innodb_flush_log_at_trx_commit 可以用来控制提交事务时写入磁盘的方式
+   - 0. 隔段时间log_buffer会写入log_file并且刷入磁盘
+   - 1（默认值). 每次提交事务都会将log_buffer写入log_file并且刷入磁盘
+   - 2. 每次提交事务都会将log_buffer写入log_file, 但是隔段时间再刷入磁盘
+间隔时间由 innodb_flush_log_at_timeout 控制，默认是1s
 
 ** 编程接口
 *** 超时重连
