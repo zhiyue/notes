@@ -284,24 +284,14 @@ test_cpconf() {
     cd -
 }
 
-build5.5d() {
-    cd $GALERA_SRC
-    MYSQL_SRC=$HOME/repo/wsrep-5.5 ./scripts/mysql/build.sh -i -b -d --no-strip
-    cd -
-}
-build5.6d() {
-    cd $GALERA_SRC
-    MYSQL_SRC=$HOME/repo/wsrep-5.6 ./scripts/mysql/build.sh -i -b -d --no-strip
-    cd -
-}
 build5.5r() {
     cd $GALERA_SRC
-    MYSQL_SRC=$HOME/repo/wsrep-5.5 ./scripts/mysql/build.sh -i -b --no-strip
+    MYSQL_SRC=$HOME/repo/wsrep-5.5 ./scripts/mysql/build.sh -i -b --no-strip --galera-debug --debug-level 0
     cd -
 }
 build5.6r() {
     cd $GALERA_SRC
-    MYSQL_SRC=$HOME/repo/wsrep-5.6 ./scripts/mysql/build.sh -i -b --no-strip
+    MYSQL_SRC=$HOME/repo/wsrep-5.6 ./scripts/mysql/build.sh -i -b --no-strip --galera-debug --debug-level 0
     cd -
 }
 wsrep_url5.5() {
@@ -340,11 +330,11 @@ bzr_commit() {
     local message=$2
     bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
 }
-galera_build() {
+build_galera() {
     local ok=0
     cd $GALERA_SRC
     rm -f libgalera_smm.so
-    scons debug=0 -j8
+    DEBUG_LEVEL=0 ./scripts/build.sh -d -j 8
     if [ $? = 0 ]; then ok=1; fi
     cd -
     if [ $ok = 0 ]; then return ; fi
