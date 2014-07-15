@@ -236,25 +236,47 @@ mysql_stopd() {
     sudo /etc/init.d/mysql stop
 }
 
-# --mips ; use multiple ips
-# --mseg ; use multiple segment
 # --nums ; how many nodes
+# --segs ; how many segemnt
+# --mips ; use multiple ips
+
+# if not multiple ips, ip is always 127.0.0.1
+# ports of node{idx} are :
+# 1. sst_port =   4566-3*idx-1
+# 2. gcomm_port = 4566-3*idx
+# 3. ist_port =   4566-3*idx+1
+
+# if multiple ips, port is always 4565,4666,4567
+# ip of node{idx} is 192.168.100.103+idx
+
 test_copy_conf() {
-    local MIPS=0
-    local MSEG=0
     local NUMS=3
+    local SEGS=1
+    local MIPS=0
+    local IPBE=103
+    local PORT=4566
     while test $# -gt 0
     do
         case $1 in
-            --mips)
-                MIPS=1
-                ;;
-            --mseg)
-                MSEG=1
-                ;;
             --nums)
                 shift 1
                 NUMS=$1
+                ;;
+            --segs)
+                shift 1
+                SEGS=$1
+                ;;
+            --mips)
+                MIPS=1
+                ;;
+            --ipbe)
+                shift 1
+                IPBE=$1
+                ;;
+            --port)
+                shift 1
+                PORT=$1
+                ;;
         esac
         shift 1
     done
@@ -265,15 +287,12 @@ test_copy_conf() {
     do
         local idx=$i
         local sid=$((idx+1))
-        local segment=0
-        if [ $MSEG = 1 ]; then
-            segment=$((idx%3+1))
-        fi
+        local segment=$((idx%$SEGS+1))
         local ip="127.0.0.1"
-        local port=$((4566-3*idx))
+        local port=$((PORT-3*idx))
         if [ $MIPS = 1 ]; then
-            ip="192.168.100."$((103+i))
-            port=4566
+            ip="192.168.100."$((IPBE+i))
+            port=$PORT
         fi
         local sst_port=$((port-1))
         local ist_port=$((port+1))
