@@ -239,7 +239,7 @@ mysql_stopd() {
 # --mips ; use multiple ips
 # --mseg ; use multiple segment
 # --nums ; how many nodes
-test_cpconf() {
+test_copy_conf() {
     local MIPS=0
     local MSEG=0
     local NUMS=3
