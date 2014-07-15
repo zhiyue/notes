@@ -170,20 +170,40 @@ start_node() {
     eval $cmd
 }
 stop_node() {
-    local idx=$1
-    /tmp/galera$idx/mysql-galera stop
-}
-conn_node() {
-    local idx=$1; shift
-    mysql --sock=/tmp/galera$idx/mysql/var/mysqld.sock -u root -prootpass
+    /tmp/galera$1/mysql-galera stop
 }
 clear_state() {
-    local idx=$1; shift
-    rm -rf /tmp/galera$idx/mysql/var/grastate.dat
+    rm -rf /tmp/galera$1/mysql/var/grastate.dat
+}
+clear_log() {
+    rm -rf /tmp/galera$1/mysql/var/mysqld.err
+}
+conn_node() {
+    mysql --sock=/tmp/galera$1/mysql/var/mysqld.sock -u root -prootpass
 }
 log_node() {
-    local idx=$1
-    less /tmp/galera$idx/mysql/var/mysqld.err
+    less /tmp/galera$1/mysql/var/mysqld.err
+}
+exec_node() {
+    local idx=$1; shift
+    echo $@ | conn_node $idx
+}
+change_master() {
+    exec_node ${1:-0} "STOP SLAVE; \
+CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_PORT=3305, MASTER_USER='root', MASTER_PASSWORD='rootpass', MASTER_AUTO_POSITION = 1; \
+START SLAVE"
+}
+status_node() {
+    exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
+}
+create_table() {
+    exec_node 0 "DROP TABLE test.t; CREATE TABLE test.t (id INT AUTO_INCREMENT PRIMARY KEY)"
+}
+select_table() {
+    exec_node ${1:-0} "SELECT * FROM test.t"
+}
+insert_table() {
+    exec_node ${1:-0} "INSERT INTO test.t values(null)"
 }
 
 # batch mode.
@@ -201,13 +221,6 @@ remove_nodes() {
     cd $GALERA_SRC
     ./tests/scripts/command.sh remove
     cd -
-}
-change_master_to_node0() {
-    local idx=$1
-    local cmd="STOP SLAVE; \
-CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_PORT=3305, MASTER_USER='root', MASTER_PASSWORD='rootpass', MASTER_AUTO_POSITION = 1; \
-START SLAVE"
-    echo $cmd | conn_node $idx
 }
 drop_connection() {
     sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
