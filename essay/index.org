@@ -188,6 +188,7 @@
    - [[file:./paxos.org][Paxos]] / [[file:./raft.org][Raft]] 分布式一致性算法。
    - [[file:./manhattan.org][Manhattan]] Twitter的分布式数据库。
    - [[file:./azkaban.org][Azkaban]] Linkedin的工作流系统，和 [[file:./oozie.org][Oozie]] 功能相似但是相比好用很多。UI不错，概念也比较清晰。
+   - [[file:./time-clocks-and-ordering-of-events-in-a-distributed-system.org][Time, Clocks, and Ordering of Events in a Distributed System]] 为分布式系统中事件定义全局顺序
 
 ** Programming Language
    - [[file:prog-lang.org][Programming Language]] including following languages:
