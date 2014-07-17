@@ -170,18 +170,30 @@ start_node() {
     eval $cmd
 }
 stop_node() {
-    /tmp/galera$1/mysql-galera stop
+    while test $# -gt 0
+    do
+        /tmp/galera$1/mysql-galera stop
+        shift 1
+    done
 }
 clear_state() {
-    rm -rf /tmp/galera$1/mysql/var/grastate.dat
+    while test $# -gt 0
+    do
+        rm -rf /tmp/galera$1/mysql/var/grastate.dat
+        shift 1
+    done
 }
 clear_log() {
-    rm -rf /tmp/galera$1/mysql/var/mysqld.err
+    while test $# -gt 0
+    do
+        rm -rf /tmp/galera$1/mysql/var/mysqld.err
+        shift 1
+    done
 }
 conn_node() {
     mysql --sock=/tmp/galera$1/mysql/var/mysqld.sock -u root -prootpass
 }
-log_node() {
+wlog_node() {
     less /tmp/galera$1/mysql/var/mysqld.err
 }
 exec_node() {
@@ -233,6 +245,7 @@ mysql_stopd() {
 
 # --nums ; how many nodes
 # --segs ; how many segemnt
+# --sgof ; segment offset
 # --mips ; use multiple ips
 
 # if not multiple ips, ip is always 127.0.0.1
@@ -247,6 +260,7 @@ mysql_stopd() {
 test_copy_conf() {
     local NUMS=3
     local SEGS=1
+    local SGOF=0
     local MIPS=0
     local IPBE=103
     local PORT=4566
@@ -260,6 +274,10 @@ test_copy_conf() {
             --segs)
                 shift 1
                 SEGS=$1
+                ;;
+            --sgof)
+                shift 1
+                SGOF=$1
                 ;;
             --mips)
                 MIPS=1
@@ -282,7 +300,7 @@ test_copy_conf() {
     do
         local idx=$i
         local sid=$((idx+1))
-        local segment=$((idx%$SEGS+1))
+        local segment=$((idx%$SEGS+$SGOF))
         local ip="127.0.0.1"
         local port=$((PORT-3*idx))
         if [ $MIPS = 1 ]; then
@@ -373,6 +391,8 @@ alias dstat='dstat -cdlmnpsy'
 pgrep() {
   ps aux | grep $1
 }
+
+alias ps_mysqld='pgrep mysqld'
 
 golang_doc_server() {
     godoc -http=:6060
