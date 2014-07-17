@@ -371,9 +371,26 @@ bzr_commit() {
 }
 build_galera() {
     local ok=0
+    local debug=1
+    while test $# -gt 0
+    do
+        case $1 in
+            --debug)
+                debug=1
+                ;;
+            --release)
+                debug=0
+                ;;
+        esac
+        shift 1
+    done
     cd $GALERA_SRC
     rm -f libgalera_smm.so
-    DEBUG_LEVEL=0 ./scripts/build.sh -d -j 8
+    if [ $debug = 1 ]; then
+        DEBUG_LEVEL=0 ./scripts/build.sh -d -j 8
+    else
+        ./scripts/build.sh -j 8
+    fi
     if [ $? = 0 ]; then ok=1; fi
     cd -
     if [ $ok = 0 ]; then return ; fi
