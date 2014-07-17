@@ -188,22 +188,17 @@ exec_node() {
     local idx=$1; shift
     echo $@ | conn_node $idx
 }
-change_master() {
-    exec_node ${1:-0} "STOP SLAVE; \
-CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_PORT=3305, MASTER_USER='root', MASTER_PASSWORD='rootpass', MASTER_AUTO_POSITION = 1; \
-START SLAVE"
-}
 status_node() {
     exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
 }
 create_table() {
-    exec_node 0 "DROP TABLE test.t; CREATE TABLE test.t (id INT AUTO_INCREMENT PRIMARY KEY)"
+    exec_node 0 "DROP TABLE test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
 }
-select_table() {
-    exec_node ${1:-0} "SELECT * FROM test.t"
-}
-insert_table() {
-    exec_node ${1:-0} "INSERT INTO test.t values(null)"
+# seems 5.6 with gtid feature supports MASTER_AUTO_POSITION.
+change_master() {
+    exec_node ${1:-0} "STOP SLAVE; \
+CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_PORT=3305, MASTER_USER='root', MASTER_PASSWORD='rootpass', MASTER_AUTO_POSITION = 1; \
+START SLAVE"
 }
 
 # batch mode.
@@ -325,12 +320,6 @@ build5.6r() {
     cd $GALERA_SRC
     MYSQL_SRC=$HOME/repo/wsrep-5.6 ./scripts/mysql/build.sh -i -b --no-strip --galera-debug --debug-level 0
     cd -
-}
-wsrep_url5.5() {
-    echo "http://bazaar.launchpad.net/~codership/codership-mysql/wsrep-5.5/revision/$1"
-}
-wsrep_url5.6() {
-    echo "http://bazaar.launchpad.net/~codership/codership-mysql/5.6/revision/$1"
 }
 test_seesaw() {
     local round=${1:-4}
