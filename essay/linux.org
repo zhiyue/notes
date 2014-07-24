@@ -2166,6 +2166,11 @@ traffic control http://www.lartc.org/
 
 todo(dirlt):
 
+*** qperf
+http://blog.yufeng.info/archives/2234
+
+todo(dirlt):
+
 *** /HTTP BENCH TOOL/
 *** httperf
 download http://www.hpl.hp.com/research/linux/httperf/

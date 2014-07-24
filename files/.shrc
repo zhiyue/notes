@@ -257,7 +257,7 @@ mysql_stopd() {
 # if multiple ips, port is always 4565,4666,4567
 # ip of node{idx} is 192.168.100.103+idx
 
-test_copy_conf() {
+_test_copy_conf() {
     local NUMS=3
     local SEGS=1
     local SGOF=0
@@ -293,7 +293,6 @@ test_copy_conf() {
         esac
         shift 1
     done
-    cd ~/.private/galera
     cp cluster.conf $GALERA_SRC/tests/conf/
     local cluster_address=""
     for ((i=0;i<$NUMS;i++))
@@ -326,7 +325,12 @@ test_copy_conf() {
         common_my.cnf > $GALERA_SRC/tests/conf/common_my.cnf
     sed -e "s/{NODE_NUM}/$NUMS/g" \
         nodes.conf > $GALERA_SRC/tests/conf/nodes.conf
-    cd -
+}
+
+test_copy_conf() {
+    cd ~/.private/galera
+    _test_copy_conf $@
+    cd  -
 }
 
 build5.5r() {
