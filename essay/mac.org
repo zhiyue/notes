@@ -65,3 +65,8 @@ brew的常用选项有下面这些：
 
 *** 启动sshd服务
 系统偏好设置 -> 共享 -> 远程登陆
+
+*** 禁止iPhoto人脸检测功能
+http://sullysrants.com/2014/02/disable-stoppause-iphoto-faces-detection/
+
+defaults write com.apple.iPhoto PKFaceDetectionEnabled 0
