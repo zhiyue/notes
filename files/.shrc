@@ -204,7 +204,7 @@ status_node() {
     exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
 }
 create_table() {
-    exec_node 0 "DROP TABLE test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
+    exec_node 0 "DROP TABLE IF EXISTS test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
 }
 # seems 5.6 with gtid feature supports MASTER_AUTO_POSITION.
 change_master() {
