@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
 #Copyright (C) dirlt
 
-#echo "configuring common part..."
 # basic path.
 export PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/sbin:$PATH
 export MANPATH=/usr/local/share/man:/usr/share/man:$MANPATH
-export EDITOR=vim
+export EDITOR=vim # write commit message in a interactive way.
+
+# language.
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+# export LANG="zh_CN.UTF-8"
+# export LC_ALL="zh_CN.UTF-8"
 
 # mac or ubuntu.
 is_mac() {
@@ -129,29 +134,12 @@ configure_key() {
 }
 configure_key
 
+# galera
+export GALERA_SRC=$HOME/repo/galera
+
 lp_login() {
     bzr launchpad-login yan.zhang
 }
-
-# language.
-export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-# export LANG="zh_CN.UTF-8"
-# export LC_ALL="zh_CN.UTF-8"
-
-export IDEA_HOME=$HOME/utils/idea-IC-123.72
-# intellij IDEA !!!
-start_idea() {
-    (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
-}
-
-start_ibus() {
-    (ibus-daemon &)
-}
-
-#echo "configuring galera part..."
-# galera
-export GALERA_SRC=$HOME/repo/galera
 
 # single mode.
 start_node() {
@@ -327,7 +315,6 @@ test_copy_conf() {
     cd  -
 }
 
-
 build_mysql_release() {
     $GALERA_SRC/scripts/mysql/build.sh -i -b --no-strip --galera-debug --debug-level 0
 }
@@ -408,7 +395,7 @@ build_galera() {
     done
 }
 
-#echo "configuring utility part..."
+# utility
 alias dstat='dstat -cdlmnpsy'
 
 pgrep() {
@@ -416,6 +403,16 @@ pgrep() {
 }
 
 alias ps_mysqld='pgrep mysqld'
+
+export IDEA_HOME=$HOME/utils/idea-IC-123.72
+# intellij IDEA !!!
+start_idea() {
+    (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
+}
+
+start_ibus() {
+    (ibus-daemon &)
+}
 
 golang_doc_server() {
     godoc -http=:6060
@@ -629,9 +626,9 @@ shadowsocks_once
 #     sudo opannotate -a $ifile > $afile
 # }
 
-package_install() {
+install_gnu_package() {
     if [ $# -lt 2 ]; then
-        echo "package_install package(tar.gz or tar.bz2) configure-parameters"
+        echo "install_gnu_package gnu-package(tar.gz or tar.bz2) configure-parameters"
         exit 1
     fi
     local NAME=$1; shift
@@ -702,6 +699,7 @@ _tm_sync() {
     local M2="no"
     local KP="no"
     local VM="no"
+    local REPO="no"
     while test $# -gt 0
     do
         case $1 in
@@ -716,6 +714,10 @@ _tm_sync() {
                 ;;
             --vm)
                 VM="yes"
+                ;;
+            --repo)
+                REPO="yes"
+                ;;
         esac
         shift 1
     done
@@ -723,6 +725,14 @@ _tm_sync() {
     if [ $M2 = "yes" ] ; then _tm_sync_dir $src $dst ".m2" ; fi
     if [ $KP = "yes" ] ; then _tm_sync_dir $src $dst "KuaiPan"; fi
     if [ $VM = "yes" ]; then _tm_sync_dir $src $dst "VirtualBox VMs"; fi
+    if [ $REPO = "yes" ]; then
+        _tm_sync_dir $src $dst "repo/trunk-5.5"
+        _tm_sync_dir $src $dst "repo/trunk-5.6"
+        _tm_sync_dir $src $dst "repo/wsrep-5.5"
+        _tm_sync_dir $src $dst "repo/wsrep-5.6"
+        _tm_sync_dir $src $dst "repo/notes"
+        _tm_sync_dir $src $dst "repo/dirtysalt.github.io"
+    fi
 }
 
 tm_backup() {
@@ -737,7 +747,7 @@ tm_restore() {
     _tm_sync $backup $home $@
 }
 
-print_proc_netstat() {
+pp_proc_netstat() {
     cat /proc/net/netstat | awk 'BEGIN { ln=0; tcp=0; ip=0; }
 {
   ln++; if(ln==1) tcp=NF; else if(ln==3) ip=NF;
