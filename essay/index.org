@@ -11,6 +11,7 @@
      - [[file:./the-secret-to-10-million-concurrent-connections.org][The Secret To 10 Million Concurrent Connections -The Kernel Is The Problem, Not The Solution]]
      - [[file:./a-tour-inside-cloudflare-latest-generation-servers.org][A Tour Inside CloudFlare's Latest Generation Servers]]
      - [[file:./busting-4-modern-hardware-myths-are-memory-hdds-and-ssds-really-random-access.org][Busting 4 Modern Hardware Myths - Are Memory, HDDs, And SSDs Really Random Access?]]
+     - [[file:how-long-does-it-take-to-make-context-switch.org][How long does it take to make a context switch?]]
    - [[file:apue.org][APUE]] Unix环境高级编程(Advanced Programming Unix Environment),W. Richard Stevens的神作。笔记里面没有包含书最后的几个部分，比如终端，打印机等，因为我觉得可能大家都不太需要这个东西了。我还尝试将一些跨章节的概念整合到一起，这样比较容易从总体把握Unix编程环境。
    - [[file:linux.org][Linux]] 主要是介绍Linux下面一些工具使用以及和内核相关的知识。（将原来[[file:./APUE.org][APUE]] 和 [[file:./UNP.org][UNP]] 中的一部分内容放在这里面来了，这样可以保持这两篇内容比较稳定）
      - [[file:pic.org][PIC]] 分析了一下PIC位置无关代码内部的原理以及和动态库之间的关系。通过阅读<深入理解计算机系统>并且结合实际的例子总结出来的。
