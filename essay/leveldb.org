@@ -38,7 +38,7 @@ leveldb还是比较麻烦的.开始阅读的时候(像我)很多策略细节就�
 这样在恢复DB的时候，首先可以从manifest里面读取到挂掉之前的version是怎么样的.然后通过读取剩余的version_edit得到挂掉之前的version.
 同时会读取log文件将挂掉之前操作的kv恢复.
 
-(dirlt):最近看到一篇文章比较leveldb和mysql存储引擎性能(可能是innodb).里面提到了连续插入性能的抖动很大.这可能
+note(dirlt):最近看到一篇文章比较leveldb和mysql存储引擎性能(可能是innodb).里面提到了连续插入性能的抖动很大.这可能
 和底层为了达到读取高效率不断地进行compaction有关的.关于compaction挑选以及触发这个策略的话以后可以好好研究一下.
 
 note(dirlt):compaction策略没有仔细分析，但是这个部分是精髓。如何控制compaction策略来针对应用达到最好的读写平衡。另外对于Recovery部分没有仔细看代码，
@@ -194,7 +194,7 @@ bool FilterBlockReader::KeyMayMatch(uint64_t block_offset, const Slice& key) {
 相关资源：
    - Table Format. http://leveldb.googlecode.com/svn/trunk/doc/table_format.txt sst table存储格式。
    - Log Format. http://leveldb.googlecode.com/svn/trunk/doc/log_format.txt block存储格式。
-   - LevelDB SSTable格式详解. http://vdisk.weibo.com/s/40kWC
+   - LevelDB SSTable格式详解. http://wenku.baidu.com/view/19f83f51be23482fb4da4c29.html
 
 *** MemTable
 memtable在leveldb内部实现就是一个skiplist.所有的update都不是in-place的，对于memtable里面的修改来说的话使用的也是使用添加的方式完成的。
