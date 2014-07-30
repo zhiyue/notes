@@ -151,6 +151,7 @@
      - [[file:./the-hadoop-distributed-file-system.org][The Hadoop Distributed File System]] @2010
      - [[file:./hdfs-reliability.org][HDFS Reliability]] @2008
      - [[file:hdfs-scalability-the-limits-to-growth.org][HDFS scalability: the limits to growth]] @2010
+     - [[file:./on-designing-and-deploying-internet-scale-services.org][On Designing and Deploying Internet-Scale Services]] @2007
    - [[file:streambase.org][StreamBase]] 在实现Baidu in-house的分布式实时流式计算系统之前，调研的商用流式计算系统。没有办法获得源代码只能够从文档中猜测其内部实现以及参考其提供的功能与接口。
    - [[file:storm.org][Storm]] Twitter的分布式实时流式处理系统。这个在实现Baidu in-house的分布式实时流式计算系统的时候也做过调研，但是当时不是很深入。
    - [[file:./samza.org][Samza]] LinkedIn的的分布式流式处理系统，现在是Apache下面的项目。
