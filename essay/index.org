@@ -25,7 +25,7 @@
      - [[file:akka.org][Akka]] Akka is a toolkit and runtime for building highly concurrent, distributed, and fault tolerant event-driven applications on the JVM.
    - [[file:memory.org][Memory]] 内存相关
      - [[file:./numa.org][NUMA]] Non-Uniform Memory Access. 非一致性内存访问
-     - [[file:numa-an-overview.org][NUMA An Overview]] 一篇关于NUMA的介绍性文章
+     - [[file:numa-an-overview.org][NUMA An Overview]] 关于NUMA的介绍性文章
      - [[file:./memory-barrier.org][Memory Barrier]] 内存屏障
      - [[file:./memory-barriers-a-hardware-view-for-software-hackers.org][Memory Barriers: a Hardware View for Software Hackers]]
      - [[file:tcmalloc.org][TCMalloc]] Google的开源线程缓存内存分配器，解决多线程下面内存分配效率问题。
@@ -73,14 +73,15 @@
 
 ** Algorithm Related
    - [[file:algorithm.org][Algorithm]] 算法还是非常重要的。记录的都是现实中使用到的算法或者是比较有趣的数学问题吧。
-     - [[file:./probabilistic-data-structures-for-web-analytics-and-data-mining.org][Probabilistic Data Structures for Web Analytics and Data Mining]]
      - [[file:./cracking-the-coding-interview.org][Cracking The Coding Interview]] 据说算法分为三种：面试算法，ACM算法，算法=D
      - [[file:./interview-problem.org][Interview Problem]] 面试问题
    - [[file:data-mining.org][Data Mining]] 了解一些数据挖掘方面的知识还是比较有帮助的。其实我们每天都在不知不觉地进行数据挖掘。
    - [[file:recommender-system.org][Recommender System]] 推荐系统
-   - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 一篇关于推荐系统的介绍性文章
+   - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 关于推荐系统的介绍性文章
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学
    - [[file:ctr.org][CTR]] click through rate.
+   - [[file:./probabilistic-data-structures-for-web-analytics-and-data-mining.org][Probabilistic Data Structures for Web Analytics and Data Mining]] 用于Web分析和数据挖掘的概率化数据结构
+   - [[file:rcfile.org][RCFile]] / [[file:./orcfile.org][ORCFile]] / [[file:./parquet.org][Parquet]] 几种列式存储(columnar storage)实现
 
 ** Network Programming
    - [[file:unp.org][UNP]] Unix网络编程(Unix Network Programming),W. Richard Stevens的又一神作。笔记里面只是对于TCP原理有比较详细讨论，这部分笔记也包含了TCP Illustrated v1里面和TCP相关的章节内容。对于编程方面也着重TCP socket使用，毕竟在大部分应用场景下面我们选用TCP模型更多，并且TCP里面有很多非常琐碎的知识。
@@ -245,4 +246,3 @@ Here is my contact info. I think email is the easiest way to get me.
    - github https://github.com/dirtysalt
 
 [[file:note.org][Here]] are my some notes written casually to record my life footprint. I think it will be fun to read them when I became old. My favouritest words comes from the idea of [[http://www.valvesoftware.com/][Valve]] : "Open your mind, Open your eyes" (放眼未来，自由想象), with a [[file:images/valve-logo.jpg][image]] from its game "Half Life"
-
