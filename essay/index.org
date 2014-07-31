@@ -76,11 +76,11 @@
      - [[file:./cracking-the-coding-interview.org][Cracking The Coding Interview]] 据说算法分为三种：面试算法，ACM算法，算法=D
      - [[file:./interview-problem.org][Interview Problem]] 面试问题
    - [[file:data-mining.org][Data Mining]] 了解一些数据挖掘方面的知识还是比较有帮助的。其实我们每天都在不知不觉地进行数据挖掘。
+     - [[file:./probabilistic-data-structures-for-web-analytics-and-data-mining.org][Probabilistic Data Structures for Web Analytics and Data Mining]] 用于Web分析和数据挖掘的概率化数据结构
+     - [[file:./do-you-think-you-have-gambling-problem.org][Do You Think You Have a Gambling Problem?]]
    - [[file:recommender-system.org][Recommender System]] 推荐系统
    - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 关于推荐系统的介绍性文章
-   - [[file:computational-advertising.org][Computational Advertising]] 计算广告学
-   - [[file:ctr.org][CTR]] click through rate.
-   - [[file:./probabilistic-data-structures-for-web-analytics-and-data-mining.org][Probabilistic Data Structures for Web Analytics and Data Mining]] 用于Web分析和数据挖掘的概率化数据结构
+   - [[file:computational-advertising.org][Computational Advertising]] 计算广告学 /  [[file:ctr.org][CTR]] click through rate.
    - [[file:rcfile.org][RCFile]] / [[file:./orcfile.org][ORCFile]] / [[file:./parquet.org][Parquet]] 几种列式存储(columnar storage)实现
 
 ** Network Programming
@@ -228,7 +228,6 @@
    - [[file:./aosa.org][The Architecture of Open Source Applications]]
    - [[file:./producing-open-source-software.org][Producing Open Source Software]]
    - [[file:./google-io.org][Google I/O]]
-   - [[file:./do-you-think-you-have-gambling-problem.org][Do You Think You Have a Gambling Problem?]]
 
 ** 42.195 About Me
 My name is Zhang Yan(yan.zhang). I get MS. at [[http://www.sdu.edu.cn/][Shandong University]] on Computer Science and BEng. at [[http://www.sdu.edu.cn/][Shandong University]] on Electronic Engineering. I currently work as Software Architect in Data Platform Team at [[http://www.umeng.com/][Umeng]] which focus on mobile analytics since 2012.5 where I mainly work on building the infrastructure of big data processing. From 2010.6 to 2012.6, I have been a Senior Software Engineer at [[http://www.baidu.com/][Baidu]] Infrastructure Tream where I wrote libraries, tools, services and distributed systems. From 2008.7 to 2010.6, I have been a Software Engineering Intern at [[http://www.baidu.com/][Baidu]] Component Tream where I wrote libraries and tools. You can dig me more on my linkedin(or [[file:./resume.org][resume]]).
