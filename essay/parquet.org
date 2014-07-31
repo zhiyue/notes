@@ -86,7 +86,7 @@ Dictionary page format: the entries in the dictionary - in dictionary order - us
 
 *Run Length Encoding / Bit-Packing Hybrid (RLE = 3) & Bit-packed (Deprecated) (BIT_PACKED = 4)*
 
-首先说4这个压缩方法，实际上就是将所有values的bit表示连接在一起，存放顺序是从MSB到LSB. 
+首先说4这个压缩方法，实际上就是将所有values的bit表示连接在一起，存放顺序是从MSB到LSB.
 
 For example, the numbers 1 through 7 using bit width 3:
 #+BEGIN_EXAMPLE
@@ -111,14 +111,14 @@ bit label: HIDEFABC RMNOJKLG VWXSTUPQ
 rle-bit-packed-hybrid: <length> <encoded-data>
 length := length of the <encoded-data> in bytes stored as 4 bytes little endian
 encoded-data := <run>*
-run := <bit-packed-run> | <rle-run>  
-bit-packed-run := <bit-packed-header> <bit-packed-values>  
-bit-packed-header := varint-encode(<bit-pack-count> << 1 | 1)  
-// we always bit-pack a multiple of 8 values at a time, so we only store the number of values / 8  
-bit-pack-count := (number of values in this run) / 8  
-bit-packed-values := *see 1 below*  
-rle-run := <rle-header> <repeated-value>  
-rle-header := varint-encode( (number of times repeated) << 1)  
+run := <bit-packed-run> | <rle-run>
+bit-packed-run := <bit-packed-header> <bit-packed-values>
+bit-packed-header := varint-encode(<bit-pack-count> << 1 | 1)
+// we always bit-pack a multiple of 8 values at a time, so we only store the number of values / 8
+bit-pack-count := (number of values in this run) / 8
+bit-packed-values := *see 1 below*
+rle-run := <rle-header> <repeated-value>
+rle-header := varint-encode( (number of times repeated) << 1)
 repeated-value := value that is repeated, using a fixed-width of round-up-to-next-byte(bit-width)
 #+END_EXAMPLE
 varint-encode() is ULEB-128 encoding, see http://en.wikipedia.org/wiki/Variable-length_quantity
@@ -156,7 +156,3 @@ note(dirlt): 每个minblocks应该都可以被向量指令处理，min-delta引�
 This is also known as incremental encoding or front compression: for each element in a sequence of strings, store the prefix length of the previous entry plus the suffix. For a longer description, see http://en.wikipedia.org/wiki/Incremental_encoding. This is stored as a sequence of delta-encoded prefix lengths (DELTA_BINARY_PACKED), followed by the suffixes encoded as delta length byte arrays (DELTA_LENGTH_BYTE_ARRAY).
 
 举个例子"AB", "ABC", "ABCD", 前缀压缩之后成为<0>"AB", <2>"C", <3>"D". 最终压缩结果是DeltaEncoding(0,2,3) DeltaEncoding(2,1,1) "ABCD".
-
-
-
-

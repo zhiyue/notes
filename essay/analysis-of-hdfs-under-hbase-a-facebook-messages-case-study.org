@@ -1,0 +1,5 @@
+* analysis-of-hdfs-under-hbase-a-facebook-messages-case-study
+#+TITLE: Analysis of HDFS Under HBase: A Facebook Messages Case Study
+
+http://research.cs.wisc.edu/adsl/Publications/fbmessages-fast14.pdf
+
