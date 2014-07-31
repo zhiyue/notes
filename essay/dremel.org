@@ -58,9 +58,8 @@ in a short word, "protobuf"
    - Repetition levels.
    - Definition levels.
 后面以下图为例
-file:./images/dremel-sample-record.png
 
-file:./images/dremel-sample-column.png
+file:./images/dremel-sample-record.png file:./images/dremel-sample-column.png
 
 所谓r的意思就是说，最近包含这个value，并且repeat的field，是第几个。0表示record开始，有特殊意义。我们以Name.Language.Country为例。
    - 第一个us是开始的记录，所以为r==0
@@ -76,7 +75,9 @@ file:./images/dremel-sample-column.png
 
 作者认为对于一个value来说，完全可以根据这个value对应的field name，以及r，d，完全构造出nested data。并且作者针对种种特性做了encoding的优化，使得column在存储上面尽可能地紧凑。
 
-*todo(dirlt):dive into algorithm*
+*todo(dirlt):dive into algorithm* 
+
+*note(dirlt):这里写的比较模糊，因为当时也没有完全理解，now see [[file:parquet.org][Parquet]]*
 
 ** Query Language
 ** Query Execution
