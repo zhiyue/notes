@@ -12,6 +12,7 @@
      - [[file:./a-tour-inside-cloudflare-latest-generation-servers.org][A Tour Inside CloudFlare's Latest Generation Servers]]
      - [[file:./busting-4-modern-hardware-myths-are-memory-hdds-and-ssds-really-random-access.org][Busting 4 Modern Hardware Myths - Are Memory, HDDs, And SSDs Really Random Access?]]
      - [[file:how-long-does-it-take-to-make-context-switch.org][How long does it take to make a context switch?]]
+     - [[file:./the-c10m-problem.org][The C10M Problem]]
    - [[file:unix-systems-for-modern-architectures.org][现代体系结构上的UNIX系统-内核程序员的SMP和Caching技术]]
    - [[file:./is-parallel-programming-hard.org][Is Parallel Programming Hard, And, If So, What Can You Do About It?]]
    - [[file:apue.org][APUE]] Unix环境高级编程(Advanced Programming Unix Environment),W. Richard Stevens的神作。笔记里面没有包含书最后的几个部分，比如终端，打印机等，因为我觉得可能大家都不太需要这个东西了。我还尝试将一些跨章节的概念整合到一起，这样比较容易从总体把握Unix编程环境。
