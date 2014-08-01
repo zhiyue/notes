@@ -1,0 +1,4 @@
+* is-parallel-programming-hard
+#+TITLE: Is Parallel Programming Hard, And, If So, What Can You Do About It?
+
+https://www.kernel.org/pub/linux/kernel/people/paulmck/perfbook/perfbook.html

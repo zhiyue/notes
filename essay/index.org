@@ -12,13 +12,14 @@
      - [[file:./a-tour-inside-cloudflare-latest-generation-servers.org][A Tour Inside CloudFlare's Latest Generation Servers]]
      - [[file:./busting-4-modern-hardware-myths-are-memory-hdds-and-ssds-really-random-access.org][Busting 4 Modern Hardware Myths - Are Memory, HDDs, And SSDs Really Random Access?]]
      - [[file:how-long-does-it-take-to-make-context-switch.org][How long does it take to make a context switch?]]
+   - [[file:unix-systems-for-modern-architectures.org][现代体系结构上的UNIX系统-内核程序员的SMP和Caching技术]]
+   - [[file:./is-parallel-programming-hard.org][Is Parallel Programming Hard, And, If So, What Can You Do About It?]]
    - [[file:apue.org][APUE]] Unix环境高级编程(Advanced Programming Unix Environment),W. Richard Stevens的神作。笔记里面没有包含书最后的几个部分，比如终端，打印机等，因为我觉得可能大家都不太需要这个东西了。我还尝试将一些跨章节的概念整合到一起，这样比较容易从总体把握Unix编程环境。
    - [[file:linux.org][Linux]] 主要是介绍Linux下面一些工具使用以及和内核相关的知识。（将原来[[file:./APUE.org][APUE]] 和 [[file:./UNP.org][UNP]] 中的一部分内容放在这里面来了，这样可以保持这两篇内容比较稳定）
      - [[file:pic.org][PIC]] 分析了一下PIC位置无关代码内部的原理以及和动态库之间的关系。通过阅读<深入理解计算机系统>并且结合实际的例子总结出来的。
      - [[file:gcc-asm.org][GCC Assembly]] 如何编写GCC内嵌汇编，以及一些关于GCC内嵌汇编的文章，主要是参考了<GCC Manual>. 但是自己对这个依然不是很了解。
      - [[file:encoding.org][Encoding]] 介绍了GB2312/GBK/GB18030/Unicode/UTF16/UTF32/UTF8这几种字符编码格式。还是觉得UTF8在设计以及实现上都相对更加合理。
    - [[file:cpu.org][CPU]] / [[file:simd.org][SIMD]] SIMD(Single Instruction Muitple Data)单指令多数据。这个笔记其实是Intel Reference Manual中关于SIMD指令的总结。里面包含了一些理解SIMD指令需要的知识，以及对SIMD指令进行了分类。遗憾的是里面没有什么过多的例子，毕竟这个是结合场景来使用的。
-   - [[file:unix-systems-for-modern-architectures.org][现代体系结构上的UNIX系统-内核程序员的SMP和Caching技术]]
    - [[file:concurrency.org][Concurrency]] 并发
      - [[file:coroutine.org][Coroutine]] 协程，轻量级线程。
      - [[file:lock.org][Lock]] 锁的原理与不同实现
@@ -35,6 +36,7 @@
      - [[file:gperftools.org][gperftools]] Google的性能分析工具，[[file:tcmalloc.org][TCMalloc]] 实现也在里面。用来观察应用程序似乎是个不错的选择。
      - [[file:perf.org][Perf]] Linux系统自带的性能分析工具，支持硬件以及软件事件计数器，支持profile kernel以及user code.
      - [[file:./optimizing-software-in-cpp.org][Optimizing software in C++]]
+     - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
    - [[file:continuation.org][Continuation]] 延续，异步编程一种实现。
 
 ** Compression Technology
@@ -195,18 +197,17 @@
    - [[file:./time-clocks-and-ordering-of-events-in-a-distributed-system.org][Time, Clocks, and Ordering of Events in a Distributed System]] 为分布式系统中事件定义全局顺序
 
 ** Programming Language
-   - [[file:prog-lang.org][Programming Language]] including following languages:
-     - [[file:cpp.org][C/C++]] # C++ (pronounced "cee plus plus") is a statically typed, free-form, multi-paradigm, compiled, general-purpose programming language. It is regarded as an intermediate-level language, as it comprises a combination of both high-level and low-level language features. [[http://en.wikipedia.org/wiki/C%2B%2B][Wikipedia]]
-       - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
-     - [[file:scheme.org][Scheme]] # Scheme is a functional programming language and one of the two main dialects of the programming language Lisp. [[http://en.wikipedia.org/wiki/Scheme_%28programming_language%29][Wikipedia]]
-     - [[file:java.org][Java]] # Java is a programming language originally developed by James Gosling at Sun Microsystems (which has since merged into Oracle Corporation) and released in 1995 as a core component of Sun Microsystems' Java platform. The language derives much of its syntax from C and C++ but has a simpler object model and fewer low-level facilities. [[http://en.wikipedia.org/wiki/Java_%28programming_language%29][Wikipedia]]
-       - [[file:./jni.org][JNI]] Java Native Interface
-       - [[file:./jvm.org][JVM]] Java Virtual Machine
-     - [[file:clojure.org][Clojure]] # Clojure (pronounced like "closure") is a recent dialect of the Lisp programming language created by Rich Hickey. It is a functional general-purpose language. Its focus on programming with immutable values and explicit progression-of-time constructs are intended to facilitate the development of more robust programs, particularly multithreaded ones. [[http://en.wikipedia.org/wiki/Clojure][Wikipedia]]
-     - [[file:python.org][Python]] # Python is a general-purpose, high-level programming language whose design philosophy emphasizes code readability. Its syntax is said to be clear and expressive. Python has a large and comprehensive standard library. [[http://en.wikipedia.org/wiki/Python_(programming_language)][Wikipedia]]
-     - [[file:go.org][Go]] # Go is a compiled, garbage-collected, concurrent programming language developed by Google Inc. [[http://en.wikipedia.org/wiki/Go_(programming_language)][Wikipedia]]
-     - [[file:./scala.org][Scala]] # Scala is an object-functional programming and scripting language for general software applications, statically typed, designed to concisely express solutions in an elegant, type-safe and lightweight (low ceremonial) manner. [[http://en.wikipedia.org/wiki/Scala_(programming_language)][Wikipedia]]
-       - [[file:./effective-scala.org][Effective Scala]]
+[[file:prog-lang.org][Programming Language]] including following languages:
+   - [[file:cpp.org][C/C++]] # C++ (pronounced "cee plus plus") is a statically typed, free-form, multi-paradigm, compiled, general-purpose programming language. It is regarded as an intermediate-level language, as it comprises a combination of both high-level and low-level language features. [[http://en.wikipedia.org/wiki/C%2B%2B][Wikipedia]]
+   - [[file:scheme.org][Scheme]] # Scheme is a functional programming language and one of the two main dialects of the programming language Lisp. [[http://en.wikipedia.org/wiki/Scheme_%28programming_language%29][Wikipedia]]
+   - [[file:java.org][Java]] # Java is a programming language originally developed by James Gosling at Sun Microsystems (which has since merged into Oracle Corporation) and released in 1995 as a core component of Sun Microsystems' Java platform. The language derives much of its syntax from C and C++ but has a simpler object model and fewer low-level facilities. [[http://en.wikipedia.org/wiki/Java_%28programming_language%29][Wikipedia]]
+     - [[file:./jni.org][JNI]] Java Native Interface
+     - [[file:./jvm.org][JVM]] Java Virtual Machine
+   - [[file:clojure.org][Clojure]] # Clojure (pronounced like "closure") is a recent dialect of the Lisp programming language created by Rich Hickey. It is a functional general-purpose language. Its focus on programming with immutable values and explicit progression-of-time constructs are intended to facilitate the development of more robust programs, particularly multithreaded ones. [[http://en.wikipedia.org/wiki/Clojure][Wikipedia]]
+   - [[file:python.org][Python]] # Python is a general-purpose, high-level programming language whose design philosophy emphasizes code readability. Its syntax is said to be clear and expressive. Python has a large and comprehensive standard library. [[http://en.wikipedia.org/wiki/Python_(programming_language)][Wikipedia]]
+   - [[file:go.org][Go]] # Go is a compiled, garbage-collected, concurrent programming language developed by Google Inc. [[http://en.wikipedia.org/wiki/Go_(programming_language)][Wikipedia]]
+   - [[file:./scala.org][Scala]] # Scala is an object-functional programming and scripting language for general software applications, statically typed, designed to concisely express solutions in an elegant, type-safe and lightweight (low ceremonial) manner. [[http://en.wikipedia.org/wiki/Scala_(programming_language)][Wikipedia]]
+     - [[file:./effective-scala.org][Effective Scala]]
 
 ** Software Design
    - [[file:design-reading.org][Design Reading]] 关于设计方面的一些文章以及阅读心得。
