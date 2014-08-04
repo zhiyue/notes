@@ -1263,9 +1263,9 @@ procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
    - r 多少个进程正在等待运行
    - b 多少个进程block住了
    - swpd 虚拟内存(swap)
-   - free 空闲内存
-   - buff 缓冲内存(buffers,用户缓存文件inode)
-   - cache 缓冲内存(cache,用户作为文件系统page-cache)
+   - free 空闲内存(phy)
+   - buff 缓冲内存(用于read/write等操作)(phy)
+   - cache 缓冲内存(用于文件系统以及内存系统管理)(phy)
    - 前面三个参数相加才是可用内存大小
    - si 读取disk使用的虚拟内存
    - so 写disk使用的虚拟内存
@@ -1348,8 +1348,8 @@ Total:     9212084    4519868    4692216
    - used 已经使用大小[buffers+shared+cached+应用程序使用]
    - free 未使用大小
    - shared 共享内存大小
-   - buffers 缓存大小包括目录inode
-   - cached 用于操作文件使用缓冲[所谓cached的内容还是可以被使用的]
+   - buffers 用于read/write等操作
+   - cached 用于文件系统以及内存系统
    - - buffers/cache 表示used-buffers/cached的大小，就是应用程序已经使用内存大小
    - + buffers/cache 表示free+buffers/cached的大小，就是所有可供应用程序使用的大小
    - Swap:total 交换分区大小
@@ -1857,7 +1857,7 @@ todo(zhangyan04):
 *** iftop
 todo(dirlt): http://www.ex-parrot.com/~pdw/iftop/
 
-*** iftraf
+*** iptraf
 todo(dirlt): http://iptraf.seul.org/
 
 *** rsync
@@ -1997,6 +1997,28 @@ todo(dirlt)
 Sysprof - Statistical, system-wide Profiler for Linux : http://sysprof.com/
 
 *** ss
+
+*** netperf
+todo(dirlt):
+http://www.netperf.org/netperf/
+
+*** iperf
+todo(dirlt):
+https://iperf.fr/
+
+*** tcptrace
+todo(dirlt):
+http://www.tcptrace.org/
+
+*** tc
+traffic control http://www.lartc.org/
+
+todo(dirlt):
+
+*** qperf
+http://blog.yufeng.info/archives/2234
+
+todo(dirlt):
 
 *** /SYS ADMIN/
 *** uptime
@@ -2161,16 +2183,6 @@ sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
 -P FORWARD ACCEPT
 -P OUTPUT ACCEPT
 #+END_EXAMPLE
-*** tc
-traffic control http://www.lartc.org/
-
-todo(dirlt):
-
-*** qperf
-http://blog.yufeng.info/archives/2234
-
-todo(dirlt):
-
 *** /HTTP BENCH TOOL/
 *** httperf
 download http://www.hpl.hp.com/research/linux/httperf/

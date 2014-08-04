@@ -38,6 +38,7 @@
      - [[file:perf.org][Perf]] Linux系统自带的性能分析工具，支持硬件以及软件事件计数器，支持profile kernel以及user code.
      - [[file:./optimizing-software-in-cpp.org][Optimizing software in C++]]
      - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
+     - [[file:./linux-system-and-performance-monitoring.org][Linux System and Performance Monitoring]]
    - [[file:continuation.org][Continuation]] 延续，异步编程一种实现。
 
 ** Compression Technology
@@ -64,6 +65,7 @@
      - [[file:maven.org][Maven]] 主要针对Java开发的基于工程对象模型(POM, Project Object Model)构建系统，主要记录了一些使用方面的问题和解决办法。
      - [[file:./sbt.org][SBT]] Simple(or Scala?) Build Tool
      - [[file:./vagrant.org][Vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持非常好的是VirtualBox)
+     - [[file:./sanitizer.org][Sanitizer]] Google的C++动态分析工具，可以检测内存泄漏，内存无效使用以及多线程数据竞争
    - Desktop
      - [[file:ubuntu.org][Ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] 。主要记录自己使用出现的问题。
      - [[file:fvwm.org][FVWM]] F* Virtual Windows Manager.Linux下面高度可定制化的窗口管理器。
@@ -85,6 +87,7 @@
    - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 关于推荐系统的介绍性文章
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学 /  [[file:ctr.org][CTR]] click through rate.
    - [[file:rcfile.org][RCFile]] / [[file:./orcfile.org][ORCFile]] / [[file:./parquet.org][Parquet]] 几种列式存储(columnar storage)实现
+   - [[file:./bitcoin.org][Bitcoin: A Peer-to-Peer Electronic Cash System]] 比特币论文
 
 ** Network Programming
    - [[file:unp.org][UNP]] Unix网络编程(Unix Network Programming),W. Richard Stevens的又一神作。笔记里面只是对于TCP原理有比较详细讨论，这部分笔记也包含了TCP Illustrated v1里面和TCP相关的章节内容。对于编程方面也着重TCP socket使用，毕竟在大部分应用场景下面我们选用TCP模型更多，并且TCP里面有很多非常琐碎的知识。
