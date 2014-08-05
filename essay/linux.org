@@ -1898,10 +1898,47 @@ ss [options] [ FILTER ]
    - -f/--family unix, inet, inet6, link, netlink
 选项里面提供了许多可以观察到某个socket的详细信息以及过滤功能. 相比netstat来说ss -s可以很容易地获取概括信息
 
-*** iftop(TODO)
+*** iftop(DONE)
 http://www.ex-parrot.com/~pdw/iftop/
 
 iftop - display bandwidth usage on an interface by host
+
+iftop -h | [-nNpblBP] [-i interface] [-f filter code] [-F net/mask] [-G net6/mask6]
+   0. -h     Print a summary of usage.
+   0. -n     Don't do hostname lookups.
+   0. -N     Do not resolve port number to service names
+   0. -p     Run in promiscuous mode, so that traffic which does not pass directly through the specified interface is also counted.
+   0. -P     Turn on port display.
+   0. -l     Display and count datagrams addressed to or from link-local IPv6 addresses.  The default is not to display that address category.
+   0. -b     Don't display bar graphs of traffic.
+   0. -B     Display bandwidth rates in bytes/sec rather than bits/sec.
+   0. -i interface   # Listen to packets on interface.
+   0. -f filter code # Use filter code to select the packets to count. Only IP packets are ever counted, so the specified code is evaluated as (filter code) and ip.
+   0. -F net/mask    # Specifies an IPv4 network for traffic analysis.  If specified, iftop will only include packets flowing in to or out of the given network, and packet direction is determined rela‐tive  to  the  network boundary, rather than to the interface.  You may specify mask as a dotted quad, such as //255.255.255.0, or as a single number specifying the number of bits set in the netmask, such as //24.
+   0. -c config file # Specifies an alternate config file.  If not specified, iftop will use ~/.iftoprc if it exists.  See below for a description of config files
+其中filter code可以用来做一些过滤，比如
+   - not ether host ff:ff:ff:ff:ff:ff  # Ignore ethernet broadcast packets.
+   - port http and not host webcache.example.com  # Count web traffic only, unless it is being directed through a local web cache.（这个看上去似乎特别有效）
+个人认为比较常用选项有: -n -N -P -B. 这些选项都可以写在配置文件里面
+
+When running, iftop uses the whole screen to display network usage. At the top of the display is a logarithmic scale for the bar graph which gives a visual indication of traffic. The main part of the display lists, for each pair of hosts, the rate at which data has been sent and received over the preceding 2, 10 and 40 second intervals.  The  direction of data flow is indicated by arrows, <= and =>. For instance,
+#+BEGIN_EXAMPLE
+foo.example.com  =>  bar.example.com      1Kb  500b   100b
+                 <=                       2Mb    2Mb    2Mb
+#+END_EXAMPLE
+shows, on the first line, traffic from foo.example.com to bar.example.com; in the preceding 2 seconds, this averaged 1Kbit/s, around half that amount over the preceding 10s, and a fifth of that over the whole of the last 40s. During each of those intervals, the data sent in the other direction was about 2Mbit/s. On the actual display, part of each line is  inverted to give a visual indication of the 10s average of traffic.  You might expect to see something like this where host foo is making repeated HTTP requests to bar, which is sending data back which saturates a 2Mbit/s link. By default, the pairs of hosts responsible for the most traffic (10 second average) are displayed at the top of the list. At the bottom of the display, various totals are shown, including peak traffic over the last 40s, total traffic transferred (after filtering), and total transfer rates averaged over 2s, 10s and 40s. (三个数值分别表示最近2,10,40s的传输速率)
+file:./images/iftop-illustration.png
+而其中白色部分则是表示当前传输速率是多少.以上面bar显示的195kb为基准可以看到当前传输数率在100kb/s左右
+
+可以通过按键来修改展现方式
+   - SOURCE / DEST AGGREGATION. By  pressing s or d while iftop is running, all traffic for each source or destination will be aggregated together.  This is most useful when iftop is run in promiscuous mode, or is run on a gateway machine. （展现source/dest与否）
+   - PORT DISPLAY. S or D toggle the display of source and destination ports respectively. p will toggle port display on/off.（展现port与否）
+   - DISPLAY TYPE. t cycles through the four line display modes; the default 2-line display, with sent and received traffic on separate lines, and 3 1-line displays, with sent, received, or total  traffic shown. (只显示send, 只显示receivd, 将send + recive聚合显示, 以及分开显示)
+   - DISPLAY ORDER. By  default, the display is ordered according to the 10s average (2nd column).  By pressing 1, 2 or 3 it is possible to sort by the 1st, 2nd or 3rd column.   By pressing < or > the dis‐ play will be sorted by source or destination hostname respectively. (按照第几列进行排序)
+   - DISPLAY FILTERING. l allows you to enter a POSIX extended regular expression that will be used to filter hostnames shown in the display.  This is a good way to quickly limit what is shown on the  display. Note that this happens at a much later stage than filter code, and does not affect what is actually captured.  Display filters DO NOT affect the totals at the bottom of the screen.（可以根据地址进行过滤）
+   - PAUSE DISPLAY / FREEZE ORDER. P will pause the current display. o  will  freeze the current screen order.  This has the side effect that traffic between hosts not shown on the screen at the time will not be shown at all, although it will be included in the totals at the bottom of the screen.（将当前内容固定下来）
+   - SCROLL DISPLAY. j and k will scroll the display of hosts.  This feature is most useful when the display order is frozen (see above).
+   - FILTER CODE. f allows you to edit the filter code whilst iftop running.  This can lead to some unexpected behaviour.
 
 *** iptraf(TODO)
 http://iptraf.seul.org/
@@ -1913,11 +1950,66 @@ todo(dirlt):
 *** jnettop(TODO)
 todo(dirlt):
 
+*** iperf(DONE)
+https://iperf.fr/
+
+iperf - perform network throughput tests 用来测量网络吞吐
+
+GENERAL OPTIONS
+   0. -f, --format [kmKM] # format to report: Kbits, Mbits, KBytes, MBytes
+   0. -h, --help # print a help synopsis
+   0. -i, --interval n # pause n seconds between periodic bandwidth reports
+   0. -l, --len n[KM] # set length read/write buffer to n (default 8 KB)
+   0. -m, --print_mss # print TCP maximum segment size (MTU - TCP/IP header)
+   0. -o, --output <filename> # output the report or error message to this specified file
+   0. -p, --port n # set server port to listen on/connect to to n (default 5001)
+   0. -u, --udp # use UDP rather than TCP
+   0. -w, --window n[KM] # TCP window size (socket buffer size)
+   0. -B, --bind <host> # bind to <host>, an interface or multicast address
+   0. -M, --mss n # set TCP maximum segment size (MTU - 40 bytes)
+   0. -N, --nodelay # set TCP no delay, disabling Nagle's Algorithm
+   0. -v, --version # print version information and quit
+
+SERVER SPECIFIC OPTIONS
+   0. -s, --server # run in server mode
+   0. -U, --single_udp # run in single threaded UDP mode
+   0. -D, --daemon # run the server as a daemon
+
+CLIENT SPECIFIC OPTIONS
+   0. -b, --bandwidth n[KM] # set target bandwidth to n bits/sec (default 1 Mbit/sec).  This setting requires UDP (-u).
+   0. -c, --client <host> # run in client mode, connecting to <host>
+   0. -d, --dualtest # Do a bidirectional test simultaneously
+   0. -n, --num n[KM] # number of bytes to transmit (instead of -t)
+   0. -t, --time n # time in seconds to transmit for (default 10 secs)
+   0. -F, --fileinput <name> # input the data to be transmitted from a file
+   0. -L, --listenport n # port to receive bidirectional tests back on
+   0. -P, --parallel n # number of parallel client threads to run
+   0. -T, --ttl n # time-to-live, for multicast (default 1)
+
+通常来说只需要使用简单的几个参数即可. 在服务器端iperf -s -p <port> -B <host>. 然后在客户端使用iperf -c <host> -p <port>
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ iperf -c localhost -i 1      
+------------------------------------------------------------
+Client connecting to localhost, TCP port 5001
+TCP window size:  169 KByte (default)
+------------------------------------------------------------
+[  3] local 127.0.0.1 port 58300 connected with 127.0.0.1 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0- 1.0 sec  6.73 GBytes  57.8 Gbits/sec
+[  3]  1.0- 2.0 sec  6.69 GBytes  57.5 Gbits/sec
+[  3]  2.0- 3.0 sec  6.42 GBytes  55.2 Gbits/sec
+[  3]  3.0- 4.0 sec  6.77 GBytes  58.1 Gbits/sec
+[  3]  4.0- 5.0 sec  6.77 GBytes  58.1 Gbits/sec
+[  3]  5.0- 6.0 sec  6.63 GBytes  57.0 Gbits/sec
+[  3]  6.0- 7.0 sec  6.02 GBytes  51.7 Gbits/sec
+[  3]  7.0- 8.0 sec  6.24 GBytes  53.6 Gbits/sec
+[  3]  8.0- 9.0 sec  4.59 GBytes  39.4 Gbits/sec
+[  3]  9.0-10.0 sec  5.58 GBytes  47.9 Gbits/sec
+[  3]  0.0-10.0 sec  62.4 GBytes  53.6 Gbits/sec
+#+END_EXAMPLE
+
 *** netperf(TODO)
 http://www.netperf.org/netperf/
-
-*** iperf(TODO)
-https://iperf.fr/
 
 *** qperf(TODO)
 http://blog.yufeng.info/archives/2234
@@ -1929,7 +2021,24 @@ http://www.tcptrace.org/
 tcpdump - dump traffic on a network
 
 *** tc(TODO)
-traffic control http://www.lartc.org/
+tc - show / manipulate traffic control settings.
+   - traffic control http://www.lartc.org/
+   - http://tldp.org/HOWTO/Traffic-Control-HOWTO/index.html
+
+-----
+
+netem (network emulation) http://www.linuxfoundation.org/collaborate/workgroups/networking/netem
+   - tc qdisc [add|change] dev [DEV] root netem [specification] # 在设备上创建和修改规则
+   - tc qdisc del dev [DEV] root # 删除设备上定义规则
+   - tc qdisc show dev [DEV] # 查看设备上定义的规则
+
+specification
+   - delay 100ms 10ms 25%.  延迟分布在[100-10,100+10]. next_delay = random(90,110) * 0.75 + last_delay * 0.25
+   - delay 100ms 10ms distribution normal 延迟正态分布[100-10,100+10]
+   - loss 1%       #丢包概率1%
+   - loss 1% 25%   #丢包概率在random(1%) * 0.75 + last_loss * 0.25
+   - duplicate 1%  #重复概率1%
+   - corrupt 1%    #坏包概率1%
 
 ** general utility
 *** sar(DONE)

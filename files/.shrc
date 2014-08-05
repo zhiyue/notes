@@ -492,7 +492,7 @@ cxx_indent() {
 }
 
 install_files() {
-    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf
+    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc
     do
         echo "installing $target..."
         rm -rf ~/$target

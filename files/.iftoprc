@@ -1,0 +1,13 @@
+# interface: eth0
+dns-resolution: no
+port-resolution: no
+show-bars: yes
+promiscuous: no
+port-display: on
+link-local: no
+hide-source: no
+hide-destination: no
+use-bytes: yes
+sort: 10s
+line-display: two-line
+show-totals: yes
