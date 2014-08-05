@@ -1215,7 +1215,7 @@ The JBD is the [[http://kerneltrap.org/node/6741][journaling block device]] that
 ** system utility
 file:./images/linux-analysis-and-tools.jpg
 
-*** /SYS DEV/
+** CPU utility
 *** mpstat(DONE)
 mpstat - Report processors related statistics.
 
@@ -1253,6 +1253,60 @@ Linux 2.6.9_5-10-0-1 (tc-cm-et18.tc.baidu.com)  2011年09月20日
    - %idle 在没有io操作时候的cpu idle时间比率
    - intr/s 每秒CPU中断次数(包括硬中断和软终端)
 
+*** taskset(DONE)
+taskset - retrieve or set a process's CPU affinity  可以用来获取和修改进程的CPU亲和性
+   - taskset -c 1,2,3 cmd (指定在CPU #1,#2,#3上运行cmd)
+   - taskset -cp 1,2,3 pid (指定在CPU #1,#2,#3上运行进程pid)
+   - taskset -c mask cmd|pid 通过mask格式进行设置，比如0x3就是#0和#1亲和性
+如果不指定-c的话那么就是获取亲和性。程序上的话可以使用sched_setaffinity/sched_getaffinity调用来修改和获取某个进程和CPU的亲和性。
+
+#+BEGIN_EXAMPLE
+       taskset  is used to set or retrieve the CPU affinity of a running pro-
+       cess given its PID or to launch a new COMMAND with a given CPU  affin-
+       ity.  CPU affinity is a scheduler property that "bonds" a process to a
+       given set of CPUs on the system.  The Linux scheduler will  honor  the
+       given  CPU  affinity  and  the process will not run on any other CPUs.
+       Note that the Linux scheduler also supports natural CPU affinity:  the
+       scheduler  attempts to keep processes on the same CPU as long as prac-
+       tical for performance reasons.   Therefore,  forcing  a  specific  CPU
+       affinity is useful only in certain applications.
+#+END_EXAMPLE
+
+*** ps(process snapshot)(DONE)
+进程状态有下面几种：
+   - D    uninterruptible sleep (usually IO)
+   - R    running or runnable (on run queue)
+   - S    interruptible sleep (waiting for an event to complete)
+   - T    stopped, either by a job control signal or because it is being traced.
+   - W    paging (not valid since the 2.6.xx kernel)
+   - X    dead (should never be seen)
+   - Z    defunct ("zombie") process, terminated but not reaped by its parent.
+   - <    high-priority (not nice to other users)
+   - N    low-priority (nice to other users)
+   - L    has pages locked into memory (for real-time and custom IO)
+   - s    is a session leader
+   - l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
+   - +    is in the foreground process group.
+
+-----
+
+在使用ubuntu的apt-get时候，可能会出现一些异常的状况，我们直接终止了apt-get。但是这个时候apt-get软件本身出于一个不正常的状态，
+导致之后不能够启动apt-get。如果观察进程的话会出现下面一些可疑的进程
+#+BEGIN_EXAMPLE
+dp@dp1:~$ ps aux | grep "apt"
+root      3587  0.0  0.0  36148 22800 ?        Ds   Oct08   0:00 /usr/bin/dpkg --status-fd 50 --unpack --auto-deconfigure /var/cache/apt/archives/sgml-data_2.0.4_all.deb
+root      9579  0.0  0.0  35992 22744 ?        Ds   Oct19   0:00 /usr/bin/dpkg --status-fd 50 --unpack --auto-deconfigure /var/cache/apt/archives/iftop_0.17-16_amd64.deb
+root     25957  0.0  0.0  36120 22796 ?        Ds   Nov05   0:00 /usr/bin/dpkg --status-fd 50 --unpack --auto-deconfigure /var/cache/apt/archives/iftop_0.17-16_amd64.deb /var/cache/apt/archives/iotop_0.4-1_all.deb
+dp       30586  0.0  0.0   7628  1020 pts/2    S+   08:59   0:00 grep --color=auto apt
+#+END_EXAMPLE
+这些进程的父进程都是init进程，并且状态是uninterruptible sleep，给kill -9也没有办法终止，唯一的办法只能reboot机器来解决这个问题。关于这个问题可以看stackoverflow上面的解答 How to stop 'uninterruptible' process on Linux? - Stack Overflow http://stackoverflow.com/questions/767551/how-to-stop-uninterruptible-process-on-linux
+   - Simple answer: you cannot. Longer answer: the uninterruptable sleep means the process will not be woken up by signals. It can be only woken up by what it's waiting for. When I get such situations eg. with CD-ROM, I usually reset the computer by using suspend-to-disk and resuming.
+   - The D state basically means that the process is waiting for disk I/O, or other block I/O that can't be interrupted. Sometimes this means the kernel or device is feverishly trying to read a bad block (especially from an optical disk). Sometimes it means there's something else. The process cannot be killed until it gets out of the D state. Find out what it is waiting for and fix that. The easy way is to reboot. Sometimes removing the disk in question helps, but that can be rather dangerous: unfixable catastrophic hardware failure if you don't know what you're doing (read: smoke coming out).
+
+*** top(DONE)
+*** htop(DONE)
+
+** VM utility
 *** vmstat(DONE)
 vmstat - Report virtual memory statistics
 
@@ -1369,47 +1423,33 @@ Total:     9212084    4519868    4692216
    - Swap:used 交换分区使用大小
    - Swap:free 可以使用的分区大小
 
-*** taskset(DONE)
-taskset - retrieve or set a process's CPU affinity  可以用来获取和修改进程的CPU亲和性
-   - taskset -c 1,2,3 cmd (指定在CPU #1,#2,#3上运行cmd)
-   - taskset -cp 1,2,3 pid (指定在CPU #1,#2,#3上运行进程pid)
-   - taskset -c mask cmd|pid 通过mask格式进行设置，比如0x3就是#0和#1亲和性
-如果不指定-c的话那么就是获取亲和性。程序上的话可以使用sched_setaffinity/sched_getaffinity调用来修改和获取某个进程和CPU的亲和性。
+*** numactl(DONE)
+numactl - Control NUMA policy for processes or shared memory
 
+see [[file:./numa-an-overview.org][NUMA: An Overview]]
+
+numactl [--hardware] 可以查看NUMA硬件支持情况
 #+BEGIN_EXAMPLE
-       taskset  is used to set or retrieve the CPU affinity of a running pro-
-       cess given its PID or to launch a new COMMAND with a given CPU  affin-
-       ity.  CPU affinity is a scheduler property that "bonds" a process to a
-       given set of CPUs on the system.  The Linux scheduler will  honor  the
-       given  CPU  affinity  and  the process will not run on any other CPUs.
-       Note that the Linux scheduler also supports natural CPU affinity:  the
-       scheduler  attempts to keep processes on the same CPU as long as prac-
-       tical for performance reasons.   Therefore,  forcing  a  specific  CPU
-       affinity is useful only in certain applications.
+➜  notes git:(master) ✗ numactl --hardware
+available: 1 nodes (0)
+node 0 cpus: 0 1 2 3 4 5 6 7
+node 0 size: 8067 MB
+node 0 free: 820 MB
+node distances:
+node   0
+  0:  10
 #+END_EXAMPLE
 
-*** lsof(TODO)
-*** hdparm(TODO)
-hdparm - get/set hard disk parameters
-
-下面是使用的用法
+numactl [--show] 可以查看当前memory policy情况
 #+BEGIN_EXAMPLE
-/sbin/hdparm [ flags ] [device] ..
+➜  notes git:(master) ✗ numactl --show
+policy: default
+preferred node: current
+physcpubind: 0 1 2 3 4 5 6 7
+cpubind: 0
+nodebind: 0
+membind: 0
 #+END_EXAMPLE
-
-对于device的话可以通过mount来查看
-#+BEGIN_EXAMPLE
-[dirlt@localhost.localdomain]$ mount
-/dev/mapper/VolGroup00-LogVol00 on / type ext3 (rw)
-proc on /proc type proc (rw)
-sysfs on /sys type sysfs (rw)
-devpts on /dev/pts type devpts (rw,gid=5,mode=620)
-/dev/sda1 on /boot type ext3 (rw)
-tmpfs on /dev/shm type tmpfs (rw)
-none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
-sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw)
-#+END_EXAMPLE
-我们关注自己读写目录，比如通常在/home下面，这里就是使用的device就是/dev/mapper/VolGroup00-LogVol00
 
 *** pmap(DONE)
 pmap - report memory map of a process 可以查看进程内存布局
@@ -1457,47 +1497,36 @@ ffffffffff600000       0       0       0 r-x--    [ anon ]
 total kB          653800  172416  151924
 #+END_EXAMPLE
 
-*** strace(DONE)
-strace - trace system calls and signals 可以用来追踪系统调用和信号
+*** vmtouch(DONE)
+https://github.com/hoytech/vmtouch note(dirlt)：可以用来warmup数据
 
-打印系统调用的方式非常容易读，包括信号处理以及其他线程触发系统调用
+里面有一些系统调用比较值得注意和学习：
+   - mlock/munlock 能够将一部分的内存lock住而不会切换到swap分区上面。
+   - mlockall/munlockall 将进程所有的内存都lock住而不会切换到swap分区上面。
+   - posix_fadvise 针对fd做一些访问模式的预测
+
+** IO utility
+*** hdparm(TODO)
+hdparm - get/set hard disk parameters
+
+下面是使用的用法
 #+BEGIN_EXAMPLE
-open("/dev/null", O_RDONLY) = 3
-open("/foo/bar", O_RDONLY) = -1 ENOENT (No such file or directory)
-
-sigsuspend([] <unfinished ...>
---- SIGINT (Interrupt) ---
-+++ killed by SIGINT +++
-
-[pid 28772] select(4, [3], NULL, NULL, NULL <unfinished ...>
-[pid 28779] clock_gettime(CLOCK_REALTIME, {1130322148, 939977000}) = 0
-[pid 28772] <... select resumed> )      = 1 (in [3])
+/sbin/hdparm [ flags ] [device] ..
 #+END_EXAMPLE
 
-选项:
-   - -c *只是* 在运行结束之后打印汇总信息
-   - -C 在运行结束之后打印汇总信息
-   - -d debug mode
-   - -h help summary
-   - -i 每次syscall打印instruction pointer
-   - -r 打印两次syscall之间时间差
-   - -t/tt/ttt 打印每次调用syscall时间
-   - -T 打印每次调用syscall耗时
-   - -x/xx 非ASCII字符打印成为hex
-   - -e trace=[syscall-list] | [qualifier] | all 只追踪部分syscall
-     - file 和文件名相关
-     - process 和进程相关
-     - network 和网络相关
-     - signal 和信号相关
-     - ipc 和ipc相关
-     - desc 和文件描述符相关
-   - -e read=[fd-list]
-   - -e write=[fd-list]
-   - -o filename 输出文件
-   - -p pid 追踪当前运行进程
-   - -s strsize[= 32] 打印的字符串最大长度
-   - -S [time|calls|name] 汇总信息按照某个字段排序
-会比较有用的选项是 -C -ttt -T -r
+对于device的话可以通过mount来查看
+#+BEGIN_EXAMPLE
+[dirlt@localhost.localdomain]$ mount
+/dev/mapper/VolGroup00-LogVol00 on / type ext3 (rw)
+proc on /proc type proc (rw)
+sysfs on /sys type sysfs (rw)
+devpts on /dev/pts type devpts (rw,gid=5,mode=620)
+/dev/sda1 on /boot type ext3 (rw)
+tmpfs on /dev/shm type tmpfs (rw)
+none on /proc/sys/fs/binfmt_misc type binfmt_misc (rw)
+sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw)
+#+END_EXAMPLE
+我们关注自己读写目录，比如通常在/home下面，这里就是使用的device就是/dev/mapper/VolGroup00-LogVol00
 
 *** iostat(DONE)
 iostat - Report Central Processing Unit (CPU) statistics and input/output statistics for devices and partitions.
@@ -1580,17 +1609,6 @@ sda               0.00     0.00    0.00    0.00     0.00     0.00     0.00     0
    - svctm todo(dirlt):don't use it.
    - %util CPU在处理IO请求时的百分比.可以认为是IO设备使用率.
 
-*** vmtouch(DONE)
-https://github.com/hoytech/vmtouch note(dirlt)：可以用来warmup数据
-
-里面有一些系统调用比较值得注意和学习：
-   - mlock/munlock 能够将一部分的内存lock住而不会切换到swap分区上面。
-   - mlockall/munlockall 将进程所有的内存都lock住而不会切换到swap分区上面。
-   - posix_fadvise 针对fd做一些访问模式的预测
-
-*** latencytop(TODO)
-todo(dirlt): https://latencytop.org/
-
 *** iotop(DONE)
 iotop - simple top-like I/O monitor 可以用来观察单独进程的IO使用状况
 
@@ -1608,201 +1626,67 @@ iotop displays columns for the I/O bandwidth read and written by each process/th
 
 对于交互式输出来说可以动态修改参数 Use the left and right arrows to change the sorting, r to reverse the sorting order, o to toggle the --only option, p to toggle the --processes option, a  to  toggle  the  --accumulated option, q to quit or i to change the priority of a thread or a process' thread(s). Any other key will force a refresh.
 
-*** dstat(DONE)(*)
-dstat - versatile tool for generating system resource statistics
+** NET utility
+*** ifconfig(DONE)
+ifconfig - configure a network interface
 
-   - todo(dirlt): https://github.com/dagwieers/dstat
-   - http://weibo.com/1840408525/AdGkO3uEL dstat -lamps
-
-dstat [-afv] [options..] [delay [count]].
-
-选项：
-   - -c/--cpu/-C 0,3,total 查看CPU状态可以指定某个CPU
-   - -d/--disk/-D hda,total 查看disk状态可以指定某个disk
-   - -g/--page 查看page状态(page in/out)
-   - -i/--int/-I 5,10 查看中断情况以及某个中断号情况
-   - -l/--load 最近1,5,15分钟的负载
-   - -m/--mem 内存状况(used, buffers, cache, free)
-   - -n/--net/-N eth0,total 网络状况(send, receive)可以指定某个网口
-   - -p/--proc 进程状况
-   - -r/--io IO请求次数
-   - -s/--swap/-S swap1,total swap状况(used, free)可以指定某个分区
-   - -t/--time/-T/--epoch 时间
-   - -y/--sys 系统状况(中断和cs)
-   - -a/--all equals -cdngy (default)
-   - -f/--full 可以将-C,-D,-I,-N,-S全部展开
-   - -v/--vmstat equals -pmgdsc -D total
-   - --output file 可以将结果保存为CSV格式
-   - --profile 退出打印dstat本身的profile信息
-会比较有用的选项搭配是 -cdgmnpsy
-
-还有一些可选项来查看其他子系统情况
-   0. --aio  enable aio stats (asynchronous I/O)
-   0. --fs   enable filesystem stats (open files, inodes)
-   0. --ipc  enable ipc stats (message queue, semaphores, shared memory)
-   0. --lock enable file lock stats (posix, flock, read, write)
-   0. --raw  enable raw stats (raw sockets)
-   0. --socket enable socket stats (total, tcp, udp, raw, ip-fragments)
-   0. --tcp  enable tcp stats (listen, established, syn, time_wait, close)
-   0. --udp  enable udp stats (listen, active)
-   0. --unix enable unix stats (datagram, stream, listen, active)
-   0. --vm   enable vm stats (hard pagefaults, soft pagefaults, allocated, free)
-
-另外dstat还支持一系列插件来查询其他系统状态，具体可以man dstat.
-
-*** slurm(TODO)
-Simple Linux Utility for Resource Management https://computing.llnl.gov/linux/slurm/
-
-*** sar(DONE)
-sar - Collect, report, or save system activity information.
-
-选项：
-   - -A 相当于指定 -bBcdqrRuvwWy -I SUM  -n FULL -P ALL.
-   - -b 这个选项只是针对2.5以下的内核.统计磁盘的IO运行情况
-      - tps // 对磁盘总共有多少个请求.
-      - rtps // 对磁盘总共有多少个读请求.
-      - wtps // 对磁盘总共有多少个写请求.
-      - bread/s // 磁盘每秒多少个read block.(512bytes/block)
-      - bwrtn/s // 磁盘每秒多少个write block.(512bytes/block)
-   - -B 内存页面情况
-      - pgpgin/s // page in from disk
-      - pgpgout/s // page out to disk.
-      - fault/s // (major+mintor) page fault
-      - majflt/s // major page fault
-   - -c 进程创建情况
-      - proc/s 每秒创建进程个数
-   - -d 块设备运行情况.打印出的dev m-n(major-mior device number)
-      - tps 对这个设备总共有多少个请求.如果多个逻辑请求的话可能会结合成为一个请求.
-      - rd_sec/s 每秒读取多少个sector.一个sector 512bytes.
-      - wr_sec/s 每秒写入多少个sector.一个sector 512bytes.
-   - -e hh:mm:ss 设置汇报的终止时间
-   - -f filename 从文件中读入
-   - -h -H 从文件读入时转换称为分析方便的格式
-   - -i interval 从文件中读入的话选取interval seconds的间隔的记录
-   - -I <irq> | SUM | ALL | XALL 中断统计
-      - <irq> interrupt number
-      - SUM 所有中断次数之和/s
-      - ALL 前16个中断次数/s
-      - XALL 所有中断次数/s.包括APIC
-   - -n DEV | EDEV | SOCK | FULL 网络统计数据
-      - DEV 所有网络接口正常数据
-      - EDEV 所有网络接口异常数据
-      - SOCK socket数据统计
-      - FULL DEV + EDEV + SOCK
-      - 关于网络接口显示数据在后面会仔细讨论
-   - -o filename 可以将sar输出重定位
-   - -P <cpu> | ALL 处理器统计数据
-   - -q 处理器请求队列长度以及平均负载
-      - runq-sz 处理器上有多少个进程在等待执行
-      - plist-sz 当前有多少个进程运行
-      - ldavg-1 过去1分钟系统负载
-      - ldavg-5 过去5分钟系统负载
-      - ldavg-15 过去15分钟系统负载
-   - -r 内存和swap空间利用率数据
-      - kbmemfree 多少free内存(KB)
-      - kbmemused 多少使用内存(KB)(不包括kernel使用)
-      - %memused 使用内存率
-      - kbbuffers kenel内部使用buffer(KB)
-      - kbcached kernel内部使用cache data(KB)
-      - kbswpfree swap可用大小(KB)
-      - kbswpused swap使用大小(KB)
-      - %swpused swap使用比率
-      - kbswpcad cached swap内存大小(KB)(曾经被换出现在换入，但是依然占用swap分区)
-   - -R 内存使用数据
-      - frmpg/s free出来的page数目/s
-      - bufpg/s 当做buffer使用的page数目/s
-      - campg/s 当做cache使用的page数目/s
-   - -s hh:mm:ss 设置汇报起始时间
-   - -t 从文件载入时候使用使用原有locale time表示而不是当前locale
-   - -u CPU使用情况
-      - %user 用户态CPU占用率
-      - %nice 用户态使用nice的CPU占用率
-      - %system 内核态CPU占用率
-      - %iowait CPU因为等待io的idle比率
-      - %idle CPU idle比率
-   - -v inode,file以及kernel tables情况
-      - dentunusd 在directory cache里面没有使用的cache entries个数
-      - file-sz 使用文件句柄数
-      - inode-sz 使用inode句柄数
-      - super-sz 内存使用的超级块句柄数
-      - %super-sz 当前超级块句柄数使用比率
-      - dquot-sz 磁盘配额分配的entries个数
-      - %dquot-sz 磁盘配额分配的entries比率
-      - rtsig-sz 排队的RT signals数量
-      - %rtsig-sz 排队的RT signals比率
-   - -V 版本号
-   - -w 系统切换情况
-      - cswch/s 上下文切换次数/s
-   - -W swap统计数据
-      - pswpin/s 每秒换入swap pages
-      - pswpout/s 每秒换出swap pages
-   - -x pid | SELF | ALL  进程统计数据
-      - minflt/s minor faults/s
-      - majflt/s major faults/s
-      - %user 用户态CPU利用率
-      - %system 内核态CPU利用率
-      - nswap/s 每秒换出pages
-      - CPU 处理器编号
-   - -X pid | SELF | ALL 统计子进程数据
-      - cminflt/s
-      - cmajflt/s
-      - %cuser
-      - %csystem
-      - cnswaps/s
-   - -y TTY设备情况
-      - rcvin/s 每个serial line接收中断数目/s
-      - xmtin/s 每个serial line发出中断数目/s
-
------
-
-关于网络接口数据显示的话，下面是使用DEV可以查看的字段
-   - IFACE network interface
-   - rxpck/s rcv packets/s
-   - txpck/s snd packets/s
-   - rxbyt/s rcv bytes/s
-   - txbyt/s snd bytes/s
-   - rxcmp/s rcv compressed packets/s
-   - txcmp/s snd compressed packets/s
-   - rxmcst/s 接收多播packets/s
-下面是使用EDEV可以查看的字段
-   - rxerr/s 接收bad packets/s
-   - txerr/s 发送bad packets/s
-   - coll/s 每秒发送packets出现collisions数目
-   - rxdrop/s 每秒因为linux缺少buffer而丢弃packets
-   - txcarr/s 每秒发送packets出现carrier-errors数目
-   - rxfram/s 每秒接收packets出现frame alignment error数目
-   - rxfifo/s 每秒接收packets出现FIFO overrun error数目
-   - txfifo/s 每秒发送packets出现FIFO overrun error数目
-下面是使用SOCK可以查看的字段
-   - totsock 总共使用socket数目
-   - tcpsck 正在使用tcp socket数目
-   - udpsck 正在使用udp socket数目
-   - rawsck 正在使用RAW socket数目
-   - ip-frag 当前使用IP fragments数目
-
------
-
-选项非常多，但是很多选项没有必要打开。对于网络程序来说的话，通常我们使用到的选项会包括
-   - -n DEV 网卡流量
-   - -n EDEV 网卡丢包以及kerner buffer问题
-   - -n SOCK 多少连接
-   - -r 内存使用。不常用。很多时候只关心大概使用多少内存，是否持续增长)
-   - -u CPU使用 -P ALL查看所有CPU
-   - -w 上下文切换。相对来说也不常用。
-通常我们使用的命令就应该是sar -n DEV -P ALL -u 1 0(1表示1秒刷新，0表示持续显示)
+/sbin/ifconfig可以用来配置和查看network interface.不过从文档上看的话，更加推荐使用/sbin/ip这个工具
 #+BEGIN_EXAMPLE
-01时56分18秒       CPU     %user     %nice   %system   %iowait     %idle
-01时56分19秒       all      7.52      0.00     78.95      0.25     13.28
-01时56分19秒         0      7.00      0.00     81.00      0.00     12.00
-01时56分19秒         1      7.92      0.00     79.21      0.00     12.87
-01时56分19秒         2      9.00      0.00     78.00      1.00     12.00
-01时56分19秒         3      7.07      0.00     77.78      0.00     15.15
-
-01时56分18秒     IFACE   rxpck/s   txpck/s   rxbyt/s   txbyt/s   rxcmp/s   txcmp/s  rxmcst/s
-01时56分19秒        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-01时56分19秒      eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
-01时56分19秒      eth1 159997.00 320006.00 175029796.00 186239160.00      0.00      0.00      0.00
+NOTE
+       This  program is obsolete!  For replacement check ip addr and ip link.
+       For statistics use ip -s link.
 #+END_EXAMPLE
+
+这里我们不打算学习如何配置network interface只是想查看一下网卡的信息。使用/sbin/ifconfig -a可以查看所有的网卡信息，即使这个网卡关闭。
+#+BEGIN_EXAMPLE
+[zhangyan04@tc-hpc-dev.tc.baidu.com]$ /sbin/ifconfig -a
+eth0      Link encap:Ethernet  HWaddr 00:1D:09:22:C9:A9
+          BROADCAST MULTICAST  MTU:1500  Metric:1
+          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
+          Interrupt:16 Memory:f4000000-f4012800
+
+eth1      Link encap:Ethernet  HWaddr 00:1D:09:22:C9:A7
+          inet addr:10.26.140.39  Bcast:10.26.140.255  Mask:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:90671796 errors:0 dropped:14456 overruns:0 frame:0
+          TX packets:143541932 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:71169282564 (66.2 GiB)  TX bytes:74096812979 (69.0 GiB)
+          Interrupt:16 Memory:f8000000-f8012800
+
+lo        Link encap:Local Loopback
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:231762640 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:231762640 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0
+          RX bytes:98089257363 (91.3 GiB)  TX bytes:98089257363 (91.3 GiB)
+#+END_EXAMPLE
+我们这里稍微仔细看看eht1的网卡信息
+   - encap 网卡连接网络类型Ethernet(以太网)
+   - HWaddr 网卡物理地址
+   - inet_addr 绑定IP地址
+   - Bcast 这个IP对应的广播地址
+   - Mask 子网掩码
+   - UP(打开) BROADCAST(广播) MULTICAST(多播) RUNNING(运行)
+   - MTU (Maximum Transport Unit)最大传输单元，以太网一般就是1500字节
+   - Metric ???
+   - RX packets 接受packets数目
+   - TX packets 传输packets数目
+   - errors 错误packets数目
+   - dropped 丢弃packets数目
+   - overruns frame carrier ???
+   - collisions ???
+   - txqueuelen 发送packets的queue长度上限.0应该是无限
+   - RX bytes 接收字节
+   - TX bytes 发送字节
+
+使用ifconfig能够创建虚拟网卡绑定IP
+   - sudo ifconfig <name> <ip>
+   - sudo ifconfig <name> down # 销毁虚拟网卡
 
 *** netstat(DONE)
 netstat - Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
@@ -1991,7 +1875,29 @@ tcp        0   1024 tc-hpc-dev.tc.baidu.c:19870 tc-com-test00.tc.baid:60745 ESTA
    - User
    - PID/Program name
 
-*** tcpdump(TODO)
+*** ss(DONE)
+ss - another utility to investigate sockets 可以用来观察系统所有socket情况，提供的信息和netstat类似
+
+ss [options] [ FILTER ]
+
+选项：
+   - -h/--help
+   - -n/--numeric Do not try to resolve service names.
+   - -r/--resolve Try to resolve numeric address/ports.
+   - -a/--all Display both listening and non-listening (for TCP this means established connections) sockets.
+   - -l/--listening Display only listening sockets (these are omitted by default).
+   - -o/--options Show timer information.
+   - -e/--extended Show detailed socket information
+   - -m/--memory Show socket memory usage.
+   - -p/--processes Show process using socket.
+   - -i/--info Show internal TCP information.
+   - -s/--summary Print summary statistics.
+   - -4/--ipv4
+   - -6/--ipv6
+   - -t/--tcp Display TCP sockets.
+   - -f/--family unix, inet, inet6, link, netlink
+选项里面提供了许多可以观察到某个socket的详细信息以及过滤功能. 相比netstat来说ss -s可以很容易地获取概括信息
+
 *** iftop(TODO)
 http://www.ex-parrot.com/~pdw/iftop/
 
@@ -2007,6 +1913,341 @@ todo(dirlt):
 *** jnettop(TODO)
 todo(dirlt):
 
+*** netperf(TODO)
+http://www.netperf.org/netperf/
+
+*** iperf(TODO)
+https://iperf.fr/
+
+*** qperf(TODO)
+http://blog.yufeng.info/archives/2234
+
+*** tcptrace(TODO)
+http://www.tcptrace.org/
+
+*** tcpdump(TODO)
+tcpdump - dump traffic on a network
+
+*** tc(TODO)
+traffic control http://www.lartc.org/
+
+** general utility
+*** sar(DONE)
+sar - Collect, report, or save system activity information.
+
+选项：
+   - -A 相当于指定 -bBcdqrRuvwWy -I SUM  -n FULL -P ALL.
+   - -b 这个选项只是针对2.5以下的内核.统计磁盘的IO运行情况
+      - tps // 对磁盘总共有多少个请求.
+      - rtps // 对磁盘总共有多少个读请求.
+      - wtps // 对磁盘总共有多少个写请求.
+      - bread/s // 磁盘每秒多少个read block.(512bytes/block)
+      - bwrtn/s // 磁盘每秒多少个write block.(512bytes/block)
+   - -B 内存页面情况
+      - pgpgin/s // page in from disk
+      - pgpgout/s // page out to disk.
+      - fault/s // (major+mintor) page fault
+      - majflt/s // major page fault
+   - -c 进程创建情况
+      - proc/s 每秒创建进程个数
+   - -d 块设备运行情况.打印出的dev m-n(major-mior device number)
+      - tps 对这个设备总共有多少个请求.如果多个逻辑请求的话可能会结合成为一个请求.
+      - rd_sec/s 每秒读取多少个sector.一个sector 512bytes.
+      - wr_sec/s 每秒写入多少个sector.一个sector 512bytes.
+   - -e hh:mm:ss 设置汇报的终止时间
+   - -f filename 从文件中读入
+   - -h -H 从文件读入时转换称为分析方便的格式
+   - -i interval 从文件中读入的话选取interval seconds的间隔的记录
+   - -I <irq> | SUM | ALL | XALL 中断统计
+      - <irq> interrupt number
+      - SUM 所有中断次数之和/s
+      - ALL 前16个中断次数/s
+      - XALL 所有中断次数/s.包括APIC
+   - -n DEV | EDEV | SOCK | FULL 网络统计数据
+      - DEV 所有网络接口正常数据
+      - EDEV 所有网络接口异常数据
+      - SOCK socket数据统计
+      - FULL DEV + EDEV + SOCK
+      - 关于网络接口显示数据在后面会仔细讨论
+   - -o filename 可以将sar输出重定位
+   - -P <cpu> | ALL 处理器统计数据
+   - -q 处理器请求队列长度以及平均负载
+      - runq-sz 处理器上有多少个进程在等待执行
+      - plist-sz 当前有多少个进程运行
+      - ldavg-1 过去1分钟系统负载
+      - ldavg-5 过去5分钟系统负载
+      - ldavg-15 过去15分钟系统负载
+   - -r 内存和swap空间利用率数据
+      - kbmemfree 多少free内存(KB)
+      - kbmemused 多少使用内存(KB)(不包括kernel使用)
+      - %memused 使用内存率
+      - kbbuffers kenel内部使用buffer(KB)
+      - kbcached kernel内部使用cache data(KB)
+      - kbswpfree swap可用大小(KB)
+      - kbswpused swap使用大小(KB)
+      - %swpused swap使用比率
+      - kbswpcad cached swap内存大小(KB)(曾经被换出现在换入，但是依然占用swap分区)
+   - -R 内存使用数据
+      - frmpg/s free出来的page数目/s
+      - bufpg/s 当做buffer使用的page数目/s
+      - campg/s 当做cache使用的page数目/s
+   - -s hh:mm:ss 设置汇报起始时间
+   - -t 从文件载入时候使用使用原有locale time表示而不是当前locale
+   - -u CPU使用情况
+      - %user 用户态CPU占用率
+      - %nice 用户态使用nice的CPU占用率
+      - %system 内核态CPU占用率
+      - %iowait CPU因为等待io的idle比率
+      - %idle CPU idle比率
+   - -v inode,file以及kernel tables情况
+      - dentunusd 在directory cache里面没有使用的cache entries个数
+      - file-sz 使用文件句柄数
+      - inode-sz 使用inode句柄数
+      - super-sz 内存使用的超级块句柄数
+      - %super-sz 当前超级块句柄数使用比率
+      - dquot-sz 磁盘配额分配的entries个数
+      - %dquot-sz 磁盘配额分配的entries比率
+      - rtsig-sz 排队的RT signals数量
+      - %rtsig-sz 排队的RT signals比率
+   - -V 版本号
+   - -w 系统切换情况
+      - cswch/s 上下文切换次数/s
+   - -W swap统计数据
+      - pswpin/s 每秒换入swap pages
+      - pswpout/s 每秒换出swap pages
+   - -x pid | SELF | ALL  进程统计数据
+      - minflt/s minor faults/s
+      - majflt/s major faults/s
+      - %user 用户态CPU利用率
+      - %system 内核态CPU利用率
+      - nswap/s 每秒换出pages
+      - CPU 处理器编号
+   - -X pid | SELF | ALL 统计子进程数据
+      - cminflt/s
+      - cmajflt/s
+      - %cuser
+      - %csystem
+      - cnswaps/s
+   - -y TTY设备情况
+      - rcvin/s 每个serial line接收中断数目/s
+      - xmtin/s 每个serial line发出中断数目/s
+
+-----
+
+关于网络接口数据显示的话，下面是使用DEV可以查看的字段
+   - IFACE network interface
+   - rxpck/s rcv packets/s
+   - txpck/s snd packets/s
+   - rxbyt/s rcv bytes/s
+   - txbyt/s snd bytes/s
+   - rxcmp/s rcv compressed packets/s
+   - txcmp/s snd compressed packets/s
+   - rxmcst/s 接收多播packets/s
+下面是使用EDEV可以查看的字段
+   - rxerr/s 接收bad packets/s
+   - txerr/s 发送bad packets/s
+   - coll/s 每秒发送packets出现collisions数目
+   - rxdrop/s 每秒因为linux缺少buffer而丢弃packets
+   - txcarr/s 每秒发送packets出现carrier-errors数目
+   - rxfram/s 每秒接收packets出现frame alignment error数目
+   - rxfifo/s 每秒接收packets出现FIFO overrun error数目
+   - txfifo/s 每秒发送packets出现FIFO overrun error数目
+下面是使用SOCK可以查看的字段
+   - totsock 总共使用socket数目
+   - tcpsck 正在使用tcp socket数目
+   - udpsck 正在使用udp socket数目
+   - rawsck 正在使用RAW socket数目
+   - ip-frag 当前使用IP fragments数目
+
+-----
+
+选项非常多，但是很多选项没有必要打开。对于网络程序来说的话，通常我们使用到的选项会包括
+   - -n DEV 网卡流量
+   - -n EDEV 网卡丢包以及kerner buffer问题
+   - -n SOCK 多少连接
+   - -r 内存使用。不常用。很多时候只关心大概使用多少内存，是否持续增长)
+   - -u CPU使用 -P ALL查看所有CPU
+   - -w 上下文切换。相对来说也不常用。
+通常我们使用的命令就应该是sar -n DEV -P ALL -u 1 0(1表示1秒刷新，0表示持续显示)
+#+BEGIN_EXAMPLE
+01时56分18秒       CPU     %user     %nice   %system   %iowait     %idle
+01时56分19秒       all      7.52      0.00     78.95      0.25     13.28
+01时56分19秒         0      7.00      0.00     81.00      0.00     12.00
+01时56分19秒         1      7.92      0.00     79.21      0.00     12.87
+01时56分19秒         2      9.00      0.00     78.00      1.00     12.00
+01时56分19秒         3      7.07      0.00     77.78      0.00     15.15
+
+01时56分18秒     IFACE   rxpck/s   txpck/s   rxbyt/s   txbyt/s   rxcmp/s   txcmp/s  rxmcst/s
+01时56分19秒        lo      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+01时56分19秒      eth0      0.00      0.00      0.00      0.00      0.00      0.00      0.00
+01时56分19秒      eth1 159997.00 320006.00 175029796.00 186239160.00      0.00      0.00      0.00
+#+END_EXAMPLE
+
+*** dstat(DONE)(*)
+dstat - versatile tool for generating system resource statistics
+
+   - todo(dirlt): https://github.com/dagwieers/dstat
+   - http://weibo.com/1840408525/AdGkO3uEL dstat -lamps
+
+dstat [-afv] [options..] [delay [count]].
+
+选项：
+   - -c/--cpu/-C 0,3,total 查看CPU状态可以指定某个CPU
+   - -d/--disk/-D hda,total 查看disk状态可以指定某个disk
+   - -g/--page 查看page状态(page in/out)
+   - -i/--int/-I 5,10 查看中断情况以及某个中断号情况
+   - -l/--load 最近1,5,15分钟的负载
+   - -m/--mem 内存状况(used, buffers, cache, free)
+   - -n/--net/-N eth0,total 网络状况(send, receive)可以指定某个网口
+   - -p/--proc 进程状况
+   - -r/--io IO请求次数
+   - -s/--swap/-S swap1,total swap状况(used, free)可以指定某个分区
+   - -t/--time/-T/--epoch 时间
+   - -y/--sys 系统状况(中断和cs)
+   - -a/--all equals -cdngy (default)
+   - -f/--full 可以将-C,-D,-I,-N,-S全部展开
+   - -v/--vmstat equals -pmgdsc -D total
+   - --output file 可以将结果保存为CSV格式
+   - --profile 退出打印dstat本身的profile信息
+会比较有用的选项搭配是 -cdgmnpsy
+
+还有一些可选项来查看其他子系统情况
+   0. --aio  enable aio stats (asynchronous I/O)
+   0. --fs   enable filesystem stats (open files, inodes)
+   0. --ipc  enable ipc stats (message queue, semaphores, shared memory)
+   0. --lock enable file lock stats (posix, flock, read, write)
+   0. --raw  enable raw stats (raw sockets)
+   0. --socket enable socket stats (total, tcp, udp, raw, ip-fragments)
+   0. --tcp  enable tcp stats (listen, established, syn, time_wait, close)
+   0. --udp  enable udp stats (listen, active)
+   0. --unix enable unix stats (datagram, stream, listen, active)
+   0. --vm   enable vm stats (hard pagefaults, soft pagefaults, allocated, free)
+
+另外dstat还支持一系列插件来查询其他系统状态，具体可以man dstat.
+
+*** lsof(TODO)
+*** strace(DONE)
+strace - trace system calls and signals 可以用来追踪系统调用和信号
+
+打印系统调用的方式非常容易读，包括信号处理以及其他线程触发系统调用
+#+BEGIN_EXAMPLE
+open("/dev/null", O_RDONLY) = 3
+open("/foo/bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+
+sigsuspend([] <unfinished ...>
+--- SIGINT (Interrupt) ---
++++ killed by SIGINT +++
+
+[pid 28772] select(4, [3], NULL, NULL, NULL <unfinished ...>
+[pid 28779] clock_gettime(CLOCK_REALTIME, {1130322148, 939977000}) = 0
+[pid 28772] <... select resumed> )      = 1 (in [3])
+#+END_EXAMPLE
+
+选项:
+   - -c *只是* 在运行结束之后打印汇总信息
+   - -C 在运行结束之后打印汇总信息
+   - -d debug mode
+   - -h help summary
+   - -i 每次syscall打印instruction pointer
+   - -r 打印两次syscall之间时间差
+   - -t/tt/ttt 打印每次调用syscall时间
+   - -T 打印每次调用syscall耗时
+   - -x/xx 非ASCII字符打印成为hex
+   - -e trace=[syscall-list] | [qualifier] | all 只追踪部分syscall
+     - file 和文件名相关
+     - process 和进程相关
+     - network 和网络相关
+     - signal 和信号相关
+     - ipc 和ipc相关
+     - desc 和文件描述符相关
+   - -e read=[fd-list]
+   - -e write=[fd-list]
+   - -o filename 输出文件
+   - -p pid 追踪当前运行进程
+   - -s strsize[= 32] 打印的字符串最大长度
+   - -S [time|calls|name] 汇总信息按照某个字段排序
+会比较有用的选项是 -C -ttt -T -r
+
+*** latencytop(DONE)
+https://latencytop.org/
+
+latencytop - a tool for developers to visualize system latencies
+
+能够用来发现程序在哪些地方在系统调用上延迟时间很长
+
+*** slurm(TODO)
+Simple Linux Utility for Resource Management https://computing.llnl.gov/linux/slurm/
+
+*** slabtop(TODO)
+slabtop - display kernel slab cache information in real time
+
+*** nmon(DONE)(*)
+nmon - systems administrator, tuner, benchmark tool.
+
+http://nmon.sourceforge.net/pmwiki.php Nigel's performance Monitor for Linux
+
+*** collectl(TODO)(*)
+http://collectl.sourceforge.net/
+
+collectl - Collects data that describes the current system status.
+
+*** glances(DONE)(*)
+http://nicolargo.github.io/glances/
+
+glances - A cross-platform curses-based system monitoring tool
+
+*** ulimit(DONE)
+ulimit [-HSTabcdefilmnpqrstuvx [limit]]
+
+Provides control over the resources available to the shell and to processes started by it, on systems that allow such control.  The -H and -S options specify  that  the  hard  or soft  limit  is  set for the given resource. A hard limit cannot be increased by a non-root user once it is set; a soft limit may be increased up to the value of the hard limit. If neither -H nor -S is specified, both the soft and hard limits are set. The value of limit can be a number in the unit specified for the resource or one of the special values hard, soft, or unlimited, which stand for the current hard limit, the current soft limit, and no limit, respectively.  If limit is omitted, the current value of the soft limit of the resource is printed, unless the -H option is given. When more than one resource is specified, the limit name and unit are printed before the value.(-H/-S可以指定hard limit和soft limit)
+
+选项：
+   0. -a     All current limits are reported
+   0. -b     The maximum socket buffer size
+   0. -c     The maximum size of core files created
+   0. -d     The maximum size of a process's data segment
+   0. -e     The maximum scheduling priority ("nice")
+   0. -f     The maximum size of files written by the shell and its children
+   0. -i     The maximum number of pending signals
+   0. -l     The maximum size that may be locked into memory
+   0. -m     The maximum resident set size (many systems do not honor this limit)
+   0. -n     The maximum number of open file descriptors (most systems do not allow this value to be set)
+   0. -p     The pipe size in 512-byte blocks (this may not be set)
+   0. -q     The maximum number of bytes in POSIX message queues
+   0. -r     The maximum real-time scheduling priority
+   0. -s     The maximum stack size
+   0. -t     The maximum amount of cpu time in seconds
+   0. -u     The maximum number of processes available to a single user
+   0. -v     The maximum amount of virtual memory available to the shell and, on some systems, to its children
+   0. -x     The maximum number of file locks
+   0. -T     The maximum number of threads
+
+If limit is given, it is the new value of the specified resource (the -a option is display only). If no option is given, then -f is assumed. Values are in 1024-byte increments, except for -t, which is in seconds, -p, which is in units of 512-byte blocks, and -T, -b, -n, and -u, which are unscaled values. The return status is 0 unless an invalid option or argument is supplied, or an error occurs while setting a new limit.
+
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ ulimit -a
+-t: cpu time (seconds)         unlimited
+-f: file size (blocks)         unlimited
+-d: data seg size (kbytes)     unlimited
+-s: stack size (kbytes)        8192
+-c: core file size (blocks)    0
+-m: resident set size (kbytes) unlimited
+-u: processes                  62757
+-n: file descriptors           1024
+-l: locked-in-memory size (kb) 64
+-v: address space (kb)         unlimited
+-x: file locks                 unlimited
+-i: pending signals            62757
+-q: bytes in POSIX msg queues  819200
+-e: max nice                   0
+-r: max rt priority            0
+-N 15:                         unlimited
+#+END_EXAMPLE
+
+*** sysprof(DONE)
+Sysprof - Statistical, system-wide Profiler for Linux : http://sysprof.com/
+
+** admin utility
 *** rsync(DONE)
 常用选项：
    - -a --archive
@@ -2018,140 +2259,6 @@ todo(dirlt):
    - 同步目录 rsync -avrz /dir/ user@host:/dir/ *note(dirlt):注意目录后面需要加上/*
    - 同步文件 rysnc -vz /dir/file1 user@host:/dir/file
 
-*** slabtop(TODO)
-slabtop - display kernel slab cache information in real time
-
-*** nmon(DONE)(*)
-nmon - systems administrator, tuner, benchmark tool.
-
-http://nmon.sourceforge.net/pmwiki.php Nigel's performance Monitor for Linux
-
-*** collectl(TODO)(*)
-collectl http://collectl.sourceforge.net/
-
-*** numactl(TODO)
-todo(dirlt):
-
-*** glances(TODO)(*)
-http://nicolargo.github.io/glances/
-
-todo(dirlt):
-
-*** ifconfig(DONE)
-ifconfig - configure a network interface
-
-/sbin/ifconfig可以用来配置和查看network interface.不过从文档上看的话，更加推荐使用/sbin/ip这个工具
-#+BEGIN_EXAMPLE
-NOTE
-       This  program is obsolete!  For replacement check ip addr and ip link.
-       For statistics use ip -s link.
-#+END_EXAMPLE
-
-这里我们不打算学习如何配置network interface只是想查看一下网卡的信息。使用/sbin/ifconfig -a可以查看所有的网卡信息，即使这个网卡关闭。
-#+BEGIN_EXAMPLE
-[zhangyan04@tc-hpc-dev.tc.baidu.com]$ /sbin/ifconfig -a
-eth0      Link encap:Ethernet  HWaddr 00:1D:09:22:C9:A9
-          BROADCAST MULTICAST  MTU:1500  Metric:1
-          RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:0 (0.0 b)  TX bytes:0 (0.0 b)
-          Interrupt:16 Memory:f4000000-f4012800
-
-eth1      Link encap:Ethernet  HWaddr 00:1D:09:22:C9:A7
-          inet addr:10.26.140.39  Bcast:10.26.140.255  Mask:255.255.255.0
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:90671796 errors:0 dropped:14456 overruns:0 frame:0
-          TX packets:143541932 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:71169282564 (66.2 GiB)  TX bytes:74096812979 (69.0 GiB)
-          Interrupt:16 Memory:f8000000-f8012800
-
-lo        Link encap:Local Loopback
-          inet addr:127.0.0.1  Mask:255.0.0.0
-          UP LOOPBACK RUNNING  MTU:16436  Metric:1
-          RX packets:231762640 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:231762640 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:0
-          RX bytes:98089257363 (91.3 GiB)  TX bytes:98089257363 (91.3 GiB)
-#+END_EXAMPLE
-我们这里稍微仔细看看eht1的网卡信息
-   - encap 网卡连接网络类型Ethernet(以太网)
-   - HWaddr 网卡物理地址
-   - inet_addr 绑定IP地址
-   - Bcast 这个IP对应的广播地址
-   - Mask 子网掩码
-   - UP(打开) BROADCAST(广播) MULTICAST(多播) RUNNING(运行)
-   - MTU (Maximum Transport Unit)最大传输单元，以太网一般就是1500字节
-   - Metric ???
-   - RX packets 接受packets数目
-   - TX packets 传输packets数目
-   - errors 错误packets数目
-   - dropped 丢弃packets数目
-   - overruns frame carrier ???
-   - collisions ???
-   - txqueuelen 发送packets的queue长度上限.0应该是无限
-   - RX bytes 接收字节
-   - TX bytes 发送字节
-
-使用ifconfig能够创建虚拟网卡绑定IP
-   - sudo ifconfig <name> <ip>
-   - sudo ifconfig <name> down # 销毁虚拟网卡
-
-*** ps(process snapshot)(DONE)
-进程状态有下面几种：
-   - D    uninterruptible sleep (usually IO)
-   - R    running or runnable (on run queue)
-   - S    interruptible sleep (waiting for an event to complete)
-   - T    stopped, either by a job control signal or because it is being traced.
-   - W    paging (not valid since the 2.6.xx kernel)
-   - X    dead (should never be seen)
-   - Z    defunct ("zombie") process, terminated but not reaped by its parent.
-   - <    high-priority (not nice to other users)
-   - N    low-priority (nice to other users)
-   - L    has pages locked into memory (for real-time and custom IO)
-   - s    is a session leader
-   - l    is multi-threaded (using CLONE_THREAD, like NPTL pthreads do)
-   - +    is in the foreground process group.
-
------
-
-在使用ubuntu的apt-get时候，可能会出现一些异常的状况，我们直接终止了apt-get。但是这个时候apt-get软件本身出于一个不正常的状态，
-导致之后不能够启动apt-get。如果观察进程的话会出现下面一些可疑的进程
-#+BEGIN_EXAMPLE
-dp@dp1:~$ ps aux | grep "apt"
-root      3587  0.0  0.0  36148 22800 ?        Ds   Oct08   0:00 /usr/bin/dpkg --status-fd 50 --unpack --auto-deconfigure /var/cache/apt/archives/sgml-data_2.0.4_all.deb
-root      9579  0.0  0.0  35992 22744 ?        Ds   Oct19   0:00 /usr/bin/dpkg --status-fd 50 --unpack --auto-deconfigure /var/cache/apt/archives/iftop_0.17-16_amd64.deb
-root     25957  0.0  0.0  36120 22796 ?        Ds   Nov05   0:00 /usr/bin/dpkg --status-fd 50 --unpack --auto-deconfigure /var/cache/apt/archives/iftop_0.17-16_amd64.deb /var/cache/apt/archives/iotop_0.4-1_all.deb
-dp       30586  0.0  0.0   7628  1020 pts/2    S+   08:59   0:00 grep --color=auto apt
-#+END_EXAMPLE
-这些进程的父进程都是init进程，并且状态是uninterruptible sleep，给kill -9也没有办法终止，唯一的办法只能reboot机器来解决这个问题。关于这个问题可以看stackoverflow上面的解答 How to stop 'uninterruptible' process on Linux? - Stack Overflow http://stackoverflow.com/questions/767551/how-to-stop-uninterruptible-process-on-linux
-   - Simple answer: you cannot. Longer answer: the uninterruptable sleep means the process will not be woken up by signals. It can be only woken up by what it's waiting for. When I get such situations eg. with CD-ROM, I usually reset the computer by using suspend-to-disk and resuming.
-   - The D state basically means that the process is waiting for disk I/O, or other block I/O that can't be interrupted. Sometimes this means the kernel or device is feverishly trying to read a bad block (especially from an optical disk). Sometimes it means there's something else. The process cannot be killed until it gets out of the D state. Find out what it is waiting for and fix that. The easy way is to reboot. Sometimes removing the disk in question helps, but that can be rather dangerous: unfixable catastrophic hardware failure if you don't know what you're doing (read: smoke coming out).
-
-*** ulimit(TODO)
-todo(dirlt)
-
-*** sysprof(TODO)
-Sysprof - Statistical, system-wide Profiler for Linux : http://sysprof.com/
-
-*** ss(TODO)
-*** netperf(TODO)
-http://www.netperf.org/netperf/
-
-*** iperf(TODO)
-https://iperf.fr/
-
-*** tcptrace(TODO)
-http://www.tcptrace.org/
-
-*** tc(TODO)
-traffic control http://www.lartc.org/
-
-*** qperf(TODO)
-http://blog.yufeng.info/archives/2234
-
-*** /SYS ADMIN/
 *** uptime(DONE)
 uptime - Tell how long the system has been running.
 
@@ -2162,8 +2269,6 @@ uptime  gives a one line display of the following information.  The current time
  13:50:11 up 3 days, 17:12,  4 users,  load average: 0.27, 0.29, 0.27
 #+END_EXAMPLE
 
-*** top(DONE)
-*** htop(DONE)
 *** ttyload(DONE)
 *** dmesg(DONE)
 能够察看开机时启动信息(启动信息保存在/var/log/dmesg文件里)
@@ -2320,7 +2425,7 @@ sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
 -P FORWARD ACCEPT
 -P OUTPUT ACCEPT
 #+END_EXAMPLE
-*** /HTTP BENCH TOOL/
+** http utility
 *** httperf(DONE)
 download http://www.hpl.hp.com/research/linux/httperf/
 
