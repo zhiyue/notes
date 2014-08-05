@@ -121,6 +121,7 @@
    - # sudo apt-get install vagrant # 版本过低
    - sudo apt-get install qt4-qtconfig
    - sudo apt-get install fluxgui
+   - sudo apt-get install iftop
 
 ** 系统配置
 *** 察看ubuntu内部版本

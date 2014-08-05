@@ -397,7 +397,7 @@ build_galera() {
 }
 
 # utility
-alias dstat='dstat -cdlmnpsy'
+alias ex_dstat='dstat -cdgmnpsy'
 
 pgrep() {
   ps aux | grep $1

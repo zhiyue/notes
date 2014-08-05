@@ -1114,10 +1114,10 @@ todo(dirlt):
 https://www.kernel.org/doc/Documentation/sysctl/fs.txt
 
 **** /proc/sys/fs/file-max
-所有进程允许打开文件的最大数量 *note(dirlt)：这个选项应该没有控制文件描述符上限，文件描述符上限应该会由其他参数控制*
+所有进程允许打开文件的最大数量 *note(dirlt)：但是没有限制文件描述符上限*
 
 #+BEGIN_EXAMPLE
-➜  notes git:(master) ✗ cat /proc/sys/fs/file-max              
+➜  notes git:(master) ✗ cat /proc/sys/fs/file-max
 793300
 ➜  notes git:(master) ✗ ulimit -a
 -t: cpu time (seconds)         unlimited
@@ -1149,7 +1149,7 @@ of the available low memory, divided by the registration cost in bytes.
 #+END_VERSE
 
 #+BEGIN_EXAMPLE
-➜  notes git:(master) ✗ cat /proc/sys/fs/epoll/max_user_watches 
+➜  notes git:(master) ✗ cat /proc/sys/fs/epoll/max_user_watches
 1645137
 #+END_EXAMPLE
 
@@ -1421,7 +1421,7 @@ GENERAL OPTIONS
    0. -V   show version   Displays version of program.
 
 #+BEGIN_EXAMPLE
-➜  notes git:(master) ✗ pmap -d 11492       
+➜  notes git:(master) ✗ pmap -d 11492
 11492:   /usr/bin/emacs24
 Address           Kbytes Mode  Offset           Device    Mapping
 0000000000400000    2212 r-x-- 0000000000000000 008:00002 emacs24-x
@@ -1474,7 +1474,7 @@ sigsuspend([] <unfinished ...>
 [pid 28772] <... select resumed> )      = 1 (in [3])
 #+END_EXAMPLE
 
-常用选项有：
+选项:
    - -c *只是* 在运行结束之后打印汇总信息
    - -C 在运行结束之后打印汇总信息
    - -d debug mode
@@ -1497,8 +1497,7 @@ sigsuspend([] <unfinished ...>
    - -p pid 追踪当前运行进程
    - -s strsize[= 32] 打印的字符串最大长度
    - -S [time|calls|name] 汇总信息按照某个字段排序
-
-会比较有用的选项就是-C -ttt -T -r 
+会比较有用的选项是 -C -ttt -T -r
 
 *** iostat(DONE)
 iostat - Report Central Processing Unit (CPU) statistics and input/output statistics for devices and partitions.
@@ -1592,36 +1591,72 @@ https://github.com/hoytech/vmtouch note(dirlt)：可以用来warmup数据
 *** latencytop(TODO)
 todo(dirlt): https://latencytop.org/
 
-*** iotop
+*** iotop(DONE)
 iotop - simple top-like I/O monitor 可以用来观察单独进程的IO使用状况
 
 iotop displays columns for the I/O bandwidth read and written by each process/thread during the sampling period. It also displays the percentage of time the thread/process spent while swapping in  and  while  waiting on I/O. For each process, its I/O priority (class/level) is shown. In addition, the total I/O bandwidth read and written during the sampling period is displayed at the top of the interface.
 
 常用选项有下面这些：
    - -o/--only 只展现有IO活动的任务
-   - -b/--batch 非交互式输出
-   - -n/--num 输出多少次之后退出
-   - -d/--delay 每隔多少秒刷新
    - -P/--process 以process而非thread为单位
    - -a/--accumulated 将iotop启动以来IO数值累加
+   - -d/--delay 每隔多少秒刷新
+   - -b/--batch 非交互式输出
+   - -n/--num 输出多少次之后退出
    - -t/--time 非交互式模式之前输出时间
    - -q/--quiet 只针对非交互模式
 
 对于交互式输出来说可以动态修改参数 Use the left and right arrows to change the sorting, r to reverse the sorting order, o to toggle the --only option, p to toggle the --processes option, a  to  toggle  the  --accumulated option, q to quit or i to change the priority of a thread or a process' thread(s). Any other key will force a refresh.
 
-*** dstat
-todo(dirlt): https://github.com/dagwieers/dstat
+*** dstat(DONE)(*)
+dstat - versatile tool for generating system resource statistics
 
-http://weibo.com/1840408525/AdGkO3uEL dstat -lamps
+   - todo(dirlt): https://github.com/dagwieers/dstat
+   - http://weibo.com/1840408525/AdGkO3uEL dstat -lamps
 
-*** slurm
-Simple Linux Utility for Resource Management
-todo(dirlt): https://computing.llnl.gov/linux/slurm/
+dstat [-afv] [options..] [delay [count]].
+
+选项：
+   - -c/--cpu/-C 0,3,total 查看CPU状态可以指定某个CPU
+   - -d/--disk/-D hda,total 查看disk状态可以指定某个disk
+   - -g/--page 查看page状态(page in/out)
+   - -i/--int/-I 5,10 查看中断情况以及某个中断号情况
+   - -l/--load 最近1,5,15分钟的负载
+   - -m/--mem 内存状况(used, buffers, cache, free)
+   - -n/--net/-N eth0,total 网络状况(send, receive)可以指定某个网口
+   - -p/--proc 进程状况
+   - -r/--io IO请求次数
+   - -s/--swap/-S swap1,total swap状况(used, free)可以指定某个分区
+   - -t/--time/-T/--epoch 时间
+   - -y/--sys 系统状况(中断和cs)
+   - -a/--all equals -cdngy (default)
+   - -f/--full 可以将-C,-D,-I,-N,-S全部展开
+   - -v/--vmstat equals -pmgdsc -D total
+   - --output file 可以将结果保存为CSV格式
+   - --profile 退出打印dstat本身的profile信息
+会比较有用的选项搭配是 -cdgmnpsy
+
+还有一些可选项来查看其他子系统情况
+   0. --aio  enable aio stats (asynchronous I/O)
+   0. --fs   enable filesystem stats (open files, inodes)
+   0. --ipc  enable ipc stats (message queue, semaphores, shared memory)
+   0. --lock enable file lock stats (posix, flock, read, write)
+   0. --raw  enable raw stats (raw sockets)
+   0. --socket enable socket stats (total, tcp, udp, raw, ip-fragments)
+   0. --tcp  enable tcp stats (listen, established, syn, time_wait, close)
+   0. --udp  enable udp stats (listen, active)
+   0. --unix enable unix stats (datagram, stream, listen, active)
+   0. --vm   enable vm stats (hard pagefaults, soft pagefaults, allocated, free)
+
+另外dstat还支持一系列插件来查询其他系统状态，具体可以man dstat.
+
+*** slurm(TODO)
+Simple Linux Utility for Resource Management https://computing.llnl.gov/linux/slurm/
 
 *** sar(DONE)
 sar - Collect, report, or save system activity information.
 
-下面是所有的选项
+选项：
    - -A 相当于指定 -bBcdqrRuvwWy -I SUM  -n FULL -P ALL.
    - -b 这个选项只是针对2.5以下的内核.统计磁盘的IO运行情况
       - tps // 对磁盘总共有多少个请求.
@@ -1956,14 +1991,21 @@ tcp        0   1024 tc-hpc-dev.tc.baidu.c:19870 tc-com-test00.tc.baid:60745 ESTA
    - User
    - PID/Program name
 
-*** tcpdump
-todo(zhangyan04):
+*** tcpdump(TODO)
+*** iftop(TODO)
+http://www.ex-parrot.com/~pdw/iftop/
 
-*** iftop
-todo(dirlt): http://www.ex-parrot.com/~pdw/iftop/
+iftop - display bandwidth usage on an interface by host
 
-*** iptraf
-todo(dirlt): http://iptraf.seul.org/
+*** iptraf(TODO)
+http://iptraf.seul.org/
+
+iptraf - Interactive Colorful IP LAN Monitor
+
+*** nethogs(TODO)
+todo(dirlt):
+*** jnettop(TODO)
+todo(dirlt):
 
 *** rsync(DONE)
 常用选项：
@@ -1976,30 +2018,21 @@ todo(dirlt): http://iptraf.seul.org/
    - 同步目录 rsync -avrz /dir/ user@host:/dir/ *note(dirlt):注意目录后面需要加上/*
    - 同步文件 rysnc -vz /dir/file1 user@host:/dir/file
 
-*** iodump
-*** nethogs
-todo(dirlt):
-
-*** slabtop
+*** slabtop(TODO)
 slabtop - display kernel slab cache information in real time
 
-todo(dirlt):
-
-*** nmon
+*** nmon(DONE)(*)
 nmon - systems administrator, tuner, benchmark tool.
 
 http://nmon.sourceforge.net/pmwiki.php Nigel's performance Monitor for Linux
 
-*** collectl
-collectl http://collectl.sourceforge.net/ *todo(dirlt):似乎相当不错，将很多关键信息都做了收集和整合*
+*** collectl(TODO)(*)
+collectl http://collectl.sourceforge.net/
 
-*** numactl
+*** numactl(TODO)
 todo(dirlt):
 
-*** jnettop
-todo(dirlt):
-
-*** glances
+*** glances(TODO)(*)
 http://nicolargo.github.io/glances/
 
 todo(dirlt):
@@ -2096,41 +2129,42 @@ dp       30586  0.0  0.0   7628  1020 pts/2    S+   08:59   0:00 grep --color=au
    - Simple answer: you cannot. Longer answer: the uninterruptable sleep means the process will not be woken up by signals. It can be only woken up by what it's waiting for. When I get such situations eg. with CD-ROM, I usually reset the computer by using suspend-to-disk and resuming.
    - The D state basically means that the process is waiting for disk I/O, or other block I/O that can't be interrupted. Sometimes this means the kernel or device is feverishly trying to read a bad block (especially from an optical disk). Sometimes it means there's something else. The process cannot be killed until it gets out of the D state. Find out what it is waiting for and fix that. The easy way is to reboot. Sometimes removing the disk in question helps, but that can be rather dangerous: unfixable catastrophic hardware failure if you don't know what you're doing (read: smoke coming out).
 
-*** ulimit
+*** ulimit(TODO)
 todo(dirlt)
 
-*** sysprof
+*** sysprof(TODO)
 Sysprof - Statistical, system-wide Profiler for Linux : http://sysprof.com/
 
-*** ss
-
-*** netperf
-todo(dirlt):
+*** ss(TODO)
+*** netperf(TODO)
 http://www.netperf.org/netperf/
 
-*** iperf
-todo(dirlt):
+*** iperf(TODO)
 https://iperf.fr/
 
-*** tcptrace
-todo(dirlt):
+*** tcptrace(TODO)
 http://www.tcptrace.org/
 
-*** tc
+*** tc(TODO)
 traffic control http://www.lartc.org/
 
-todo(dirlt):
-
-*** qperf
+*** qperf(TODO)
 http://blog.yufeng.info/archives/2234
 
-todo(dirlt):
-
 *** /SYS ADMIN/
-*** uptime(TODO)
-*** top(TODO)
-*** htop(TODO)
-*** ttyload(TODO)
+*** uptime(DONE)
+uptime - Tell how long the system has been running.
+
+uptime  gives a one line display of the following information.  The current time, how long the system has been running, how many users are currently logged on, and the system load aver‐ages for the past 1, 5, and 15 minutes.
+
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ uptime
+ 13:50:11 up 3 days, 17:12,  4 users,  load average: 0.27, 0.29, 0.27
+#+END_EXAMPLE
+
+*** top(DONE)
+*** htop(DONE)
+*** ttyload(DONE)
 *** dmesg(DONE)
 能够察看开机时启动信息(启动信息保存在/var/log/dmesg文件里)
 #+BEGIN_EXAMPLE
@@ -2151,9 +2185,8 @@ BIOS-provided physical RAM map:
 #+END_EXAMPLE
 
 *** quota(DONE)
-http://blog.itpub.net/post/7184/488931
+http://blog.itpub.net/post/7184/488931 quota用来为用户编辑磁盘配额
 
-quota用来为用户编辑磁盘配额。
    - 初始化磁盘配额功能
 修改/etc/fstab增加usrquota以及grpquota
 #+BEGIN_EXAMPLE
