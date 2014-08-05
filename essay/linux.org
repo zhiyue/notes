@@ -1,5 +1,5 @@
 * linux
-#+OPTIONS: H:5
+#+OPTIONS: H:4
 ** proc filesystem
 *** /proc
 **** /proc/meminfo
@@ -810,17 +810,8 @@ Node 0, zone   Normal
    - task 如果是多线程的话每个线程对应信息
    - wchan ???
 
-**** fd
-todo(zhangyan04):
-
-**** io
-TODO:
-
-**** limits
-TODO:
-
 **** maps
-当前进程关联到的每个可执行文件和库文件在内存中的映射区域及其访问权限所组成的列表
+当前进程关联到的每个可执行文件和库文件在内存中的映射区域及其访问权限所组成的列表. note(dirlt): see command 'pmap'
 #+BEGIN_EXAMPLE
 00400000-004e0000 r-xp 00000000 08:01 4456452                            /bin/bash
 006df000-006e0000 r--p 000df000 08:01 4456452                            /bin/bash
@@ -869,18 +860,6 @@ TODO:
 ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
 #+END_EXAMPLE
 
-**** mount
-TODO:
-
-**** net
-todo(zhangyan04):
-
-**** sched
-todo(zhangyan04):
-
-**** status
-TODO:
-
 **** statm
 Provides information about memory usage, measured in pages. The columns are:
    - size total program size (same as VmSize in /proc/[pid]/status)
@@ -908,6 +887,8 @@ vm.swappiness = 0
 然后重启那么这个设置就会永久生效。
 
 *** /proc/sys/vm
+https://www.kernel.org/doc/Documentation/sysctl/vm.txt
+
 **** /proc/sys/vm/overcommit_memory
 所谓的overcommit是过量使用的意思。
    - OVERCOMMIT_GUESS=0 用户申请内存的时候，系统会判断剩余的内存有多少。如果不够的话那么就会失败。这种方式是比较保守的，因为有时候比如用户申请1G内存但是可能只是会使用其中1K.
@@ -1054,22 +1035,25 @@ dirlt@dirlt-virtual-machine:~/github/sperm/essay$ cat /proc/sys/vm/overcommit_ra
 
 **** /proc/sys/vm/swappiness
 这个参数决定系统使用swap的程度。但是这个参数并没有禁止使用swap分区，而只是一个依赖于swap分区的程度。
+
 如果这个值设置成为0的话那么，那么系统会尽可能地将减少page swap in/out操作，将更多的内存操作于物理内存上面。
 
 **** /proc/sys/vm/dirty_*
-这几个参数主要是用来控制脏页刷回磁盘策略。关于脏页刷回磁盘的过程可以参看"文件IO/write"一节。
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ ls /proc/sys/vm/dirty_*
+/proc/sys/vm/dirty_background_bytes  /proc/sys/vm/dirty_bytes             /proc/sys/vm/dirty_ratio
+/proc/sys/vm/dirty_background_ratio  /proc/sys/vm/dirty_expire_centisecs  /proc/sys/vm/dirty_writeback_centisecs
+#+END_EXAMPLE
 
-*note(dirlt)@2013-05-25: 我copy了一份内容过来*
-
-对于这些脏页的写回策略是：
-   - 首先判断脏页比例是否超过dirty_ratio.如果没有的话那么直接退出
-   - 然后开始将脏页刷到磁盘直到比率小于dirty_ratio.（此时write会阻塞）
+这几个参数主要是用来控制脏页刷回磁盘策略。如果是前台触发的话（比如主动write操作）：
+   - 判断脏页比例是否超过dirty_ratio.如果没有的话那么直接退出
+   - 将脏页刷到磁盘直到比率小于dirty_ratio.（此时write会阻塞）
+   - todo(dirlt): /proc/sys/vm/dirty_bytes
+如果是后台pdflush daemon触发的话
+   - 每隔dirty_writeback_centisecs时间会检测
    - 判断脏页比例是否超过dirty_background_ratio或者是超过dirty_background_bytes.如果没有那么退出。
-   - 如果超过的话那么就会启动pdflush daemon后台进程刷新脏页。（此时write不会阻塞）
-
-注意到这里可能启动pdflush daemon在后台刷新脏页。另外系统每隔dirty_writeback_centisecs时间会启动
-pdflush daemon将脏页刷到磁盘上面。而pdflush daemon工作方式是这样的，检查脏页是否存在超过
-dirty_expire_centisecs时间的，如果超过的话那么就会在后台刷新这些脏页。
+   - 将脏页刷到磁盘直到比率小于dirty_background_ratio或者是dirty_background_bytes.（此时write不会阻塞）
+   - 必须将时间超过dirty_expire_centisecs的脏页刷到磁盘。
 
 **** /proc/sys/vm/drop_caches
     可以用来释放kernel保存的buffers和cached memory，buffers保存的是目录以及文件的inode，cached memory保存的是操作文件时候使用的pagecache
@@ -1093,59 +1077,85 @@ dirty_expire_centisecs时间的，如果超过的话那么就会在后台刷新�
    - Respite from the OOM killer [LWN.net] http://lwn.net/Articles/104179/  *note(dirlt)：似乎overcommit_memory设置成为2也不能够完全避免OOM*
 
 This enables or disables panic on out-of-memory feature.
-
-If this is set to 0, the kernel will kill some rogue process, called oom_killer.  Usually, oom_killer can kill rogue processes and system will survive.
-
-If this is set to 1, the kernel panics when out-of-memory happens. However, if a process limits using nodes by mempolicy/cpusets, and those nodes become memory exhaustion status, one process may be killed by oom-killer. No panic occurs in this case. Because other nodes' memory may be free. This means system total status may be not fatal yet.
-
-If this is set to 2, the kernel panics compulsorily even on the above-mentioned.
-
-The default value is 0. 1 and 2 are for failover of clustering. Please select either according to your policy of failover.
+   - If this is set to 0, the kernel will kill some rogue process, called oom_killer.  Usually, oom_killer can kill rogue processes and system will survive.
+   - If this is set to 1, the kernel panics when out-of-memory happens. However, if a process limits using nodes by mempolicy/cpusets, and those nodes become memory exhaustion status, one process may be killed by oom-killer. No panic occurs in this case. Because other nodes' memory may be free. This means system total status may be not fatal yet.
+   - If this is set to 2, the kernel panics compulsorily even on the above-mentioned.
+   - The default value is 0. 1 and 2 are for failover of clustering. Please select either according to your policy of failover.
 
 *note(dirlt):对于1，2不是很理解，可能是用于分布式集群Linux系统上面的策略*
 
 *** /proc/sys/net
+https://www.kernel.org/doc/Documentation/sysctl/net.txt
+
 **** /proc/sys/net/ipv4/ip_local_port_range
-本地port分配范围.
+本地port分配范围. 本地client如果没有指定连接port的话那么就从这个范围内随机分配
+
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ cat /proc/sys/net/ipv4/ip_local_port_range
+32768	61000
+#+END_EXAMPLE
 
 **** /proc/sys/net/ipv4/tcp_tw_reuse
-重复使用处于TIME_WAIT的socket.
-
-Allow  to  reuse  TIME_WAIT sockets for new connections when it is safe from protocol viewpoint.
+todo(dirlt): a little bit tricky
 
 **** /proc/sys/net/ipv4/tcp_tw_recycle
-快速回收处理TIME_WAIT的socket.
-
-Enable fast recycling of TIME_WAIT sockets.
+todo(dirlt): a little bit tricky
 
 **** /proc/sys/net/ipv4/tcp_max_syn_backlog
-等待client做ack的连接数目上限
+todo(dirlt):
 
 **** /proc/sys/net/core/somaxconn
-每个端口监听队列的最大长度。
+todo(dirlt):
 
 **** /proc/sys/net/core/netdev_max_backlog
-网络设备接收数据包的速率比内核处理这些包的速率快时，允许送到队列的数据包的最大数目。
+todo(dirlt):
 
 *** /proc/sys/fs
-**** /proc/sys/fs/file-max
-所有进程允许打开文件的最大数量 *note(dirlt)：这个应该是和文件描述符有区别的*
+https://www.kernel.org/doc/Documentation/sysctl/fs.txt
 
-**** /proc/sys/fs/epoll/max_user_instances
-单个用户使用epoll的文件描述符上限。如果超过上限会返回EMFILE错误。 *note(dirlt)：不过在我的文件系统下面似乎没有这个选项*
+**** /proc/sys/fs/file-max
+所有进程允许打开文件的最大数量 *note(dirlt)：这个选项应该没有控制文件描述符上限，文件描述符上限应该会由其他参数控制*
+
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ cat /proc/sys/fs/file-max              
+793300
+➜  notes git:(master) ✗ ulimit -a
+-t: cpu time (seconds)         unlimited
+-f: file size (blocks)         unlimited
+-d: data seg size (kbytes)     unlimited
+-s: stack size (kbytes)        8192
+-c: core file size (blocks)    0
+-m: resident set size (kbytes) unlimited
+-u: processes                  62757
+-n: file descriptors           1024
+-l: locked-in-memory size (kb) 64
+-v: address space (kb)         unlimited
+-x: file locks                 unlimited
+-i: pending signals            62757
+-q: bytes in POSIX msg queues  819200
+-e: max nice                   0
+-r: max rt priority            0
+-N 15:                         unlimited
+#+END_EXAMPLE
 
 **** /proc/sys/fs/epoll/max_user_watches
-单个用户使用epoll进行watch的文件描述符上限。 *note(dirlt)：对于服务器应该特别有用，可以限制内存使用量*
+单个用户使用epoll进行监控的文件描述符上限.
 
 #+BEGIN_VERSE
-This specifies a limit on the total number of file descriptors that a user can register across all epoll  instances
-on  the system.  The limit is per real user ID.  Each registered file descriptor costs roughly 90 bytes on a 32-bit
-kernel, and roughly 160 bytes on a 64-bit kernel.  Currently, the default value for max_user_watches is  1/25  (4%)
+This specifies a limit on the total number of file descriptors that a user can register across all epoll instances
+on  the system. The limit is per real user ID.  Each registered file descriptor costs roughly 90 bytes on a 32-bit
+kernel, and roughly 160 bytes on a 64-bit kernel. Currently, the default value for max_user_watches is  1/25  (4%)
 of the available low memory, divided by the registration cost in bytes.
-
 #+END_VERSE
 
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ cat /proc/sys/fs/epoll/max_user_watches 
+1645137
+#+END_EXAMPLE
+
 *** /proc/sys/kernel
+https://www.kernel.org/doc/Documentation/sysctl/kernel.txt
+
 **** /proc/sys/kernel/hung_task_timeout_secs
 *Detecting hung tasks in Linux*
 
@@ -1196,17 +1206,17 @@ The JBD is the [[http://kerneltrap.org/node/6741][journaling block device]] that
 
 *** /proc/net
 **** /proc/net/tcp
-记录所有tcp连接，netstat以及lsof都会读取这个文件. 我们遇到过一个问题就是netstat/lsof速度非常慢，通过strace发现是在读取这个文件时候非常耗时，下面两个链接给出了一些相关信息
+记录所有tcp连接信息. netstat以及lsof等命令会读取这个文件.
+
+之前我们遇到过一个问题就是netstat/lsof速度非常慢，通过strace发现是在读取这个文件时候非常耗时. 下面两个链接给出了一些相关信息
    - [PATCH] tcp: Fix slowness in read /proc/net/tcp — Linux Network Development : http://www.spinics.net/lists/netdev/msg132186.html
    - Linux-Kernel Archive: Awfully slow /proc/net/tcp, netstat, in.i : http://lkml.indiana.edu/hypermail/linux/kernel/0110.2/0475.html
-
-*todo(dirlt):*
 
 ** system utility
 file:./images/linux-analysis-and-tools.jpg
 
 *** /SYS DEV/
-*** mpstat
+*** mpstat(DONE)
 mpstat - Report processors related statistics.
 
 #+BEGIN_EXAMPLE
@@ -1243,7 +1253,8 @@ Linux 2.6.9_5-10-0-1 (tc-cm-et18.tc.baidu.com)  2011年09月20日
    - %idle 在没有io操作时候的cpu idle时间比率
    - intr/s 每秒CPU中断次数(包括硬中断和软终端)
 
-*** vmstat
+*** vmstat(DONE)
+vmstat - Report virtual memory statistics
 
 #+BEGIN_EXAMPLE
 vmstat [-a] [-n] [-S unit] [delay [ count]] // 查看全局内存开销
@@ -1335,7 +1346,9 @@ nfs_write_data               69     69    704     23
        418742 forks
 #+END_EXAMPLE
 
-*** free
+*** free(DONE)
+free - Display amount of free and used memory in the system
+
 #+BEGIN_EXAMPLE
 [zhangyan04@tc-hpc-dev.tc.baidu.com]$ free -t
              total       used       free     shared    buffers     cached
@@ -1356,8 +1369,8 @@ Total:     9212084    4519868    4692216
    - Swap:used 交换分区使用大小
    - Swap:free 可以使用的分区大小
 
-*** taskset
-可以用来获取和修改进程的CPU亲和性。
+*** taskset(DONE)
+taskset - retrieve or set a process's CPU affinity  可以用来获取和修改进程的CPU亲和性
    - taskset -c 1,2,3 cmd (指定在CPU #1,#2,#3上运行cmd)
    - taskset -cp 1,2,3 pid (指定在CPU #1,#2,#3上运行进程pid)
    - taskset -c mask cmd|pid 通过mask格式进行设置，比如0x3就是#0和#1亲和性
@@ -1375,10 +1388,8 @@ Total:     9212084    4519868    4692216
        affinity is useful only in certain applications.
 #+END_EXAMPLE
 
-*** lsof
-todo(dirlt):
-
-*** hdparm
+*** lsof(TODO)
+*** hdparm(TODO)
 hdparm - get/set hard disk parameters
 
 下面是使用的用法
@@ -1400,14 +1411,98 @@ sunrpc on /var/lib/nfs/rpc_pipefs type rpc_pipefs (rw)
 #+END_EXAMPLE
 我们关注自己读写目录，比如通常在/home下面，这里就是使用的device就是/dev/mapper/VolGroup00-LogVol00
 
-todo(dirlt):好多选项都不太清楚是什么意思.
-*** pmap
-todo(dirlt):
+*** pmap(DONE)
+pmap - report memory map of a process 可以查看进程内存布局
 
-*** strace
-todo(dirlt):
+GENERAL OPTIONS
+   0. -x   extended       Show the extended format.
+   0. -d   device         Show the device format.
+   0. -q   quiet          Do not display some header/footer lines.
+   0. -V   show version   Displays version of program.
 
-*** iostat
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ pmap -d 11492       
+11492:   /usr/bin/emacs24
+Address           Kbytes Mode  Offset           Device    Mapping
+0000000000400000    2212 r-x-- 0000000000000000 008:00002 emacs24-x
+0000000000828000       4 r---- 0000000000228000 008:00002 emacs24-x
+0000000000829000   12160 rw--- 0000000000229000 008:00002 emacs24-x
+0000000002e02000  134156 rw--- 0000000000000000 000:00000   [ anon ]
+00007fb7821ad000     176 rw--- 0000000000000000 000:00000   [ anon ]
+00007fb7821e0000    4192 r---- 0000000000000000 008:00002 NanumGothicBold.ttf
+00007fb7825f8000    4532 r---- 0000000000000000 008:00002 NanumMyeongjoBold.ttf
+00007fb782a65000     688 rw--- 0000000000000000 000:00000   [ anon ]
+00007fb782b11000   16752 r---- 0000000000000000 008:00002 ukai.ttc
+...
+ffffffffff600000       4 r-x-- 0000000000000000 000:00000   [ anon ]
+mapped: 651672K    writeable/private: 178012K    shared: 612K
+#+END_EXAMPLE
+可以看到emacs24占用虚拟内存在651MB, 可写以及private内存在178MB. shared(?) = 612K.
+
+使用-x选项可以查看RSS以及dirty pages
+#+BEGIN_EXAMPLE
+➜  notes git:(master) ✗ pmap -x 11492
+11492:   /usr/bin/emacs24
+Address           Kbytes     RSS   Dirty Mode   Mapping
+0000000000400000       0    1884       0 r-x--  emacs24-x
+0000000000828000       0       4       4 r----  emacs24-x
+0000000000829000       0   11380    8752 rw---  emacs24-x
+0000000002e02000       0  136332  136332 rw---    [ anon ]
+00007fb7821ad000       0     176     176 rw---    [ anon ]
+...
+00007fff9aef3000       0     616     616 rw---    [ stack ]
+00007fff9afff000       0       4       0 r-x--    [ anon ]
+ffffffffff600000       0       0       0 r-x--    [ anon ]
+----------------  ------  ------  ------
+total kB          653800  172416  151924
+#+END_EXAMPLE
+
+*** strace(DONE)
+strace - trace system calls and signals 可以用来追踪系统调用和信号
+
+打印系统调用的方式非常容易读，包括信号处理以及其他线程触发系统调用
+#+BEGIN_EXAMPLE
+open("/dev/null", O_RDONLY) = 3
+open("/foo/bar", O_RDONLY) = -1 ENOENT (No such file or directory)
+
+sigsuspend([] <unfinished ...>
+--- SIGINT (Interrupt) ---
++++ killed by SIGINT +++
+
+[pid 28772] select(4, [3], NULL, NULL, NULL <unfinished ...>
+[pid 28779] clock_gettime(CLOCK_REALTIME, {1130322148, 939977000}) = 0
+[pid 28772] <... select resumed> )      = 1 (in [3])
+#+END_EXAMPLE
+
+常用选项有：
+   - -c *只是* 在运行结束之后打印汇总信息
+   - -C 在运行结束之后打印汇总信息
+   - -d debug mode
+   - -h help summary
+   - -i 每次syscall打印instruction pointer
+   - -r 打印两次syscall之间时间差
+   - -t/tt/ttt 打印每次调用syscall时间
+   - -T 打印每次调用syscall耗时
+   - -x/xx 非ASCII字符打印成为hex
+   - -e trace=[syscall-list] | [qualifier] | all 只追踪部分syscall
+     - file 和文件名相关
+     - process 和进程相关
+     - network 和网络相关
+     - signal 和信号相关
+     - ipc 和ipc相关
+     - desc 和文件描述符相关
+   - -e read=[fd-list]
+   - -e write=[fd-list]
+   - -o filename 输出文件
+   - -p pid 追踪当前运行进程
+   - -s strsize[= 32] 打印的字符串最大长度
+   - -S [time|calls|name] 汇总信息按照某个字段排序
+
+会比较有用的选项就是-C -ttt -T -r 
+
+*** iostat(DONE)
+iostat - Report Central Processing Unit (CPU) statistics and input/output statistics for devices and partitions.
+
 iostat主要用来观察io设备的负载情况的。首先我们看看iostat的样例输出
 #+BEGIN_EXAMPLE
 dirlt@dirlt-virtual-machine:~$ iostat
@@ -1486,23 +1581,33 @@ sda               0.00     0.00    0.00    0.00     0.00     0.00     0.00     0
    - svctm todo(dirlt):don't use it.
    - %util CPU在处理IO请求时的百分比.可以认为是IO设备使用率.
 
-*** vmtouch
-https://github.com/hoytech/vmtouch
-
-*note(dirlt)：可以用来warmup数据，使用参数似乎也比较简单*
+*** vmtouch(DONE)
+https://github.com/hoytech/vmtouch note(dirlt)：可以用来warmup数据
 
 里面有一些系统调用比较值得注意和学习：
    - mlock/munlock 能够将一部分的内存lock住而不会切换到swap分区上面。
    - mlockall/munlockall 将进程所有的内存都lock住而不会切换到swap分区上面。
    - posix_fadvise 针对fd做一些访问模式的预测
 
-*** latencytop
+*** latencytop(TODO)
 todo(dirlt): https://latencytop.org/
 
 *** iotop
-可以用来观察单独进程的IO使用状况
+iotop - simple top-like I/O monitor 可以用来观察单独进程的IO使用状况
 
-todo(dirlt)：
+iotop displays columns for the I/O bandwidth read and written by each process/thread during the sampling period. It also displays the percentage of time the thread/process spent while swapping in  and  while  waiting on I/O. For each process, its I/O priority (class/level) is shown. In addition, the total I/O bandwidth read and written during the sampling period is displayed at the top of the interface.
+
+常用选项有下面这些：
+   - -o/--only 只展现有IO活动的任务
+   - -b/--batch 非交互式输出
+   - -n/--num 输出多少次之后退出
+   - -d/--delay 每隔多少秒刷新
+   - -P/--process 以process而非thread为单位
+   - -a/--accumulated 将iotop启动以来IO数值累加
+   - -t/--time 非交互式模式之前输出时间
+   - -q/--quiet 只针对非交互模式
+
+对于交互式输出来说可以动态修改参数 Use the left and right arrows to change the sorting, r to reverse the sorting order, o to toggle the --only option, p to toggle the --processes option, a  to  toggle  the  --accumulated option, q to quit or i to change the priority of a thread or a process' thread(s). Any other key will force a refresh.
 
 *** dstat
 todo(dirlt): https://github.com/dagwieers/dstat
@@ -1513,7 +1618,7 @@ http://weibo.com/1840408525/AdGkO3uEL dstat -lamps
 Simple Linux Utility for Resource Management
 todo(dirlt): https://computing.llnl.gov/linux/slurm/
 
-*** sar
+*** sar(DONE)
 sar - Collect, report, or save system activity information.
 
 下面是所有的选项
@@ -1664,7 +1769,7 @@ sar - Collect, report, or save system activity information.
 01时56分19秒      eth1 159997.00 320006.00 175029796.00 186239160.00      0.00      0.00      0.00
 #+END_EXAMPLE
 
-*** netstat
+*** netstat(DONE)
 netstat - Print network connections, routing tables, interface statistics, masquerade connections, and multicast memberships
 
 netstat可以查看很多信息，包括网络链接,路由表，网卡信息,伪装链接以及多播成员关系。但是从文档上看，一部分工作可以在/sbin/ip里面完成
@@ -1860,7 +1965,7 @@ todo(dirlt): http://www.ex-parrot.com/~pdw/iftop/
 *** iptraf
 todo(dirlt): http://iptraf.seul.org/
 
-*** rsync
+*** rsync(DONE)
 常用选项：
    - -a --archive
    - -r --recursive
@@ -1872,12 +1977,13 @@ todo(dirlt): http://iptraf.seul.org/
    - 同步文件 rysnc -vz /dir/file1 user@host:/dir/file
 
 *** iodump
-*** iopp
 *** nethogs
 todo(dirlt):
 
 *** slabtop
 slabtop - display kernel slab cache information in real time
+
+todo(dirlt):
 
 *** nmon
 nmon - systems administrator, tuner, benchmark tool.
@@ -1898,7 +2004,7 @@ http://nicolargo.github.io/glances/
 
 todo(dirlt):
 
-*** ifconfig
+*** ifconfig(DONE)
 ifconfig - configure a network interface
 
 /sbin/ifconfig可以用来配置和查看network interface.不过从文档上看的话，更加推荐使用/sbin/ip这个工具
@@ -1959,7 +2065,7 @@ lo        Link encap:Local Loopback
    - sudo ifconfig <name> <ip>
    - sudo ifconfig <name> down # 销毁虚拟网卡
 
-*** ps(process snapshot)
+*** ps(process snapshot)(DONE)
 进程状态有下面几种：
    - D    uninterruptible sleep (usually IO)
    - R    running or runnable (on run queue)
@@ -2021,11 +2127,11 @@ http://blog.yufeng.info/archives/2234
 todo(dirlt):
 
 *** /SYS ADMIN/
-*** uptime
-*** top
-*** htop
-*** ttyload
-*** dmesg
+*** uptime(TODO)
+*** top(TODO)
+*** htop(TODO)
+*** ttyload(TODO)
+*** dmesg(DONE)
 能够察看开机时启动信息(启动信息保存在/var/log/dmesg文件里)
 #+BEGIN_EXAMPLE
 [dirlt@localhost.localdomain]$ dmesg | less
@@ -2044,7 +2150,7 @@ BIOS-provided physical RAM map:
  BIOS-e820: 00000000fffe0000 - 0000000100000000 (reserved)
 #+END_EXAMPLE
 
-*** quota
+*** quota(DONE)
 http://blog.itpub.net/post/7184/488931
 
 quota用来为用户编辑磁盘配额。
@@ -2085,7 +2191,7 @@ Filesystem blocks soft hard inodes soft hard
    - 查看整体磁盘配额可以使用/usr/sbin/repquota -a,查看用户配额情况可以使用quota -vu test
 
 可以对WWW空间，FTP空间，Email空间进行磁盘配额限制。Quota只能基于磁盘分区进行配额管理，不能基于目录进行配额管理，因此只能把数据存放在有配额限制的分区，再用符号链接到实际应用的目录。
-*** crontab
+*** crontab(DONE)
 crontab就是为了能够使得工作自动化在特定的时间或者是时间间隔执行特定的程序。crontab -e就可以编辑crontab配置文件，默认是vim编辑器。crontab配置文件里面可以像shell一样定义变量，之后就是任务描述，每一个任务分为6个字段: minute hour day month week command
    1. minute范围是0-59
    2. hour范围是0-23
@@ -2105,7 +2211,7 @@ crontab就是为了能够使得工作自动化在特定的时间或者是时间�
 \* 23-7/1 * * * /* 23-7/1 * * * /usr/local/apache/bin/apachectl restart 每天从23到次日7点每隔一小时重启apache
 #+END_EXAMPLE
 
-*** ntp
+*** ntp(DONE)
    - ntp.org: Home of the Network Time Protocol http://www.ntp.org/ *note(dirlt):这个项目应该是非常复杂的*
 
 ntp(network time protocol)是用来做机器时间同步的，包含下面几个组件：
@@ -2140,10 +2246,8 @@ ntp是可以在minpoll和maxpoll指定的时间间隔内来选择同步间隔的
 
 其实如果不考虑为其他机器提供服务的话，完全可以在cron里面使用ntpdate来进行同步。
 
-*** cssh
-todo(dirlt):
-
-*** iptables
+*** cssh(TODO)
+*** iptables(DONE)
 查看当前过滤规则 iptables -L/-S
 #+BEGIN_EXAMPLE
 ➜  ~GALERA_SRC git:(yan) sudo iptables -L
@@ -2184,7 +2288,7 @@ sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
 -P OUTPUT ACCEPT
 #+END_EXAMPLE
 *** /HTTP BENCH TOOL/
-*** httperf
+*** httperf(DONE)
 download http://www.hpl.hp.com/research/linux/httperf/
 
 paper http://www.hpl.hp.com/research/linux/httperf/wisp98/httperf.pdf
@@ -2303,7 +2407,7 @@ Session length histogram: 4 7 4... 3 3 240
    - failtime表示平均每个失败session在失败之前占用时间
    - length historagm表示每个session得到的reply个数，4个没有接收到任何reply,7个接受到1个。
 
-*** ab
+*** ab(DONE)
 ab(apache benchmarking)是apache httpd自带的一个HTTP Server个的工具。下面是这个工具命令行参数
 #+BEGIN_EXAMPLE
        ab  [ -A auth-username:password ] [ -b windowsize ] [ -c concurrency ] [ -C cookie-name=value ] [ -d ] [ -e
@@ -2389,7 +2493,7 @@ Percentage of the requests served within a certain time (ms)
  100%     20 (longest request)
 #+END_EXAMPLE
 
-*** autobench
+*** autobench(DONE)
 http://www.xenoclast.org/autobench/
 
 autobench作为httperf包装，也提供了分布式压力测试的工具。
