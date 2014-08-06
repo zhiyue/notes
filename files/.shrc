@@ -514,7 +514,7 @@ cxx_indent() {
 }
 
 install_files() {
-    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc
+    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc Vagrantfile
     do
         echo "installing $target..."
         rm -rf ~/$target
@@ -575,9 +575,6 @@ install_files() {
     rm -rf ~/.emacs.d
     ln -s ~/.private/emacs.d ~/.emacs.d
 
-    echo "installing Vagrantfile"
-    rm -rf ~/Vagrantfile
-    ln -s ~/.private/files/Vagrantfile Vagrantfile
     echo "installing tc-env..."
     rm -rf ~/contestapplet.conf
     ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
