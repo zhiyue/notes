@@ -345,6 +345,16 @@ build5.5r() {
 build5.6r() {
     MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_release
 }
+install5.5() {
+    local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.5*.tgz --sort=time -r | head -1)
+    echo "installing $p"
+    install_nodes $p
+}
+install5.6() {
+    local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.6*.tgz --sort=time -r | head -1)
+    echo "installing $p"
+    install_nodes $p
+}
 test_seesaw() {
     local round=${1:-4}
     $GALERA_SRC/tests/test_seesaw/run.sh $round
@@ -568,7 +578,6 @@ install_files() {
     echo "installing Vagrantfile"
     rm -rf ~/Vagrantfile
     ln -s ~/.private/files/Vagrantfile Vagrantfile
-
     echo "installing tc-env..."
     rm -rf ~/contestapplet.conf
     ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
