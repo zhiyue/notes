@@ -28,8 +28,8 @@ http://docs.vagrantup.com/v2/multi-machine/index.html
 
 #+BEGIN_EXAMPLE
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.define "centos" do |m| # 定义centos机器
-    m.vm.box = "centos" # 使用centos环境
+  config.vm.define "centos" do |m|
+    m.vm.box = "centos"
   end
   config.vm.define "debian" do |m|
     m.vm.box = "debian"

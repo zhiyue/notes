@@ -16,6 +16,9 @@ export LC_ALL="en_US.UTF-8"
 is_mac() {
     if [ $(uname -s) = "Darwin" ]; then echo "1"; else echo "0"; fi
 }
+is_vm() {
+    if [ $USER = "vagrant" ]; then echo "1"; else echo "0"; fi
+}
 
 # cdh related.
 configure_cdh() {
@@ -212,6 +215,9 @@ stop_nodes() {
 remove_nodes() {
     $GALERA_SRC/tests/scripts/command.sh remove
 }
+install_nodes() {
+    $GALERA_SRC/tests/scripts/command.sh install $1
+}
 drop_connection() {
     sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
     sudo iptables -A INPUT -s "192.168.100.103" -d "192.168.100.104" -j DROP
@@ -232,13 +238,14 @@ mysql_stopd() {
 # --mips ; use multiple ips
 
 # if not multiple ips, ip is always 127.0.0.1
+# if multiple ips, ip of node{idx} is 192.168.100.103+idx
+
+# segment of node{idx} is (idx % seg_num + seg_off)
+
 # ports of node{idx} are :
 # 1. sst_port =   4566-3*idx-1
 # 2. gcomm_port = 4566-3*idx
 # 3. ist_port =   4566-3*idx+1
-
-# if multiple ips, port is always 4565,4666,4567
-# ip of node{idx} is 192.168.100.103+idx
 
 _test_copy_conf() {
     local NUMS=3
@@ -246,6 +253,7 @@ _test_copy_conf() {
     local SGOF=0
     local MIPS=0
     local IPBE=103
+    local IPPX="192.168.100."
     local PORT=4566
     while test $# -gt 0
     do
@@ -269,6 +277,10 @@ _test_copy_conf() {
                 shift 1
                 IPBE=$1
                 ;;
+            --ippx)
+                shift 1
+                IPPX=$1
+                ;;
             --port)
                 shift 1
                 PORT=$1
@@ -286,8 +298,7 @@ _test_copy_conf() {
         local ip="127.0.0.1"
         local port=$((PORT-3*idx))
         if [ $MIPS = 1 ]; then
-            ip="192.168.100."$((IPBE+i))
-            port=$PORT
+            ip=$IPPX$((IPBE+i))
         fi
         local sst_port=$((port-1))
         local ist_port=$((port+1))
@@ -322,7 +333,6 @@ build_mysql_release() {
 build_mysql_debug() {
     $GALERA_SRC/scripts/mysql/build.sh -i -b -d --no-strip --galera-debug --debug-level 0
 }
-
 build5.5d() {
     MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_debug
 }
@@ -459,7 +469,9 @@ home_http_server_once() {
         cd -
     fi
 }
-home_http_server_once
+if [ $(is_vm) = 0 ]; then
+    home_http_server_once
+fi
 
 cxx_indent() {
     dos2unix $@
@@ -553,6 +565,10 @@ install_files() {
     rm -rf ~/.emacs.d
     ln -s ~/.private/emacs.d ~/.emacs.d
 
+    echo "installing Vagrantfile"
+    rm -rf ~/Vagrantfile
+    ln -s ~/.private/files/Vagrantfile Vagrantfile
+
     echo "installing tc-env..."
     rm -rf ~/contestapplet.conf
     ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
@@ -598,7 +614,9 @@ shadowsocks_once() {
         cd -
     fi
 }
-shadowsocks_once
+if [ $(is_vm) = 0 ]; then
+    shadowsocks_once
+fi
 
 # # deprecated now !!!
 # easy_oprofile() {
