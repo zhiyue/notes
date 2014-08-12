@@ -1803,9 +1803,9 @@ inline void do_free_with_callback(void* ptr, void (*invalid_free_fn)(void*)) {
   }
   if (cl != 0) { // 如果是小对象释放的话
     ASSERT(!Static::pageheap()->GetDescriptor(p)->sample);
-    ThreadCache* heap = GetCacheIfPresent(); // 那么我得到当前线程的heap
+    ThreadCache* heap = GetCacheIfPresent(); // 那么获得到当前线程的tc
     if (heap != NULL) {
-      heap->Deallocate(ptr, cl); // 然后会受到这个tc里面
+      heap->Deallocate(ptr, cl); // 然后回收到这个tc里面
     } else { // 不知道这个情况什么时候出现，如果出现的话，那么就放到cc里面,非常直接.
       // Delete directly into central cache
       tcmalloc::SLL_SetNext(ptr, NULL);
