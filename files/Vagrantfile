@@ -25,16 +25,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.provision :shell, inline: $root
+  config.vm.provision :shell, inline: $root, privileged: true
   config.vm.provision :shell, inline: $vagrant, privileged: false
-  for i in 0..3 do
-    name = "u%d" % i
-    ip = "192.168.101.%d" % (103 + i)
-    config.vm.define name do |m|
-      m.vm.box = name
-      m.vm.network "private_network", ip: ip
-      m.vm.provision :shell, inline: "hostname %s" % (name)
-    end
+  config.vm.define "u0" do |m|
+    m.vm.box = "u0"
+    m.vm.network "private_network", ip: "192.168.101.103"
+    m.vm.provision :shell, inline: "hostname u0", privileged: true
+  end
+  config.vm.define "u1" do |m|
+    m.vm.box = "u1"
+    m.vm.network "private_network", ip: "192.168.101.104"
+    m.vm.provision :shell, inline: "hostname u1", privileged: true
+  end
+  config.vm.define "u2" do |m|
+    m.vm.box = "u2"
+    m.vm.network "private_network", ip: "192.168.101.105"
+    m.vm.provision :shell, inline: "hostname u2", privileged: true
+  end
+  config.vm.define "u3" do |m|
+    m.vm.box = "u3"
+    m.vm.network "private_network", ip: "192.168.101.106"
+    m.vm.provision :shell, inline: "hostname u3", privileged: true
   end
 
   # Disable automatic box update checking. If you disable this, then
