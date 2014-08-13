@@ -43,6 +43,7 @@
    - [[file:./note/helsinki-travel.org][赫尔辛基印象]]
    - [[file:./note/sfo-travel.org][旧金山印象]]
    - [[file:./note/xmn-travel.org][厦门鼓浪屿印象]]
+   - [[file:note/jeju-travel.org][济州岛之旅]]
 
 ** 印记
    - [[file:note/fun.org][挺搞笑的]]
