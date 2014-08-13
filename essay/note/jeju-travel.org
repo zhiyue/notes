@@ -6,9 +6,9 @@
    - 8月7日  BK2717 天津/济州 （北京时间）15:15-18:05（韩国时间）
    - 8月11日 BK2718 济州/天津 （韩国时间）19:00-20:20（北京时间）
 
-济州岛是韩国的一个小岛，对中国游客来说是落地签证，所以岛上可以看到很多中国游客，并且当地很多服务都提供中文。去济州岛之前有几个事情需要注意一下：
+济州岛是韩国的一个小岛，对中国游客来说是落地签证，所以岛上可以看到很多中国游客，并且当地很多服务都提供中文。
    - 通讯设备。可以提前在淘宝上购买中国移动香港的3G卡（7天5G流量），或者是到了当地租用WiFi(egg, 需要充电每次能够坚持大约4-6小时)
-   - 插头转换器。应该属于欧洲标准插头，和 [[file:./note/helsinki-travel.org][赫尔新基]] 插头一样，所以我之前买的插头转换器正好可以用上。
+   - 插头转换器。应该属于欧洲标准插头，和 [[file:helsinki-travel.org][赫尔新基]] 插头一样，所以我之前买的插头转换器正好可以用上。
    - 时差。济州岛时间比北京时间快一个小时。
    - 餐饮。大韩人民果然是对泡菜情有独钟，旅游期间每餐都有泡菜。主食还吃过海带汤，大酱汤，石锅拌饭，黑猪肉，人参鸡汤等。香蕉牛奶在酒店楼下的7-11就有卖1000韩元不贵。[[http://baike.baidu.com/view/3746390.htm][CASS]] 啤酒应该是韩国一个比较大的品牌。因为临海所以海产品也比较多包括海带和海苔，据说当地孕妇上每餐都要喝海带汤。
    - 汇率。1人民币 = 166韩元，不过我从导游那里换韩元的话是320人民币 = 50000韩元。韩元里面面额是10,50,100,500,1000,5000,10000,50000这些，10通常是用来交税使用的，商品价格里面通常不会有。
@@ -27,7 +27,7 @@ file:../images/jeju01.jpg file:../images/jeju02.jpg
    - 鸟岛跨海大桥 & [[http://baike.baidu.com/view/838603.htm][天地渊瀑布]]
 file:../images/jeju03.jpg file:../images/jeju04.jpg
 
-   - [[http://baike.baidu.com/view/687151.htm][柱状节理带]]: 海下火山喷发然后迅速冷却形成的。我们去的那天正好赶上涨潮，海水不断拍打节理激起层层雪白的浪花，最后撞在峭壁上形成非常高的浪。
+   - [[http://baike.baidu.com/view/687151.htm][柱状节理带]]: 海下火山喷发然后迅速冷却形成的。我们去的那天正好赶上涨潮，海水不断拍打节理激起层层雪白的浪花，最后撞在峭壁上形成非常高的浪。[[http://v.youku.com/v_show/id_XNzU1MDMzOTA0.html][视频1]] , [[http://v.youku.com/v_show/id_XNzU1MDM3MDMy.html][视频2]]
 file:../images/jeju05.jpg
 
    - [[http://baike.baidu.com/view/4089447.htm][药泉寺]]： 韩国寺庙和中国的差别比较大，首先寺庙允许拍照，其次不需要还愿。
@@ -36,10 +36,10 @@ file:../images/jeju06.jpg file:../images/jeju07.jpg file:../images/jeju08.jpg
 -----
 day3
 
-   - [[http://baike.baidu.com/view/841869.htm][城邑民俗村]]: 济州岛有一个特别的人群叫做海女，专门靠下海捕捉海鲜以及海产品为生。她们可以穿着潜水服潜到海下面20米左右坚持3分钟。如今已经没有海女这个职业了，现在最年轻的海女都70多了，但是她们现在依然坚持下海。不过这些海女老了都容易头疼并且听力不太好。
+   - [[http://baike.baidu.com/view/841869.htm][城邑民俗村]]: 济州岛有一个特别的人群叫做海女，专门靠下海捕捉海鲜以及海产品为生。她们可以穿着潜水服潜到海下面20米左右坚持3分钟。如今已经没有海女这个职业了，现在最年轻的海女都70多了，但是她们现在依然坚持下海。不过这些海女老了都容易头疼并且听力不太好。[[http://v.youku.com/v_show/id_XNzU1MDM4OTIw.html][视频]]
 file:../images/jeju09.jpg
 
-   - [[http://baike.baidu.com/view/5909350.htm][涉地可支]] & [[http://baike.baidu.com/view/93364.htm][城山日出峰]]
+   - [[http://baike.baidu.com/view/5909350.htm][涉地可支]] & [[http://baike.baidu.com/view/93364.htm][城山日出峰]] [[http://v.youku.com/v_show/id_XNzU1MDQyMjYw.html][视频]]
 file:../images/jeju10.jpg file:../images/jeju11.jpg
 
 file:../images/jeju12.jpg file:../images/jeju13.jpg
@@ -54,7 +54,7 @@ day4
 
 -----
 day5
-   - [[http://baike.baidu.com/view/349025.htm][汉拿山]]: 非常美丽神奇的地方。云层在半山腰上，我们穿过云层爬上了高峰，俯瞰的时候感觉自己在仙境中。山上空气清新湿润，整个爬山过程非常舒服。
+   - [[http://baike.baidu.com/view/349025.htm][汉拿山]]: 非常美丽神奇的地方。云层在半山腰上，我们穿过云层爬上了高峰，俯瞰的时候感觉自己在仙境中。山上空气清新湿润，整个爬山过程非常舒服。[[http://v.youku.com/v_show/id_XNzU1MDQzNzY4.html][视频]]
 file:../images/jeju16.jpg file:../images/jeju17.jpg
 
    - [[http://baike.baidu.com/view/362270.htm][汉拿树木园]]
