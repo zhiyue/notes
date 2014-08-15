@@ -127,6 +127,7 @@
    - sudo apt-get install collectl
    - sudo apt-get install latencytop
    - sudo apt-get install powertop
+   - sudo apt-get install lxc-docker
 
 ** 系统配置
 *** 察看ubuntu内部版本

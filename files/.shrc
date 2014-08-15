@@ -461,16 +461,11 @@ golang_doc_server() {
 }
 
 apt_update() {
-    # google chrome
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-    sudo apt-add-repository -y "deb http://dl.google.com/linux/chrome/deb/ stable main"
+    sudo rm -rf /etc/apt/sources.list
+    sudo ln -s ~/repo/notes/files/.sources.list /etc/apt/sources.list
 
-    # virtual box
-    wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc -O- | sudo apt-key add -
-    sudo apt-add-repository -y "deb http://download.virtualbox.org/virtualbox/debian $(lsb_release -sc) contrib"
-
-    # canonical
-    sudo apt-add-repository -y "deb http://archive.canonical.com/ $(lsb_release -sc) partner"
+    # docker
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 
     # ubuntu tweak
     sudo add-apt-repository -y ppa:tualatrix/ppa

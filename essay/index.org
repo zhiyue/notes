@@ -67,6 +67,7 @@
      - [[file:./sbt.org][SBT]] Simple(or Scala?) Build Tool
      - [[file:./vagrant.org][Vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持非常好的是VirtualBox)
      - [[file:./sanitizer.org][Sanitizer]] Google的C++动态分析工具，可以检测内存泄漏，内存无效使用以及多线程数据竞争
+     - [[file:./docker.org][Docker]] 基于lxc(linux container)的分发应用平台
    - Desktop
      - [[file:ubuntu.org][Ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] 。主要记录自己使用出现的问题。
      - [[file:fvwm.org][FVWM]] F* Virtual Windows Manager.Linux下面高度可定制化的窗口管理器。
