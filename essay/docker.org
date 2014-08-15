@@ -39,6 +39,9 @@ docker使用cs架构，所以即使在本地运行也需要启动一个daemon的
 （不过如果不使用默认值的话，那么所有docker命令都要添加-H来指定通讯方式，比较繁琐） 关于docker server命令可以man docker.
 
 docker大部分使用方式都是集中在client上. 每个命令都有非常多的参数可以使用，可以man docker-<command>比如man docker-run察看
+
+** commands
+下面是docker client所有命令。大部分命令都是自描述的。
 #+BEGIN_EXAMPLE
 ➜  docker  docker      
 Usage: docker [OPTIONS] COMMAND [arg...]
@@ -83,8 +86,49 @@ Commands:
     wait      Block until a container stops, then print its exit code
 #+END_EXAMPLE
 
-** commands
+命令基本可以分为操作container和image两类。container可以通过ID, NAME来定位。image可以通过ID, REPOSITORY:TAG来定位。
+#+BEGIN_EXAMPLE
+➜  wsrep-5.6  sudo docker ps -a                     
+[sudo] password for dirlt: 
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+84d4b4a3ad11        ubuntu:latest       /bin/bash           5 seconds ago       Up 5 seconds                            angry_nobel
+
+➜  wsrep-5.6  sudo docker inspect 84d4b4a3ad11
+[{
+    "Args": [],
+    "Config": {
+        "AttachStderr": true,
+        "AttachStdin": true,
+        "AttachStdout": true,
+        "Cmd": [
+            "/bin/bash"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "HOME=/",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+......
+
+➜  wsrep-5.6  sudo docker images                    
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+ubuntu              latest              c4ff7513909d        3 days ago          225.4 MB
+#+END_EXAMPLE
+对于reposiroty名称约定是<username>/<image>. 如果不指定TAG只指定REPO的话，根据上下文结果会是REPO的最新一个TAG，或者是REPO下所有TAG。
+
+comments on some commands
+   - attach. 后台运行任务通常是非交互式的并且使用-d启动
+   - history. 只能够察看本地image.
+   - export/import. tarball里面文件都是single-layer所以可以用来创建全新的image.
+   - save/load. 可以通过文件方式来传递image.
+
+** docker-run
+** docker-inspect
 ** Dockerfile
+** FAQ
 ** troubleshooting
 ** internal stuff
    - LXC https://linuxcontainers.org/
