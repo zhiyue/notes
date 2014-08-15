@@ -30,6 +30,7 @@
      - [[file:numa-an-overview.org][NUMA An Overview]] 关于NUMA的介绍性文章
      - [[file:./memory-barrier.org][Memory Barrier]] 内存屏障
      - [[file:./memory-barriers-a-hardware-view-for-software-hackers.org][Memory Barriers: a Hardware View for Software Hackers]]
+     - [[file:./nonblocking-algorithms-and-scalable-multicore-programming.org][Nonblocking Algorithms and Scalable Multicore Programming]]
      - [[file:tcmalloc.org][TCMalloc]] Google的开源线程缓存内存分配器，解决多线程下面内存分配效率问题。
    - [[file:sysperf.org][System-Peformance]] 系统性能相关
      - [[file:oprofile.org][OProfile]] OProfile(系统级profiler)的原理和应用。不过说实话没有分析过源代码(或者是自己技术背景不行)终究觉得对这个东西理解不够深入，而且自己也仅仅是使用OProfile功能的子集。
