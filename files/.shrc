@@ -437,6 +437,35 @@ build_galera() {
     done
 }
 
+dk_create_node() {
+    while test $# -gt 0
+    do
+        docker run -v /home/dirlt/repo:/mnt/repo -v /home/dirlt/.private:/mnt/.private \
+            --name "u$1" --hostname "u$1" -d dirlt/ubuntu:12.04 \
+            /usr/sbin/sshd -D
+        shift 1
+    done
+}
+dk_use_node() {
+    ssh vagrant@127.0.0.1
+}
+
+# docker related.
+alias dk='docker'
+reset_docker_privilege() {
+    # seems following way is useless.
+    # sudo gpasswd -a dirlt docker    
+    sudo chown dirlt:dirlt /var/run/docker.sock
+}
+dk_list() {
+    docker ps -a
+    echo '----------'
+    docker images
+}
+dk_remove_all() {
+    docker rm -f $(docker ps -a -q)
+}
+
 # utility
 alias ex_dstat='dstat -cdgmnpsy'
 
