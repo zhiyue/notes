@@ -216,6 +216,16 @@ doc存放位置通常在/usr/share/doc/<package>/下面。
    - pkg
 甚至可以直接调用alien -i test.rpm直接安装而不需要转换。
 
+*** The System Running In Low Graphics Mode
+
+http://simpledeveloper.com/system-running-in-low-graphics-mode/
+
+   - CTRL + ALT + F1 切换到terminal
+   - # sudo apt-get -d install --reinstall gdm
+   - # sudo apt-get remove --purge gdm
+   - # sudo apt-get install gdm
+   - # sudo reboot
+
 ** 桌面应用
 *** amarok循环播放
 在amarok的右下角有task progression的图标，选择repeat track即可。

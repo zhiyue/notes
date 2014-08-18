@@ -17,7 +17,6 @@ docker有三种方式运行:
 docker底层可以使用virtualbox(开销大，可以使用其他内核), 也可以使用lxc(轻量，必须使用本地内核). 如果使用lxc的话必须确保linux内核支持，使用下面命令来升级内核
 #+BEGIN_EXAMPLE
 #安装内核
-sudo apt-get update
 sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
 
 #重启
@@ -124,10 +123,234 @@ comments on some commands
    - history. 只能够察看本地image.
    - export/import. tarball里面文件都是single-layer所以可以用来创建全新的image.
    - save/load. 可以通过文件方式来传递image.
+   - pull. 可以指定从远端什么地方拉取比如 sudo docker pull registry.hub.docker.com/fedora:20
 
 ** docker-run
+Run a process in a new container. docker run starts a process with its own file system, its own networking, and its own isolated process tree. The IMAGE which starts the process may define defaults related to the process that will be run in the container, the networking to expose, and more, but docker run gives final control to the operator or administrator who starts the container from the image.  For that reason docker run has more options than any other Docker command. If the IMAGE is not already loaded then docker run will pull the IMAGE, and all image dependencies, from the repository in the same way running docker pull IMAGE, before it starts the container from that image. （用于启动容器。image本身可能已经包含了一些文件系统以及网络还有独立进程，但是用户也可以改写这些选项。如果image在本地不存在的话就会尝试从远端拉下来）
+
+资源限制
+   - -c, --cpu-shares=0 CPU shares in relative weight.
+   - --cpuset="" CPUs in which to allow execution (0-3, 0,1)
+   - --lxc-conf=[] (lxc exec-driver only) Add custom lxc options --lxc-conf="lxc.cgroup.cpuset.cpus = 0,1"
+   - -m, --memory=memory-limit Allows you to constrain the memory available to a container.
+
+容器管理
+   - -i, -interactive=true|false When set to true, keep stdin open even if not attached.
+   - -t, -tty=true|false When set to true Docker can allocate a pseudo-tty and attach to the standard input of any container.
+   - -a, --attach=stdin|stdout|stderr Attach to stdin, stdout or stderr.
+   - -d, --detach=true|false Detached mode.
+   - --cidfile=file Write the container ID to the file specified. 
+   - -e, --env=environment Set environment variables.
+   - --env-file=[] Read in a line delimited file of ENV variables
+   - -h, --hostname=hostname Sets the container host name that is available inside the container.
+   - --name=name Assign a name to the container.
+   - --rm=true|false If set to true the container is automatically removed when it exits.
+   - --sig-proxy=true|false When set to true, proxify received signals to the process (even in non-tty mode).
+   - -u, --user=username,uid Set a username or UID for the container.
+   - --privileged=true|false Give extended privileges to this container.
+   - -v, --volume=volume[:ro|:rw] Bind mount a volume to the container. # -v <host-path>:<container-path>
+   - --volumes-from=container-id[:ro|:rw]  Will mount volumes from the specified container identified by container-id.
+   - -w, --workdir=directory Working directory inside the container.
+
+网络配置
+   - --dns-search=[] Set custom dns search domains.
+   - --dns=IP-address Set custom DNS servers.
+   - --entrypoint=command This option allows you to overwrite the default entrypoint of the image that is set in the Dockerfile.
+   - --expose=port Expose a port from the container without publishing it to your host.
+   - --link=name:alias Add link to another container.
+   - --net="bridge"  Set the Network mode for the container.
+   - -P, --publish-all=true|false  When set to true publish all exposed ports to the host interfaces.
+   - -p, --publish=[] Publish a container's port to the host # -p <container-port>:<host-port>
+
+在foreground和background之间切换还是有点问题的(C-P以及C-Q都不work)，http://stackoverflow.com/questions/20145717/how-to-detach-from-a-docker-container 所以个人觉得比较有效的方式就是：
+   - 交互式应用 # docker run -i -t --rm ubuntu /bin/bash
+   - 非交互式应用 # docker run -d ubuntu <cmd> 这里cmd可以是后台应用也可以是sshd
+
 ** docker-inspect
+inspect可以看到container和image内部具体信息。下面是一个container inspection的输出
+#+BEGIN_EXAMPLE
+➜  ~  sudo docker inspect 22b
+[{
+    "Args": [],
+    "Config": {
+        "AttachStderr": true,
+        "AttachStdin": true,
+        "AttachStdout": true,
+        "Cmd": [
+            "/bin/bash"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "HOME=/",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+        "ExposedPorts": null,
+        "Hostname": "22b078636c10",
+        "Image": "ubuntu",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": null,
+        "OpenStdin": true,
+        "PortSpecs": null,
+        "StdinOnce": true,
+        "Tty": true,
+        "User": "",
+        "Volumes": null,
+        "WorkingDir": ""
+    },
+    "Created": "2014-08-18T03:09:42.322264455Z",
+    "Driver": "aufs",
+    "ExecDriver": "native-0.2",
+    "HostConfig": {
+        "Binds": null,
+        "ContainerIDFile": "",
+        "Dns": null,
+        "DnsSearch": null,
+        "Links": null,
+        "LxcConf": [],
+        "NetworkMode": "bridge",
+        "PortBindings": {},
+        "Privileged": false,
+        "PublishAllPorts": false,
+        "VolumesFrom": null
+    },
+    "HostnamePath": "/var/lib/docker/containers/22b078636c10249d02359130197af40bb7f48d8321c09f1c5d8fe4349b8cafd4/hostname",
+    "HostsPath": "/var/lib/docker/containers/22b078636c10249d02359130197af40bb7f48d8321c09f1c5d8fe4349b8cafd4/hosts",
+    "Id": "22b078636c10249d02359130197af40bb7f48d8321c09f1c5d8fe4349b8cafd4",
+    "Image": "c4ff7513909dedf4ddf3a450aea68cd817c42e698ebccf54755973576525c416",
+    "MountLabel": "",
+    "Name": "/naughty_curie",
+    "NetworkSettings": {
+        "Bridge": "",
+        "Gateway": "",
+        "IPAddress": "",
+        "IPPrefixLen": 0,
+        "PortMapping": null,
+        "Ports": null
+    },
+    "Path": "/bin/bash",
+    "ProcessLabel": "",
+    "ResolvConfPath": "/var/lib/docker/containers/22b078636c10249d02359130197af40bb7f48d8321c09f1c5d8fe4349b8cafd4/resolv.conf",
+    "State": {
+        "ExitCode": 0,
+        "FinishedAt": "2014-08-18T03:09:43.298188716Z",
+        "Paused": false,
+        "Pid": 0,
+        "Running": false,
+        "StartedAt": "2014-08-18T03:09:42.368868329Z"
+    },
+    "Volumes": {},
+    "VolumesRW": {}
+}
+]
+#+END_EXAMPLE
+
+下面是一个image inspection的输出
+#+BEGIN_EXAMPLE
+➜  ~  sudo docker inspect c4f 
+[{
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "",
+    "Config": {
+        "AttachStderr": false,
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "Cmd": [
+            "/bin/bash"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "HOME=/",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+        "ExposedPorts": null,
+        "Hostname": "b756a5b3138f",
+        "Image": "cc58e55aa5a53b572f3b9009eb07e50989553b95a1545a27dcec830939892dba",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": [],
+        "OpenStdin": false,
+        "PortSpecs": null,
+        "StdinOnce": false,
+        "Tty": false,
+        "User": "",
+        "Volumes": null,
+        "WorkingDir": ""
+    },
+    "Container": "9171240b5812e222219401a43d291d652c9f67a52b03961d130202635bba0bed",
+    "ContainerConfig": {
+        "AttachStderr": false,
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "Cmd": [
+            "/bin/sh",
+            "-c",
+            "#(nop) CMD [/bin/bash]"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "HOME=/",
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+        ],
+        "ExposedPorts": null,
+        "Hostname": "b756a5b3138f",
+        "Image": "cc58e55aa5a53b572f3b9009eb07e50989553b95a1545a27dcec830939892dba",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": [],
+        "OpenStdin": false,
+        "PortSpecs": null,
+        "StdinOnce": false,
+        "Tty": false,
+        "User": "",
+        "Volumes": null,
+        "WorkingDir": ""
+    },
+    "Created": "2014-08-12T03:30:47.480340266Z",
+    "DockerVersion": "1.1.2",
+    "Id": "c4ff7513909dedf4ddf3a450aea68cd817c42e698ebccf54755973576525c416",
+    "Os": "linux",
+    "Parent": "cc58e55aa5a53b572f3b9009eb07e50989553b95a1545a27dcec830939892dba",
+    "Size": 0
+}
+]
+#+END_EXAMPLE
+
 ** Dockerfile
+使用Dockerfile可以很容易地构建image. 常用命令是docker build -t <image-name> .
+
+Dockerfile格式很简单的:
+#+BEGIN_EXAMPLE
+# Comment
+指令 参数
+#+END_EXAMPLE
+指令是不区分大小写的, 然而约定是大写的以便区分其他的参数。Docker会读测试Dockerfile中的指令，第一条命令必须是'FROM'来指定你正在构建的基本镜像。
+
+   - FROM <image-name> # 基本镜像
+   - MAINTAINER <name> # 作者信息
+   - RUN <command> # 为构建image执行的shell命令
+   - CMD <command> # 容器启动时候默认的shell命令
+   - EXPOSE <port> [<port>...] # 暴露外部端口
+   - ENV <key> <value> # 设置环境变量
+   - ADD <src> <dest> # 添加hostOS文件。权限是755,uid=0.
+   - ENTRYPOINT <command> # 和CMD类似
+   - VOLUME # 挂载到本地或者是其他container文件系统
+   - USER # 设置镜像运行用户名和uid
+   - WORKDIR # 初始工作目录
+
 ** FAQ
 ** troubleshooting
 ** internal stuff
