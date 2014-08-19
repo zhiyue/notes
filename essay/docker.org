@@ -364,9 +364,10 @@ Dockerfile格式很简单的:
    - WORKDIR # 初始工作目录
 
 ** troubleshooting
-*** 如何为container分配固定IP
-现在除了在启动container时候使用lxc-conf指定lxc配置之外没有特别好的办法。此外有个工具可以简化这个步骤 https://github.com/jpetazzo/pipework
+*** assign static ip to container
+可以在启动container时候使用lxc-conf指定lxc配置来分配固定IP(必须保证容器格式是lxc)
 
+有个工具可以简化这个步骤 https://github.com/jpetazzo/pipework
 #+BEGIN_EXAMPLE
 pipework br1 -i eth2 <container> 192.168.1.1/24
 #+END_EXAMPLE
@@ -374,6 +375,18 @@ pipework br1 -i eth2 <container> 192.168.1.1/24
    - add an interface named eth2 to the container;
    - assign IP address 192.168.1.1 to this interface,
    - connect this interface to br1.
+
+如果不使用pipework的话那么步骤如下
+   - sudo brctl addbr br1 # apt-get install bridge-utils
+   - sudo ifconfig br1 inet 192.168.16.254 netmask 255.255.255.0
+然后在docker启动时候添加如下参数
+#+BEGIN_EXAMPLE
+    --lxc-conf="lxc.network.type=veth" \
+    --lxc-conf="lxc.network.name=eth1" \
+    --lxc-conf="lxc.network.flags=up" \
+    --lxc-conf="lxc.network.link=br1" \
+    --lxc-conf="lxc.network.ipv4=192.168.16.1/24" \
+#+END_EXAMPLE
 
 ** internal stuff
    - LXC https://linuxcontainers.org/
