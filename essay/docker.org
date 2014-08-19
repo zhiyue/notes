@@ -351,8 +351,18 @@ Dockerfile格式很简单的:
    - USER # 设置镜像运行用户名和uid
    - WORKDIR # 初始工作目录
 
-** FAQ
 ** troubleshooting
+*** 如何为container分配固定IP
+现在除了在启动container时候使用lxc-conf指定lxc配置之外没有特别好的办法。此外有个工具可以简化这个步骤 https://github.com/jpetazzo/pipework
+
+#+BEGIN_EXAMPLE
+pipework br1 -i eth2 <container> 192.168.1.1/24
+#+END_EXAMPLE
+   - create a bridge named br1 in the docker host;
+   - add an interface named eth2 to the container;
+   - assign IP address 192.168.1.1 to this interface,
+   - connect this interface to br1.
+
 ** internal stuff
    - LXC https://linuxcontainers.org/
    - AUFS http://en.wikipedia.org/wiki/Aufs

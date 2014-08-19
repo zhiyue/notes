@@ -259,7 +259,7 @@ mysql_pull() {
 # --mips ; use multiple ips
 
 # if not multiple ips, ip is always 127.0.0.1
-# if multiple ips, ip of node{idx} is 192.168.100.103+idx
+# if multiple ips, ip of node{idx} is 192.168.101.103+idx
 
 # segment of node{idx} is (idx % seg_num + seg_off)
 
@@ -274,7 +274,7 @@ _test_copy_conf() {
     local SGOF=0
     local MIPS=0
     local IPBE=103
-    local IPPX="192.168.100."
+    local IPPX="192.168.101."
     local PORT=4566
     while test $# -gt 0
     do
@@ -437,33 +437,76 @@ build_galera() {
     done
 }
 
-dk_create_node() {
+# docker related.
+dk() {
+    if [ $# -eq 0 ]; then
+        docker
+        return
+    fi
+    case $1 in
+        create)
+            shift 1
+            _dk_create_node $@
+            ;;
+        connect)
+            shift 1
+            _dk_connect_node $@
+            ;;
+        un-sudo)
+            _dk_unsudo
+            ;;
+        list)
+            _dk_list
+            ;;
+        rm-ac)
+            _dk_remove_containers
+            ;;
+        rm-ai)
+            _dk_remove_images
+            ;;
+        *)
+            docker $@
+            ;;
+    esac
+}
+
+export DK_IMAGE="dirlt/ubuntu:14.04"
+_dk_create_node() {
     while test $# -gt 0
     do
+        local ipd=$((103+$1))
         docker run -v /home/dirlt/repo:/mnt/repo -v /home/dirlt/.private:/mnt/.private \
-            --name "u$1" --hostname "u$1" -d dirlt/ubuntu:12.04 \
+            --name "u$1" --hostname "u$1" -d \
+            $DK_IMAGE \
             /usr/sbin/sshd -D
+        if [ $? -eq 0 ]; then
+            echo "assign IP 172.17.0.$ipd/24 to u$1"
+            sudo /home/dirlt/repo/pipework/pipework docker0 -i eth1 u$1 172.17.0.$ipd/24
+        fi
         shift 1
     done
 }
-dk_use_node() {
-    ssh vagrant@127.0.0.1
+
+_dk_connect_node() {
+    local ipd=$((103+$1))
+    echo "connect to vagrant@172.17.0.$ipd"
+    ssh vagrant@172.17.0.$ipd
 }
 
-# docker related.
-alias dk='docker'
-reset_docker_privilege() {
-    # seems following way is useless.
-    # sudo gpasswd -a dirlt docker    
+_dk_unsudo() {
+    # sudo gpasswd -a dirlt docker
     sudo chown dirlt:dirlt /var/run/docker.sock
 }
-dk_list() {
+_dk_list() {
     docker ps -a
     echo '----------'
     docker images
 }
-dk_remove_all() {
+_dk_remove_containers() {
     docker rm -f $(docker ps -a -q)
+}
+_dk_remove_images() {
+    docker rmi -f $(docker images -q)
 }
 
 # utility
