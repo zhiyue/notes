@@ -14,6 +14,8 @@ docker有三种方式运行:
    - 作为一个命令行的方式来告诉docker进程的程序接口来做什么（docker run ...）
    - 作为一个仓库的客户端让你分享你搭建的环境(docker pull,docker commit)
 
+-----
+
 docker底层可以使用virtualbox(开销大，可以使用其他内核), 也可以使用lxc(轻量，必须使用本地内核). 如果使用lxc的话必须确保linux内核支持，使用下面命令来升级内核
 #+BEGIN_EXAMPLE
 #安装内核
@@ -23,19 +25,29 @@ sudo apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-ra
 sudo reboot
 #+END_EXAMPLE
 
-然后用apt-get命令来安装lxc-docker
+然后用apt-get命令来安装docker
 #+BEGIN_EXAMPLE
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
 sudo sh -c "echo deb http://get.docker.io/ubuntu docker main >/etc/apt/sources.list.d/docker.list"
 sudo apt-get update
-sudo apt-get install lxc-docker
+sudo apt-get install lxc lxc-docker
 #+END_EXAMPLE
+
+*note(dirlt): 高版本docker不再使用lxc而是使用libcontainer作为默认容器格式*
+#+BEGIN_VERSE
+Container format. Docker combines these components into a wrapper we call a container format. The default container format is called libcontainer. Docker also supports traditional Linux containers using LXC. In the future, Docker may support other container formats, for example, by integrating with BSD Jails or Solaris Zones.
+#+END_VERSE
+如果需要使用lxc作为container format的话必须修改配置文件/etc/default/docker.
+#+BEGIN_EXAMPLE
+DOCKER_OPTS="-e lxc"
+#+END_EXAMPLE
+
+------
 
 docker使用cs架构，所以即使在本地运行也需要启动一个daemon的docker server进程
    - sudo service docker [command]
    - sudo docker -d &
-默认server使用unix:///var/run/docker.sock做通信，因为这个文件owner是root，所以所有docker命令必须以sudo开头。所以修改这个文件的owner为普通用户的话就可以不用sudo开头。
-（不过如果不使用默认值的话，那么所有docker命令都要添加-H来指定通讯方式，比较繁琐） 关于docker server命令可以man docker.
+默认server使用unix:///var/run/docker.sock做通信，因为这个文件owner是root，所以所有docker命令必须以sudo开头。所以修改这个文件的owner为普通用户的话就可以不用sudo开头。不过如果不使用默认值的话，那么所有docker命令都要添加-H来指定通讯方式，比较繁琐. 关于docker server命令可以man docker.  *note(dirlt): 可以通过修改配置文件/etc/default/docker来解决这个问题。也可以通过将自己加入到docker组这样不用每次都使用sudo.*
 
 docker大部分使用方式都是集中在client上. 每个命令都有非常多的参数可以使用，可以man docker-<command>比如man docker-run察看
 
@@ -440,7 +452,5 @@ Control groups（资源控制）. Docker also makes use of another technology ca
 
 Union file systems（UFS）. Union file systems, or UnionFS, are file systems that operate by creating layers, making them very lightweight and fast. Docker uses union file systems to provide the building blocks for containers. Docker can make use of several union file system variants including: AUFS, btrfs, vfs, and DeviceMapper.
 
-Container format. Docker combines these components into a wrapper we call a container format. The default container format is called libcontainer. Docker also supports traditional Linux containers using LXC. In the future, Docker may support other container formats, for example, by integrating with BSD Jails or Solaris Zones.
-
-
+Container format. Docker combines these components into a wrapper we call a container format. The default container format is called libcontainer. Docker also supports traditional Linux containers using LXC. In the future, Docker may support other container formats, for example, by integrating with BSD Jails or Solaris Zones. *note(dirlt): docker默认不再使用lxc而是libcontainer*
 

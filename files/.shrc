@@ -452,17 +452,8 @@ dk() {
             shift 1
             _dk_connect_node $@
             ;;
-        un-sudo)
-            _dk_unsudo
-            ;;
         list)
             _dk_list
-            ;;
-        rm-ac)
-            _dk_remove_containers
-            ;;
-        rm-ai)
-            _dk_remove_images
             ;;
         *)
             docker $@
@@ -475,37 +466,60 @@ _dk_create_node() {
     while test $# -gt 0
     do
         local ipd=$((103+$1))
+        local ip="192.168.101.$ipd"
         docker run -v /home/dirlt/repo:/mnt/repo -v /home/dirlt/.private:/mnt/.private \
-            --name "u$1" --hostname "u$1" -d \
+            --name "u$1" --hostname "u$1" -d --privileged \
+            --lxc-conf="lxc.network.type=veth" \
+            --lxc-conf="lxc.network.name=eth1" \
+            --lxc-conf="lxc.network.flags=up" \
+            --lxc-conf="lxc.network.link=xbr1" \
+            --lxc-conf="lxc.network.ipv4=$ip/24" \
             $DK_IMAGE \
             /usr/sbin/sshd -D
-        if [ $? -eq 0 ]; then
-            echo "assign IP 172.17.0.$ipd/24 to u$1"
-            sudo /home/dirlt/repo/pipework/pipework docker0 -i eth1 u$1 172.17.0.$ipd/24
-        fi
         shift 1
     done
 }
 
+
 _dk_connect_node() {
     local ipd=$((103+$1))
-    echo "connect to vagrant@172.17.0.$ipd"
-    ssh vagrant@172.17.0.$ipd
+    local ip="192.168.101.$ipd"
+    echo "connect to vagrant@$ip"
+    ssh vagrant@$ip
 }
 
-_dk_unsudo() {
-    # sudo gpasswd -a dirlt docker
-    sudo chown dirlt:dirlt /var/run/docker.sock
-}
 _dk_list() {
     docker ps -a
     echo '----------'
     docker images
 }
-_dk_remove_containers() {
+
+dk_create_bridge() {
+    sudo brctl addbr br1
+    sudo brctl addbr br2
+    sudo ifconfig br1 inet 192.168.16.254 netmask 255.255.255.0
+    sudo ifconfig br2 inet 192.168.17.254 netmask 255.255.255.0
+    sudo brctl addbr xbr1
+    sudo ifconfig xbr1 inet 192.168.101.254 netmask 255.255.255.0
+}
+
+dk_remove_bridge() {
+    sudo ifconfig br1 down
+    sudo ifconfig br2 down
+    sudo ifconfig xbr1 down
+    sudo brctl delbr br1
+    sudo brctl delbr br2
+    sudo brctl delbr xbr1
+}
+
+dk_unsudo() {
+    sudo usermod -G docker -a dirlt
+}
+
+dk_remove_containers() {
     docker rm -f $(docker ps -a -q)
 }
-_dk_remove_images() {
+dk_remove_images() {
     docker rmi -f $(docker images -q)
 }
 
