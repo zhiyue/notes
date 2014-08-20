@@ -112,6 +112,9 @@ configure_utils() {
     PATH=$SBT_HOME/bin:$PATH
     export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt -Dsbt.ivy.home=$HOME/.ivy2"
 
+    # sqlgen
+    PATH=$HOME/repo/galera/tests/bin:$PATH
+
     export PATH
 }
 configure_utils
