@@ -8,8 +8,10 @@ export EDITOR=vim # write commit message in a interactive way.
 
 # language.
 export LANG="en_US.UTF-8"
+export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 # export LANG="zh_CN.UTF-8"
+export LANGUAGE="zh_CN.UTF-8"
 # export LC_ALL="zh_CN.UTF-8"
 
 # mac or ubuntu.
@@ -17,7 +19,7 @@ is_mac() {
     if [ $(uname -s) = "Darwin" ]; then echo "1"; else echo "0"; fi
 }
 is_vm() {
-    if [ $USER = "vagrant" ]; then echo "1"; else echo "0"; fi
+    if [ "$USER" != "dirlt" ]; then echo "1"; else echo "0"; fi
 }
 
 # cdh related.
@@ -135,8 +137,8 @@ configure_git
 
 # private key.
 configure_key() {
-    ssh-add ~/.ssh/id_rsa 2>/dev/null
-    ssh-add ~/.ssh/github 2>/dev/null
+    ssh-add $HOME/.ssh/id_rsa 2>/dev/null
+    ssh-add $HOME/.ssh/github 2>/dev/null
 }
 configure_key
 
@@ -248,12 +250,10 @@ mysql_stopd() {
     sudo /etc/init.d/mysql stop
 }
 mysql_pull() {
-    pushd
     cd $HOME/repo/wsrep-5.5 && bzr pull
     cd $HOME/repo/wsrep-5.6 && bzr pull
     cd $HOME/repo/trunk-5.5 && bzr pull
-    cd H$OME/repo/trunk-5.6 && bzr pull
-    popd
+    cd $$OME/repo/trunk-5.6 && bzr pull
 }
 
 # --nums ; how many nodes
@@ -346,7 +346,7 @@ _test_copy_conf() {
 }
 
 test_copy_conf() {
-    cd ~/.private/galera
+    cd $HOME/.private/galera
     _test_copy_conf $@
     cd  -
 }
@@ -464,7 +464,7 @@ dk() {
     esac
 }
 
-export DK_IMAGE="dirlt/ubuntu:14.04"
+export DK_IMAGE="ubuntu:local"
 _dk_create_node() {
     while test $# -gt 0
     do
@@ -497,6 +497,12 @@ _dk_list() {
     docker images
 }
 
+dk_build_image() {
+    cd $HOME/repo/notes/files/
+    docker build -t $DK_IMAGE .
+    cd -
+}
+
 dk_create_bridge() {
     sudo brctl addbr br1
     sudo brctl addbr br2
@@ -516,7 +522,8 @@ dk_remove_bridge() {
 }
 
 dk_unsudo() {
-    sudo usermod -G docker -a dirlt
+    # sudo usermod -G docker -a dirlt
+    sudo chown dirlt /var/run/docker.sock
 }
 
 dk_remove_containers() {
@@ -551,7 +558,7 @@ golang_doc_server() {
 
 apt_update() {
     sudo rm -rf /etc/apt/sources.list
-    sudo ln -s ~/repo/notes/files/.sources.list /etc/apt/sources.list
+    sudo ln -s $HOME/repo/notes/files/.sources.list /etc/apt/sources.list
 
     # docker
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
@@ -569,7 +576,7 @@ apt_update() {
 }
 
 home_http_server() {
-    cd ~
+    cd $HOME
     python -m SimpleHTTPServer 8080
     cd -
 }
@@ -579,7 +586,7 @@ home_http_server_once() {
     port_info=$(lsof -i:8080 -Pn | grep "(LISTEN)")
     if [ -z "$port_info" ]; then
         echo "start home_http_server..."
-        cd ~
+        cd $HOME
         (python -m SimpleHTTPServer 8080 >/tmp/home_http_server.out 2>&1 &)
         cd -
     fi
@@ -622,71 +629,71 @@ install_files() {
     for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc Vagrantfile
     do
         echo "installing $target..."
-        rm -rf ~/$target
-        ln -s ~/repo/notes/files/$target ~/$target
+        rm -rf $HOME/$target
+        ln -s $HOME/repo/notes/files/$target $HOME/$target
     done
 
     ##########
     echo "installing index.html..."
-    rm -rf ~/index.html
-    ln -s ~/.private/files/index.html ~/index.html
+    rm -rf $HOME/index.html
+    ln -s $HOME/.private/files/index.html $HOME/index.html
 
     echo "installing id_rsa.pub..."
-    rm -rf ~/.ssh/id_rsa.pub
-    ln -s ~/.private/keys/id_rsa.pub ~/.ssh/id_rsa.pub
-    chmod 0600 ~/.ssh/id_rsa.pub
+    rm -rf $HOME/.ssh/id_rsa.pub
+    ln -s $HOME/.private/keys/id_rsa.pub $HOME/.ssh/id_rsa.pub
+    test -f $HOME/.ssh/id_rsa.pub && chmod 0600 $HOME/.ssh/id_rsa.pub
 
     echo "installing id_rsa..."
-    rm -rf ~/.ssh/id_rsa
-    ln -s ~/.private/keys/id_rsa ~/.ssh/id_rsa
-    chmod 0600 ~/.ssh/id_rsa
+    rm -rf $HOME/.ssh/id_rsa
+    ln -s $HOME/.private/keys/id_rsa $HOME/.ssh/id_rsa
+    test -f $HOME/.ssh/id_rsa && chmod 0600 $HOME/.ssh/id_rsa
 
     echo "installing github.pub..."
-    rm -rf ~/.ssh/github.pub
-    ln -s ~/.private/keys/github.pub ~/.ssh/github.pub
-    chmod 0600 ~/.ssh/github.pub
+    rm -rf $HOME/.ssh/github.pub
+    ln -s $HOME/.private/keys/github.pub $HOME/.ssh/github.pub
+    test -f $HOME/.ssh/github.pub && chmod 0600 $HOME/.ssh/github.pub
 
     echo "installing github..."
-    rm -rf ~/.ssh/github
-    ln -s ~/.private/keys/github ~/.ssh/github
-    chmod 0600 ~/.ssh/github
+    rm -rf $HOME/.ssh/github
+    ln -s $HOME/.private/keys/github $HOME/.ssh/github
+    test -f $HOME/.ssh/github && chmod 0600 $HOME/.ssh/github
 
     echo "installing ssh-config..."
-    rm -rf ~/.ssh/config
-    ln -s ~/.private/files/ssh-config ~/.ssh/config
+    rm -rf $HOME/.ssh/config
+    ln -s $HOME/.private/files/ssh-config $HOME/.ssh/config
 
     echo "installing ivy2-credentials..."
-    mkdir -p ~/.ivy2
-    rm -rf ~/.ivy2/.credentials
-    ln -s ~/.private/files/ivy2-credentials ~/.ivy2/.credentials
+    mkdir -p $HOME/.ivy2
+    rm -rf $HOME/.ivy2/.credentials
+    ln -s $HOME/.private/files/ivy2-credentials $HOME/.ivy2/.credentials
 
     echo "installing mvn-settings.xml..."
-    mkdir -p ~/.m2
-    rm -rf ~/.m2/settings.xml
-    ln -s ~/.private/files/mvn-settings.xml ~/.m2/settings.xml
+    mkdir -p $HOME/.m2
+    rm -rf $HOME/.m2/settings.xml
+    ln -s $HOME/.private/files/mvn-settings.xml $HOME/.m2/settings.xml
 
     echo "installing build.sbt..."
-    mkdir -p ~/.sbt/plugins
-    rm -rf ~/.sbt/plugins/build.sbt
-    rm -rf ~/.sbt/build.sbt
-    ln -s ~/.private/files/plugins.sbt ~/.sbt/plugins/build.sbt
-    ln -s ~/.private/files/build.sbt ~/.sbt/build.sbt
+    mkdir -p $HOME/.sbt/plugins
+    rm -rf $HOME/.sbt/plugins/build.sbt
+    rm -rf $HOME/.sbt/build.sbt
+    ln -s $HOME/.private/files/plugins.sbt $HOME/.sbt/plugins/build.sbt
+    ln -s $HOME/.private/files/build.sbt $HOME/.sbt/build.sbt
 
     echo "installing .oh-my-zsh"
-    rm -rf ~/.oh-my-zsh
-    ln -s ~/.private/oh-my-zsh ~/.oh-my-zsh
+    rm -rf $HOME/.oh-my-zsh
+    ln -s $HOME/.private/oh-my-zsh $HOME/.oh-my-zsh
 
     echo "installing .emacs.d"
-    rm -rf ~/.emacs.d
-    ln -s ~/.private/emacs.d ~/.emacs.d
+    rm -rf $HOME/.emacs.d
+    ln -s $HOME/.private/emacs.d $HOME/.emacs.d
 
     echo "installing tc-env..."
-    rm -rf ~/contestapplet.conf
-    ln -s ~/repo/tc-env/contestapplet.conf ~/contestapplet.conf
+    rm -rf $HOME/contestapplet.conf
+    ln -s $HOME/repo/tc-env/contestapplet.conf $HOME/contestapplet.conf
 }
 
 vpn_umeng_dp() {
-    cd ~/.private/vpn-umeng-dp
+    cd $HOME/.private/vpn-umeng-dp
     sudo openvpn --config client.conf
     cd -
 }
@@ -697,7 +704,7 @@ start_tc_env() {
 
 install_hosts() {
     echo "installing hosts..."
-    sudo cp ~/.private/files/hosts /etc/hosts
+    sudo cp $HOME/.private/files/hosts /etc/hosts
 }
 
 update_hosts() {
@@ -710,7 +717,7 @@ update_hosts() {
 }
 
 shadowsocks() {
-    cd ~/.private/shadowsocks
+    cd $HOME/.private/shadowsocks
     ./local.py
     cd -
 }
@@ -720,7 +727,7 @@ shadowsocks_once() {
     port_info=$(lsof -i:62221 -Pn | grep "(LISTEN)")
     if [ -z "$port_info" ]; then
         echo "start shadowsocks..."
-        cd ~/.private/shadowsocks
+        cd $HOME/.private/shadowsocks
         (./local.py >/tmp/shadowsocks.out 2>&1 &)
         cd -
     fi
@@ -792,7 +799,7 @@ set_local_port_range() {
 }
 
 install_ubuntu_packages() {
-    cat ~/repo/notes/essay/ubuntu.org | grep "^   - sudo apt-get" | \
+    cat $HOME/repo/notes/essay/ubuntu.org | grep "^   - sudo apt-get" | \
         awk '{print $5;}' | xargs sudo apt-get install -y
 }
 
