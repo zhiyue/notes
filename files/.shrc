@@ -496,7 +496,7 @@ _dk_connect_node() {
 _dk_list() {
     docker ps -a
     echo '----------'
-    docker images
+    docker images | grep -v "<none>"
 }
 
 dk_build_image() {
