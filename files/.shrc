@@ -470,8 +470,10 @@ _dk_create_node() {
     do
         local ipd=$((103+$1))
         local ip="192.168.101.$ipd"
-        docker run -v /home/dirlt/repo:/mnt/repo -v /home/dirlt/.private:/mnt/.private \
-            --name "u$1" --hostname "u$1" -d --privileged \
+        docker run -d \
+            -v /home/dirlt/repo:/mnt/repo \
+            -v /home/dirlt/.private:/mnt/.private \
+            --name "u$1" --hostname "u$1" \
             --lxc-conf="lxc.network.type=veth" \
             --lxc-conf="lxc.network.name=eth1" \
             --lxc-conf="lxc.network.flags=up" \
