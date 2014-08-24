@@ -172,7 +172,7 @@ Run a process in a new container. docker run starts a process with its own file 
    - --link=name:alias Add link to another container.
    - --net="bridge"  Set the Network mode for the container.
    - -P, --publish-all=true|false  When set to true publish all exposed ports to the host interfaces.
-   - -p, --publish=[] Publish a container's port to the host # -p <container-port>:<host-port>
+   - -p, --publish=[] Publish a container's port to the host # -p <host-port>:<container-port>
 
 在foreground和background之间切换还是有点问题的(C-P以及C-Q都不work)，http://stackoverflow.com/questions/20145717/how-to-detach-from-a-docker-container 所以个人觉得比较有效的方式就是：
    - 交互式应用 # docker run -i -t --rm ubuntu /bin/bash

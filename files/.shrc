@@ -487,10 +487,23 @@ _dk_create_node() {
 
 
 _dk_connect_node() {
-    local ipd=$((103+$1))
-    local ip="192.168.101.$ipd"
-    echo "connect to vagrant@$ip"
-    ssh vagrant@$ip
+    local ip=$(docker inspect -f '{{.NetworkSettings.IPAddress}}' $1)
+    shift 1
+    local user="vagrant"
+    while test $# -gt 0
+    do
+        case $1 in 
+            --user)
+                shift 1
+                user=$1
+                shift 1
+                ;;
+            *)
+                ;;
+        esac
+    done
+    echo "connect to $user@$ip"
+    ssh $user@$ip
 }
 
 _dk_list() {
