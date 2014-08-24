@@ -496,11 +496,11 @@ _dk_connect_node() {
             --user)
                 shift 1
                 user=$1
-                shift 1
                 ;;
             *)
                 ;;
         esac
+        shift 1
     done
     echo "connect to $user@$ip"
     ssh $user@$ip
