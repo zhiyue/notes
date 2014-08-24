@@ -23,6 +23,7 @@ USER vagrant
 env USER vagrant
 env HOME /home/vagrant
 WORKDIR /home/vagrant
+# VOLUME ["/mnt/repo", "/mnt/.private"]
 RUN ln -s /mnt/repo repo
 RUN ln -s /mnt/.private .private
 RUN mkdir -p .ssh
