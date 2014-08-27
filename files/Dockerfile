@@ -20,9 +20,9 @@ RUN mkdir -p /var/run/sshd
 RUN apt-get install -y git
 
 USER vagrant
+WORKDIR /home/vagrant
 env USER vagrant
 env HOME /home/vagrant
-WORKDIR /home/vagrant
 VOLUME ["/mnt/repo", "/mnt/.private"]
 RUN ln -s /mnt/repo repo
 RUN ln -s /mnt/.private .private
@@ -34,7 +34,8 @@ RUN /bin/zsh -c "source /home/vagrant/.shrc && install_files"
 
 # Install basic packages
 USER root
-RUN apt-get install -y bzr git subversion
-RUN apt-get install -y rsync lsof gdb valgrind
+RUN apt-get install -y git lsof less vim
+RUN apt-get install -y python perl
 RUN apt-get install -y autotools-dev automake build-essential libtool
-RUN apt-get install -y libmysqlclient-dev libaio1
+RUN apt-get install -y libaio1
+RUN apt-get install -y net-tools sysstat

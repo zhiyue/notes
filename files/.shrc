@@ -253,7 +253,7 @@ mysql_pull() {
     cd $HOME/repo/wsrep-5.5 && bzr pull
     cd $HOME/repo/wsrep-5.6 && bzr pull
     cd $HOME/repo/trunk-5.5 && bzr pull
-    cd $$OME/repo/trunk-5.6 && bzr pull
+    cd $HOME/repo/trunk-5.6 && bzr pull
 }
 
 # --nums ; how many nodes
@@ -492,7 +492,7 @@ _dk_connect_node() {
     local user="vagrant"
     while test $# -gt 0
     do
-        case $1 in 
+        case $1 in
             --user)
                 shift 1
                 user=$1
