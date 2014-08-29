@@ -130,6 +130,7 @@
    - sudo apt-get install lxc-docker
    - sudo apt-get install lxc
    - sudo apt-get install bridge-utils
+   - sudo apt-get install python-mysqldb
 
 ** 系统配置
 *** 察看ubuntu内部版本
@@ -219,7 +220,6 @@ doc存放位置通常在/usr/share/doc/<package>/下面。
 甚至可以直接调用alien -i test.rpm直接安装而不需要转换。
 
 *** The System Running In Low Graphics Mode
-
 http://simpledeveloper.com/system-running-in-low-graphics-mode/
 
    - CTRL + ALT + F1 切换到terminal
@@ -227,6 +227,13 @@ http://simpledeveloper.com/system-running-in-low-graphics-mode/
    - # sudo apt-get remove --purge gdm
    - # sudo apt-get install gdm
    - # sudo reboot
+
+*** apt-get: Waiting for headers
+http://askubuntu.com/questions/156650/apt-get-update-very-slow-stuck-at-waiting-for-headers
+
+可能是因为网络链接不太好，也可能是因为源服务器不太稳定。如果确定是自己源服务器不太稳定的话，那么可以更换源服务器。
+
+Update Manager -> Settings -> Ubuntu Software -> Download from Other -> Select Best Server
 
 ** 桌面应用
 *** amarok循环播放
@@ -371,6 +378,11 @@ ssh-add   ~/.ssh/id_rsa
 sudo chsh -s /bin/zsh dirlt
 
 似乎需要重启才能够生效
+*** 关闭ssh host key检查
+How to disable SSH host key checking http://linuxcommando.blogspot.com/2008/10/how-to-disable-ssh-host-key-checking.html
+   - UserKnownHostsFile /dev/null
+   - StrictHostKeyCheckin no
+
 ** 虚拟机
 *** vmware虚拟机增加磁盘空间
 今天感觉自己的磁盘空间好像有点不够了，大部分数据都是在$HOME下面的，需要增加磁盘空间。

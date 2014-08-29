@@ -172,7 +172,7 @@ Run a process in a new container. docker run starts a process with its own file 
    - --link=name:alias Add link to another container.
    - --net="bridge"  Set the Network mode for the container.
    - -P, --publish-all=true|false  When set to true publish all exposed ports to the host interfaces.
-   - -p, --publish=[] Publish a container's port to the host # -p <container-port>:<host-port>
+   - -p, --publish=[] Publish a container's port to the host # -p <host-port>:<container-port>
 
 在foreground和background之间切换还是有点问题的(C-P以及C-Q都不work)，http://stackoverflow.com/questions/20145717/how-to-detach-from-a-docker-container 所以个人觉得比较有效的方式就是：
    - 交互式应用 # docker run -i -t --rm ubuntu /bin/bash
@@ -354,14 +354,14 @@ Dockerfile格式很简单的:
    - FROM <image-name> # 基本镜像
    - MAINTAINER <name> # 作者信息
    - RUN <command> # 为构建image执行的shell命令
-   - CMD <command> # 容器启动时候默认的shell命令
+   - CMD <command> # 基于这个image的容器入口指令
    - EXPOSE <port> [<port>...] # 暴露外部端口
-   - ENV <key> <value> # 设置环境变量
-   - ADD <src> <dest> # 添加hostOS文件。权限是755,uid=0.
-   - ENTRYPOINT <command> # 和CMD类似
-   - VOLUME # 挂载到本地或者是其他container文件系统
-   - USER # 设置镜像运行用户名和uid
-   - WORKDIR # 初始工作目录
+   - ENV <key> <value> # 环境变量，影响之后的RUN
+   - ADD <src> <dest> # 添加hostOS文件，权限是755，uid=0.
+   - ENTRYPOINT <command> # see CMD
+   - VOLUME # 挂载本地或者是其他container文件系统（just placeholder） http://stackoverflow.com/questions/18873474/can-i-specify-host-directory-to-mount-from-dockerfile
+   - USER # 设置运行用户名和uid，影响之后的RUN
+   - WORKDIR # 设置工作目录，影响之后的RUN，CMD，ENTRYPOINT
 
 ** troubleshooting
 *** assign static ip to container
