@@ -97,8 +97,8 @@ configure_utils() {
 
     # protocol buffers.
     PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
-    PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
+    PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
 
     # golang
     export GOROOT=$HOME/utils/go
@@ -807,6 +807,10 @@ install_gnu_package() {
 set_core_dump_param() {
     ulimit -c unlimited
     sudo sysctl -q -w kernel.core_pattern="/tmp/core.%e.%t.%p"
+}
+
+set_ptrace_scope() {
+    sudo sysctl -w kernel.yama.ptrace_scope=0
 }
 
 set_local_port_range() {
