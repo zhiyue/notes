@@ -72,7 +72,7 @@ configure_java() {
     if [ $(is_mac) = 1 ]; then
         JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
     else
-        JAVA_HOME=/usr/lib/jvm/java-6-openjdk-amd64/
+        JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
     fi
     CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:$HADOOP_CLASSPATH:$CLASSPATH
     CLASSPATH=.:./target/classes:./target/dependency:$CLASSPATH
@@ -92,14 +92,14 @@ configure_utils() {
     PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
 
     # maven.
+    PATH=$HOME/utils/apache-maven-2.2.1/bin:$PATH
     PATH=$HOME/utils/apache-maven-3.0.4/bin:$PATH
-    PATH=$HOME/utils/apache-maven-3.2.1/bin:$PATH
 
     # protocol buffers.
     PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
-
+    
     # golang
     export GOROOT=$HOME/utils/go
     export GOPATH=$HOME/go/
