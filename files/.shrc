@@ -588,6 +588,11 @@ if [ $(is_vm) = 0 ]; then
     home_http_server_once
 fi
 
+mvn_over_socks_proxy() {
+    # export MAVEN_OPTS="-DsocksProxyHost=127.0.0.1 -DsocksProxyPort=62221"
+    mvn -DsocksProxyHost=127.0.0.1 -DsocksProxyPort=62221 $@
+}
+
 cxx_indent() {
     dos2unix $@
     # http://astyle.sourceforge.net/astyle.html
