@@ -2,6 +2,7 @@
 #+OPTIONS: H:4
 
    - Readings in Database Systems http://redbook.cs.berkeley.edu/
+   - Reading List - CS286 Fall 2014 : http://www.cs286.net/home/reading-list
 
 ** 硬盘报价
 @2013-05-09 by tianxuewen
@@ -13,5 +14,3 @@
    - 3T SAS(3.5寸7200转) 单价：2000元
    - 4T SAS(3.5寸7200转) 单价：2900元
 硬盘架子一个50元
-
-

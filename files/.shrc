@@ -99,7 +99,7 @@ configure_utils() {
     PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
-    
+
     # golang
     export GOROOT=$HOME/utils/go
     export GOPATH=$HOME/go/
@@ -660,22 +660,20 @@ install_files() {
 
     echo "installing id_rsa.pub..."
     rm -rf $HOME/.ssh/id_rsa.pub
-    ln -s $HOME/.private/keys/id_rsa.pub $HOME/.ssh/id_rsa.pub
+    ln -s $HOME/.private/files/id_rsa.pub $HOME/.ssh/id_rsa.pub
     test -f $HOME/.ssh/id_rsa.pub && chmod 0600 $HOME/.ssh/id_rsa.pub
 
-    echo "installing id_rsa..."
     rm -rf $HOME/.ssh/id_rsa
-    ln -s $HOME/.private/keys/id_rsa $HOME/.ssh/id_rsa
+    ln -s $HOME/.private/files/id_rsa $HOME/.ssh/id_rsa
     test -f $HOME/.ssh/id_rsa && chmod 0600 $HOME/.ssh/id_rsa
 
     echo "installing github.pub..."
     rm -rf $HOME/.ssh/github.pub
-    ln -s $HOME/.private/keys/github.pub $HOME/.ssh/github.pub
+    ln -s $HOME/.private/files/github.pub $HOME/.ssh/github.pub
     test -f $HOME/.ssh/github.pub && chmod 0600 $HOME/.ssh/github.pub
 
-    echo "installing github..."
     rm -rf $HOME/.ssh/github
-    ln -s $HOME/.private/keys/github $HOME/.ssh/github
+    ln -s $HOME/.private/files/github $HOME/.ssh/github
     test -f $HOME/.ssh/github && chmod 0600 $HOME/.ssh/github
 
     echo "installing ssh-config..."
@@ -701,11 +699,11 @@ install_files() {
 
     echo "installing .oh-my-zsh"
     rm -rf $HOME/.oh-my-zsh
-    ln -s $HOME/.private/oh-my-zsh $HOME/.oh-my-zsh
+    ln -s $HOME/repo/oh-my-zsh $HOME/.oh-my-zsh
 
     echo "installing .emacs.d"
     rm -rf $HOME/.emacs.d
-    ln -s $HOME/.private/emacs.d $HOME/.emacs.d
+    ln -s $HOME/repo/emacs.d $HOME/.emacs.d
 
     echo "installing tc-env..."
     rm -rf $HOME/contestapplet.conf
