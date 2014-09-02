@@ -223,7 +223,8 @@ remove_nodes() {
 install_nodes() {
     $GALERA_SRC/tests/scripts/command.sh install $1
 }
-drop_connection() {
+
+isolate_connection() {
     sudo iptables -A INPUT -s "192.168.100.104" -d "192.168.100.105" -j DROP
     sudo iptables -A INPUT -s "192.168.100.103" -d "192.168.100.104" -j DROP
     sudo iptables -A INPUT -s "192.168.100.103" -d "192.168.100.105" -j DROP
