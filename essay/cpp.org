@@ -437,14 +437,14 @@ class B{
 
 之后我在想，虽然这个方式不错消除继承完全按照基于对象的方式编程，但是如果对于对象所需要的接口非常多的话，并且虚函数本身就是语言内置的特性，相对来说使用起来会更加方便。下面是可编译的示例代码之后我在想，虽然这个方式不错消除继承完全按照基于对象的方式编程，但是如果对于对象所需要的接口非常多的话，并且虚函数本身就是语言内置的特性，相对来说使用起来会更加方便。
 
-具体代码可以参考 [[https://github.com/dirtysalt/playboard/blob/master/cc/test_bind.cc][playboard/cc/test_bind.cc]]
+具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_bind.cc][tomb/cc/test_bind.cc]]
 
 *** boost::spirit
 今天被Dr. Yang推荐使用boost::spirit，模板编程实现的语法解析器。Dr. Yang推荐我看看hypertable里面实现的hql，里面就是使用spirit实现的hql(hypertable query language)，在src/cc/Hypertable/Lib/HqlParser.h里面。粗看一下功能还是非常强大的，对于很多使用flex/bison完成的工作都可以通过spirit来完成。看上去是LALR解析器，现在不太清楚就是如果出现shift/reduce或者是reduce/reduce冲突的话spirit是怎么解决的。note(dirlt):事实上是LL解析器，而且如果没有猜错应该是LL(1)解析器。
 
 对于action的话需要单独编写function object来完成，operator()是这个grammar对应的字符串。定义ParserState来构建语法树是一个好主意。对于里面更多的细节现在还是不太了解，关于入门使用可以查看代码中的链接或者documentation.
 
-具体代码可以参考 [[https://github.com/dirtysalt/playboard/blob/master/cc/test_spirit.cc][playboard/cc/test_spirit.cc]]
+具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_spirit.cc][tomb/cc/test_spirit.cc]]
 
 *** google::protobuf dynamic usage
 使用google::protobuf如果我们不知道生成消息schema的话，那么就需要依赖于google::protobuf动态编译的能力了。google::protobuf支持动态地读取某个proto文件并且进行动态编译。其实这里说编译有点不太恰当，因为内部并没有生成native code,不过确实使得我们有能力去动态构造一个消息。
@@ -462,7 +462,7 @@ class B{
    - Reflection
    - FieldDescriptor
 
-具体代码可以参考 [[https://github.com/dirtysalt/playboard/blob/master/cc/test_proto_dynamic.cc][playboard/cc/test_proto_dynamic.cc]]
+具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_proto_dynamic.cc][tomb/cc/test_proto_dynamic.cc]]
 
 ** misc
 *** 诡异的性能问题
@@ -532,34 +532,34 @@ int main() {
 
 *在自己的Ubuntu机器下面使用g++4.6编译* 运行结果如下。可以看到测试组1里面action2运行时间为2.9s左右，而测试组2里面action2运行时间为8.5s *时间差别很大*
 #+BEGIN_EXAMPLE
-➜  playboard git:(master) ✗ g++ map_perf_test.cc -O2
-➜  playboard git:(master) ✗ ./a.out
+➜  tomb git:(master) ✗ g++ map_perf_test.cc -O2
+➜  tomb git:(master) ✗ ./a.out
 19764.38
 2957.30
-➜  playboard git:(master) ✗ g++ map_perf_test.cc -O2
-➜  playboard git:(master) ✗ ./a.out
+➜  tomb git:(master) ✗ g++ map_perf_test.cc -O2
+➜  tomb git:(master) ✗ ./a.out
 8521.25
 #+END_EXAMPLE
 
 可能是编译器的原因？ *在自己的Ubuntu机器下面clang++来编译，时间差别同样很大*
 #+BEGIN_EXAMPLE
-➜  playboard git:(master) ✗ clang++ map_perf_test.cc -O2
-➜  playboard git:(master) ✗ ./a.out
+➜  tomb git:(master) ✗ clang++ map_perf_test.cc -O2
+➜  tomb git:(master) ✗ ./a.out
 19494.99
 3052.83
-➜  playboard git:(master) ✗ clang++ map_perf_test.cc -O2
-➜  playboard git:(master) ✗ ./a.out
+➜  tomb git:(master) ✗ clang++ map_perf_test.cc -O2
+➜  tomb git:(master) ✗ ./a.out
 8495.00
 #+END_EXAMPLE
 
 *在自己的macbook air下面使用clang重新编译，时间是差不多的*
 #+BEGIN_EXAMPLE
-➜  playboard git:(master) ✗ g++ map_perf_test.cc -O2
-➜  playboard git:(master) ✗ ./a.out
+➜  tomb git:(master) ✗ g++ map_perf_test.cc -O2
+➜  tomb git:(master) ✗ ./a.out
 22759.82
 4203.22
-playboard git:(master) ✗ g++ map_perf_test.cc -O2
-➜  playboard git:(master) ✗ ./a.out
+tomb git:(master) ✗ g++ map_perf_test.cc -O2
+➜  tomb git:(master) ✗ ./a.out
 4214.48
 #+END_EXAMPLE
 

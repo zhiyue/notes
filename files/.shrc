@@ -541,7 +541,7 @@ dk_unsudo() {
     # sudo usermod -G docker -a dirlt
     sudo chown dirlt /var/run/docker.sock
 }
-
+x
 dk_remove_containers() {
     docker rm -f $(docker ps -a -q)
 }
@@ -551,6 +551,18 @@ dk_remove_images() {
 
 # utility
 alias ex_dstat='dstat -cdgmnpsy'
+
+torrent_clean() {
+    cd $HOME/repo/tomb/py/torrent
+    ./cleanser.py $@
+    cd -
+}
+
+torrent_batch_clean() {
+    cd $HOME/repo/tomb/py/torrent
+    ./btclean.sh $@
+    cd -
+}
 
 pgrep() {
   ps aux | grep $1

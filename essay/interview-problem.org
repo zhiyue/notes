@@ -32,7 +32,7 @@ Resource:
 ** CareerCup
 ** Codility
 ** LeetCode
-https://github.com/dirtysalt/playboard/tree/master/leetcode
+https://github.com/dirtysalt/tomb/tree/master/leetcode
 
 ** 待字闺中
 @陈利人 的微信公众账号
