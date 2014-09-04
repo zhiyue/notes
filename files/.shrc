@@ -541,7 +541,7 @@ dk_unsudo() {
     # sudo usermod -G docker -a dirlt
     sudo chown dirlt /var/run/docker.sock
 }
-x
+
 dk_remove_containers() {
     docker rm -f $(docker ps -a -q)
 }
