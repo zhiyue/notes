@@ -174,14 +174,6 @@ netmask 255.255.255.0
 gateway 10.18.102.254
 #+END_EXAMPLE
 
-修改/etc/resolve.conf
-#+BEGIN_EXAMPLE
-nameserver 208.67.222.222
-nameserver 202.106.0.20
-nameserver 219.232.48.62
-nameserver 210.52.149.2
-#+END_EXAMPLE
-
 修改/etc/nsswitch.conf
 #+BEGIN_EXAMPLE
 hosts:          files dns
@@ -192,17 +184,16 @@ networks:       files
 #+BEGIN_EXAMPLE
 sudo /etc/init.d/networking restart
 #+END_EXAMPLE
-*note(dirlt):可能需要重启多次*
 
 *** 修改主机名称
 sudo hostname <name>
 
-*note(dirlt):mac works too=D*
+*note(dirlt): it works for mac too=D*
 
 *** root密码
 初次启动的时候需要使用sudo passwd root来修改root密码
 
-*note(dirlt)：it works for mac too=D*
+*note(dirlt): it works for mac too=D*
 
 *** deb使用
 安装deb使用命令 sudo dpkg -i test.deb
