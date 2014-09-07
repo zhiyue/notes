@@ -689,9 +689,9 @@ install_files() {
     ln -s $HOME/.private/files/github $HOME/.ssh/github
     test -f $HOME/.ssh/github && chmod 0600 $HOME/.ssh/github
 
-    echo "installing ssh-config..."
+    echo "installing ssh.config..."
     rm -rf $HOME/.ssh/config
-    ln -s $HOME/.private/files/ssh-config $HOME/.ssh/config
+    ln -s $HOME/repo/notes/files/.ssh.config $HOME/.ssh/config
 
     echo "installing ivy2-credentials..."
     mkdir -p $HOME/.ivy2
@@ -707,8 +707,8 @@ install_files() {
     mkdir -p $HOME/.sbt/plugins
     rm -rf $HOME/.sbt/plugins/build.sbt
     rm -rf $HOME/.sbt/build.sbt
-    ln -s $HOME/.private/files/plugins.sbt $HOME/.sbt/plugins/build.sbt
-    ln -s $HOME/.private/files/build.sbt $HOME/.sbt/build.sbt
+    ln -s $HOME/repo/notes/files/.plugins.sbt $HOME/.sbt/plugins/build.sbt
+    ln -s $HOME/repo/notes/files/.build.sbt $HOME/.sbt/build.sbt
 
     echo "installing .oh-my-zsh"
     rm -rf $HOME/.oh-my-zsh
@@ -944,7 +944,7 @@ random_picture() {
 }
 
 configure_samba() {
-    # smdpasswd -a dirlt
-    sudo cp $HOME/.private/files/smb.conf /etc/samba/smb.conf
+    # smbpasswd -a dirlt
+    sudo cp $HOME/repo/notes/files/.smb.conf /etc/samba/smb.conf
     sudo service smbd restart
 }
