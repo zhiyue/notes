@@ -53,7 +53,7 @@ file:./images/spanner-server-organization.png
 
    - zonemaster 选择spanserver来serve data
    - spanserver serve data
-   - location proxy 用来定位spanserver location *todo(dirlt)：confuse with zonemaster*
+   - location proxy 用来定位spanserver location
    - universe master和plaecment driver都是单例
      - The universe master is primarily a console that displays status information about all the zones for inter-active debugging. （汇总信息） *note(dirlt):包括管理schema等？*
      - The placement driver handles auto-mated movement of data across zones on the timescale of minutes. （在zone之间进行分钟级别自动balance）
@@ -74,6 +74,8 @@ file:./images/spanserver-software-stack.png
      - If a transac-tion involves only one Paxos group (as is the case for most transactions), it can bypass the transaction manager, since the lock table and Paxos together provide transac- tionality. （如果操作只是发生在一个paxos group上面的话，那么可以绕过transaction manager)
      - If a transaction involves more than one Paxos group, those groups’ leaders coordinate to perform two-phase commit.(如果涉及到多个paxos group的话，那么就需要leader来发起2PC）
      -  The state of each trans-action manager is stored in the underlying Paxos group (and therefore is replicated).（transaction manager的log记录在底层的paxos group)
+
+<大规模分布式存储系统>: 通过Paxos协议实现了跨数据中心的多个副本之间的一致性。另外每个主副本所在的spanserver还会实现一个锁表用于并发控制，读写事务操作某个子表上的目录时需要通过锁表避免多个事务之间相互干扰。除了锁表每个主副本上还有一个事务管理器，如果事务在一个Paxos组里可以绕过事务管理器，但是一旦事务跨多个Paxos组，就需要事务管理器来协调。
 	
 *** Directories and Placement
 file:./images/spanner-directory-movement.png
@@ -128,6 +130,8 @@ true time api看上去非常简洁，也非常好理解。就是说请求当前�
 links can result in occasional localized spikes.（但是如果出现故障的话那么超过这个锯齿装的还是可能的，比如偶尔的timemaster不可用，或者是机器和网络出现overload的情况会造成延迟加大等）
 
 *note(dirlt)：感觉他们在设计这个的时候就是胆大心细*
+
+<大规模分布式存储系统>: 为了实现并发控制，数据库需要给每个事务分配全局唯一的事务id。然而在分布式系统中很难生成全局唯一id。一种方式才哦那个percolator中的做法，专门部署一套Oracle数据库用于生成全局唯一id。虽然Oracle逻辑上是一个单点，但是实现的功能单一，因而能够做得很高效。
 
 ** Concurrency Control
 *note(dirlt):并发控制是关键部分，但是这个部分我没有仔细阅读，主要是对paxos没有很好的理解*

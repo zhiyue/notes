@@ -11,7 +11,7 @@
 如果只有一个副本机器A，要是A的硬盘坏了，那数据就丢失了。要是有多个副本机器，则还可以从其他机器上找回来。所以说多副本提高了数据的durability，写完多副本的数据很难会丢失。
 
 ** Cloudera blog
-*** Application 
+*** Application
    1. [[http://www.cloudera.com/blog/2009/04/22/using-hadoop-to-annotate-=billions-of-web-documents-with-semantics/][Using Hadoop to Annotate Billions of Web Documents with Semantics]]
    2. [[http://www.cloudera.com/blog/2009/06/02/smart-grid-big-data-hadoop=-tennessee-valley-authority-tva/][The Smart Grid and Big Data: Hadoop at the Tennessee Valley Authority (TVA)]]
    3. [[http://www.cloudera.com/blog/2009/10/15/analyzing-human-genomes-with=-hadoop/][Analyzing Human Genomes with Hadoop]]
@@ -48,7 +48,7 @@
    34. [[http://www.cloudera.com/blog/2012/05/treato-analyzes-health-re=lated-big-data-with-hadoop/][How Treato Analyzes Health-related Social Media Big Data with Hadoop and HBase]]
    35. [[http://www.cloudera.com/blog/2012/07/processing-rat-brain-neuronal-signals-using-a-hadoop-computing-cluster-part-i/][Processing Rat Brain Neuronal Signals Using A Hadoop Computing Cluster – Part I]]
    36. [[http://www.cloudera.com/blog/2012/08/processing-rat-brain-neuronal-signals-using-a-hadoop-computing-cluster-part-ii/][Processing Rat Brain Neuronal Signals Using a Hadoop Computing Cluster – Part II]]
-   
+
 *** Hadoop
    1. [[http://www.cloudera.com/blog/2008/12/03/securing-a-hadoop-cluster-t=hrough-a-gateway/][Securing a Hadoop Cluster Through a Gateway]]
    2. [[http://www.cloudera.com/blog/2008/12/16/testing-hadoop= /][Testing Hadoop]]
@@ -77,8 +77,8 @@
    25. [[http://www.cloudera.com/blog/2011/09/snappy-and-hadoop/][Snappy and Hadoop]]
    26. [[http://www.cloudera.com/blog/2012/03/thoughts-on-cloudera-and-cisco-=ucs-reference-architecture-for-hadoop/][Thoughts on Cloudera and Cisco UCS reference architecture for Hadoop]]
    27. [[http://www.cloudera.com/blog/2012/03/authorization-and-authenticatio=n-in-hadoop/][Authorization and Authentication In Hadoop]]
-   28. [[http://www.cloudera.com/blog/2012/06/hadoop-beyond-mapreduce-introdu=cing-kitten/][Hadoop Beyond MapReduce, Part 1: Introducing Kitten]]   
-   
+   28. [[http://www.cloudera.com/blog/2012/06/hadoop-beyond-mapreduce-introdu=cing-kitten/][Hadoop Beyond MapReduce, Part 1: Introducing Kitten]]
+
 *** HDFS
    1. [[http://www.cloudera.com/blog/2009/01/14/hdfs-reliabi= lity/][HDFS Reliability]]
    2. [[http://www.cloudera.com/blog/2009/02/10/multi-host-secondaryn=amenode-configuration/][Multi-host SecondaryNameNode Configuration]]
@@ -87,7 +87,7 @@
    5. [[http://www.cloudera.com/blog/2012/03/high-availability-for-the-hadoo=p-distributed-file-system-hdfs/][High Availability for the Hadoop Distributed File System (HDFS)]]
    6. [[http://www.cloudera.com/blog/2012/05/namenode-recovery-tools-for-the=-hadoop-distributed-file-system/][NameNode Recovery Tools for the Hadoop Distributed File System]]
    7. [[http://www.cloudera.com/blog/2012/07/why-we-build-our-platform-on-hdfs=/][Why we build our platform on HDFS]]
-    
+
 *** MapReduce
    1. [[http://www.cloudera.com/blog/2008/11/14/sending-files-to-remote-t=ask-nodes-with-hadoop-mapreduce/][Sending Files to Remote Task Nodes with Hadoop MapReduce]]
    2. [[http://www.cloudera.com/blog/2008/11/23/job-scheduling-in-hadoop/][Job Scheduling in Hadoop]]
@@ -107,7 +107,7 @@
    16. [[http://www.cloudera.com/blog/2011/12/crunch-for-dummies/][Crunch for Dummies]]
    17. [[http://www.cloudera.com/blog/2012/02/mapreduce-2-0-in-hadoop-0-23/][MapReduce 2.0 in Hadoop 0.23]]
    18. [[http://www.cloudera.com/blog/2012/07/experimenting-with-mapreduce-2-0/][Experimenting with MapReduce 2.0]]
-   
+
 *** HBase
    1. [[http://www.cloudera.com/blog/2010/03/hbase-user-group-9-hbase-and-hdfs=/][HBase User Group #9: HBase and HDFS]]
    2. [[http://www.cloudera.com/blog/2010/06/integrating-hive-and-hbase/][Integrating Hive and HBase]]
@@ -121,22 +121,22 @@
    10. [[http://www.cloudera.com/blog/2012/06/hbase-io-hfile-input-output/][HBase I/O - HFile]]
    11. [[http://www.cloudera.com/blog/2012/07/hbase-log-splitting/][HBase Log Splitting]]
    12. [[http://www.cloudera.com/blog/2012/07/hbase-replication-overview-2/=][HBase Replication Overview]]
-   
+
 *** Pig
    1. [[http://www.cloudera.com/blog/2009/06/17/analyzing-apache-logs-with-pig/=][Analyzing Apache logs with Pig]]
-   
+
 *** Scribe
    1. [[http://www.cloudera.com/blog/2008/10/28/installing-scribe-for-lo=g-collection/][Installing Scribe For Log Collection]]
    2. [[http://www.cloudera.com/blog/2008/11/02/configuring-and-using-sc=ribe-for-hadoop-log-collection/][Configuring and Using Scribe for Hadoop Log Collection]]
-     
+
 *** ZooKeeper
    1. [[http://www.cloudera.com/blog/2009/05/28/building-a-distributed-co=ncurrent-queue-with-apache-zookeeper/][Building a distributed concurrent queue with Apache ZooKeeper]]
-      
+
 *** Sqoop
    1. [[http://www.cloudera.com/blog/2009/06/01/introducing-sqoop/][Introducing Sqoop]]
    2. [[http://www.cloudera.com/blog/2011/10/apache-sqoop-overview/][Apache Sqoop - Overview]]
    3. [[http://www.cloudera.com/blog/2012/01/apache-sqoop-highlights-of-sqoop-2/][Apache Sqoop: Highlights of Sqoop 2]]
-   
+
 *** Avro
    1. [[http://www.cloudera.com/blog/2009/11/02/avro-a-format-for-big-data/][Avro: a Format for Big Data]]
    2. [[http://www.cloudera.com/blog/2010/11/better-workflow-management-in-cdh-wi=th-oozie-2/][Better Workflow Management in CDH with Oozie 2]]
@@ -144,13 +144,36 @@
    4. [[http://www.cloudera.com/blog/2011/05/three-reasons-why-apache-av=ro-data-serialization-is-a-good-choice-for-openrtb/][Three Reasons Why Apache Avro Data Serialization is a Good Choice for OpenRTB]]
    5. [[http://www.cloudera.com/blog/2011/07/avro-data-interop/][Data Interoperability with Apache Avro]]
    6. [[http://www.cloudera.com/blog/2011/12/apache-avro-at-richrelev=ance/][Apache Avro at RichRelevance]]
-      
+
 *** Hive
    1. [[http://www.cloudera.com/blog/2009/11/11/hadoop-world-rethi=nking-the-data-warehouse-with-hadoop-and-hive-from-ashish-thusoo/][Hadoop World: Rethinking the Data Warehouse with Hadoop and Hive from Ashish Thusoo]]
-   
+
 *** Misc
    1. [[http://www.cloudera.com/blog/2010/04/cap-confusion-problems=-with-partition-tolerance/][CAP Confusion: Problems with 'partition tolerance']]
    2. [[http://www.cloudera.com/blog/2011/06/if-80-of-data-is-unstructured-is=-it-the-exception-or-a-new-rule/][If 80% of data is unstructured, is it the exception or a new rule?]]
    3. [[http://www.cloudera.com/blog/2011/12/notes-from-the-flume-ng-hack=athon/][Notes from the Flume NG Hackathon]]
    4. [[http://www.cloudera.com/blog/2012/01/capacity-planning-with-clouder=a-manager/][Capacity Planning with Cloudera Manager]]
-     
+
+** 2PC & Paxos
+<大规模分布式存储系统>
+
+2PC提交协议可能面临两种故障：
+   - 事务参与者发生故障。给每个事务设置一个超时时间，如果某个事务参与者一直不响应，到达超时时间后整个事务失败。
+   - 协调者发生故障。协调者需要将事务相关信息记录到操作日志并同步到备用协调者。假如协调者发生故障，备用协调者可以接替它完成后续的工作。如果没有备用协调者，协调者又发生了永久性故障，事务参与者讲无法完成事务而一直等待下去。
+总而言之，2PC提交协议是阻塞协议。执行过程中需要锁住其他更新，且不能容错，大部分分布式存储系统都采用敬而远之的做法，放弃对分布式事务的支持。
+
+Paxos协议和2PC协议在分布式系统中所起的作用并不相同。Paxos协议用于保证同一个数据分片的多个副本之间的数据一致性。当这些副本分布到不同的数据中心时，这个需求尤其强烈。2PC协议用于保证属于多个数据分片上的操作原子性。这些数据分片可能分布在不同的服务器上，2PC协议保证多台服务器上的操作要么全部成功，要么全部失败。
+
+Paxos协议有两种用法：一种用法是用它来实现全局的锁服务或者命名和配置服务，比如chubby和zookeeper. 另外一种用法是用它来将用户数据复制到多个数据中心比如megastore和spanner.
+
+2PC协议最大的缺陷在于无法处理协调者宕机问题。如果协调者宕机，那么2PC协议中的每个参与者可能都不知道事务应该提交还是回滚，整个协议被阻塞，执行过程中申请的资源都无法释放。 *因此常见做法是将2PC和Paxos协议结合起来* 通过2PC保证多个数据分片上操作的原子性，通过Paxos协议实现同一个数据分片的多个副本之间的一致性，另外通过Paxos协议解决2PC协议中协调者宕机问题。当2PC协议中的协调者出现故障时，通过Paxos协议选举出新的协调者继续提供服务。
+
+
+
+
+
+
+
+
+
+
