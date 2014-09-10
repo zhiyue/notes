@@ -739,10 +739,20 @@ install_hosts() {
 }
 
 update_hosts() {
+    local disable=0
+    while test $# -gt 0
+    do
+        case $1 in
+            --disable)
+                disable=1
+                ;;
+        esac
+        shift 1
+    done
     local url=${SMART_HOSTS_URL:-"http://smarthosts.googlecode.com/svn/trunk/hosts"}
     local hosts="$HOME/.private/files/hosts"
     cat $hosts | awk 'BEGIN {f=0;} /^#SmartHosts/ {f=1;} {if(f==0) print $0;}' > /tmp/hosts
-    curl -S $url 2>/dev/null >> /tmp/hosts
+    if [ $disable = 0 ]; then curl -S $url 2>/dev/null >> /tmp/hosts ; fi
     cp $hosts $hosts.bak
     cp /tmp/hosts $hosts
 }
