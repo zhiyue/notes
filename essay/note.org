@@ -40,10 +40,11 @@
    - [[file:./note/apply-visa-for-finland.org][申请芬兰签证]]
    - [[file:./note/apply-visa-for-usa.org][申请美国签证]]
    - [[file:./note/mobile-foreign-business.org][手机国际业务]]
-   - [[file:./note/helsinki-travel.org][赫尔辛基印象]]
+   - [[file:./note/helsinki-travel.org][赫尔辛基印象]] @ 2014-03-03
    - [[file:./note/sfo-travel.org][旧金山印象]]
    - [[file:./note/xmn-travel.org][厦门鼓浪屿印象]]
    - [[file:note/jeju-travel.org][济州岛之旅]]
+   - [[file:./note/helsinki-travel2.org][赫尔辛基印象2]] @ 2014-09-09
 
 ** 印记
    - [[file:note/fun.org][挺搞笑的]]

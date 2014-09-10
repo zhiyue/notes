@@ -1,6 +1,8 @@
 * helsinki-travel
 #+TITLE: 赫尔辛基印象
 
+@2014-03-03
+
 http://xiangce.baidu.com/picture/album/list/1d579b1647dfe7d30706370e604402c202332396
 
    - 自来水可以直接饮用
