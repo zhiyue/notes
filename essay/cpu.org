@@ -100,8 +100,5 @@ May 12 12:29:40 dp57 mcelog: Processor 1 below trip temperature. Throttling disa
 May 12 12:29:40 dp57 mcelog: Processor 1 below trip temperature. Throttling disabled
 #+END_EXAMPLE
 
-** SMP achitecture
-file:./images/smp-arch.jpg
-
-** Motherboard architecture
-file:./images/motherboard-arch.jpg
+** arch illustration
+file:./images/smp-arch.jpg file:./images/motherboard-arch.jpg
