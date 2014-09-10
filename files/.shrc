@@ -755,6 +755,7 @@ update_hosts() {
     if [ $disable = 0 ]; then curl -S $url 2>/dev/null >> /tmp/hosts ; fi
     cp $hosts $hosts.bak
     cp /tmp/hosts $hosts
+    install_hosts
 }
 
 shadowsocks() {
