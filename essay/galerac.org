@@ -164,3 +164,4 @@ capabilities
    - put sqlgen(which is not open-sourced) to tests/bin
    - install libgbl.so (https://github.com/codership/glb) to /user/local/lib
    - install mysql client.
+

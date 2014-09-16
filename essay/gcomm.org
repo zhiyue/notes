@@ -1,0 +1,103 @@
+* gcomm
+** protocol layer
+*** ProtoUpMeta
+#+BEGIN_SRC C++
+class ProtoUpMeta {
+    UUID    const source_; // 消息发送者
+    ViewId  const source_view_id_; // 消息是在哪个view下发送的
+    uint8_t const user_type_; // 消息类型
+    Order   const order_; // 消息顺序
+    int64_t const to_seq_; // 消息编号
+    int     const err_no_; // 错误编号
+    View*   const view_; // 消息是否为view
+};
+#+END_SRC
+
+*** ProtoDownMeta
+#+BEGIN_SRC C++
+class ProtoDownMeta {
+    const uint8_t user_type_; // 消息类型
+    const Order   order_; // 消息顺序
+    const UUID    source_; // 消息发送者
+    const int     segment_; // 发送者所属分区
+};
+#+END_SRC
+
+*** Protolay
+定义协议层接口.
+
+#+BEGIN_SRC C++
+class Protolay {
+    typedef std::list<Protolay*> CtxList;
+    CtxList     up_context_; // 向上协议层
+    CtxList     down_context_; // 向下协议层
+    typedef Map<UUID, gu::datetime::Date> FenceList;
+    FenceList   fence_list_; // 节点屏蔽列表
+};
+#+END_SRC
+比较重要方法有
+   - send_up // 主动触发向上发送消息
+   - send_down // 主动触发向下发送消息
+   - fence // 将节点接入屏蔽列表
+   - unfence // 移除屏蔽列表
+   - connect(down, up) // 将上下层协议连接
+   - disconnect(down, up)
+
+提供了一些方法接口需要实现
+   - connect(bool)
+   - close(bool force/const UUID& uuid)
+   - handle_down // 被动处理向下流动消息
+   - handle_up // 被动处理向上流动消息
+   - handle_stable_view // 当non-transient view形成时
+   - handle_fencing // 节点加入屏蔽列表时
+   - handle_timers // 处理超时情况
+两个扩展类是Toplay和Bottomlay, 分别禁止调用handle_up和handle_down.
+
+*** Protostack
+将协议层组织成为栈式结构(协议栈)
+
+#+BEGIN_SRC C++
+class gcomm::Protostack {
+    std::deque<Protolay*> protos_; // 所有协议层
+    gu::Mutex mutex_; // 用于控制并发
+};
+#+END_SRC
+   - push_proto // 在上层添加协议栈
+   - pop_proto // 从上层移除协议栈
+   - dispatch // 从最下面一层协议栈开始向上传播
+
+*** Transport
+继承于Protolay也属于协议层. 所谓transport就是传输节点，因为传输数据涉及到协议自然也属于协议层
+
+#+BEGIN_SRC C++
+class Transport {
+    Protostack        pstack_; // 协议栈
+    Protonet&         pnet_; // 网络传输
+    gu::URI           uri_;  // 网络地址
+    int               error_no_; // 错误编号
+};
+#+END_SRC
+
+增加了部分新的接口
+   - listen / handle_listen // 处理监听成功(失败)
+   - accept / handle_accept // 处理连接请求
+   - handle_connect // 处理连接成功(失败)
+
+** test framework
+*** check trace
+模拟网络输入来控制协议栈运行并且追踪记录所有的view以及msg. 
+   - TraceMsg 追踪消息
+   - ViewTrace 追踪view以及这个view下面所有的消息
+   - Trace 追踪信息流包括view以及msg.
+   - DummyTransport 模拟传输节点，允许对发送数据进行拦截
+   - DummyNode 模拟节点来追踪信息，属于最高层。
+   - ChannelMsg 在channel上的msg
+   - Channel 两个节点通信管道，属于最底层。对接到DummyTransport. 可以设置延迟和丢失率
+   - MatrixElem. 通信矩阵单元节点
+   - ChannelMap = Map<MatrixElem, Channel>
+   - NodeMap = Map<size_t(index), DummyNode*>
+   - PropagationMatrix 消息传播矩阵。在传播时候使用Channel设置来模拟延迟和丢失率
+     - propagate_n 传播n次
+     - propagate_until_empty 传播直到没有消息流动
+     - propagate_until_cvi 传播直到达到某个view为止
+     
