@@ -1,4 +1,7 @@
 * gcomm
+** links
+   - Virtual and Extended Virtual Synchrony : http://www.cs.huji.ac.il/labs/transis/lab-projects/guide/chap3.html#Virtual
+
 ** protocol layer
 *** ProtoUpMeta
 #+BEGIN_SRC C++
@@ -82,6 +85,32 @@ class Transport {
    - listen / handle_listen // 处理监听成功(失败)
    - accept / handle_accept // 处理连接请求
    - handle_connect // 处理连接成功(失败)
+
+** delivery order
+http://www.cs.huji.ac.il/labs/transis/lab-projects/guide/chap3.html#Virtual 几种投递顺序的详细解释. 
+在agreed order部分解释为什么引入transitional configuration而最终形成extended virtual synchrony
+
+在order.hpp里面定义了6种投递顺序
+   - O_DROP 协议内部使用(用来递增消息序列号)
+   - O_UNRELIABLE 协议内部使用
+   - O_FIFO 对于单个节点有序
+   - O_AGREED 对于整个集群有序
+   - O_SAFE 对于整个集群有序并且确保消息被所有节点都收到
+   - O_LOCAL_CAUSAL 只会在本地投递，作用类似barrier: "当应用看到这条消息时可以确保，在这条信息之前投递的消息(可以是从任意节点发起的)都已经传递给了应用层"
+
+下面是代码中关于local causal的注释
+#+BEGIN_VERSE
+ * Message will be delivered only locally and delivery will fulfill the
+ * following property:
+ *
+ * Let M_c be message tagged with O_LOCAL_CAUSAL ordering requirement.
+ * Any message M_a which is delivered on any node so that delivery
+ * has causal precedence on generating M_c will be delivered locally
+ * before M_c.
+ *
+ * Note that the causality is guaranteed only with respect to
+ * already delivered messages.
+#+END_VERSE
 
 ** test framework
 *** check trace
