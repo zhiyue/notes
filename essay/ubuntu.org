@@ -134,6 +134,7 @@
    - sudo apt-get install bridge-utils
    - sudo apt-get install python-mysqldb
    - sudo apt-get install samba
+   - sudo apt-get install octave
 
 ** 系统配置
 *** 察看ubuntu内部版本

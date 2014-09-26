@@ -253,6 +253,8 @@ mysql_stopd() {
 mysql_pull() {
     cd $HOME/repo/trunk-5.5 && bzr pull
     cd $HOME/repo/trunk-5.6 && bzr pull
+    cd $HOME/repo/wsrep-5.5 && bzr pull
+    cd $HOME/repo/wsrep-5.6 && bzr pull
 }
 
 # --nums ; how many nodes
