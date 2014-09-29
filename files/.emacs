@@ -249,6 +249,9 @@
 ;;; protobuf
 (require 'protobuf-mode)
 (add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
+;;; octave
+(add-to-list 'auto-mode-alist '("\\.m\\'" . octave-mode))
+
 ;;; nxml mode.
 ;; (defvar nxml-mode-map
 ;;       (let ((map (make-sparse-keymap)))
