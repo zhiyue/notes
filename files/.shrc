@@ -117,6 +117,12 @@ configure_utils() {
     # sqlgen
     PATH=$HOME/repo/galera/tests/bin:$PATH
 
+    # sml
+    PATH=$HOME/utils/sml/bin:$PATH
+
+    # racket
+    PATH=$HOME/utils/racket/bin:$PATH
+
     export PATH
 }
 configure_utils
