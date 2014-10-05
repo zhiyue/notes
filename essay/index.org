@@ -219,6 +219,7 @@
    - [[file:go.org][Go]] # Go is a compiled, garbage-collected, concurrent programming language developed by Google Inc. [[http://en.wikipedia.org/wiki/Go_(programming_language)][Wikipedia]]
    - [[file:./scala.org][Scala]] # Scala is an object-functional programming and scripting language for general software applications, statically typed, designed to concisely express solutions in an elegant, type-safe and lightweight (low ceremonial) manner. [[http://en.wikipedia.org/wiki/Scala_(programming_language)][Wikipedia]]
      - [[file:./effective-scala.org][Effective Scala]]
+     - [[file:./images/coursera-fpps-2013.pdf][Coursera: FP in Scala]]
 
 ** Software Design
    - [[file:design-reading.org][Design Reading]] 关于设计方面的一些文章以及阅读心得。
