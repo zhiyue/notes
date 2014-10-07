@@ -135,6 +135,18 @@
    - sudo apt-get install python-mysqldb
    - sudo apt-get install samba
    - sudo apt-get install octave
+   - sudo apt-get install audacity
+   - sudo apt-get install libbz2-dev
+   - sudo apt-get install libfftw3-dev
+   - sudo apt-get install libsndfile1-dev
+   - sudo apt-get install libsamplerate0-dev
+   - sudo apt-get install ipython
+   - sudo apt-get install python-numpy
+   - sudo apt-get install python-matplotlib
+   - sudo apt-get install python-scipy
+   - sudo apt-get install python-pygame
+   - sudo apt-get install cython
+
 
 ** 系统配置
 *** 察看ubuntu内部版本
