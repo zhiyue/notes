@@ -83,9 +83,10 @@
    - [[file:algorithm.org][Algorithm]] 算法还是非常重要的。记录的都是现实中使用到的算法或者是比较有趣的数学问题吧。
      - [[file:./cracking-the-coding-interview.org][Cracking The Coding Interview]] 据说算法分为三种：面试算法，ACM算法，算法=D
      - [[file:./interview-problem.org][Interview Problem]] 面试问题
-   - [[file:data-mining.org][Data Mining]] 了解一些数据挖掘方面的知识还是比较有帮助的。其实我们每天都在不知不觉地进行数据挖掘。
+   - [[file:data-mining.org][Data Mining]] / [[file:./machine-learning.org][Machine Learning]] 数据挖掘和机器学习
      - [[file:./probabilistic-data-structures-for-web-analytics-and-data-mining.org][Probabilistic Data Structures for Web Analytics and Data Mining]] 用于Web分析和数据挖掘的概率化数据结构
      - [[file:./do-you-think-you-have-gambling-problem.org][Do You Think You Have a Gambling Problem?]]
+     - [[file:./ml-the-hard-way.org][Machine Learning the Hard Way]] 哥们用ml来赌马，虽然最后赚钱了，但是结果却特别悲惨:)
    - [[file:recommender-system.org][Recommender System]] 推荐系统
    - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 关于推荐系统的介绍性文章
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学 /  [[file:ctr.org][CTR]] click through rate.
@@ -167,6 +168,7 @@
      - [[file:./on-designing-and-deploying-internet-scale-services.org][On Designing and Deploying Internet-Scale Services]] @2007
      - [[file:./analysis-of-hdfs-under-hbase-a-facebook-messages-case-study.org][Analysis of HDFS Under HBase: A Facebook Messages Case Study]] @2014
      - [[file:./the-log-what-every-software-engineer-should-know-about-real-time-datas-unifying-abstraction.org][The Log: What every software engineer should know about real-time data's unifying abstraction]]
+     - [[file:./hadoop-at-a-crossroads.org][Hadoop at a Crossroads?]] by Michael Stonebraker
    - [[file:streambase.org][StreamBase]] 在实现Baidu in-house的分布式实时流式计算系统之前，调研的商用流式计算系统。没有办法获得源代码只能够从文档中猜测其内部实现以及参考其提供的功能与接口。
    - [[file:storm.org][Storm]] Twitter的分布式实时流式处理系统。这个在实现Baidu in-house的分布式实时流式计算系统的时候也做过调研，但是当时不是很深入。
    - [[file:./samza.org][Samza]] LinkedIn的的分布式流式处理系统，现在是Apache下面的项目。
