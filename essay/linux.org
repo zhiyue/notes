@@ -2856,9 +2856,8 @@ todo(dirlt):
 file:./images/kernel-panic-not-syncing-attempted-to-kill-init.png
 
 *** disk IO
-file:./images/Linux-io-stack-diagram_v1.0.png
-
-file:./images/Linux-storage-stack-diagram_v3.17.png
+   - [[file:./images/Linux-io-stack-diagram.png][Linux IO Stack Diagram]]
+   - [[file:./images/Linux-storage-stack-diagram.png][Linux Storage Stack Diagram]]
 
 ** application
 *** 返回值问题
