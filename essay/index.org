@@ -68,6 +68,7 @@
      - [[file:./vagrant.org][Vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持非常好的是VirtualBox)
      - [[file:./sanitizer.org][Sanitizer]] Google的C++动态分析工具，可以检测内存泄漏，内存无效使用以及多线程数据竞争
      - [[file:./docker.org][Docker]] 基于lxc(linux container)的分发应用平台
+     - [[file:./octave.org][Octave]] GNU 'Matlab' on Linux/Mac/Windows
    - Desktop
      - [[file:ubuntu.org][Ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] 。主要记录自己使用出现的问题。
      - [[file:fvwm.org][FVWM]] F* Virtual Windows Manager.Linux下面高度可定制化的窗口管理器。
@@ -237,6 +238,7 @@
      - [[file:./note/how-did-you-learn-so-much-stuff.org][How did you learn so much stuff about Oracle?]]
      - [[file:./a-conversation-with-werner-vogels.org][A Conversation with Werner Vogels]]
      - [[file:./an-interview-with-edw.org][An Interview With Edsger W. Dijkstra]]
+     - [[file:./what-are-the-best-kept-secrets-of-great-programmers.org][What are the best-kept secrets of great programmers?]]
    - [[file:design-pattern.org][Design Pattern]] 将书<Design Patterns: Elements of Reusable Object-Oriented Software>中要表达的思想按照自己的意思整理出来(后面可能会添加一些自己的"设计模式"吧:)。不过我倒是觉得没有必要在使用中刻意地去拼凑使用某种模式，相反应该让模式渗入到自己的思想中去，指导自己写出更加优美更加可维护的代码，而不用在意"我使用了哪种模式". 然后现在我开始逐渐认同一个观点，那就是"设计模式是语言表达能力存在缺陷的一种表现".
    - [[file:./aosa.org][The Architecture of Open Source Applications]]
    - [[file:./producing-open-source-software.org][Producing Open Source Software]]
