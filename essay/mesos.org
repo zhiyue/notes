@@ -1,0 +1,6 @@
+* mesos
+   - http://mesos.apache.org/
+   - https://www.cs.berkeley.edu/~alig/papers/mesos.pdf
+   - date: 2010
+
+

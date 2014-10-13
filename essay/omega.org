@@ -1,0 +1,10 @@
+* omega
+   - link: http://research.google.com/pubs/pub41684.html
+   - title: Omega: flexible, scalable schedulers for large compute clusters 
+   - date: 2013
+
+
+
+
+
+ 
