@@ -1,9 +1,8 @@
 * manhattan
-** Manhattan, our real-time, multi-tenant distributed database for Twitter scale
+#+TITLE: Manhattan, our real-time, multi-tenant distributed database for Twitter scale
 https://blog.twitter.com/2014/manhattan-our-real-time-multi-tenant-distributed-database-for-twitter-scale
 
 ** Layers
-
 file:./images/twitter-manhattan-layers.png
 
 ** Core
@@ -26,7 +25,6 @@ file:./images/twitter-manhattan-layers.png
    - All of our storage engines support block-based compression.
 
 ** Storage Services
-
 file:./images/twitter-manhattan-ss.png
 
 We have created additional services that sit on top of the core of Manhattan that allow us to enable more robust features that developers might come to expect from traditional databases. Some examples are:
@@ -43,7 +41,7 @@ We have created additional services that sit on top of the core of Manhattan tha
 ** Interfaces
 The interface layer is how a customer interacts with our storage system. Currently we expose a key/value interface to our customers, and we are working on additional interfaces such as a graph based interface to interact with edges.
 
-**  Multi-Tenancy and QoS (Quality of Service)
+** Multi-Tenancy and QoS (Quality of Service)
 Supporting multi-tenancy — allowing many different applications to share the same resources — was a key requirement from the beginning. In previous systems we managed at Twitter, we were building out clusters for every feature. This was increasing operator burden, wasting resources, and slowing customers from rolling out new features quickly.
 
 As mentioned above, allowing multiple customers to use the same cluster increases the challenge of running our systems. *We now must think about isolation, management of resources, capacity modeling with multiple customers, rate limiting, QoS, quotas, and more.*
