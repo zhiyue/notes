@@ -365,16 +365,16 @@ build_mysql_debug() {
     $GALERA_SRC/scripts/mysql/build.sh -i -b -d --no-strip --galera-debug --debug-level 0
 }
 build5.5d() {
-    MYSQL_SRC=$HOME/repo/trunk-5.5 build_mysql_debug
+    MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_debug
 }
 build5.6d() {
-    MYSQL_SRC=$HOME/repo/trunk-5.6 build_mysql_debug
+    MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_debug
 }
 build5.5r() {
-    MYSQL_SRC=$HOME/repo/trunk-5.5 build_mysql_release
+    MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_release
 }
 build5.6r() {
-    MYSQL_SRC=$HOME/repo/trunk-5.6 build_mysql_release
+    MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_release
 }
 install5.5() {
     local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.5*.tgz --sort=time | head -1)
