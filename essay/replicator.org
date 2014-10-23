@@ -9,7 +9,7 @@ state transfer触发时机是在membership发生变化的时候，replicator对�
     case GCS_ACT_CONF:
     {
         const gcs_act_conf_t* conf(static_cast<const gcs_act_conf_t*>(act.buf));
-        wsrep_view_info_t* view_info( 
+        wsrep_view_info_t* view_info(
             galera_view_info_create(conf, conf->my_state == GCS_NODE_STATE_PRIM) // 构造view信息
             );
         replicator_.process_conf_change(recv_ctx, *view_info,
@@ -28,4 +28,3 @@ state transfer触发时机是在membership发生变化的时候，replicator对�
 #+END_SRC
 
 *** galera_view_info_create
-
