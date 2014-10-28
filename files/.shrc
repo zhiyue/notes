@@ -568,6 +568,12 @@ pgrep() {
   ps aux | grep $1
 }
 
+gdb_apply_bt()
+{
+    gdb -batch -ex "thread apply all bt" -p $1
+    # gdb -batch -ex "thread apply all bt full" -p $1
+}
+
 alias ps_mysqld='pgrep mysqld'
 
 export IDEA_HOME=$HOME/utils/idea-IC-123.72
