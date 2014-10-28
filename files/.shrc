@@ -149,7 +149,7 @@ configure_key() {
 configure_key
 
 # galera
-export GALERA_SRC=$HOME/repo/galera
+export GALERA_SRC=$HOME/repo/galera-features
 export GALERA_DIR="/tmp/"
 
 lp_login() {
@@ -206,15 +206,15 @@ exec_node() {
 status_node() {
     exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
 }
-create_table() {
-    exec_node 0 "DROP TABLE IF EXISTS test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
-}
-# seems 5.6 with gtid feature supports MASTER_AUTO_POSITION.
-change_master() {
-    exec_node ${1:-0} "STOP SLAVE; \
-CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_PORT=3305, MASTER_USER='root', MASTER_PASSWORD='rootpass', MASTER_AUTO_POSITION = 1; \
-START SLAVE"
-}
+# create_table() {
+#     exec_node 0 "DROP TABLE IF EXISTS test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
+# }
+# # mysql 5.6 with gtid feature supports MASTER_AUTO_POSITION.
+# change_master() {
+#     exec_node ${1:-0} "STOP SLAVE; \
+# CHANGE MASTER TO MASTER_HOST='127.0.0.1', MASTER_PORT=3305, MASTER_USER='root', MASTER_PASSWORD='rootpass', MASTER_AUTO_POSITION = 1; \
+# START SLAVE"
+# }
 
 # batch mode.
 start_nodes() {
@@ -225,9 +225,6 @@ stop_nodes() {
 }
 remove_nodes() {
     $GALERA_SRC/tests/scripts/command.sh remove
-}
-install_nodes() {
-    $GALERA_SRC/tests/scripts/command.sh install $1
 }
 
 isolate_connection() {
@@ -253,10 +250,7 @@ show_network() {
     sudo tc qdisc show
 }
 
-mysql_stopd() {
-    sudo /etc/init.d/mysql stop
-}
-mysql_pull() {
+lp_mysql_pull() {
     cd $HOME/repo/trunk-5.5 && bzr pull
     cd $HOME/repo/trunk-5.6 && bzr pull
     cd $HOME/repo/wsrep-5.5 && bzr pull
@@ -919,8 +913,22 @@ _tm_sync() {
         _tm_sync_dir $src $dst "repo/trunk-5.6"
         _tm_sync_dir $src $dst "repo/wsrep-5.5"
         _tm_sync_dir $src $dst "repo/wsrep-5.6"
+        _tm_sync_dir $src $dst "repo/galera"
+        _tm_sync_dir $src $dst "repo/galera-features"
+        _tm_sync_dir $src $dst "repo/mysql-wsrep"
+        _tm_sync_dir $src $dst "repo/mysql-wsrep-features"
         _tm_sync_dir $src $dst "repo/notes"
         _tm_sync_dir $src $dst "repo/dirtysalt.github.io"
+        _tm_sync_dir $src $dst "repo/emacs.d"
+        _tm_sync_dir $src $dst "repo/oh-my-zsh"
+        _tm_sync_dir $src $dst "repo/astyle"
+        _tm_sync_dir $src $dst "repo/bench"
+        _tm_sync_dir $src $dst "repo/common"
+        _tm_sync_dir $src $dst "repo/itachi"
+        _tm_sync_dir $src $dst "repo/leetcode"
+        _tm_sync_dir $src $dst "repo/nasty"
+        _tm_sync_dir $src $dst "repo/tc-env"
+        _tm_sync_dir $src $dst "repo/tomb"
     fi
 }
 
