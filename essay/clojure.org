@@ -3,6 +3,7 @@
   - http://clojure.org/
   - http://clojure.github.com/clojure/
   - http://java.ociweb.com/mark/clojure/
+  - http://clojure-doc.org/
   - Clojure made simple http://clojure.jr0cket.co.uk/
   - Clojure - Functional Programming for the JVM http://java.ociweb.com/mark/clojure/article.html
   - Clojure Handbook (by jamesqiu) http://qiujj.com/static/clojure-handbook.html
