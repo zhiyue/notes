@@ -47,6 +47,7 @@
    - [[file:./note/helsinki-travel2.org][赫尔辛基印象2]] @ 2014-09-09
    - [[file:./note/running.org][跑步教学]]
    - [[file:note/best-sex.org][最佳体位]]
+   - [[file:./note/my-iphone5s.org][我的iPhone5S]]
 
 ** 印记
    - [[file:note/fun.org][挺搞笑的]]
