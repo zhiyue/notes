@@ -1,4 +1,0 @@
-* photo
-#+TITLE: 摄影
-
-todo(dirlt):
