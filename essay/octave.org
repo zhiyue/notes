@@ -9,7 +9,7 @@ https://class.coursera.org/ml-007/lecture
   - m(:) expand m to a single column vector.
   - m(i,j) could be used as left operand. And for i,j could be
    - [a b] which means ath and bth elements.
-   - or s:i:e/s:e which is shorthand of [a,b]
+   - or s:i:e/s:e which is shorthand of [a,b] # end as a keyword.
    - or : which means every elements.
 - output control
   - disp(value) to print value
