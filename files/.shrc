@@ -24,9 +24,9 @@ is_vm() {
 
 # cdh related.
 configure_cdh() {
-    local CDH3=0
+    local CDH3=1
     local CDH4_2_0=0
-    local CDH4_3_0=1
+    local CDH4_3_0=0
 
     # mac
     if [ $(is_mac) = 1 ]; then
@@ -150,6 +150,7 @@ configure_key
 
 # galera
 export GALERA_SRC=$HOME/repo/galera-features
+export MYSQL_SRC=$HOME/repo/mysql-wsrep-features
 export GALERA_DIR="/tmp/"
 
 lp_login() {
@@ -199,13 +200,13 @@ elog_node() {
 vlog_node() {
     less $GALERA_DIR/galera$1/mysql/var/vg.log
 }
-exec_node() {
-    local idx=$1; shift
-    echo $@ | conn_node $idx
-}
-status_node() {
-    exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
-}
+# exec_node() {
+#     local idx=$1; shift
+#     echo $@ | conn_node $idx
+# }
+# status_node() {
+#     exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
+# }
 # create_table() {
 #     exec_node 0 "DROP TABLE IF EXISTS test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
 # }
@@ -250,12 +251,12 @@ show_network() {
     sudo tc qdisc show
 }
 
-lp_mysql_pull() {
-    cd $HOME/repo/trunk-5.5 && bzr pull
-    cd $HOME/repo/trunk-5.6 && bzr pull
-    cd $HOME/repo/wsrep-5.5 && bzr pull
-    cd $HOME/repo/wsrep-5.6 && bzr pull
-}
+# lp_mysql_pull() {
+#     cd $HOME/repo/trunk-5.5 && bzr pull
+#     cd $HOME/repo/trunk-5.6 && bzr pull
+#     cd $HOME/repo/wsrep-5.5 && bzr pull
+#     cd $HOME/repo/wsrep-5.6 && bzr pull
+# }
 
 # --nums ; how many nodes
 # --segs ; how many segemnt
@@ -358,25 +359,30 @@ build_mysql_release() {
 build_mysql_debug() {
     $GALERA_SRC/scripts/mysql/build.sh -i -b -d --no-strip --galera-debug --debug-level 0
 }
-build5.5d() {
-    MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_debug
-}
-build5.6d() {
-    MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_debug
-}
-build5.5r() {
-    MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_release
-}
-build5.6r() {
-    MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_release
-}
-install5.5() {
-    local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.5*.tgz --sort=time | head -1)
-    echo "installing $p"
-    install_nodes $p
-}
-install5.6() {
-    local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.6*.tgz --sort=time | head -1)
+# build5.5d() {
+#     MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_debug
+# }
+# build5.6d() {
+#     MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_debug
+# }
+# build5.5r() {
+#     MYSQL_SRC=$HOME/repo/wsrep-5.5 build_mysql_release
+# }
+# build5.6r() {
+#     MYSQL_SRC=$HOME/repo/wsrep-5.6 build_mysql_release
+# }
+# install5.5() {
+#     local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.5*.tgz --sort=time | head -1)
+#     echo "installing $p"
+#     install_nodes $p
+# }
+# install5.6() {
+#     local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.6*.tgz --sort=time | head -1)
+#     echo "installing $p"
+#     install_nodes $p
+# }
+install_mysql() {
+    local p=$(ls $GALERA_SRC/scripts/mysql/mysql-5.*.tgz --sort=time | head -1)
     echo "installing $p"
     install_nodes $p
 }
@@ -400,16 +406,16 @@ git_commit() {
     local message=$2
     git commit -m "Refs #$issue_id: $message"
 }
-svn_commit() {
-    local ticket_id=$1
-    local message=$2
-    svn commit -m "Refs #$ticket_id: $message"
-}
-bzr_commit() {
-    local bug_id=$1
-    local message=$2
-    bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
-}
+# svn_commit() {
+#     local ticket_id=$1
+#     local message=$2
+#     svn commit -m "Refs #$ticket_id: $message"
+# }
+# bzr_commit() {
+#     local bug_id=$1
+#     local message=$2
+#     bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
+# }
 build_galera() {
     local ok=0
     local debug=1
@@ -811,31 +817,31 @@ fi
 #     sudo opannotate -a $ifile > $afile
 # }
 
-install_gnu_package() {
-    if [ $# -lt 2 ]; then
-        echo "install_gnu_package gnu-package(tar.gz or tar.bz2) configure-parameters"
-        exit 1
-    fi
-    local NAME=$1; shift
-    local PARAMS=$@
-    case $NAME in
-        *.tar.gz)
-            local SRC=`basename $NAME .tar.gz`
-            rm -rf $SRC
-            tar xzf $NAME
-            ;;
-        *.tar.bz2)
-            local SRC=`basename $NAME .tar.bz2`
-            rm -rf $SRC
-            tar xjf $NAME
-            ;;
-    esac
-    cd $SRC
-    local CONFIG="./configure $PARAMS --enable-shared=no --enable-static=yes"
-    CFLAGS="-fPIC" CXXFLAGS="-fPIC" $CONFIG
-    make -j 8;make install
-    cd -
-}
+# install_gnu_package() {
+#     if [ $# -lt 2 ]; then
+#         echo "install_gnu_package gnu-package(tar.gz or tar.bz2) configure-parameters"
+#         exit 1
+#     fi
+#     local NAME=$1; shift
+#     local PARAMS=$@
+#     case $NAME in
+#         *.tar.gz)
+#             local SRC=`basename $NAME .tar.gz`
+#             rm -rf $SRC
+#             tar xzf $NAME
+#             ;;
+#         *.tar.bz2)
+#             local SRC=`basename $NAME .tar.bz2`
+#             rm -rf $SRC
+#             tar xjf $NAME
+#             ;;
+#     esac
+#     cd $SRC
+#     local CONFIG="./configure $PARAMS --enable-shared=no --enable-static=yes"
+#     CFLAGS="-fPIC" CXXFLAGS="-fPIC" $CONFIG
+#     make -j 8;make install
+#     cd -
+# }
 
 set_core_dump_param() {
     ulimit -c unlimited
