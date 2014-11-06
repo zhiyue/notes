@@ -947,7 +947,15 @@ _tm_sync() {
     fi
 }
 
-export TM_DIR="/tmp/bak/"
+export TM_DIR="/tmp/bak"
+_setup_tm_dir() {
+    if [ ! -e  $TM_DIR ]; then
+        echo "setup time-machine directory..."
+        ln -s "/media/Expansion Drive/Ubuntu Backup/" $TM_DIR
+    fi
+}
+_setup_tm_dir
+
 tm_backup() {
     local home=$HOME
     local backup=$TM_DIR/dirlt
