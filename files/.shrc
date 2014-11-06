@@ -949,7 +949,7 @@ _tm_sync() {
 
 export TM_DIR="/tmp/bak"
 _setup_tm_dir() {
-    if [ ! -e  $TM_DIR ]; then
+    if [ ! -h $TM_DIR ]; then
         echo "setup time-machine directory..."
         ln -s "/media/Expansion Drive/Ubuntu Backup/" $TM_DIR
     fi
