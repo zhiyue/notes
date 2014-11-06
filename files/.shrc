@@ -150,6 +150,7 @@ configure_key
 
 # galera
 export GALERA_SRC=$HOME/repo/galera-features
+export MYSQL_SRC=$HOME/repo/mysql-wsrep-features
 export GALERA_DIR="/tmp/"
 
 lp_login() {
@@ -225,6 +226,9 @@ stop_nodes() {
 }
 remove_nodes() {
     $GALERA_SRC/tests/scripts/command.sh remove
+}
+install_nodes() {
+    $GALERA_SRC/tests/scripts/command.sh install $1
 }
 
 isolate_connection() {
