@@ -200,13 +200,9 @@ elog_node() {
 vlog_node() {
     less $GALERA_DIR/galera$1/mysql/var/vg.log
 }
-# exec_node() {
-#     local idx=$1; shift
-#     echo $@ | conn_node $idx
-# }
-# status_node() {
-#     exec_node ${1:-0} "SHOW STATUS LIKE 'wsrep_%'"
-# }
+status_node() {
+    echo "SHOW STATUS LIKE 'wsrep_%'" | conn_node $1
+}
 # create_table() {
 #     exec_node 0 "DROP TABLE IF EXISTS test.t; CREATE TABLE test.t (id INT PRIMARY KEY)"
 # }
@@ -928,9 +924,9 @@ _tm_sync() {
         _tm_sync_dir $src $dst "repo/trunk-5.6"
         _tm_sync_dir $src $dst "repo/wsrep-5.5"
         _tm_sync_dir $src $dst "repo/wsrep-5.6"
-        _tm_sync_dir $src $dst "repo/galera"
+        # _tm_sync_dir $src $dst "repo/galera"
         _tm_sync_dir $src $dst "repo/galera-features"
-        _tm_sync_dir $src $dst "repo/mysql-wsrep"
+        # _tm_sync_dir $src $dst "repo/mysql-wsrep"
         _tm_sync_dir $src $dst "repo/mysql-wsrep-features"
         _tm_sync_dir $src $dst "repo/notes"
         _tm_sync_dir $src $dst "repo/dirtysalt.github.io"
