@@ -148,7 +148,9 @@ configure_key
 # ---------- galera starts ---------- #
 export GALERA_SRC=$HOME/repo/galera-features
 export MYSQL_SRC=$HOME/repo/mysql-wsrep-features
-export GALERA_DIR="/tmp/"
+export MTR_BINDIR=$MYSQL_SRC/build_debug
+export GALERA_DIR="/tmp"/
+export WSREP_PROVIDER=$GALERA_SRC/libgalera_smm.so
 
 lp_login() {
     bzr launchpad-login yan.zhang
@@ -388,6 +390,9 @@ test_pc_recovery() {
     local round=${1:-4}
     $GALERA_SRC/tests/test_pc_recovery/run.sh $round
 }
+test_non_blocking_ddl() {
+    cd $MYSQL_SRC/mysql-test && perl mysql-test-run.pl --suite galera_3nodes galera_non_blocking_ddl.test --mysqld=--performance-schema=OFF
+}
 build_galera() {
     local ok=0
     local debug=1
@@ -550,6 +555,11 @@ git_commit() {
 
 pgrep() {
   ps aux | grep $1
+}
+
+fresh_directory() {
+  cd /tmp/
+  cd -
 }
 
 gdb_apply_bt()
