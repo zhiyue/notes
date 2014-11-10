@@ -1,0 +1,6 @@
+* programmer-career
+#+TITLE: 程序员职业规划
+
+陈晓峰大牛在创新工场分享的PPT中的一页
+
+file:./images/programmer-career-chart.jpg
