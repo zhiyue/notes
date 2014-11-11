@@ -423,6 +423,16 @@ build_galera() {
         cp $GALERA_SRC/libgalera_smm.so $GALERA_DIR/galera$i/galera/lib/libgalera_smm.so
     done
 }
+
+configure_clang() {
+    CC=$HOME/.private/files/_clang
+    CXX=$HOME/.private/files/_clang++
+    ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer-3.4
+    export CC
+    export CXX
+    export ASAN_SYMBOLIZER_PATH
+}
+
 # ---------- galera ends ---------- #
 
 # ---------- docker starts ----------#
