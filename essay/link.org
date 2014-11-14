@@ -33,6 +33,7 @@
    - Percona. MySQL Performance Optimization & Support, InnoDB, XtraDB and XtraBackup : http://www.mysqlperformanceblog.com/
    - DBMS 2 : Database management and analytic technologies in a changing world : http://www.dbms2.com/
    - Small Datum : http://smalldatum.blogspot.com/
+   - Bartosz Milewski's Programming Cafe | Concurrency, C++, Haskell : http://bartoszmilewski.com/
 
 ** Article
    - The Best of 2012 | Dr Dobb's : http://www.drdobbs.com/architecture-and-design/the-best-of-2012/240145121
