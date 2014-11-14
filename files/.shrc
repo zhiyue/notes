@@ -590,6 +590,23 @@ start_ibus() {
     (ibus-daemon &)
 }
 
+run_mysql_on_docker() {
+    $HOME/repo/tomb/dockerfiles/mysql/start $@
+}
+run_redis_on_docker() {
+    $HOME/repo/tomb/dockerfiles/redis/start $@
+}
+build_mysql_on_docker() {
+    cd $HOME/repo/tomb/dockerfiles 
+    ./build.sh mysql 
+    cd -
+}
+build_redis_on_docker() {
+    cd $HOME/repo/tomb/dockerfiles
+    ./build.sh redis
+    cd -
+}
+
 golang_doc_server() {
     godoc -http=:6060
 }
@@ -923,22 +940,16 @@ _tm_sync() {
         # _tm_sync_dir $src $dst "repo/trunk-5.6"
         # _tm_sync_dir $src $dst "repo/wsrep-5.5"
         # _tm_sync_dir $src $dst "repo/wsrep-5.6"
-        # _tm_sync_dir $src $dst "repo/galera"
         # _tm_sync_dir $src $dst "repo/galera-features"
-        # _tm_sync_dir $src $dst "repo/mysql-wsrep"
         # _tm_sync_dir $src $dst "repo/mysql-wsrep-features"
         _tm_sync_dir $src $dst "repo/notes"
         _tm_sync_dir $src $dst "repo/dirtysalt.github.io"
         _tm_sync_dir $src $dst "repo/emacs.d"
         _tm_sync_dir $src $dst "repo/oh-my-zsh"
-        # _tm_sync_dir $src $dst "repo/astyle"
-        # _tm_sync_dir $src $dst "repo/bench"
-        # _tm_sync_dir $src $dst "repo/common"
         # _tm_sync_dir $src $dst "repo/itachi"
-        # _tm_sync_dir $src $dst "repo/leetcode"
-        # _tm_sync_dir $src $dst "repo/nasty"
         # _tm_sync_dir $src $dst "repo/tc-env"
         # _tm_sync_dir $src $dst "repo/tomb"
+
     fi
 }
 
