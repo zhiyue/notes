@@ -876,13 +876,22 @@ install_ubuntu_packages() {
         awk '{print $5;}' | xargs sudo apt-get install -y
 }
 
-_tm_sync_dir() {
+_tm_soft_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
     mkdir -p "$dst/$d/" 2>/dev/null
-    echo "sync $d..."
+    echo "soft sync $d..."
     rsync -arz --no-times "$src/$d/" "$dst/$d/"
+}
+
+_tm_hard_sync_dir() {
+    local src=$1
+    local dst=$2
+    local d=$3
+    mkdir -p "$dst/$d/" 2>/dev/null
+    echo "hard sync $d..."
+    rsync -arz --delete --no-times "$src/$d/" "$dst/$d/"
 }
 
 _tm_sync_utils() {
@@ -932,23 +941,19 @@ _tm_sync() {
         shift 1
     done
     if [ $UTILS = "yes" ] ; then _tm_sync_utils $src $dst; fi
-    if [ $M2 = "yes" ] ; then _tm_sync_dir $src $dst ".m2" ; fi
-    if [ $KP = "yes" ] ; then _tm_sync_dir $src $dst "KuaiPan"; fi
-    if [ $VM = "yes" ]; then _tm_sync_dir $src $dst "VirtualBox VMs"; fi
+    if [ $M2 = "yes" ] ; then _tm_soft_sync_dir $src $dst ".m2" ; fi
+    if [ $KP = "yes" ] ; then _tm_hard_sync_dir $src $dst "KuaiPan"; fi
+    if [ $VM = "yes" ]; then _tm_soft_sync_dir $src $dst "VirtualBox VMs"; fi
     if [ $REPO = "yes" ]; then
-        # _tm_sync_dir $src $dst "repo/trunk-5.5"
-        # _tm_sync_dir $src $dst "repo/trunk-5.6"
-        # _tm_sync_dir $src $dst "repo/wsrep-5.5"
-        # _tm_sync_dir $src $dst "repo/wsrep-5.6"
-        # _tm_sync_dir $src $dst "repo/galera-features"
-        # _tm_sync_dir $src $dst "repo/mysql-wsrep-features"
-        _tm_sync_dir $src $dst "repo/notes"
-        _tm_sync_dir $src $dst "repo/dirtysalt.github.io"
-        _tm_sync_dir $src $dst "repo/emacs.d"
-        _tm_sync_dir $src $dst "repo/oh-my-zsh"
-        # _tm_sync_dir $src $dst "repo/itachi"
-        # _tm_sync_dir $src $dst "repo/tc-env"
-        # _tm_sync_dir $src $dst "repo/tomb"
+        _tm_hard_sync_dir $src $dst "repo/galera-features"
+        _tm_hard_sync_dir $src $dst "repo/mysql-wsrep-features"
+        _tm_hard_sync_dir $src $dst "repo/notes"
+        _tm_hard_sync_dir $src $dst "repo/dirtysalt.github.io"
+        _tm_hard_sync_dir $src $dst "repo/emacs.d"
+        _tm_hard_sync_dir $src $dst "repo/oh-my-zsh"
+        _tm_hard_sync_dir $src $dst "repo/itachi"
+        _tm_hard_sync_dir $src $dst "repo/tc-env"
+        _tm_hard_sync_dir $src $dst "repo/tomb"
 
     fi
 }
@@ -957,7 +962,7 @@ export TM_DIR="/tmp/bak"
 _setup_tm_dir() {
     if [ ! -h $TM_DIR ]; then
         echo "setup time-machine directory..."
-        ln -s "/media/Expansion Drive/Ubuntu Backup/" $TM_DIR
+        ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup/" $TM_DIR
     fi
 }
 _setup_tm_dir
