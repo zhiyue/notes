@@ -91,34 +91,17 @@ configure_utils() {
     # texmacs.
     PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
 
-    # maven.
-    PATH=$HOME/utils/apache-maven-2.2.1/bin:$PATH
-    PATH=$HOME/utils/apache-maven-3.0.4/bin:$PATH
-
     # protocol buffers.
     PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
 
-    # golang
-    export GOROOT=$HOME/utils/go
-    export GOPATH=$HOME/go/
-    PATH=$GOROOT/bin:$PATH
-
-    # scala.
+    # scala and sbt
     export SCALA_HOME=$HOME/utils/scala-2.10.2
     PATH=$SCALA_HOME/bin:$PATH
-
-    # sbt
     export SBT_HOME=$HOME/utils/sbt
     PATH=$SBT_HOME/bin:$PATH
     export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt -Dsbt.ivy.home=$HOME/.ivy2"
-
-    # sml
-    PATH=$HOME/utils/sml/bin:$PATH
-
-    # racket
-    PATH=$HOME/utils/racket/bin:$PATH
 
     export PATH
 }
@@ -598,8 +581,8 @@ run_redis_on_docker() {
     $HOME/repo/tomb/dockerfiles/redis/start $@
 }
 build_mysql_on_docker() {
-    cd $HOME/repo/tomb/dockerfiles 
-    ./build.sh mysql 
+    cd $HOME/repo/tomb/dockerfiles
+    ./build.sh mysql
     cd -
 }
 build_redis_on_docker() {
