@@ -136,16 +136,16 @@ export MTR_BINDIR=$MYSQL_SRC/build_debug
 export GALERA_DIR="/tmp"/
 export WSREP_PROVIDER=$GALERA_SRC/libgalera_smm.so
 
-lp_login() {
-    bzr launchpad-login yan.zhang
-}
+# lp_login() {
+#     bzr launchpad-login yan.zhang
+# }
 
-lp_mysql_pull() {
-    cd $HOME/repo/trunk-5.5 && bzr pull
-    cd $HOME/repo/trunk-5.6 && bzr pull
-    cd $HOME/repo/wsrep-5.5 && bzr pull
-    cd $HOME/repo/wsrep-5.6 && bzr pull
-}
+# lp_mysql_pull() {
+#     cd $HOME/repo/trunk-5.5 && bzr pull
+#     cd $HOME/repo/trunk-5.6 && bzr pull
+#     cd $HOME/repo/wsrep-5.5 && bzr pull
+#     cd $HOME/repo/wsrep-5.6 && bzr pull
+# }
 
 # single mode.
 start_node() {
@@ -494,7 +494,7 @@ _dk_list() {
 }
 
 dk_build_image() {
-    cd $HOME/repo/notes/files/
+    cd $HOME/.private/files
     docker build -t $DK_IMAGE .
     cd -
 }
@@ -553,7 +553,7 @@ pgrep() {
   ps aux | grep $1
 }
 
-fresh_directory() {
+update_directory() {
   cd /tmp/
   cd -
 }
@@ -593,13 +593,13 @@ build_redis_on_docker() {
     cd -
 }
 
-golang_doc_server() {
-    godoc -http=:6060
-}
+# run_godoc() {
+#     godoc -http=:6060
+# }
 
 apt_update() {
     sudo rm -rf /etc/apt/sources.list
-    sudo ln -s $HOME/repo/notes/files/.sources.list /etc/apt/sources.list
+    sudo ln -s $HOME/.private/files/sources.list /etc/apt/sources.list
 
     # docker
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
@@ -672,7 +672,7 @@ cxx_indent() {
 }
 
 install_files() {
-    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc Vagrantfile
+    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc
     do
         echo "installing $target..."
         rm -rf $HOME/$target
@@ -704,7 +704,7 @@ install_files() {
 
     echo "installing ssh.config..."
     rm -rf $HOME/.ssh/config
-    ln -s $HOME/repo/notes/files/.ssh.config $HOME/.ssh/config
+    ln -s $HOME/.private/files/ssh.config $HOME/.ssh/config
 
     echo "installing ivy2-credentials..."
     mkdir -p $HOME/.ivy2
@@ -720,8 +720,12 @@ install_files() {
     mkdir -p $HOME/.sbt/plugins
     rm -rf $HOME/.sbt/plugins/build.sbt
     rm -rf $HOME/.sbt/build.sbt
-    ln -s $HOME/repo/notes/files/.plugins.sbt $HOME/.sbt/plugins/build.sbt
-    ln -s $HOME/repo/notes/files/.build.sbt $HOME/.sbt/build.sbt
+    ln -s $HOME/.private/files/plugins.sbt $HOME/.sbt/plugins/build.sbt
+    ln -s $HOME/.private/files/build.sbt $HOME/.sbt/build.sbt
+
+    echo "installing tc-env..."
+    rm -rf $HOME/contestapplet.conf
+    ln -s $HOME/.private/tc-env/contestapplet.conf $HOME/contestapplet.conf
 
     echo "installing .oh-my-zsh"
     rm -rf $HOME/.oh-my-zsh
@@ -730,10 +734,6 @@ install_files() {
     echo "installing .emacs.d"
     rm -rf $HOME/.emacs.d
     ln -s $HOME/repo/emacs.d $HOME/.emacs.d
-
-    echo "installing tc-env..."
-    rm -rf $HOME/contestapplet.conf
-    ln -s $HOME/repo/tc-env/contestapplet.conf $HOME/contestapplet.conf
 }
 
 vpn_umeng_dp() {
@@ -743,7 +743,7 @@ vpn_umeng_dp() {
 }
 
 start_tc_env() {
-    (javaws "$HOME/repo/tc-env/ContestAppletProd.jnlp" &)
+    (javaws "$HOME/.private/tc-env/ContestAppletProd.jnlp" &)
 }
 
 install_hosts() {
@@ -780,7 +780,7 @@ if [ $(is_vm) = 0 ]; then
     shadowsocks_once
 fi
 
-# # deprecated !
+# # Deprecated !!!
 # easy_oprofile() {
 #     if [ $# -lt 5 ]; then
 #         echo "easy_oprofile image-file(ELF) command"
@@ -843,7 +843,7 @@ set_ptrace_scope() {
 }
 
 set_local_port_range() {
-    sudo sysctl -q -w net.ipv4.ip_local_port_range="32768	61000"
+    sudo sysctl -q -w net.ipv4.ip_local_port_range="32768 61000"
 }
 
 install_ubuntu_packages() {
@@ -927,9 +927,7 @@ _tm_sync() {
         _tm_hard_sync_dir $src $dst "repo/emacs.d"
         _tm_hard_sync_dir $src $dst "repo/oh-my-zsh"
         _tm_hard_sync_dir $src $dst "repo/itachi"
-        _tm_hard_sync_dir $src $dst "repo/tc-env"
         _tm_hard_sync_dir $src $dst "repo/tomb"
-
     fi
 }
 
@@ -979,6 +977,6 @@ random_picture() {
 
 configure_samba() {
     # smbpasswd -a dirlt
-    sudo cp $HOME/repo/notes/files/.smb.conf /etc/samba/smb.conf
+    sudo cp $HOME/.private/files/smb.conf /etc/samba/smb.conf
     sudo service smbd restart
 }
