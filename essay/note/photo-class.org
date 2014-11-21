@@ -1,0 +1,73 @@
+* photo-class
+#+TITLE: The Art of Photography
+
+https://www.open2study.com/courses/the-art-of-photography
+
+** 4 basics
+  - vantage point
+  - framing
+  - optical / drawing
+  - time
+
+** another 4 basics
+  - genre
+  - visual
+  - tech
+  - subject
+
+** blocks
+  - focal # auto focus is recommended.
+  - aperture 光圈
+    - F / R where F = focal length, R = diameter of lens
+    - area(F/2) = 2 * area(F/2.8) = 4 * area(F/4)
+    - F/2, F/2.8, F/4, F/5.6, F/8, F/11, F/16, F/22 ...
+  - shutter 快门
+    - 1(s), 1/2, 1/4, 1/8, 1/15, 1/30, ...
+  - trade-off
+    - shutter, aperture, ISO
+    - over-exposure or under-exposure
+
+** evolution
+  - pixel. ppi = pixels per inch. magic number 300 ppi.
+  - tone/tonality 色调. smoothness and continuity. 2 ^ n.
+    - luminance / brightness / colour
+    - sharpness, acutance, contrast
+    - shadows, mid-tone, highlight
+  - about light 
+    - light meter 曝光表. # histogram
+      - P programmed
+      - M manual 
+      - TV time-value # shutter
+      - AV aperture-value # aperture
+    - histogram # exposure information.
+      - x = level of tones
+      - y = # of pixels
+  - depth of field 景深
+    - optical illusion / DOF(degree of freedom)
+    - potrait => shorter depth 浅景深
+    - landscape => longer depth 长景深
+    - aperture # todo(dirlt): why
+      - potrait aperture => bigger aperture 大光圈
+      - landscape aperture => smaller aperture 小光圈 (16, 22)
+    - lens
+      - portrait lens => narrower lens 长焦，窄视野 (>70)
+      - landscape lens => wider lens 短焦，宽视野 (24, 28, or 35)
+    - distance to subject
+  - format 制式 
+    - JPEG # compressed, exposure, ISO, white balance, picture style, color space
+    - RAW # exposure, ISO
+  - post-processing
+     - global vs. local edit
+     - destructive vs. non-destructive way
+
+** creativity
+   - artificial vs. natural light
+   - documentary vs. Indexicality
+   - constructing narratives # multiple composites
+
+** further-reading
+   - module1 file:../images/tap-further-reading-m1.pdf
+   - module2 file:../images/tap-further-reading-m2.pdf
+   - module3 file:../images/tap-further-reading-m3.pdf
+   - module4 file:../images/tap-further-reading-m4.pdf
+   - Ansel Adams http://www.anseladams.com/
