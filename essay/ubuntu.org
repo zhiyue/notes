@@ -239,6 +239,8 @@ doc存放位置通常在/usr/share/doc/<package>/下面。
    - pkg
 甚至可以直接调用alien -i test.rpm直接安装而不需要转换。
 
+使用dpkg --listfiles可以查看安装了哪些文件
+
 *** The System Running In Low Graphics Mode
 http://simpledeveloper.com/system-running-in-low-graphics-mode/
 
