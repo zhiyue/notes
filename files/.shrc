@@ -18,11 +18,12 @@ export LC_ALL="en_US.UTF-8"
 is_mac() {
     if [ $(uname -s) = "Darwin" ]; then echo "1"; else echo "0"; fi
 }
+# in virtual machine or not.
 is_vm() {
     if [ "$USER" != "dirlt" ]; then echo "1"; else echo "0"; fi
 }
 
-# cdh related.
+# CDH settings.
 configure_cdh() {
     local CDH3=1
     local CDH4_2_0=0
@@ -67,7 +68,7 @@ configure_cdh() {
 }
 configure_cdh
 
-# java related.
+# Java settings.
 configure_java() {
     if [ $(is_mac) = 1 ]; then
         JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
@@ -86,7 +87,7 @@ configure_java() {
 }
 configure_java
 
-# utilities related.
+# utilities
 configure_utils() {
     # texmacs.
     PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
@@ -107,28 +108,14 @@ configure_utils() {
 }
 configure_utils
 
-# git related.
-configure_git() {
-    git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
-    git config --global color.ui true
-    git config --global core.autocrlf false
-    git config --global user.name "dirtysalt"
-    git config --global user.email "dirtysalt1987@gmail.com"
-    git config --global alias.co checkout
-    git config --global alias.br branch
-    git config --global alias.ci commit
-    git config --global alias.st status
-    git config --global push.default simple
-}
-configure_git
-
-# private key.
+# private key
 configure_key() {
     ssh-add $HOME/.ssh/id_rsa 2>/dev/null
     ssh-add $HOME/.ssh/github 2>/dev/null
 }
 configure_key
 
+# galera settings.
 # ---------- galera starts ---------- #
 export GALERA_SRC=$HOME/repo/galera-features
 export MYSQL_SRC=$HOME/repo/mysql-wsrep-features
@@ -421,6 +408,7 @@ configure_clang() {
 
 # ---------- galera ends ---------- #
 
+# docker settings.
 # ---------- docker starts ----------#
 dk() {
     if [ $# -eq 0 ]; then
@@ -530,8 +518,12 @@ dk_remove_images() {
 }
 # ---------- docker ends ----------#
 
-# utility
+# customized commands.
+pgrep() {
+  ps aux | grep $1
+}
 alias ex_dstat='dstat -cdgmnpsy'
+alias ps_mysqld='pgrep mysqld'
 
 git_commit() {
     local issue_id=$1
@@ -549,22 +541,11 @@ git_commit() {
 #     bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
 # }
 
-pgrep() {
-  ps aux | grep $1
-}
-
-update_directory() {
-  cd /tmp/
-  cd -
-}
-
 gdb_apply_bt()
 {
     gdb -batch -ex "thread apply all bt" -p $1
     # gdb -batch -ex "thread apply all bt full" -p $1
 }
-
-alias ps_mysqld='pgrep mysqld'
 
 export IDEA_HOME=$HOME/utils/idea-IC-123.72
 # intellij IDEA !!!
@@ -672,7 +653,7 @@ cxx_indent() {
 }
 
 install_files() {
-    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc
+    for target in .emacs .shrc .zshrc .bashrc .screenrc .tmux.conf .iftoprc .gitconfig
     do
         echo "installing $target..."
         rm -rf $HOME/$target
