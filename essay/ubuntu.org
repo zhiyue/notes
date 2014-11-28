@@ -149,6 +149,8 @@
    - sudo apt-get install libssl-dev
    - sudo apt-get install libaio-dev
    - sudo apt-get install percona-xtrabackup
+   - sudo apt-get install chkconfig
+   - sudo apt-get install nginx
 
 ** 系统配置
 *** 察看ubuntu内部版本
@@ -239,6 +241,8 @@ doc存放位置通常在/usr/share/doc/<package>/下面。
    - pkg
 甚至可以直接调用alien -i test.rpm直接安装而不需要转换。
 
+使用dpkg --listfiles可以查看安装了哪些文件
+
 *** The System Running In Low Graphics Mode
 http://simpledeveloper.com/system-running-in-low-graphics-mode/
 
@@ -254,6 +258,50 @@ http://askubuntu.com/questions/156650/apt-get-update-very-slow-stuck-at-waiting-
 可能是因为网络链接不太好，也可能是因为源服务器不太稳定。如果确定是自己源服务器不太稳定的话，那么可以更换源服务器。
 
 Update Manager -> Settings -> Ubuntu Software -> Download from Other -> Select Best Server
+
+*** /sbin/insserv: No such file or directory
+这个命令会在chkconfig(用于配置是否自动启动)里面用到. 
+
+#+BEGIN_EXAMPLE
+➜  nginx  sudo chkconfig lighttpd off
+/sbin/insserv: No such file or directory
+#+END_EXAMPLE
+
+解决办法是做个软链接 "sudo ln -s  /usr/lib/insserv/insserv /sbin/insserv"
+
+*** 允许/禁止服务自动启动
+chkconfig可以用来配置服务是否自动启动 sudo chkconfig <service> on/off
+
+另外使用chkconfig还可以用来查看当前服务自动启动情况
+#+BEGIN_EXAMPLE
+➜  nginx  chkconfig
+distcc                   on
+docker                   off
+lighttpd                 off
+mysql                    off
+nginx                    on
+ntp                      on
+ondemand                 on
+openvpn                  on
+redis-server             off
+resolvconf               off
+rsync                    on
+rsyslog                  off
+samba                    off
+samba-ad-dc              off
+saned                    on
+screen-cleanup           off
+screen-cleanup.dpkg-new  off
+sendsigs                 0
+smbd                     off
+speech-dispatcher        on
+ssh                      off
+sudo                     on
+sysstat                  on
+virtualbox               on
+virtualbox-guest-utils   on
+virtualbox-guest-x11     on
+#+END_EXAMPLE
 
 ** 桌面应用
 *** amarok循环播放
