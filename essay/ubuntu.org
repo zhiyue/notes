@@ -149,7 +149,8 @@
    - sudo apt-get install libssl-dev
    - sudo apt-get install libaio-dev
    - sudo apt-get install percona-xtrabackup
-   - sudo apt-get install chkconfig
+   - # sudo apt-get install chkconfig
+   - sudo apt-get install sysv-rc-conf
    - sudo apt-get install nginx
 
 ** 系统配置
@@ -260,7 +261,7 @@ http://askubuntu.com/questions/156650/apt-get-update-very-slow-stuck-at-waiting-
 Update Manager -> Settings -> Ubuntu Software -> Download from Other -> Select Best Server
 
 *** /sbin/insserv: No such file or directory
-这个命令会在chkconfig(用于配置是否自动启动)里面用到. 
+这个命令会在chkconfig(用于配置是否自动启动)里面用到.
 
 #+BEGIN_EXAMPLE
 ➜  nginx  sudo chkconfig lighttpd off
@@ -302,6 +303,30 @@ virtualbox               on
 virtualbox-guest-utils   on
 virtualbox-guest-x11     on
 #+END_EXAMPLE
+
+note(dirlt@2014-11-30): 但是ubuntu后期版本移除了这个组件,使用sysv-rc-conf来代替. 使用--list可以列出所有当前服务
+#+BEGIN_EXAMPLE
+➜  .private  sudo sysv-rc-conf --list
+collectl     0:off1:off2:on3:on4:on5:on6:off
+distcc       0:off1:off2:on3:on4:on5:on6:off
+docker
+mysql        2:off3:off4:off5:off
+ntp          1:off2:on3:on4:on5:on
+rc.local     2:on3:on4:on5:on
+reboot       6:on
+redis-server 0:off1:off2:off3:off4:off5:off6:off
+resolvconf
+rsync        2:on3:on4:on5:on
+rsyslog
+samba
+sudo         2:on3:on4:on5:on
+sysstat      2:on3:on4:on5:on
+urandom      0:on6:onS:on
+virtualbox   0:off1:off2:on3:on4:on5:on6:off
+virtualbox-g 0:off1:off2:on3:on4:on5:on6:off
+#+END_EXAMPLE
+
+然后使用sudo sysv-rc-conf <service> on/off 来配置是否自动启动
 
 ** 桌面应用
 *** amarok循环播放
