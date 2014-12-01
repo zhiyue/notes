@@ -219,7 +219,7 @@ T(task),E(experience),P(performance)
      - X ~ N(u, e^2) # X distributed as N. where mean = u, variance = e^2
      - p(x, u, e^2) = 1 / ((sqrt(2 * pi) * e)) * exp ^ { - (x-u)^2 / (2 * e^2) } # probability
      - multivariate version
-       - to capture anomalous combination of values. computationally expensive. 
+       - to capture anomalous combination of values. computationally expensive.
        - u~{n*1}, e~{n*n} (covariance matrix) # intuition. contour not axis aligned.
        - p(x, u, e) = 1 / ((2 * pi) ^ (n/2) * sqrt(det(e))) * exp ^ {-0.5 * (x-u)' * e^-1 * (x-u)}
        - u = 1/m * sum{x}, e = 1/m * sum{(x-u) * (x-u)'}
@@ -230,7 +230,7 @@ T(task),E(experience),P(performance)
        - epsilon # p(x) is comparable for normal and anomalous examples.
        - features to distinguish normal and anomalous examples.
        - p(x) = p1(x1, u1, e1^2) * ... pj(xj, uj, ej^2).. # j = # of features.
-       - if xj is not gaussian feature, transform it to fit into gaussian distribution. 
+       - if xj is not gaussian feature, transform it to fit into gaussian distribution.
    - vs. supervised learning
      - anomaly detection
        - # of positive cases is very small, while # of negative cases is very large
@@ -250,6 +250,27 @@ T(task),E(experience),P(performance)
      - random initialization to break symmetry
      - content features to compute similarity between items
      - mean normalization # assign mean value to null
+
+** ML in large scale
+   - stochastic gradient descent algorithm
+     - vs. batch gradient descent
+     - randomly shuffle dataset
+     - repeat for i = 1..m { for j = 0..n  { update theta_j only use ith data } }
+     - move to global minimum generally, but not always in one iteration.
+     - convergence checking
+       - use averaged last k(say 1000) examples.
+       - the larger k, the smoother cost function curve.
+       - can slowly decrease learning rate over time for convergence.
+   - mini-batch gradient descent algorithm
+     - between batch and stochastic gradient descent
+     - use b(say 10) examples in one iteration
+     - take advantage of vectorization
+   - online learning
+   - map-reduce and data parallelism
+   - more data
+     - collect from multiple sources
+     - artificial data synthesis
+   - ceiling analysis
 
 ** appendix code
 *** feature normalization
@@ -441,7 +462,7 @@ S = zeros(n);
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should first compute the covariance matrix. Then, you
 %               should use the "svd" function to compute the eigenvectors
-%               and eigenvalues of the covariance matrix. 
+%               and eigenvalues of the covariance matrix.
 %
 % Note: When computing the covariance matrix, remember to divide by m (the
 %       number of examples).
@@ -461,9 +482,9 @@ end
 projectData
 #+BEGIN_SRC Octave
 function Z = projectData(X, U, K)
-%PROJECTDATA Computes the reduced data representation when projecting only 
+%PROJECTDATA Computes the reduced data representation when projecting only
 %on to the top k eigenvectors
-%   Z = projectData(X, U, K) computes the projection of 
+%   Z = projectData(X, U, K) computes the projection of
 %   the normalized inputs X into the reduced dimensional space spanned by
 %   the first K columns of U. It returns the projected examples in Z.
 %
@@ -472,9 +493,9 @@ function Z = projectData(X, U, K)
 Z = zeros(size(X, 1), K);
 
 % ====================== YOUR CODE HERE ======================
-% Instructions: Compute the projection of the data using only the top K 
-%               eigenvectors in U (first K columns). 
-%               For the i-th example X(i,:), the projection on to the k-th 
+% Instructions: Compute the projection of the data using only the top K
+%               eigenvectors in U (first K columns).
+%               For the i-th example X(i,:), the projection on to the k-th
 %               eigenvector is given as follows:
 %                    x = X(i, :)';
 %                    projection_k = x' * U(:, k);
@@ -495,9 +516,9 @@ end
 recoverData
 #+BEGIN_SRC Octave
 function X_rec = recoverData(Z, U, K)
-%RECOVERDATA Recovers an approximation of the original data when using the 
+%RECOVERDATA Recovers an approximation of the original data when using the
 %projected data
-%   X_rec = RECOVERDATA(Z, U, K) recovers an approximation the 
+%   X_rec = RECOVERDATA(Z, U, K) recovers an approximation the
 %   original data that has been reduced to K dimensions. It returns the
 %   approximate reconstruction in X_rec.
 %
@@ -515,7 +536,7 @@ X_rec = zeros(size(Z, 1), size(U, 1));
 %                    recovered_j = v' * U(j, 1:K)';
 %
 %               Notice that U(j, 1:K) is a row vector.
-%               
+%
 
 U_reduce = U(:, 1:K);
 
@@ -531,13 +552,13 @@ compute mean and variance of X
 
 #+BEGIN_SRC Octave
 function [mu sigma2] = estimateGaussian(X)
-%ESTIMATEGAUSSIAN This function estimates the parameters of a 
+%ESTIMATEGAUSSIAN This function estimates the parameters of a
 %Gaussian distribution using the data in X
-%   [mu sigma2] = estimateGaussian(X), 
+%   [mu sigma2] = estimateGaussian(X),
 %   The input X is the dataset with each n-dimensional data point in one row
 %   The output is an n-dimensional vector mu, the mean of the data set
 %   and the variances sigma^2, an n x 1 vector
-% 
+%
 
 % Useful variables
 [m, n] = size(X);
@@ -570,8 +591,8 @@ compute probability
 function p = multivariateGaussian(X, mu, Sigma2)
 %MULTIVARIATEGAUSSIAN Computes the probability density function of the
 %multivariate gaussian distribution.
-%    p = MULTIVARIATEGAUSSIAN(X, mu, Sigma2) Computes the probability 
-%    density function of the examples X under the multivariate gaussian 
+%    p = MULTIVARIATEGAUSSIAN(X, mu, Sigma2) Computes the probability
+%    density function of the examples X under the multivariate gaussian
 %    distribution with parameters mu and Sigma2. If Sigma2 is a matrix, it is
 %    treated as the covariance matrix. If Sigma2 is a vector, it is treated
 %    as the \sigma^2 values of the variances in each dimension (a diagonal
@@ -607,17 +628,17 @@ F1 = 0;
 
 stepsize = (max(pval) - min(pval)) / 1000;
 for epsilon = min(pval):stepsize:max(pval)
-    
+
     % ====================== YOUR CODE HERE ======================
     % Instructions: Compute the F1 score of choosing epsilon as the
     %               threshold and place the value in F1. The code at the
     %               end of the loop will compare the F1 score for this
     %               choice of epsilon and set it to be the best epsilon if
     %               it is better than the current choice of epsilon.
-    %               
+    %
     % Note: You can use predictions = (pval < epsilon) to get a binary vector
     %       of 0's and 1's of the outlier predictions
-    
+
     cv_pred = pval < epsilon;
     tp = sum((cv_pred == 1) & (yval == 1));
     fp = sum((cv_pred == 1) & (yval == 0));
@@ -656,7 +677,7 @@ X = reshape(params(1:num_movies*num_features), num_movies, num_features);
 Theta = reshape(params(num_movies*num_features+1:end), ...
                 num_users, num_features);
 
-            
+
 % You need to return the following values correctly
 J = 0;
 X_grad = zeros(size(X));
@@ -666,7 +687,7 @@ Theta_grad = zeros(size(Theta));
 % Instructions: Compute the cost function and gradient for collaborative
 %               filtering. Concretely, you should first implement the cost
 %               function (without regularization) and make sure it is
-%               matches our costs. After that, you should implement the 
+%               matches our costs. After that, you should implement the
 %               gradient and use the checkCostFunction routine to check
 %               that the gradient is correct. Finally, you should implement
 %               regularization.
@@ -674,14 +695,14 @@ Theta_grad = zeros(size(Theta));
 % Notes: X - num_movies  x num_features matrix of movie features
 %        Theta - num_users  x num_features matrix of user features
 %        Y - num_movies x num_users matrix of user ratings of movies
-%        R - num_movies x num_users matrix, where R(i, j) = 1 if the 
+%        R - num_movies x num_users matrix, where R(i, j) = 1 if the
 %            i-th movie was rated by the j-th user
 %
 % You should set the following variables correctly:
 %
-%        X_grad - num_movies x num_features matrix, containing the 
+%        X_grad - num_movies x num_features matrix, containing the
 %                 partial derivatives w.r.t. to each element of X
-%        Theta_grad - num_users x num_features matrix, containing the 
+%        Theta_grad - num_users x num_features matrix, containing the
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
@@ -703,4 +724,3 @@ grad = [X_grad(:); Theta_grad(:)];
 
 end
 #+END_SRC
-
