@@ -202,7 +202,6 @@
    - [[file:./spark.org][Spark]] AMPLab的分布式计算系统，现在是Apache下面的项目。
    - [[file:dynamo.org][Dynamo]] Amazon的分布式数据库。
    - [[file:./cassandra.org][Cassandra]] / [[file:riak.org][Riak]] / [[file:./voldemort.org][Voldemort]] 类Dynamo的开源分布式数据库。
-   - [[file:./zbase.org][zBase]] Zynga. A high-performance, elastic, distributed key-value store.
    - [[file:./pnuts.org][PNUTS]] Yahoo的分布式数据库。
    - [[file:./paxos.org][Paxos]] / [[file:./raft.org][Raft]] 分布式一致性算法。
    - [[file:./manhattan.org][Manhattan]] Twitter的分布式数据库。
@@ -212,6 +211,8 @@
    - [[file:./corona.org][Corona]] Facebook的MapReduce集群资源管理系统
    - [[file:./mesos.org][Mesos]] Twitter的集群资源管理系统
    - [[file:./omega.org][Omega]] Google的集群资源管理系统
+   - [[file:./ceph.org][Ceph]] 分布式文件系统
+   - [[file:./flumejava.org][FlumeJava]] Google的分布式数据抽象系统.
 
 ** Programming Language
 [[file:prog-lang.org][Programming Language]] including following languages:

@@ -1,0 +1,5 @@
+* ceph
+   - http://www.ssrc.ucsc.edu/Papers/weil-osdi06.pdf
+   - Ceph: A Scalable, High-Performance Distributed File System
+   - date: 2006
+
