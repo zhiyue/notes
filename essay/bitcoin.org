@@ -5,13 +5,15 @@
    - http://blog.codingnow.com/2011/05/bitcoin.html
 
 ** Abstract
-   - A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. （不经过第三方）
-   - Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending.
+A purely peer-to-peer version of electronic cash would allow online payments to be sent directly from one party to another without going through a financial institution. Digital signatures provide part of the solution, but the main benefits are lost if a trusted third party is still required to prevent double-spending. 最主要的问题就是不经过第三方但是解决double-spending问题.
 
+double-spending问题是: 如果A向B转帐100元, 那么在网络上是这么一个数据块trx(A,B,100), 然后经过B's pubkey和A's private-key加密形成trx'. attacker虽然没有办法伪造trx, 但是attacker却可以重复发送trx'. 
+
+The network timestamps transactions by hashing them into an ongoing chain of hash-based proof-of-work, forming a record that cannot be changed without redoing the proof-of-work. The longest chain not only serves as proof of the sequence of events witnessed, but proof that it came from the largest pool of CPU power. As long as a majority of CPU power is controlled by nodes that are not cooperating to attack the network, they'll generate the longest chain and outpace attackers. 解决办法是通过将trx和当前最长的POW chain做hash, 来为trx加上时间戳. 而POW chain没有办法伪造, 除非这个集群掌握了超过世界上50%以上的计算能力. 
+
+The network itself requires minimal structure. Messages are broadcast on a best effort basis, and nodes can leave and rejoin the network at will, accepting the longest proof-of-work chain as proof of what happened while they were gone. 对于网络组织上要求非常少. 所有消息都是best-effort广播出去. 节点一旦介入网络只要同步POW-chain即可.
 
 ** Introduction
-
-
 ** Transactions
 ** Timestamp Server
 ** Proof-of-Work
