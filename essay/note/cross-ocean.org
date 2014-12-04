@@ -30,8 +30,10 @@ http://careers.stackoverflow.com/jobs/43288/senior-software-developer-codership
    - apply@2013-11-05
    - reply@2013-11-23
    - skype@2013-12-16
-   - *offer@2013-12-20*
-   - *negotiate@2013-12-24*
+   - offer@2013-12-20
+   - negotiate@2013-12-24
+   - start@2014-03-03
+   - resign@2014-12-04
 
 ** dropbox
 https://www.dropbox.com/position?jvi=oNbJVfwm,Job

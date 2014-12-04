@@ -168,9 +168,7 @@ capabilities
 ** gcomm
    - Virtual and Extended Virtual Synchrony : http://www.cs.huji.ac.il/labs/transis/lab-projects/guide/chap3.html#Virtual
 
------
-deliver order. 
-
+*** deliver order
 http://www.cs.huji.ac.il/labs/transis/lab-projects/guide/chap3.html#Virtual 有几种投递顺序的详细解释.
 在agreed order部分解释了为什么引入transitional configuration而最终形成extended virtual synchrony
 
