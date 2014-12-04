@@ -132,3 +132,4 @@
    - [[file:note/what-is-diff-between-winner-and-loser.org][温拿和卢瑟差别在哪里]]
    - [[file:note/what-happens-to-older-developers.org][What Happens to Older Developers?]]
    - [[file:./note/happiness-is.org][幸福是...]]
+   - [[file:note/the-golden-circle.org][The Golden Circle]] # 我们应该如何来做一件事情
