@@ -133,4 +133,3 @@
    - [[file:note/what-happens-to-older-developers.org][What Happens to Older Developers?]]
    - [[file:./note/happiness-is.org][幸福是...]]
    - [[file:note/the-golden-circle.org][The Golden Circle]] # 我们应该如何来做一件事情
-   - [[file:note/data-processing-system-trend-thinking.org][数据处理系统趋势思考]]

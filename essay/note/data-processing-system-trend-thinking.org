@@ -1,4 +1,0 @@
-* data-processing-system-trend-thinking
-#+TITLE: 数据处理系统趋势思考
-
-
