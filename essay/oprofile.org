@@ -3,18 +3,17 @@
 
 note(dirlt@2014-05-08): 从主页 http://oprofile.sourceforge.net/news/ 上看，最后更新时间还是2003-07-08, 感觉这个东西应该是废弃了. 在这个工具上最蠢的一个举动就是仔细阅读了那些工具的选项但是却完全没有用上：（
 
-** OProfile简介
-http://www.ibm.com/developerworks/cn/linux/l-oprof/
-
-OProfile是用于Linux的若干种评测和性能监控工具中的一种。它可以工作在不同的体系结构上，包括IA32,IA64和AMD Athlon系列。它的开销小，将被包含在(Linux)2.6版的内核中。
-
-OProfile可以帮助用户识别诸如循环的展开、高速缓存的使用率低、低效的类型转换和冗余操作、错误预测转移等问题。它收集有关处理器事件的信息，其中包括TLB的故障、停机、存储器访问、位于 DCU(数据高速缓存单元)中的总线路数、一个 DCU 故障的周期数，以及不可高速缓存的和可高速缓存的指令的获取数量。OProfile是一种细粒度的工具，可以为指令集或者为函数、系统调用或中断处理例程收集采样。OProfile通过取样来工作。使用收集到的评测数据，用户可以很容易地找出性能问题。
-
-** OProfile地址
    - Documentation http://oprofile.sourceforge.net/doc/index.html
    - AMD Family 10 Events http://oprofile.sourceforge.net/docs/amd-family10-events.php
 
-** OProfile组成部分
+** oprofile intro
+http://www.ibm.com/developerworks/cn/linux/l-oprof/
+
+oprofile是用于Linux的若干种评测和性能监控工具中的一种。它可以工作在不同的体系结构上，包括IA32,IA64和AMD Athlon系列。它的开销小，将被包含在(Linux)2.6版的内核中。
+
+oprofile可以帮助用户识别诸如循环的展开、高速缓存的使用率低、低效的类型转换和冗余操作、错误预测转移等问题。它收集有关处理器事件的信息，其中包括TLB的故障、停机、存储器访问、位于 DCU(数据高速缓存单元)中的总线路数、一个 DCU 故障的周期数，以及不可高速缓存的和可高速缓存的指令的获取数量。oprofile是一种细粒度的工具，可以为指令集或者为函数、系统调用或中断处理例程收集采样。oprofile通过取样来工作。使用收集到的评测数据，用户可以很容易地找出性能问题。
+
+** oprofile blocks
 *** 内核驱动
 内核驱动工作的时候分为三种模式：
    - 硬件事件计数器模式
@@ -30,14 +29,14 @@ OProfile可以帮助用户识别诸如循环的展开、高速缓存的使用率
 *** daemon
 daemon部分用于收集内核驱动采样数据，并且将采样数据dump到外部文件。可执行程序是bin/oprofiled.
 
-*** 附加组件
-附加组件部分通过读取dump出来的外部文件，得到采样数据并且进行加工：
+*** 工具附件
+通过读取dump出来的外部文件得到采样数据进行加工：
    - ophelp //显示帮助信息
    - opcontrol //oprofile控制程序
    - opreport //产生报表信息
    - opannotate //annotate代码，包括源代码和汇编代码
 
-** OProfile使用
+** oprofile usage
    - Installation http://oprofile.sourceforge.net/doc/install.html
    - Requirement http://oprofile.sourceforge.net/doc/requirements.html
 
@@ -145,7 +144,7 @@ opreport包含两类参数，一类是过滤参数用于通知应用打印出关
    - opannotate -a <image> > profile.asm # 产生汇编文件注释.profile.asm是结果.
    - opannotate -s --output-dir=. <image> # 产生源文件注释.在当前目录下面产生.
 
-** OProfile脚本
+** oprofile script
 *note(dirlt):依然没有成功profile过kenerl！*
 
 *note(dirlt)：另外觉得这个东西似乎长久没有整理，以后可能似乎不太会使用这个东西了*

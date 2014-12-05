@@ -33,13 +33,14 @@
      - [[file:./nonblocking-algorithms-and-scalable-multicore-programming.org][Nonblocking Algorithms and Scalable Multicore Programming]]
      - [[file:tcmalloc.org][TCMalloc]] Google的开源线程缓存内存分配器，解决多线程下面内存分配效率问题。
    - [[file:sysperf.org][System-Peformance]] 系统性能相关
-     - [[file:oprofile.org][OProfile]] OProfile(系统级profiler)的原理和应用。不过说实话没有分析过源代码(或者是自己技术背景不行)终究觉得对这个东西理解不够深入，而且自己也仅仅是使用OProfile功能的子集。
+     - [[file:oprofile.org][oprofile]] oprofile(系统级profiler). note: obsolete!!!
      - [[file:systemtap.org][SystemTap]] 通过将观察语句编译成为内核驱动，和linux内核提供的接口匹配，来深度地观察linux操作系统。
      - [[file:gperftools.org][gperftools]] Google的性能分析工具，[[file:tcmalloc.org][TCMalloc]] 实现也在里面。用来观察应用程序似乎是个不错的选择。
      - [[file:perf.org][Perf]] Linux系统自带的性能分析工具，支持硬件以及软件事件计数器，支持profile kernel以及user code.
      - [[file:./optimizing-software-in-cpp.org][Optimizing software in C++]]
      - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
      - [[file:./linux-system-and-performance-monitoring.org][Linux System and Performance Monitoring]]
+     - [[http://www.brendangregg.com/linuxperf.html][Linux Performance Tools]] by Brendan Gregg. # 工具索引入口
    - [[file:continuation.org][Continuation]] 延续，异步编程一种实现。
 
 ** Compression Technology
