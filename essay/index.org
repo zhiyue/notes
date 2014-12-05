@@ -119,7 +119,6 @@
    - [[file:redis.org][Redis]] 内存存储系统，支持丰富的数据类型以及相应的计算(支持持久化)。外围包装网络访问接口(并且提供了丰富的客户端),可以比较方便地在分布式系统内或者是环境下面使用. [[file:redisc.org][代码分析]]
    - [[file:mysql.org][MySQL]] 开源关系型数据库。The world's most popular open source database.
    - [[file:./galera.org][Galera]] 基于MySQL的同步多主备份集群(synchronous multi-master replication cluster). [[file:galerac.org][代码分析]]
-     - [[file:./gcomm.org][gcomm]] group communication system
    - [[file:ssd.org][SSD]] solid state disk.固态硬盘
      - [[file:./solid-state-revolution-in-depth-on-how-ssd-really-work.org][Solid-state revolution: in-depth on how SSDs really work]] ssd发展演变，内部构造和工作方式
      - [[file:./ssd-gc-and-trim.org][固态硬盘技术解析之垃圾回收和TRIM指令]]
@@ -170,6 +169,8 @@
      - [[file:./the-log-what-every-software-engineer-should-know-about-real-time-datas-unifying-abstraction.org][The Log: What every software engineer should know about real-time data's unifying abstraction]]
      - [[file:./hadoop-at-a-crossroads.org][Hadoop at a Crossroads?]] by Michael Stonebraker
      - [[file:a-typical-data-processing-system.org][A Typical Data Processing System]] by me:) 一个典型的数据处理系统
+     - [[file:what-does-big-data-mean.org][What Does 'Big Data' Mean?]] by Michael Stonebraker
+     - [[file:./possible-hadoop-trajectories.org][Possible Hadoop Trajectories]] by Michael Stonebraker
    - [[file:streambase.org][StreamBase]] 在实现Baidu in-house的分布式实时流式计算系统之前，调研的商用流式计算系统。没有办法获得源代码只能够从文档中猜测其内部实现以及参考其提供的功能与接口。
    - [[file:storm.org][Storm]] Twitter的分布式实时流式处理系统。这个在实现Baidu in-house的分布式实时流式计算系统的时候也做过调研，但是当时不是很深入。
    - [[file:./samza.org][Samza]] LinkedIn的的分布式流式处理系统，现在是Apache下面的项目。
@@ -252,7 +253,9 @@
    - [[file:./aosa.org][The Architecture of Open Source Applications]]
    - [[file:./producing-open-source-software.org][Producing Open Source Software]]
    - [[file:./google-io.org][Google I/O]]
-   - [[file:./programmer-career.org][程序员职业规划]] (摘自各方观点)
+   - [[file:./images/programmer-career-chart.jpg][程序员技术发展路线]]
+   - [[file:./vp-eng-vs-cto.org][VP Engineering vs. CTO]]
+   - [[file:images/netflix-culture.pdf][Netflix Culture: Freedom & Responsibility]]
 
 ** 42.195 About Me
 My name is Zhang Yan(yan.zhang). I get MS. at [[http://www.sdu.edu.cn/][Shandong University]] on Computer Science and BEng. at [[http://www.sdu.edu.cn/][Shandong University]] on Electronic Engineering. I currently work as Software Architect in Data Platform Team at [[http://www.umeng.com/][Umeng]] which focus on mobile analytics since 2012.5 where I mainly work on building the infrastructure of big data processing. From 2010.6 to 2012.6, I have been a Senior Software Engineer at [[http://www.baidu.com/][Baidu]] Infrastructure Tream where I wrote libraries, tools, services and distributed systems. From 2008.7 to 2010.6, I have been a Software Engineering Intern at [[http://www.baidu.com/][Baidu]] Component Tream where I wrote libraries and tools. You can dig me more on my linkedin(or [[file:./resume.org][resume]]).
