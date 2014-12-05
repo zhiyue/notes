@@ -128,7 +128,7 @@
    - [[file:./the-skinny-on-raid.org][The skinny on RAID]] 一篇关于RAID的介绍性文章
    - [[file:memcached.org][Memcached]] an in-memory key-value store for small chunks of arbitrary data (strings, objects) 可以用来搭建分布式缓存服务，没有持久化存储。
    - [[file:gizzard.org][Gizzard]] a library for creating distributed datastores 可以认为是数据库中间层，完成partition/replication，也做fault-tolerant migration.
-   - [[file:./rocksdb.org][RocksDB]] A persistent key-value store for fast storage environments. 基于 [[file:leveldb.org][LevelDB]] 构建，借鉴了 [[file:./hbase.org][HBase]] 的思想。
+   - [[file:./rocksdb.org][RocksDB]] A persistent key-value store for fast storage environments. 基于 [[file:leveldb.org][LevelDB]] 构建
 
 ** Distributed System
    - [[file:distributed-system-reading.org][Distributed System Reading]] 关于分布式系统方面的一些文章以及阅读心得。

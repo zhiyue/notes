@@ -362,3 +362,4 @@ http://www.codership.com/wiki/doku.php?id=limitations
    - Load balancing MySQL with HaProxy | Percona Live: MySQL Conference And Expo 2013 : https://www.percona.com/live/mysql-conference-2013/sessions/load-balancing-mysql-haproxy
    - Evaluating MySQL High Availability alternatives | Percona Live: MySQL Conference And Expo 2013 : http://www.percona.com/live/mysql-conference-2013/sessions/evaluating-mysql-high-availability-alternatives
    - Introduction to Galera : http://www.slideshare.net/henrikingo/introduction-to-galera
+** [[file:./galerac.org][代码分析]]
