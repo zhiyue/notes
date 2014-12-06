@@ -155,6 +155,36 @@ opreport包含两类参数，一类是过滤参数用于通知应用打印出关
    - 对源代码进行标注
    - 对汇编代码进行标注
 
+#+BEGIN_SRC Shell
+# deprecated !!!
+easy_oprofile() {
+    if [ $# -lt 5 ]; then
+        echo "easy_oprofile image-file(ELF) command"
+        exit 1
+    fi
+    local ifile=$1; shift
+    local rfile="oprof.rpt"
+    local srcdir="."
+    local afile="oprof.asm"
+    local command=$@
+    echo "Image file: $ifile"
+    echo "Report file: $rfile"
+    echo "Source directory: $srcdir"
+    echo "Assembly file: $afile"
+    echo "Command: $command"
+
+    sudo opcontrol --reset
+    sudo opcontrol --no-vmlinux --separate=lib --start --image=$ifile
+    $command
+    sudo opcontrol --dump
+    sudo opcontrol --shutdown
+    sudo opreport -l image:$ifile -o $rfile
+    sudo opannotate -s --output-dir=$srcdir $ifile
+    sudo opannotate -a $ifile > $afile
+}
+#+END_SRC
+
+
 ** FAQ
 *** 设置time interrupt模式
 http://oprofile.sourceforge.net/doc/detailed-parameters.html#timer
