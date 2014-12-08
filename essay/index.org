@@ -176,7 +176,7 @@
    - [[file:storm.org][Storm]] Twitter的分布式实时流式处理系统。这个在实现Baidu in-house的分布式实时流式计算系统的时候也做过调研，但是当时不是很深入。
    - [[file:./samza.org][Samza]] LinkedIn的的分布式流式处理系统，现在是Apache下面的项目。
    - [[file:kafka.org][Kafka]] Apache的分布式消息系统。似乎在高可用性方面还有很多事情需要做。
-   - [[file:chubby.org][Chubby]] Google为松耦合分布式系统开发的锁服务，但是在现实中还可以作为名字服务来使用。
+   - [[file:chubby.org][Chubby]] Google为松耦合分布式系统开发的锁服务，但是在现实中还可以作为名字服务或是资源定位来使用。
    - [[file:gfs.org][GFS]] Google分布式基础架构的分布式文件系统。
    - [[file:mapreduce.org][MapReduce]] Google分布式基础架构的分布式计算系统。
    - [[file:bigtable.org][BigTable]] Google分布式基础架构的分布式表格系统。
@@ -208,14 +208,17 @@
    - [[file:./pnuts.org][PNUTS]] Yahoo的分布式数据库。
    - [[file:./paxos.org][Paxos]] / [[file:./raft.org][Raft]] 分布式一致性算法。
    - [[file:./manhattan.org][Manhattan]] Twitter的分布式数据库。
-   - [[file:./azkaban.org][Azkaban]] Linkedin的工作流系统，和 [[file:./oozie.org][Oozie]] 功能相似但是相比好用很多。UI不错，概念也比较清晰。
-   - [[file:./time-clocks-and-ordering-of-events-in-a-distributed-system.org][Time, Clocks, and Ordering of Events in a Distributed System]] 为分布式系统中事件定义全局顺序
-   - [[file:./yarn.org][YARN]] Yet Another Resource Negotiator. Apache Hadoop的集群资源管理系统
-   - [[file:./corona.org][Corona]] Facebook的MapReduce集群资源管理系统
-   - [[file:./mesos.org][Mesos]] Twitter的集群资源管理系统
-   - [[file:./omega.org][Omega]] Google的集群资源管理系统
-   - [[file:./ceph.org][Ceph]] 分布式文件系统
+   - [[file:./azkaban.org][Azkaban]] Linkedin的工作流系统，和 [[file:./oozie.org][Oozie]] 功能相似但是相比好用很多。UI不错，概念也比较清晰.
+   - [[file:./time-clocks-and-ordering-of-events-in-a-distributed-system.org][Time, Clocks, and Ordering of Events in a Distributed System]] 为分布式系统中事件定义全局顺序.
+   - [[file:./yarn.org][YARN]] Yet Another Resource Negotiator. Apache Hadoop的集群资源管理系统.
+   - [[file:./corona.org][Corona]] Facebook的MapReduce集群资源管理系统.
+   - [[file:./mesos.org][Mesos]] Twitter的集群资源管理系统.
+   - [[file:./omega.org][Omega]] Google的集群资源管理系统.
+   - [[file:./ceph.org][Ceph]] 分布式文件系统. 已经进入 [[file:./linux.org][Linux]] 内核.
    - [[file:./flumejava.org][FlumeJava]] Google的分布式数据抽象系统.
+   - [[file:./photon.org][Photon]] Google的分布式的流式处理(joining)系统.
+   - [[file:./millwheel.org][MillWheel]] Google的分布式流式处理系统.
+   - [[file:./haystack.org][HayStack]] Facebook的小文件存储系统.
 
 ** Programming Language
 [[file:prog-lang.org][Programming Language]] including following languages:
