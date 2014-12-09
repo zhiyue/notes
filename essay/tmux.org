@@ -1,2 +1,0 @@
-* tmux
-   - http://tmux.sourceforge.net/

@@ -477,6 +477,104 @@ How to disable SSH host key checking http://linuxcommando.blogspot.com/2008/10/h
    - UserKnownHostsFile /dev/null
    - StrictHostKeyCheckin no
 
+** 开发工具
+*** about 'screen'
+   - http://www.gnu.org/software/screen/
+   - [[https://github.com/dirtysalt/notes/blob/master/files/.screenrc][我的配置文件]]
+
+如何使用screen启动后台任务?
+   - screen -D -R <session-name>
+     - 如果会话存在那么会连上.
+     - 如果会话不存在那么创建.
+     - 如果会话被其他人attach, 可以强制attach.
+   - 在会话里面执行命令
+   - C-a d从这个会话里面detach出来
+
+参考我的配置文件
+
+*** about 'tmux'
+   - http://tmux.sourceforge.net/
+   - [[https://github.com/dirtysalt/notes/blob/master/files/.tmux.conf][我的配置文件]]
+
+*** about 'emacs'
+   - http://www.gnu.org/software/emacs/
+   - [[https://github.com/dirtysalt/notes/blob/master/files/.emacs][我的配置文件]]
+
+*** about 'eclipse'
+note(dirlt): 不要用eclipse, 用intellij吧!
+
+如何将maven项目导入eclipse?
+   - mvn eclipse:eclipse 建立eclipse工程文件
+     - mvn eclipse:clean 清除eclipse工程文件
+   - 在eclipse导入工程
+   - 在preferences=》Java=》Build Path=》Classpath Variables里面添加M2_REPO，通常为/home/${USER}/.m2/repository
+
+-----
+
+常用快捷键
+   - 格式化 C+S+F
+   - 注释 C+S+C
+   - 切换声明 F3
+   - 跳回 Alt+(<-) 跳前Alt+(->)   
+   - 切换编辑Tab Ctrl+PageUp/Down
+   - 跳行 Ctrl+L
+   - 大纲 Ctrl+O
+   - 跳转编辑Tab Ctrl+E
+   - 定位错误 Ctrl+.
+   - 上个编辑位置 Ctrl+Q
+   - 类型浏览器 Ctrl+Shift+T
+   - 资源浏览器 Ctrl+Shift+R
+
+*** about 'intellij'
+常用快捷键
+   - 查找方法 Ctrl+F12
+   - 查找类 Ctrl+N
+   - 页面跳转 Ctrl+E
+   - 查看声明 Ctrl+B
+   - 察看实现 Ctrl+Alt+B
+   - 跳回 Alt+(<-) 跳前Alt+(->)   
+   - 格式化 Ctrl+Alt+L （这个键和ubuntu的锁屏键冲突了，我修改到了Ctrl+Alt+\)
+   - 导入某个类（光标在这个类上） Alt+Enter
+   - 优化类的导入 Ctrl+Alt+O
+
+-----
+
+   - 编辑区域右键"maven"这个选项
+     - Reimport 可以重新导入maven配置
+     - Generate Sources and Update Folders 重新生成sources并且更新文件夹
+   - 目录右键"Mark Directory As" -> "Source Root" 可以将某个目录指定为源代码目录
+
+*** about 'fvwm'
+   - http://docs.huihoo.com/homepage/shredderyin/fvwm_frame.html
+
+*** about 'bzr'
+   - http://bazaar.canonical.com/en/
+   - https://launchpad.net/
+
+-----
+
+   - bzr branch <repo> # git clone.
+     - # 每个分支都会有自己单独的revno
+   - bzr pull # git pull
+   - bzr push <repo> # git push
+     - --create-prefix # create if not exist
+     - --overwrite -rREVNO # 强制将远端回滚到此revno.
+   - bzr config [parent_location|push_location|submit_branch]=<URL>
+
+-----
+
+   - bzr commit -m 'message'
+   - bzr uncommit # 撤销一个commit
+   - bzr revert # git checkout
+   - bzr merge -r[a]..[b] <URL> # 合并revno=[a+1,b]修改
+
+-----
+
+   - bzr log/diff -r[a]..[b] # 察看revno=[a,b]修改信息
+   - bzr status/st # 当前仓库状态
+   - bzr revno # current revision number
+   - bzr info # 当前仓库情况
+
 ** 虚拟机
 *** vmware虚拟机增加磁盘空间
 今天感觉自己的磁盘空间好像有点不够了，大部分数据都是在$HOME下面的，需要增加磁盘空间。

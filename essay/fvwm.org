@@ -1,3 +1,0 @@
-* fvwm
-Links:
-   - http://docs.huihoo.com/homepage/shredderyin/fvwm_frame.html

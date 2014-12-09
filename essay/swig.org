@@ -3,12 +3,12 @@
 
 SWIG(Simple Wrapper Interface Generator)是一个C/C++多语言扩展接口生成器。个人对于SWIG并不是非常熟悉，但是觉得这个东西确实很好使用能够很快地写出扩展。整理的文档只是常用内容，只为抛砖引玉。
 
-** 原理
+** how it works
 首先我们需要编写一个输入文件里面有我们需要包装的C++类或者是函数的声明并且加上一些特殊的标记，然后SWIG内部有一个C++解析器能够解析这些标记以及C++
 的类或者是函数的声明，然后生成包装代码。这个C++解析器来支持预处理的过程，能够处理宏并且进行#include头文件。如果在SWIG预处理处理的时候，那么会定义
 宏SWIG.我们可以通过#ifdef SWIG来在我们的.h文件里面包含一些特殊标记。这些特殊标记在被SWIG预处理器处理的时候会生效。
 
-** 示例
+** a simple example
 #+BEGIN_EXAMPLE
 %module pycompack_  // 生成pycompack_.py和pycompack_wrap.cxx.
 // 其中pycompack_.py是包装python代码，而pycompack_wrap.cxx是包装的C++代码。
@@ -87,16 +87,16 @@ swig -Wall -python -c++ -I/usr/include -includeall pycompack.swg
 然后会有pycompack_wrap.cxx和pycompack_.py生成，至于如何如何生成python扩展的话在python扩展一节说明。
 因为python有自己的构建扩展的方式。
 
-** 选项
+** options
    - -c++ // 使用C++编写扩展
    - -python // 生成python扩展
    - -globals // 如果不加的话全局变量是在module.cvar对象下面定义的，如果加上的话那么全局变量直接出现在module下面。
 
-** 指示
+** instructions
    - %rename(x) y; // 能够将y重名为x
    - %template(x) y<z>; // 将y<z>这个模板实例化定义为类型x导出
 
-** 类型
+** types
 默认情况下面的话SWIG只是支持几个C/C++类型比如char,unsigned char,int,unsigned int等，而对于其他类型都认为是opaque pointer.我们经常遇到的问题就是
 我们使用int64_t这样的类型，但是SWIG认为这个是一个pointer.当然我们可以使用typedef来进行类型定义，显示地告诉SWIG这个是一个基本类型，比如
 #+BEGIN_SRC C++
@@ -135,7 +135,7 @@ class Exception{
 void foo() throw (bsl::Excption);
 #+END_SRC
 
-** 编译Python扩展
+** python extension
 python本身提供了非常简单的方式来编译扩展，使用内置的distutils模块即可搞定。我们编写setup.py内容如下：
 #+BEGIN_SRC Python
 from distutils.core import setup,Extension

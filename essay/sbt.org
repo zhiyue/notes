@@ -1,6 +1,0 @@
-* sbt
-  - http://www.scala-sbt.org/
-
-
-
-
