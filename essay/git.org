@@ -119,7 +119,7 @@ git-flow主要推行的就是一种开发方式，然后通过工具来配合这
      - OK之后合并到master和develop
 关系还是非常清楚的(不过我这里可能描述比较混乱).
 
-** FAQ
+** notes
 *** 合并多个commit
 合并两个commit
 #+BEGIN_VERSE

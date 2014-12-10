@@ -1,7 +1,7 @@
 * hdfs
 #+OPTIONS: H:4
 
-** 观点
+** opinions
 *** Under the Hood: Hadoop Distributed Filesystem reliability with Namenode and Avatarnode | Facebook
 http://www.facebook.com/notes/facebook-engineering/under-the-hood-hadoop-distributed-filesystem-reliability-with-namenode-and-avata/10150888759153920
 
@@ -83,19 +83,7 @@ http://hadoopblog.blogspot.com/2012/05/hadoop-and-solid-state-drives.html
 
 todo(dirlt):
 
-** 日志分析
-*** All datanodes are bad. Aborting
-*note(dirlt):当时的情况是增加了datanode的处理线程数目但是没有重启regionserver.怀疑原因可能是文件句柄数量不够，重启regionserver之后恢复正常。*
-
-#+BEGIN_EXAMPLE
-2013-06-05 03:45:16,866 FATAL org.apache.hadoop.hbase.regionserver.wal.HLog: Could not append. Requesting close of hlog
-java.io.IOException: All datanodes 10.11.0.41:50010 are bad. Aborting...
-        at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream.processDatanodeError(DFSClient.java:3088)
-        at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream.access$1900(DFSClient.java:2627)
-        at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer.run(DFSClient.java:2799)
-#+END_EXAMPLE
-
-** 使用问题
+** notes
 *** hdfs shell
    - balancer
      - start-balancer.sh / stop-balancer.sh
@@ -224,7 +212,19 @@ uri = file:///
    - 参考代码 [[https://github.com/dirtysalt/tomb/blob/master/java/hdfs/src/main/java/com/dirlt/java/hdfs/ClusterSummary.java][com.dirlt.java.hdfs.ClusterSummary]]
    - 通过DFSClient可以获取集群运行状况
 
-** 代码分析
+** all-about-log
+*** All datanodes are bad. Aborting
+*note(dirlt):当时的情况是增加了datanode的处理线程数目但是没有重启regionserver.怀疑原因可能是文件句柄数量不够，重启regionserver之后恢复正常。*
+
+#+BEGIN_EXAMPLE
+2013-06-05 03:45:16,866 FATAL org.apache.hadoop.hbase.regionserver.wal.HLog: Could not append. Requesting close of hlog
+java.io.IOException: All datanodes 10.11.0.41:50010 are bad. Aborting...
+        at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream.processDatanodeError(DFSClient.java:3088)
+        at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream.access$1900(DFSClient.java:2627)
+        at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer.run(DFSClient.java:2799)
+#+END_EXAMPLE
+
+** all-about-code
 *** Balancer
 *note(dirlt):hadoop-2.0.0-cdh4.3.0*
 

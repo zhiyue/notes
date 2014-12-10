@@ -20,7 +20,7 @@
    - vagrant destroy  # 销毁当前虚拟机
    - vagrant package # 将当前虚拟机打包
 
-** FAQ
+** notes
 *** 启动多台虚拟机
 http://docs.vagrantup.com/v2/multi-machine/index.html
 

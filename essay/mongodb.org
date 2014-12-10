@@ -150,5 +150,4 @@ Within the replica set, members are interconnected with each other to exchange h
 也就是说，replicas之间都会和相互检测对方的心跳，这是一个全连接图。如果节点超过一定数量的话，那么心跳处理的延迟可能会非常长，同时选举的时间也会非常长，
 最终造成如果发生切换的话，切换时间会非常长。
 
-** 代码分析
-todo(dirlt):
+

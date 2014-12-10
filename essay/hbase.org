@@ -1,6 +1,6 @@
 * hbase
 #+OPTIONS: H:5
-** 观点
+** opinions
 *** dyq's hbase representation @ 2012-08-16
 file:./images/hbase-architecture.png
 
@@ -317,7 +317,7 @@ fusion iomemory 是类似 ssd的东西， *操作速度接近DRAM，成本更低
      - 复制的测试(push的replication已经上线、pull在研)
      - 消息中间件实现(异步消息)
 
-** 使用问题
+** notes
 *** 单节点搭建
 修改conf/hbase-site.xml,增加选项
 #+BEGIN_SRC XML
@@ -497,7 +497,7 @@ Exception in thread "main" java.io.IOException: Cannot initialize Cluster. Pleas
 hadoop jar ~/utils/hbase-0.94.6-cdh4.3.0/hbase-0.94.6-cdh4.3.0-security.jar export/import
 #+END_EXAMPLE
 
-** TroubleShooting
+** troubleshooting
 region一直assign不上，观察曾经尝试被assigned的节点出现下面的错误
 #+BEGIN_EXAMPLE
 java.io.IOException: java.io.IOException: java.io.FileNotFoundException: File does not exist: /hbase/installhistory/2f1b909bb15ce5960d72a1773902085c/install/240086423354424bb32d647fab6f9b98
@@ -536,7 +536,7 @@ java.io.IOException: java.io.IOException: java.io.FileNotFoundException: File do
 
 *note(dirlt)：如果需要强制停止assign一个节点的话，只能进入zookeeper的/hbase/unassigned目录将下面节点完全删除，hbase shell的unassign命令只是针对那些assign成功的region有效*
 
-** 日志分析
+** all-about-log
 *** output error
 2013.04.07 AttachAppkeyToDeviceInfo失败很多次，都是因为连接hbase很多次失败。观察发现每次task都是连接某一个regionserver失败。日志中出现很多下面这样的错误：
 
@@ -755,8 +755,8 @@ org.apache.hadoop.ipc.RemoteException: org.apache.hadoop.ipc.RemoteException: ja
         at org.apache.hadoop.hdfs.DFSClient$DFSOutputStream$DataStreamer.run(DFSClient.java:2799)
 #+END_EXAMPLE
 
-** 代码分析
-*** put限制
+** all-about-code
+*** put大小限制
 在HTable.validatePut对put大小进行了限制
 #+BEGIN_SRC Java
   // validate for well-formedness
@@ -782,7 +782,8 @@ org.apache.hadoop.ipc.RemoteException: org.apache.hadoop.ipc.RemoteException: ja
 另外如果put是empty的话会抛出异常，因此在调用put之前最好判断put.isEmpty().
 
 -----
-*note(dirlt):实际还是有大小限制的，可以看代码HBaseConfiguration.create
+
+note(dirlt):实际在server端也还是有大小限制的，可以看代码HBaseConfiguration.create
 #+BEGIN_SRC Java
   public static Configuration addHbaseResources(Configuration conf) {
     conf.addResource("hbase-default.xml");
@@ -793,9 +794,9 @@ org.apache.hadoop.ipc.RemoteException: org.apache.hadoop.ipc.RemoteException: ja
     return conf;
   }
 #+END_SRC
- 可以看到加载了hbase-default.xml这个文件。这个文件是在hbase package自带的，默认值为10485760 = 10M
+可以看到加载了hbase-default.xml这个文件。这个文件是在hbase package自带的，默认值为10485760 = 10M
 
-*** put分析
+*** put过程分析
 最后都走到了下面这个方法，可以看到对于每次put并不是立即去写hbase的，除非有特殊开关autoFlush. writeBuffer是一个ArrayList用来hold住所有需要write的put.默认autoFlush=false，所以会缓存到writeBufferSize大小才会commit，而大小是通过heapSize来得到的。而writeBufferSize是通过hbase.client.write.buffer这个属性配置的，默认是2097152=2M
 
 #+BEGIN_SRC Java

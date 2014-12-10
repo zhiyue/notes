@@ -160,8 +160,10 @@ capabilities
      - while sqlgen keep updating db
    - test_upgrade # rotate and upgrade nodes.
 
-*setup test environment*
-   - put sqlgen(which is not open-sourced) to tests/bin
+-----
+
+how to setup setup test environment ?
+   - put sqlgen(which is not open-source yet) to tests/bin
    - install libgbl.so (https://github.com/codership/glb) to /user/local/lib
    - install mysql client.
 

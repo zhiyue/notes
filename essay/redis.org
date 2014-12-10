@@ -244,4 +244,4 @@ sentinel功能是为了解决redis在分布式使用场景中主从automatic fai
 
 todo(dirlt)：考虑到redis的代码质量比较高，对于redis的automatic failover实现机制可以好好分析并且阅读代码。
 
-** [[file:./redisc.org][代码分析]]
+

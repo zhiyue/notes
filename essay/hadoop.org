@@ -10,7 +10,7 @@
    - CDH Documentation https://ccp.cloudera.com/display/DOC/Documentation
    - CDH Tutorial https://ccp.cloudera.com/display/SUPPORT/Hadoop+Tutorial
 
-** FAQ
+** Introduction
 *** Hadoop可以用来做什么
 Why Hadoop? http://www.cloudera.com/why-hadoop/
 
@@ -161,7 +161,7 @@ As JMX port, ZooKeeper will also use another randomly selected port for RMI. In 
  | KRB5 KDC Server   | Secure    |   88 | UDP/TCP  | External           | kdc_ports and kdc_tcp_ports in either the [kdcdefaults] or [realms] sections of kdc.conf | By default only UDP |
  | KRB5 Admin Server | Secure    |  749 | TCP      | Internal           | kadmind_port in the [realms] section of kdc.conf                                         |                     |
 
-** 观点
+** Opinions
 *** Hadoop即将过时了吗？
 http://www.kuqin.com/database/20120715/322528.html
 
@@ -194,7 +194,7 @@ http://web.archive.org/web/20110510125644/http://tech.backtype.com/the-dark-side
 
 Making Hadoop easy to deploy, use, and operate should be the #1 priority for the developers of Hadoop.
 
-** 使用问题
+** Notes
 *** CDH3u3搭建单节点集群
 搭建单节点集群允许我们在单机做一些模拟或者是测试，还是非常有意义的。如何操作的话可以参考链接 http://localhost/utils/hadoop-0.20.2-cdh3u3/docs/single_node_setup.html
 

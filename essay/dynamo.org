@@ -343,7 +343,7 @@ In particular, applications have received successful responses (without timing o
 
 ** CONCLUSIONS
 
-** FAQ
+** NOTES
 -----
 <大规模分布式存储系统>
 

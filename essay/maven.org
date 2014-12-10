@@ -1,10 +1,9 @@
 * maven
 #+OPTIONS: H:5
-  
-** FAQ
-参考资源
    - http://maven.apache.org/
    - http://www.ibm.com/developerworks/cn/education/java/j-mavenv2/
+  
+** introduction
 *** maven能够用来做什么
   - 理解项目通常是如何构建的。
   - 利用其内嵌的项目知识简化和便利项目构建。
@@ -61,7 +60,7 @@ There are two other Maven lifecycles of note beyond the default list above. They
    - clean: cleans up artifacts created by prior builds
    - site: generates site documentation for this project
 
-** 仓库
+** repository
 Maven 2 仓库存储 Maven 在一个项目的依赖项解析中使用过的工件集。在本地磁盘上访问本地仓库，通过网络访问远程仓库。工件通常被打包成包含二进制库或可执行库的 JAR 文件。这被认为是工件的一个类型。但在实践中，工件也可以是 WAR、EAR 或其他代码捆绑类型。Maven 2 利用操作系统的目录结构对存储在仓库中的工件集进行快速索引。这个仓库索引系统依赖于这种能力来通过工件的坐标惟一标识工件。Maven 坐标是一组可以惟一标识工件的三元组值。坐标包含了下列三条信息：
    - (groupId)组 ID：代表制造该工件的实体或组织。例如，com.ibm.devworks 就是一个组 ID。
    - (artifactId)工件 ID：实际的工件的名称。例如，主体类名为 OpsImp 的项目也许会用 OpsImp 作为其工件 ID。
@@ -310,7 +309,7 @@ nexus有下面几种repo：
    - Virtual Repo(???)
 另外如果自己将一些pom直接copy到某个repo下面的话，nexus不能够索引到，这个时候需要右击这个repo选择Update Index.(nexus依赖索引知道文件分布)
 
-** 使用问题
+** notes
 *** 安装maven
 如果使用的是ubuntu/debian的话，可以直接使用apt-get install maven来完成。
 

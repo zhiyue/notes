@@ -7,7 +7,7 @@
 ** architecture
 file:./images/netty-components.png
 
-** concept
+** concepts
 *** Channel
 可以认为是一个connection，这个connection上面有socket fd可以所以进行读写。
 
@@ -53,7 +53,7 @@ file:./images/netty-components.png
 *** ChannelGroup
 线程安全的Channel集合，如果Channel关闭的话那么会自动从group里面移除，能够对Channel进行批量操作。 
 
-** 使用问题
+** notes
 *** boss/worker executor
 NioServerSocketChannelFactory构造函数需要指定boss/worker两个executor，有必要解释一下这两个对象的含义。
 
@@ -185,7 +185,7 @@ private void fireReadTimedOut(final ChannelHandlerContext ctx) throws Exception 
 
 *note(dirlt)：有时候我在考虑，其实writeTimeout这个事件其实大部分时候是不需要的，对于server而言write之后就不care了，而对于client而言write之后直接使用read来触发readTimeout更加合适*
 
-** 代码分析
+** all-about-code
 *** HashedWheelTimer
 定时器的实现，相关其接口如下
 #+BEGIN_SRC Java
