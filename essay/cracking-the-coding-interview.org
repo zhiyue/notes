@@ -240,6 +240,7 @@ Questions:
        3. u = zn # using 1 and 2.
        4. (k + p) = z'n # using 2 and 3.
        5. k % n = (n-p) # done.
+    - see leetcode https://oj.leetcode.com/problems/linked-list-cycle/ and https://oj.leetcode.com/problems/linked-list-cycle-ii/
 
 *** Stacks and Queues
 Questions:
