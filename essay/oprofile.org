@@ -184,8 +184,7 @@ easy_oprofile() {
 }
 #+END_SRC
 
-
-** FAQ
+** notes
 *** 设置time interrupt模式
 http://oprofile.sourceforge.net/doc/detailed-parameters.html#timer
 

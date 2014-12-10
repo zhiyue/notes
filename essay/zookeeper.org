@@ -3,8 +3,8 @@
    - http://research.yahoo.com/pub/3280
 todo(dirlt):
 
-** FAQ
-*** 部署zookeeper
+** notes
+*** 部署zookeeper集群
    - http://blog.csdn.net/cxhzqhzq/article/details/6538491
 
 接触过zookeeper这么久了，自己也实现了一个同步的zookeeper client(放在github上，考虑过确实需要一个异步的zookeeper client,但是又考虑到自己对zookeeper本身就不了解，这么多触发的事件也不太清楚，所以暂时就不写了。不过异步的zkclient可以纳入itachi这个框架里面）。虽然对于paxos也不是非常了解，但是也算是大致了解吧（其实我觉得完全没有必要实现paxos,paxos只是一个general solution,对于zookeeper完全可以做一个specialized solution)。每次使用zkclient都是找别人的搭建好的集群。如果自己了解简单地部署zookeeper的话倒是可以很方便地进行单测。
