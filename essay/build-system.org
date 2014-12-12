@@ -215,7 +215,7 @@ gyp虽然是构建系统，并且通常来说构建文件倾向于使用描述�
 从gyp层面就考虑了如何避免调用recursive make，通过规定某些属性内容只允许为路径名称并且允许include其他目录的.gpyi文件，
 理论上可以生成不需要recurisve make的Makefile。同时在生成Makefile上面考虑了cross compile,out-of-source build问题。
 
-** Scons
+** SCons
 地址在http://www.scons.org/。
 
 总体来说算是一个比较成熟的产品，也发布过相当多的版本经过很长时间的演化。
@@ -663,50 +663,15 @@ cmake会重新生成Makefile并且进行编译的。不过因为时间有限也�
 
 ** Others
 关于BuildSystem一些有用的链接，在这里给出：
-
-   - Build Management Entry
-http://www.dmoz.org/Computers/Software/Build_Management/
-这个是关于一个构建管理项目的入口，里面有很多解决构建项目遇到问题的工具和方案。
-
-   - Make Alternatives
-http://freshmeat.net/articles/make-alternatives
-Make的代替品。
-
-   - A.A.P
-http://www.a-a-p.org/tools_build.html
-这是VIM作者编写的一个构建系统框架，是一个可以扩展的系统。
-
-   - Boost.Build
-http://www.boost.org/doc/tools/build/index.html
-http://www.boost.org/boost-build2/index.html
-Boost使用的BuildSystem，也是旨在解决C++跨平台构建问题。
-
-   - Makeit
-http://www.dscpl.com.au/projects/makeit/
-时间限制，没有仔细研究。
-
-   - Waf
-http://code.google.com/p/waf/
-基本上可以认为是和SCons的一个sibling，似乎SCons和Waf都是从某个项目分支出来的。
-语法上都采用了Python Script解决方案，但是Waf看上去似乎没有SCons简单。
-
-   - SDS
-http://sds.sourceforge.net/index.html
-时间限制，没有仔细研究。
-
-   - MSBuild
-http://msdn.microsoft.com/zh-cn/library/dd393574.aspx
-M$的构建系统，时间限制没有仔细研究，并且对于Windows下面的开发环境也不是很熟悉。
-唯一了解就是MSBuild也使用XML来进行描述。
-
-   - Maven
-http://maven.apache.org/
-Java项目开发最常使用的构建系统工具之一。Maven描述方法是使用XML来描述，虽然也可以描述一些过程化的内容，
-但是感觉就是没有Python Script简洁和清晰。Maven相对于之前这些构建系统，有下面几点重大改进的地方：
-   - 规范项目目录结构
-   - 引入Maven Source Code Repository概念
-规范目录结构使得大家开发Maven很容易，而Maven Source Code Repository使得协作开发非常简单，
-只要配置好Source Code Repo，然后Maven能够自动下载编译所需要的依赖模块并且进行编译，能够很好地进行多模块之间的持续集成开发。
+   - Build Management Entry http://www.dmoz.org/Computers/Software/Build_Management/ 这个是关于一个构建管理项目的入口，里面有很多解决构建项目遇到问题的工具和方案
+   - Make Alternatives http://freshmeat.net/articles/make-alternatives Make各种代替品
+   - A.A.P http://www.a-a-p.org/tools_build.html 这是VIM作者编写的一个构建系统框架，是一个可以扩展的系统
+   - Boost.Build http://www.boost.org/doc/tools/build/index.html http://www.boost.org/boost-build2/index.html Boost使用的BuildSystem，也是旨在解决C++跨平台构建问题
+   - Makeit http://www.dscpl.com.au/projects/makeit/ 时间限制，没有仔细研究
+   - WAF http://code.google.com/p/waf/ 基本上可以认为是和SCons的一个sibling，似乎SCons和Waf都是从某个项目分支出来的。语法上都采用了Python Script解决方案，但是Waf看上去似乎没有SCons简单。
+   - SDS http://sds.sourceforge.net/index.html 时间限制，没有仔细研究
+   - MSBuild http://msdn.microsoft.com/zh-cn/library/dd393574.aspx M$的构建系统，时间限制没有仔细研究，并且对于Windows下面的开发环境也不是很熟悉。唯一了解就是MSBuild也使用XML来进行描述。
+   - Maven http://maven.apache.org/ Java项目开发最常使用的构建系统工具之一。Maven描述方法是使用XML来描述，虽然也可以描述一些过程化的内容，但是感觉就是没有Python Script简洁和清晰。Maven相对于之前这些构建系统，有下面几点重大改进的地方：1)规范项目目录结构 2) 引入Maven Source Code Repository概念. 规范目录结构使得大家开发Maven很容易，而Maven Source Code Repository使得协作开发非常简单，只要配置好Source Code Repo，然后Maven能够自动下载编译所需要的依赖模块并且进行编译，能够很好地进行多模块之间的持续集成开发。note(dirlt): 使用Java/JVM做开发还是离不开maven的, 这里有一些关于maven的[[file:./maven.org][笔记]].
 
 ** 总结
 关于构建系统，个人感觉这里是一个大坑，想要满足所有人的要求是非常困难的。对于构建系统，我们希望有下面这些点(一部分是我觉得应该这样做)：
