@@ -1,13 +1,13 @@
 * jvm
-** 经验参数
-服务器JVM
+** common options
+用于服务器的JVM参数
 #+BEGIN_EXAMPLE
  -server \
  -Xms8192m -Xmx8192m -XX:NewSize=1024m \
  -XX:+UseConcMarkSweepGC -XX:+UseParNewGC \
 #+END_EXAMPLE
 
-** GC
+** about gc
    - Sun jdk 1.6 gc http://www.slideshare.net/BlueDavy/sun-jdk-16-gc
    - Java SE 6 HotSpot[tm] Virtual Machine Garbage Collection Tuning : http://www.oracle.com/technetwork/java/javase/gc-tuning-6-140523.html
    - Performance Tuning Garbage Collection in Java : http://www.petefreitag.com/articles/gctuning/

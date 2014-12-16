@@ -1,5 +1,4 @@
 * scheme
-** 相关资料
   - http://www.scheme.com/
   - [[http://mitpress.mit.edu/sicp/][Structure and Interpretation of Computer Programs]]
 
