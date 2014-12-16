@@ -1,0 +1,4 @@
+* millwheel
+   - http://research.google.com/pubs/pub41378.html
+   - MillWheel: Fault-Tolerant Stream Processing at Internet Scale
+   - date: 2013

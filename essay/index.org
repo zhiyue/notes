@@ -196,8 +196,9 @@
    - [[file:./omega.org][Omega]] Google的集群资源管理系统.
    - [[file:./ceph.org][Ceph]] 分布式文件系统. 已经进入 [[file:./linux.org][Linux]] 内核.
    - [[file:./flumejava.org][FlumeJava]] Google的分布式数据抽象系统. Flume, "水槽, 水道".
-   - [[file:./photon.org][Photon]] Google的分布式的流式处理(joining)系统. Photon, "<物>光子，光量子".
+   - [[file:./photon.org][Photon]] Google的分布式流式处理(joining)系统. Photon, "<物>光子，光量子".
    - [[file:./haystack.org][HayStack]] Facebook的小文件存储系统. HayStack, "干草堆".
+   - [[file:./millwheel.org][MillWheel]] Google的分布式流式处理系统. MillWheel, "磨坊水轮".
 
 ** Programming Language
 [[file:prog-lang.org][Programming Language]] including following languages:
