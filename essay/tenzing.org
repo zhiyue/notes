@@ -5,12 +5,12 @@
 
 这个MR框架实现和Hadoop还不太一样。这里的worker是常驻的，实现上应该是接收master的指令并被通知输入位置，完成之后通知master完成计算以及输出位置，但是计算上还是Map+Reduce实现方式，多轮迭代应该也是通过多轮的mapreduce来完成的。
 
-http://duanple.blog.163.com/blog/static/70971767201192484915767/ 
+http://duanple.blog.163.com/blog/static/70971767201192484915767/
 
 ** ABSTRACT
 ** INTRODUCTION
-   - In this paper, we describe Tenzing, a SQL query execution engine built on top of MapReduce. 
-   - We have been able to build a system with latency as low as ten seconds, high effciency, and a comprehensive SQL92 implementation with some SQL99 extensions. 
+   - In this paper, we describe Tenzing, a SQL query execution engine built on top of MapReduce.
+   - We have been able to build a system with latency as low as ten seconds, high effciency, and a comprehensive SQL92 implementation with some SQL99 extensions.
    - Tenzing also supports efficiently querying data in row stores, column stores, Bigtable, GFS, text and protocol buffers.
    - Users have access to the underlying platform through SQL extensions such as user defined table valued functions and native support for nested relational data.
 
@@ -31,16 +31,16 @@ http://duanple.blog.163.com/blog/static/70971767201192484915767/
 file:./images/tenzing-architecture.png
 
 The system has four major components: the worker pool, query server, client interfaces, and metadata server.
-   - The distributed worker pool is the execution system which takes a query execution plan and executes the MapRe-duces. 
-     - In order to reduce query latency, we do not spawn any new processes, but instead keep the processes running constantly. This allows us to significantly decrease the end-to-end latency of queries. 
-     - The pool consists of master and worker nodes, plus an overall gatekeeper called the master watcher. The workers manipulate the data for all the tables defined in the metadata layer. 
+   - The distributed worker pool is the execution system which takes a query execution plan and executes the MapRe-duces.
+     - In order to reduce query latency, we do not spawn any new processes, but instead keep the processes running constantly. This allows us to significantly decrease the end-to-end latency of queries.
+     - The pool consists of master and worker nodes, plus an overall gatekeeper called the master watcher. The workers manipulate the data for all the tables defined in the metadata layer.
      - Since Tenzing is a heteroge-neous system, the backend storage can be a mix of various data stores, such as ColumnIO, Bigtable, GFS files, MySQL databases, etc.
-   - The query server serves as the gateway between the client and the pool. （query server解析请求并且进行执行优化） 
-     - The query server parses the query, ap-plies optimizations and sends the plan to the master for execution. 
+   - The query server serves as the gateway between the client and the pool. （query server解析请求并且进行执行优化）
+     - The query server parses the query, ap-plies optimizations and sends the plan to the master for execution.
      - The Tenzing optimizer applies some basic rule and cost based optimizations to create an optimal execution plan.
-   - Tenzing has several client interfaces, including a com-mand line client (CLI) and a Web UI. 
-     - The CLI provides more power such as complex scripting and is used mostly by power users. 
-     - The Web UI, with easier-to-use features such as query & table browsers and syntax highlighting, is geared towards novice and intermediate users. 
+   - Tenzing has several client interfaces, including a com-mand line client (CLI) and a Web UI.
+     - The CLI provides more power such as complex scripting and is used mostly by power users.
+     - The Web UI, with easier-to-use features such as query & table browsers and syntax highlighting, is geared towards novice and intermediate users.
      - There is also an API to directly execute queries on the pool, and a standalone bi-nary which does not need any server side components, but rather launches its own MapReduce jobs.
    - The metadata server provides an API to store and fetch metadata such as table names and schemas, and pointers to the underlying data. The metadata server is also responsi-ble for storing ACLs (Access Control Lists) and other secu-rity related information about the tables. The server uses Bigtable as the persistent backing store.（metaserver存储表名和schema，以及数据存储位置，还有ACL等信息）
 
@@ -50,7 +50,7 @@ A typical Tenzing query goes through the following steps:
    - The query server fetches the required metadata from the metadata server to create a more complete inter-mediate format.（从metadata server获取元信息并且决定中间格式）
    - The optimizer goes through the intermediate format and applies various optimizations.（优化器进行优化）
    - The optimized execution plan consists of one or more MapReduces. For each MapReduce, the query server finds an available master using the master watcher and submits the query to it. At this stage, the execution has been physically partitioned into multiple units of work(i.e. shards).（对于每个步骤与master watcher交互获取可用master完成每个MapReduce）
-   - Idle workers poll the masters for available work. Re-duce workers write their results to an intermediate storage.（每个MapReduce，master会交给worker来完成） 
+   - Idle workers poll the masters for available work. Re-duce workers write their results to an intermediate storage.（每个MapReduce，master会交给worker来完成）
    - The query server monitors the intermediate area for results being created and gathers them as they arrive. The results are then streamed to the upstream client.（query server返回结果）
 
 ** SQL FEATURES
@@ -59,18 +59,18 @@ A typical Tenzing query goes through the following steps:
 *** Joins
 **** BROADCAST JOINS
    - If small enough, the secondary table is pulled into the memory of each mapper / reducer process for in- memory lookups, which typically is the fastest method for joining.
-     - The data structure used to store the lookup data is determined at execution time. For example, if the sec- ondary table has integer keys in a limited range, we use an integer array. For integer keys with wider range, we use a sparse integer map. Otherwise we use a data type specific hash table. （查询存储格式根据数据内容和大小不同而异） 
+     - The data structure used to store the lookup data is determined at execution time. For example, if the sec- ondary table has integer keys in a limited range, we use an integer array. For integer keys with wider range, we use a sparse integer map. Otherwise we use a data type specific hash table. （查询存储格式根据数据内容和大小不同而异）
      - We apply filters on the join data while loading to re- duce the size of the in-memory structure, and also only load the columns that are needed for the query.（只是fetch必要的记录和字段）
      - For multi-threaded workers, we create a single copy of the join data in memory and share it between the threads.（单次查询尽量用同一份copy）
      - Once a secondary data set is copied into the worker process, we retain the copy for the duration of the query so that we do not have to copy the data for every map shard. This is valuable when there are many map shards being processed by a relatively small number of workers.（单次查询尽量用同一份copy）
-     - For tables which are both static and frequently used, we permanently cache the data in local disk of the worker to avoid remote reads. Only the first use of the table results in a read into the worker. Subsequent reads are from the cached copy on local disk.（多次查询之间也尽量用一份copy） 
-     - We cache the join results from the last record; since input data often is naturally ordered on the join at- tribute(s), it saves us one lookup access.（保存最后一次join位置减少查询dataset大小） 
+     - For tables which are both static and frequently used, we permanently cache the data in local disk of the worker to avoid remote reads. Only the first use of the table results in a read into the worker. Subsequent reads are from the cached copy on local disk.（多次查询之间也尽量用一份copy）
+     - We cache the join results from the last record; since input data often is naturally ordered on the join at- tribute(s), it saves us one lookup access.（保存最后一次join位置减少查询dataset大小）
 
 **** REMOTE LOOKUP JOINS
 For sources which support remote lookups on index (e.g., Bigtable), Tenzing supports remote lookup joins on the key (or a prefix of the key). We employ an asynchronous batch lookup technique combined with a local LRU cache in order to improve performance. The optimizer can intelligently switch table order to enable this if needed.（通过聚合批量以及异步的方式进行查询）
- 
+
 **** DISTRIBUTED SORT-MERGE JOINS
-Distributed sort-merge joins are the most widely used joins in MapReduce implementations. Tenzing has an im- plementation which is most effective when the two tables being joined are roughly the same size and neither has an index on the join key.（比较通用的join算法） 
+Distributed sort-merge joins are the most widely used joins in MapReduce implementations. Tenzing has an im- plementation which is most effective when the two tables being joined are roughly the same size and neither has an index on the join key.（比较通用的join算法）
 
 *note(dirlt):对应在Hadoop里面就是reducer-join*
 
@@ -120,11 +120,11 @@ Tenzing is tightly integrated with the Google MapReduce implementation, and we m
      - We subsequently im-proved performance further by using memory chaining, where the reducer of the upstream MR and the mapper of the downstream MR are co-located in the same process.（上下游pipelining）
      - *note(dirlt)：这个思想相比之下，感觉可能还是spark/shark的思路会更加靠谱。很明显MapReduce方式不太适合DAG计算，与其在上面做修改不如建立一个新的framework。事实上spark/shark的扩展性也是非常好的*
    - Sort Avoidance. 一些操作不需要做sort可以关闭，这样mapper输出直接就feed给reducer.
-     - Certain operators such as hash join and hash aggregation require shuffling, but not sorting. The MapReduce API was enhanced to automatically turn off sorting for these operations. 
+     - Certain operators such as hash join and hash aggregation require shuffling, but not sorting. The MapReduce API was enhanced to automatically turn off sorting for these operations.
      - When sorting is turned off, the mapper feeds data to the reducer which directly passes the data to the Reduce() function bypassing the intermediate sorting step. This makes many SQL operators significantly more efficient.
    - Block Shuffle. 如果不需要做sort的话那么进行shuffle的时候，那么可以通过将rows聚合成为一个block，以block为单元进行shuffle.
      - Typically, MapReduce uses row based en-coding and decoding during shuffle. This is necessary since in order to sort the data, rows must be processed individu-ally. However, this is inefficient when sorting is not required.
-     - We implemented a block-based shuffle mechanism on top of the existing row-based shuffler in MapReduce that combines many small rows into compressed blocks of roughly 1MB in size. 
+     - We implemented a block-based shuffle mechanism on top of the existing row-based shuffler in MapReduce that combines many small rows into compressed blocks of roughly 1MB in size.
      - By treating the entire block as one row and avoiding reducer side sorting, we were able to avoid some of the over-head associated with row serialization and deserialization in the underlying MapReduce framework code.
      - This lead to 3X faster shuffling of data compared to row based shuffling with sorting.
    - Local Execution. 如果处理数据非常小的话那么可以在本地执行而不需要提交到worker pool.
@@ -140,5 +140,3 @@ Tenzing is tightly integrated with the Google MapReduce implementation, and we m
 
 ** RELATED WORK
 ** CONCLUSION
-
-
