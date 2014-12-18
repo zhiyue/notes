@@ -1,11 +1,10 @@
 * yarn
-** series of articles by Hortonworks
-*** Introducing Apache Hadoop YARN | Hortonworks
+** Introducing Apache Hadoop YARN | Hortonworks
 http://hortonworks.com/blog/introducing-apache-hadoop-yarn/
 
 看起来YARN的主要目的是将Hadoop不仅仅用于map-reduce的计算方式，还包括MPI，graph-processing，simple services等，而MR仅仅是作为其中一种计算方式。底层依然是使用HDFS。发布方式的话还是将HDFS，YARN，MR，以及Common一起统一发布。
 
-*** Apache Hadoop YARN: Background and an Overview | Hortonworks
+** Apache Hadoop YARN: Background and an Overview | Hortonworks
 http://hortonworks.com/blog/apache-hadoop-yarn-background-and-an-overview/
 
 对于MR来说，最关键的一点就是lack of data motion。通过将任务放在数据所在的机器上面，而不是将数据移动到任务所在的机器上面，可以节省带宽提高计算效率。现在来说MR分为下面三个部分：
@@ -32,7 +31,7 @@ YARN主要做的工作就是在资源利用的改进上面，将资源利用已�
 
 file:./images/YARNArch.png
 
-*** Apache Hadoop YARN: Concepts and Applications | Hortonworks
+** Apache Hadoop YARN: Concepts and Applications | Hortonworks
 http://hortonworks.com/blog/apache-hadoop-yarn-concepts-and-applications/
 
 将AM和RM分离的好处在于：一方面减轻RM的压力这样可以让RM管理更多的集群，另外一方面可以让AM支持更多类型的计算而不仅仅是MR
@@ -72,7 +71,7 @@ Let’s walk through an application execution sequence (steps are illustrated in
 
 file:./images/yarnflow.png
 
-*** Apache Hadoop YARN: NodeManager | Hortonworks
+** Apache Hadoop YARN: NodeManager | Hortonworks
 http://hortonworks.com/blog/apache-hadoop-yarn-nodemanager/
 
 file:./images/yarn-nodemanager-arch.png
@@ -92,7 +91,7 @@ file:./images/yarn-nodemanager-arch.png
      - ContainerTokenSecretManager
    - WebServer 当前运行的application以及对应的container，资源利用状况以及聚合的log
 
-*** Apache Hadoop YARN: ResourceManager | Hortonworks
+** Apache Hadoop YARN: ResourceManager | Hortonworks
 http://hortonworks.com/blog/apache-hadoop-yarn-resourcemanager/
 
 file:./images/yarn-resourcemanager-arch.png

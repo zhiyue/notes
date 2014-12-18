@@ -642,9 +642,6 @@ int main() {
 *** 初次DIV2
 file:./images/virgin-topcoder-div2.jpg
 
-*** srm div2 series
-todo(dirlt):
-
 ** 计算机科学最重要的32个算法
 http://www.infoq.com/cn/news/2012/08/32-most-important-algorithms
 
