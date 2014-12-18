@@ -2,8 +2,9 @@
 *I'm looking for a remote job, and this statement is long term till I remove it*
    - http://careers.stackoverflow.com/jobs?allowsremote=true
    - https://weworkremotely.com/
+   - https://remotecoder.io/
 
-** SALARY
+** about salary
 salary comparison of various countries
    - Numbeo - The biggest Internet Database about Cost of Living, Housing Indicators and many other informations about cities and countries! : http://www.numbeo.com/common/
    - PayScale - Salary Comparison, Salary Survey, Search Wages : http://www.payscale.com/
