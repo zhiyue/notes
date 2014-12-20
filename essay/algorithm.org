@@ -154,8 +154,7 @@ simhash算法原理非常简单：
    - HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm : http://research.google.com/pubs/pub40671.html
    - https://github.com/clearspring/stream-lib *note(dirlt):HyperLogLogPlus实现*
 
------
-这个算法主要是来进行去重的，前提是在big data下面并且内存存在限制。 *算法的假设和原理如下* ：
+这个算法主要是来进行去重的，前提是在big data下面并且内存存在限制。算法的假设和原理如下：
 #+BEGIN_VERSE
 Given a random uniform distribution for likelihoods of N 0s and 1s, you can extract a probability distribution for the likelihood of a specific phenomenon.  The phenomenon we care about is the maximum index of a 1 bit.  Specifically, we expect the following to be true:
 
@@ -173,8 +172,7 @@ Another interesting thing about this algorithm is that it introduces two paramet
 2)   Increasing the number of bits of your hash increases the highest possible number you can accurately approximate
 #+END_VERSE
 
------
-*算法代码如下：*
+下面是这个算法的一个实现：
 #+BEGIN_SRC Python
 def trailing_zeroes(num):
   """Counts the number of trailing 0 bits in num."""
@@ -201,17 +199,13 @@ def estimate_cardinality(values, k):
     max_zeroes[bucket] = max(max_zeroes[bucket], trailing_zeroes(bucket_hash))
   return 2 ** (float(sum(max_zeroes)) / num_buckets) * num_buckets * 0.79402
 #+END_SRC
-
 这个算法上面存在一些差别，就是这个算法实现是假设末尾为0的概率为0.5,末尾为10的概率为0.25，以此类推。最后的0.79402应该是调整系数。
 
 另外还有一个SuperLogLog针对HyperLogLog做了一些改进降低了错误的概率：
    - 去掉30%的最大的bucket，只是计算剩余70%的bucket
    - max_zeroes的计算不是使用geometric mean而是使用harmonic mean
 
------
-*分布式计算*
-
-可以让每个机器各自维护各自的bucket，最后每个机器上面属于相同的bucket index的bucket进行merge即可，so damn cool!.
+这个算法可以很容易地并行化。可以让每个机器各自维护各自的bucket，最后每个机器上面属于相同的bucket index的bucket进行merge即可。
 
 *** CONCISE
    - Maximum Performance with Minimum Storage: Data Compression in Druid | Metamarkets http://metamarkets.com/2012/druid-bitmap-compression/
