@@ -92,6 +92,9 @@ configure_utils() {
     # texmacs.
     PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
 
+    # maven
+    PATH=$HOME/utils/apache-maven-3.0.5/bin:$PATH
+
     # protocol buffers.
     PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
     PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
