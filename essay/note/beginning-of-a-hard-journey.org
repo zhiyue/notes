@@ -1,5 +1,5 @@
 * beginning-of-a-hard-journey
-#+TITLE: 苦旅的开始
+#+TITLE: 苦旅起点
 
 @2014-12-20
 
