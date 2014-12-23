@@ -270,7 +270,8 @@ configure_clang() {
     export CCACHE_COMPILERCHECK
 }
 
-export IDEA_HOME=$HOME/utils/idea-IC-123.72
+#export IDEA_HOME=$HOME/utils/idea-IC-123.72 # 12.0
+export IDEA_HOME=$HOME/utils/idea-IC-139.659.2 # 14.0.2
 # intellij IDEA !!!
 start_idea() {
     (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
@@ -317,6 +318,8 @@ apt_update() {
     # f.lux https://justgetflux.com/
     sudo add-apt-repository -y ppa:kilian/f.lux
 
+    # fcitx
+    sudo add-apt-repository -y ppa:fcitx-team/nightly
     sudo apt-get update
 }
 

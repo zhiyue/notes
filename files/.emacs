@@ -152,20 +152,19 @@
 (require 'session)
 (add-hook 'after-init-hook 'session-initialize)
 
-
-;;; ibus.
-(if (not mac-system)
-    (progn
-      (add-to-list 'load-path "~/.emacs.d/ibus-el-0.3.2")
-      (require 'ibus)
-      (add-hook 'after-init-hook 'ibus-mode-on)
-      ;; Use C-SPC for Set Mark command
-      ;; (ibus-define-common-key ?\C-\s nil)
-      ;; Use C-/ for Undo command
-      (ibus-define-common-key ?\C-/ nil)
-      (global-set-key [(shift)] 'ibus-toggle)
-      ;; Change cursor color depending on IBus status
-      (setq ibus-cursor-color '("red" "blue" "limegreen"))))
+;;; ibus. (does not work in emacs24 any more)
+;; (if (not mac-system)
+;;     (progn
+;;       (add-to-list 'load-path "~/.emacs.d/ibus-el-0.3.2")
+;;       (require 'ibus)
+;;       (add-hook 'after-init-hook 'ibus-mode-on)
+;;       ;; Use C-SPC for Set Mark command
+;;       ;; (ibus-define-common-key ?\C-\s nil)
+;;       ;; Use C-/ for Undo command
+;;       (ibus-define-common-key ?\C-/ nil)
+;;       (global-set-key [(shift)] 'ibus-toggle)
+;;       ;; Change cursor color depending on IBus status
+;;       (setq ibus-cursor-color '("red" "blue" "limegreen"))))
 
 ;;; multi-term.
 (require 'multi-term)

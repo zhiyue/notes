@@ -152,6 +152,8 @@
    - # sudo apt-get install chkconfig
    - sudo apt-get install sysv-rc-conf
    - sudo apt-get install nginx
+   - sudo apt-get install fcitx
+   - sudo apt-get install im-switch
 
 ** 系统配置
 *** 察看ubuntu内部版本
@@ -334,7 +336,7 @@ virtualbox-g 0:off1:off2:on3:on4:on5:on6:off
 
 *** 设置输入法切换
 在Preferences里面：
-   - Input Method 里面添加 SubPinyin
+   - Input Method 里面添加 SunPinyin
    - 然后在General里面的Keyboard Shortcuts里面设置Enable or disable设置切换按键
      - Release+Shift_L 左边的Shift键
      - Constrol+space control和空格键
@@ -407,6 +409,13 @@ http://www.mintos.org/network/modify-skype-font.html
 Tools -> Preferences -> Subtitles & OSD
 
 使用默认的编码(encoding)就行，然后选择font为"WenQuanYi Micro Hei"(默认的字体应该是不能够显示中文)
+
+*** 使用搜狗输入法
+搜狗输入法依赖于fcitx框架，所以必须先安装好fcitx. 然后从搜狗输入法主页上下载deb进行安装。http://pinyin.sogou.com/linux/?r=pinyin
+
+通常系统会安装多种输入法框架比如ibus/fcitx，所以我们必须配置使用什么输入法框架，这个工作可以通过im-switch/im-config来完成。
+
+因为搜狗输入法是基于云的输入法，所以输入效果相比单机输入法比如sunpinyin会好很多。
 
 ** 编程环境
 *** bash的tab自动补全
