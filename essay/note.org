@@ -49,7 +49,7 @@
    - [[file:./note/photo-class.org][The Art of Photography]]
    - [[file:note/beginning-of-a-hard-journey.org][苦旅的起点]]
 
-** 印记
+** 笔记
    - [[file:note/fun.org][挺搞笑的]]
    - [[file:note/excerpt.org][网络摘抄]]
    - [[file:note/book.org][书籍]] 自己看过的一些书，可能不太好分类所以全部放在这里了。
