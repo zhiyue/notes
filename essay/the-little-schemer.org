@@ -1,0 +1,12 @@
+* the-little-schemer
+#+TITLE: The Little Schemer
+
+http://www.ccs.neu.edu/home/matthias/BTLS/
+
+- The Ten Commandments
+- The Five Rules
+- Chapter1-7 # 基本内容
+- Chapter8 # high-order function, currying, continuation
+- Chapter9 # partial/total function, halting problem, Y combinator
+- Chapter10 # interpreter
+
