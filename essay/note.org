@@ -1,9 +1,6 @@
 * note
 ** 折腾
-   - 动漫
-     - [[file:note/naruto.org][火影]]
-     - [[file:./note/bleach.org][死神]]
-     - [[file:./note/kof.org][拳皇]]
+   - [[file:note/naruto.org][火影]] | [[file:./note/bleach.org][死神]] | [[file:./note/kof.org][拳皇]]
    - [[file:./note/graduate-final-report.org][研究生答辩]]
    - [[file:./note/baidu-bit-shanghai-route.org][百度BIT上海行程]]
    - [[file:note/purchase-compaq-notebook.org][购买compqa笔记本]]
