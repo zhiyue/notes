@@ -206,6 +206,7 @@
      - [[file:./guide-to-advanced-programming-in-c.org][Guide to Advanced Programming in C]]
    - [[file:scheme.org][Scheme]] # Scheme is a functional programming language and one of the two main dialects of the programming language Lisp. [[http://en.wikipedia.org/wiki/Scheme_%28programming_language%29][Wikipedia]]
      - [[file:./the-little-schemer.org][The Little Schemer]]
+     - [[file:./the-seasoned-schemer.org][The Seasoned Schemer]]
      - [[file:sicp.org][SICP = Structure and Interpretation of Computer Programs]]
    - [[file:java.org][Java]] # Java is a programming language originally developed by James Gosling at Sun Microsystems (which has since merged into Oracle Corporation) and released in 1995 as a core component of Sun Microsystems' Java platform. The language derives much of its syntax from C and C++ but has a simpler object model and fewer low-level facilities. [[http://en.wikipedia.org/wiki/Java_%28programming_language%29][Wikipedia]]
      - [[file:./jni.org][JNI]] Java Native Interface

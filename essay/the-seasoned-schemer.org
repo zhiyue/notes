@@ -1,0 +1,9 @@
+* the-seasoned-schemer
+#+TITLE: The Seasones Schemer
+
+** Welcome Back to the Show
+** Take Cover
+可以认为Y-combinator是一种特殊形式的(define ...), 但是很明显(define ...)比Y-combinator更加可读。如果需要在函数体内进行define的话可以使用letrec(let recursively. 递归绑定)
+
+
+

@@ -215,3 +215,4 @@ Y combinator
     ((lambda (f) (f f))
      (lambda (f) (fun (lambda (x) ((f f) x)))))))
 #+END_SRC
+note(dirlt): 注意fun函数只允许接收一个参数。
