@@ -3,6 +3,7 @@
   - SICP http://mitpress.mit.edu/sicp/
   - TSPL http://www.scheme.com/tspl4/
   - Daniel P. Friedman http://www.cs.indiana.edu/~dfried/
+  - [[ftp://ftp.cs.utexas.edu/pub/garbage/cs345/schintro-v14/schintro_toc.html][An Introduction to Scheme and its Implementation]]
 
 ** church counter
 只要能够正确理解计数就可以，并不一定要将这个数显示出来
