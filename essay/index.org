@@ -41,6 +41,7 @@
      - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
      - [[file:./linux-system-and-performance-monitoring.org][Linux System and Performance Monitoring]]
      - [[http://www.brendangregg.com/linuxperf.html][Linux Performance Tools]] by Brendan Gregg. # 工具索引入口
+     - [[file:./thinking-clearly-about-performance.org][Thinking Clearly about Performance]] by Cary Millsap.
    - [[file:continuation.org][continuation]] 延续，异步编程一种实现。
 
 ** Tool and Desktop
