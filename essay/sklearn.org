@@ -1,0 +1,6 @@
+* sklearn
+- home http://scikit-learn.org/stable/index.html
+- docs http://scikit-learn.org/stable/documentation.html
+- [[file:images/scikit-learn-ml-map.png][一张图说明如何选择正确算法]]
+
+** overview

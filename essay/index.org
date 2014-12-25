@@ -48,13 +48,14 @@
    - [[file:license.org][license]] 一些常见的开源协议。不知道自己以后是否可以用得上：）
    - [[file:swig.org][swig]] C/C++多语言扩展接口生成器，使用起来非常方便(至于生成的代码没有看过效率如何). 个人觉得比较适合quick & dirty的方案.
    - [[file:git.org][git]] 分布式版本控制系统(DCVS)。很多项目都在使用Git进行版本管理包括Linux Kernel, Ruby on Rails, WINE, X.org等.
-   - [[file:folly.org][folly]] Folly is an open-source C++ library developed and used at Facebook.
+   - [[file:folly.org][folly]] folly is an open-source C++ library developed and used at Facebook.
    - [[file:sanitizer.org][sanitizer]] Google的C++动态分析工具，可以检测内存泄漏，内存无效使用以及多线程数据竞争.
    - [[file:build-system.org][build-system]] 在实现Baidu in-house的构建工具Comake2之前，做过构建系统的调研总结出来的.
    - [[file:maven.org][maven]] 主要针对Java开发的基于工程对象模型(POM, Project Object Model)构建系统，主要记录了一些使用方面的问题和解决办法.
    - [[file:vagrant.org][vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持非常好的是VirtualBox)
    - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
-   - [[file:octave.org][octave]] GNU 'Matlab' on Linux/Mac/Windows
+   - [[file:octave.org][octave]] GNU 'Matlab' on Linux/Mac/Windows.
+   - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
    - [[file:ubuntu.org][ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] . 主要记录自己使用出现的问题.
    - [[file:mac.org][macosx]] 如何更好地使用Mac。以前使用Windows，后来转向Ubuntu，再后来买了个MBA. 熟悉它又需要一段时间了.
 

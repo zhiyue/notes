@@ -276,6 +276,11 @@ export IDEA_HOME=$HOME/utils/idea-IC-139.659.2 # 14.0.2
 start_idea() {
     (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
 }
+export PYC_HOME=$HOME/utils/pycharm-community-4.0.3/ # 4.0.3
+# intellij pycharm !!!
+start_pycharm() {
+    (sh $PYC_HOME/bin/pycharm.sh > /tmp/pycharm.out 2>&1 &)
+}
 
 start_ibus() {
     (ibus-daemon &)
@@ -296,10 +301,6 @@ build_redis_on_docker() {
     cd $HOME/repo/tomb/dockerfiles
     ./build.sh redis
     cd -
-}
-
-run_godoc() {
-    godoc -http=:6060
 }
 
 apt_update() {
