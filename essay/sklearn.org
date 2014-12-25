@@ -4,3 +4,15 @@
 - [[file:images/scikit-learn-ml-map.png][一张图说明如何选择正确算法]]
 
 ** overview
+http://scipy-lectures.github.io/ sklearn底层使用的三驾马车numpy, scipy, matplotlib.
+
+- supervised learning
+  - classification # Identifying to which set of categories a new observation belong to.
+  - regression # Predicting a continuous value for a new example.
+- unsupervised learning
+  - clustering # Automatic grouping of similar objects into sets.
+  - dimensionality reduction # Reducing the number of random variables to consider.
+- model selection and evaluation # Comparing, validating and choosing parameters and models.
+- dataset transformations # Feature extraction and normalization.
+- dataset loading utilities
+

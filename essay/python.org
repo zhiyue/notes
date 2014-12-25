@@ -1,6 +1,6 @@
 * python
 ** language
-*** encode/decode
+*** encoding
 python字符串是unicode类型，二进制是str类型。
    - encode是将unicode转换成为str
    - decode是将str转换成为unicode
@@ -26,7 +26,7 @@ def toUTF8(s):
         return s.decode('gb2312').encode('utf8')
     except UnicodeDecodeError,e:
         return s
-        
+
 def toLocal(s):
     try:
         open(s,'r') # what a tricky way.
@@ -54,7 +54,7 @@ if(sys.getdefaultencoding() !='utf8'):
 *** simple WSGI
 WSGI(web server gateway interface)定义了一个webserver的标准编程接口，对于coder来说只需要实现这个接口，然后可以选择外部其他的framework（比如gunicore），就可以将webserver运行起来了。下面是一个参考代码
 #+BEGIN_SRC Python
-def logic(environ,start_response):    
+def logic(environ,start_response):
     start_response('200 OK', # status code
                    [('Content-type','text/plain')]) # header
     return ("OK",)
@@ -63,7 +63,7 @@ def logic(environ,start_response):
    - environ 表示环境变量，对于get/post请求数据都会放在这里.下面是常用的环境
      - PATH_INFO // 请求path
      - REQUEST_METHOD // 请求方法 GET/POST
-     - CONTENT_LENGTH // 
+     - CONTENT_LENGTH //
      - QUERY_STRING // path后面接的query，可以使用cgi.parse_qs来进行解析
        - cgi.parse_qs解析后的结果就是dict
        - 如果dict同一个key出现多次的话会以数组方式保留
@@ -143,7 +143,7 @@ max-requests = 128
 
 从文档里面可以看到它是直接分析excel文件的，通过阅读OpenOffice的关于M$ Excel文件格式文档编写的。
 #+BEGIN_VERSE
-    Development of this module would not have been possible without the document “OpenOffice.org’s Documentation of the Microsoft Excel File Format” (“OOo docs” for short). The latest version is available from OpenOffice.org in PDF format and XML format. Small portions of the OOo docs are reproduced in this document. A study of the OOo docs is recommended for those who wish a deeper understanding of the Excel file layout than the xlrd docs can provide. 
+    Development of this module would not have been possible without the document “OpenOffice.org’s Documentation of the Microsoft Excel File Format” (“OOo docs” for short). The latest version is available from OpenOffice.org in PDF format and XML format. Small portions of the OOo docs are reproduced in this document. A study of the OOo docs is recommended for those who wish a deeper understanding of the Excel file layout than the xlrd docs can provide.
 #+END_VERSE
    - PDF format http://sc.openoffice.org/excelfileformat.pdf
    - XML format http://sc.openoffice.org/excelfileformat.sxw
@@ -156,7 +156,7 @@ Features:
 3.Extracts all data (including Booleans and error-values)
 4.Extracts named references
 5.Extracts formatting information for cells (number format, font, alignment, borders, backgrounds, protection) and rows/columns (default height/width, etc). This effort was funded by Simplistix Ltd.
-6.Further information: APIs, README, HISTORY 
+6.Further information: APIs, README, HISTORY
 #+END_VERSE
 
 但是也有一些信息没有提取出来（但是对于很多简单的应用来说的话是没有必要的）。包括表格，图片，宏等嵌入对象，VBA模块，公式，注释以及超链等。
@@ -165,7 +165,7 @@ Exclusions: xlrd will not attempt to decode password-protected (encrypted) files
 1.Charts, Macros, Pictures, any other embedded object. WARNING: currently this includes embedded worksheets.
 2.Visual Basic (VBA) modules
 3.Formulas (results of formula calculations are extracted, of course)
-4.Comments and hyperlinks 
+4.Comments and hyperlinks
 #+END_VERSE
 
 下面是一个相对简单的例子（但是大部分时候应该足够了）。
@@ -190,14 +190,14 @@ for i in range(0,book.nsheets):
         print ''
 #+END_SRC
 
-*** http
+*** httplib
 关于httplib.HTTPConnection超时问题
 - python - HTTP Request Timeout - Stack Overflow : http://stackoverflow.com/questions/265720/http-request-timeout
 - 构造函数的timeout是connect timeout. 而不是recv/send timeout. 超时单位是秒.
 - send/recv timeout可以通过socket.setdefaulttimeout()来设置，全局设置对所有socket有效.
 - 对单个socket可以通过设置connection.sock.settimeout完成，但是必须首先connect才能够获得sock对象.
 
-*** date/time
+*** datetime
 #+BEGIN_SRC Python
 def convertDateTimeToTimeStamp(s):
     st = time.strptime(s,'%Y-%m-%d %H:%M:%S')
@@ -209,3 +209,34 @@ def convertTimeStampToDateTime(ts):
     return time.strftime('%Y-%m-%d %H:%M:%S',st)
 #+END_SRC
 
+*** ipython
+- timeit <expr> # 测量<expr>执行时间
+- run <file> # 运行<file>
+- cd / ls / pwd / cat ... # shell commands.
+- <object>? / ?<object> # 显示<object>文档
+- pylab # for interactive matplotlib sessions with Matlab/Mathematica-like functionality.
+
+*** numpy
+import numpy as np
+
+note(dirlt): 数组/矩阵的表示和运算能力
+
+numpy provides:
+- extension package to Python for multi-dimensional arrays
+- closer to hardware (efficiency)
+- designed for scientific computation (convenience)
+- also known as array oriented computing
+
+*** matplotlib
+import pylab as pl
+
+note(dirlt): 绘图能力
+
+*** scipy
+note(dirlt): 复杂数值处理运算能力
+
+The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc.
+
+scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
+
+Before implementing a routine, it is worth checking if the desired data processing is not already implemented in scipy. As non-professional programmers, scientists often tend to re-invent the wheel, which leads to buggy, non-optimal, difficult-to-share and unmaintainable code. By contrast, scipy‘s routines are optimized and tested, and should therefore be used when possible.
