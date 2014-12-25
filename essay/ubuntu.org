@@ -63,6 +63,7 @@
    - sudo apt-get install curl
    - sudo apt-get install ibus
    - sudo apt-get install ibus-sunpinyin
+   - sudo apt-get install ibus-googlepinyin
    - sudo apt-get install xsunpinyin
    - sudo apt-get install python-xlib # 需要在emacs下面调用ibus
    - #sudo apt-get install chromium-browser # 实验性质版本
@@ -153,7 +154,8 @@
    - sudo apt-get install sysv-rc-conf
    - sudo apt-get install nginx
    - sudo apt-get install fcitx
-   - sudo apt-get install im-switch
+   - sudo apt-get install im-config
+   - sudo apt-get install fcitx-googlepinyin
 
 ** 系统配置
 *** 察看ubuntu内部版本
@@ -415,7 +417,9 @@ Tools -> Preferences -> Subtitles & OSD
 
 通常系统会安装多种输入法框架比如ibus/fcitx，所以我们必须配置使用什么输入法框架，这个工作可以通过im-switch/im-config来完成。
 
-因为搜狗输入法是基于云的输入法，所以输入效果相比单机输入法比如sunpinyin会好很多。
+因为搜狗输入法是基于云的输入法，所以输入效果相比单机输入法比如sunpinyin会好很多。安装完成之后需要重启X.
+
+note(dirlt): 其实试试fcitx-googlepinyin应该也不错。
 
 ** 编程环境
 *** bash的tab自动补全
