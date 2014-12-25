@@ -156,6 +156,7 @@
    - sudo apt-get install fcitx
    - sudo apt-get install im-config
    - sudo apt-get install fcitx-googlepinyin
+   - sudo apt-get install guile-2.0
 
 ** 系统配置
 *** 察看ubuntu内部版本
