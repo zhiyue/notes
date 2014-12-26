@@ -142,3 +142,30 @@ note(dirlt): 这个模型还是无法阐释清楚Lisp系统里的控制机制，
 
 ** 寄存器机器里的计算
 我的目的是想说明，这一天空机器并不是一种天赐造物或者生命体，它只不过是钟表一类的机械装置（而那些相信中标有灵魂的人却将这一工作说成是其创造者的荣耀），在很大程度上，这里多种多样的运动都是由最简单的物质力量产生的，就像钟表里所有的活动都是由一个发条产生的一样。
+
+-----
+寄存器机器模拟器
+
+机器支持的指令集如下：
+- (assign <reg-name> (reg <reg-name>))
+- (asisgn <reg-name> (const <const-value>))
+- (assign <reg-name> (op <op-name> <args>)) # 模拟寄存器上的简单计算
+- (perform <op-name> <args>) # 模拟调用外部函数
+- (test (op <op-name> <args>)) # 将计算结果存入寄存器flag.
+- (branch (label <label-name>)) # 根据寄存器flag来判断是否跳转
+- (goto (label <label-name>)) 
+- (assign <reg-name> (label <label-name>))
+- (goto (reg <reg-name>))
+- (save <register-name>)
+- (restore <register-name>)
+
+然后我们考虑为这个机器编写模拟器以及汇编程序。这里汇编程序将机器指令转换成为可执行的函数，然后模拟器为这些函数提供环境并且执行它。模拟器非常简单，只有两个基本寄存器(pc, flag)以及无限大小堆栈，但是却异常灵活：可以自己设置外部函数和寄存器集合。之后我们考虑使用这个指令集合实现：1.垃圾回收 2.求值器 3.编译程序。
+
+-----
+存储分配和废料收集
+
+-----
+显式控制的求值器
+
+-----
+编译器

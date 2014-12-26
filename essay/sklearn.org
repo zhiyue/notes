@@ -4,8 +4,6 @@
 - [[file:images/scikit-learn-ml-map.png][一张图说明如何选择正确算法]]
 
 ** overview
-http://scipy-lectures.github.io/ sklearn底层使用的三驾马车numpy, scipy, matplotlib.
-
 - supervised learning
   - classification # Identifying to which set of categories a new observation belong to.
   - regression # Predicting a continuous value for a new example.
@@ -15,4 +13,81 @@ http://scipy-lectures.github.io/ sklearn底层使用的三驾马车numpy, scipy,
 - model selection and evaluation # Comparing, validating and choosing parameters and models.
 - dataset transformations # Feature extraction and normalization.
 - dataset loading utilities
+
+** blocks
+http://scipy-lectures.github.io/ sklearn底层使用的三驾马车numpy, scipy, matplotlib.
+
+*** numpy
+数组/矩阵的表示和运算能力. # import numpy as np
+
+numpy provides:
+- extension package to Python for multi-dimensional arrays
+- closer to hardware (efficiency)
+- designed for scientific computation (convenience)
+- also known as array oriented computing
+
+-----
+array attributes
+
+- ndim # 维度
+- shape # 每个维度大小
+- dtype # 存储类型
+- T # 转置矩阵
+- size # 元素个数
+- itemsize # 每个元素占用内存大小
+- nbytes # 占用内存大小
+
+-----
+create array
+
+- np.array([0, 1, 2, 3]) # 1D
+- np.array([[0, 1, 2], [3, 4, 5]]) # 2D
+- np.arange(n) / np.arange(s, e, interval)
+- np.linspace(s, e, num-points)
+- np.ones(<shape>) / np.zeros(<shape>) / np.eye(n) / np.diag(<1D array>)
+- np.random.<???>
+- np.may_share_memory(a, b) / array.copy # for COW.
+- np.loadtxt / savetxt / load /save
+- plt.imread / plt.imsave
+
+index array
+
+- a[d1, d2, ...] # 多维访问
+- a[<array>, ...] # fancy indexing
+
+-----
+operations
+
+- +, -, *, /, ==, <, > # elementwise
+- logical_and(or) / all / any
+- min / max / argmin / argmax
+- mean / median / std / sum / unique / sqrt
+- ravel / reshape(<shape>) # flatten and reshape
+- z[:, np.newaxis] / z[np.newaxis, :] # add dimension
+- np.sort(argsort) / z.sort(argsort) # in-place sort.
+
+*** pylab
+绘图能力 # import pylab as plt
+
+这里有许多示例做参考 http://scipy-lectures.github.io/intro/matplotlib/matplotlib.html#other-types-of-plots-examples-and-exercises
+
+- plt.show()
+- plt.figure() # create a figure.
+- plt.plot(x as <1D-array>, y as <1D-array>) # various options.
+- plt.imshow(<2D-array>, cmap = ...) / plt.colorbar()
+- plt.legend / plt.xlabel/ plt.ylabel / plt.xlim / plt.ylim / plt.xticks / plt.yticks
+- pl.gca # get current axis. 操作边框
+- pl.gcf # get current figure. # 操作图像
+- pl.close(<fig-no>), or (), or ("all") # 关闭图像
+
+关于figure和subplot关系. A “figure” in matplotlib means the whole window in the user interface. Within this figure there can be “subplots”. If there is none it calls figure() to make one, strictly speaking, to make a subplot(1,1,1). 
+
+file:./images/sklearn-subplot.png
+
+*** scipy
+复杂数值处理运算能力
+
+The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc. scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
+
+
 

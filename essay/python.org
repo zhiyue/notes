@@ -50,6 +50,14 @@ if(sys.getdefaultencoding() !='utf8'):
   sys.setdefaultencoding('utf8')
 #+END_SRC
 
+** ipython
+- <TAB> 可以提示补全信息
+- timeit <expr> # 测量<expr>执行时间
+- run <file> # 运行<file>
+- cd / ls / pwd / cat ... # shell commands.
+- <object>? / ?<object> # 显示<object>文档
+- pylab # for interactive matplotlib sessions with Matlab/Mathematica-like functionality.
+
 ** library
 *** simple WSGI
 WSGI(web server gateway interface)定义了一个webserver的标准编程接口，对于coder来说只需要实现这个接口，然后可以选择外部其他的framework（比如gunicore），就可以将webserver运行起来了。下面是一个参考代码
@@ -209,34 +217,3 @@ def convertTimeStampToDateTime(ts):
     return time.strftime('%Y-%m-%d %H:%M:%S',st)
 #+END_SRC
 
-*** ipython
-- timeit <expr> # 测量<expr>执行时间
-- run <file> # 运行<file>
-- cd / ls / pwd / cat ... # shell commands.
-- <object>? / ?<object> # 显示<object>文档
-- pylab # for interactive matplotlib sessions with Matlab/Mathematica-like functionality.
-
-*** numpy
-import numpy as np
-
-note(dirlt): 数组/矩阵的表示和运算能力
-
-numpy provides:
-- extension package to Python for multi-dimensional arrays
-- closer to hardware (efficiency)
-- designed for scientific computation (convenience)
-- also known as array oriented computing
-
-*** matplotlib
-import pylab as pl
-
-note(dirlt): 绘图能力
-
-*** scipy
-note(dirlt): 复杂数值处理运算能力
-
-The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc.
-
-scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
-
-Before implementing a routine, it is worth checking if the desired data processing is not already implemented in scipy. As non-professional programmers, scientists often tend to re-invent the wheel, which leads to buggy, non-optimal, difficult-to-share and unmaintainable code. By contrast, scipy‘s routines are optimized and tested, and should therefore be used when possible.
