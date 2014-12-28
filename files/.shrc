@@ -130,14 +130,14 @@ dk() {
     case $1 in
         create)
             shift 1
-            _dk_create_node $@
+            __dk_create_node $@
             ;;
         connect)
             shift 1
-            _dk_connect_node $@
+            __dk_connect_node $@
             ;;
         list)
-            _dk_list
+            __dk_list
             ;;
         *)
             docker $@
@@ -146,7 +146,7 @@ dk() {
 }
 
 export DK_IMAGE="ubuntu:local"
-_dk_create_node() {
+__dk_create_node() {
     while test $# -gt 0
     do
         local ipd=$((103+$1))
@@ -167,7 +167,7 @@ _dk_create_node() {
 }
 
 
-_dk_connect_node() {
+__dk_connect_node() {
     local ip=$(docker inspect -f '{{.NetworkSettings.IPAddress}}' $1)
     shift 1
     local user="vagrant"
@@ -187,7 +187,7 @@ _dk_connect_node() {
     ssh $user@$ip
 }
 
-_dk_list() {
+__dk_list() {
     docker ps -a
     echo '----------'
     docker images | grep -v "<none>"
@@ -253,7 +253,7 @@ bzr_commit() {
     bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
 }
 
-gdb_apply_bt()
+gdb_backtrace_process()
 {
     gdb -batch -ex "thread apply all bt" -p $1
     # gdb -batch -ex "thread apply all bt full" -p $1
@@ -388,7 +388,6 @@ install_files() {
         ln -s $HOME/repo/notes/files/$target $HOME/$target
     done
 
-    ##########
     echo "installing index.html..."
     rm -rf $HOME/index.html
     ln -s $HOME/.private/files/index.html $HOME/index.html
@@ -533,7 +532,7 @@ install_ubuntu_packages() {
         awk '{print $5;}' | xargs sudo apt-get install -y
 }
 
-_tm_soft_sync_dir() {
+__tm_soft_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
@@ -542,7 +541,7 @@ _tm_soft_sync_dir() {
     rsync -arz --no-times "$src/$d/" "$dst/$d/"
 }
 
-_tm_hard_sync_dir() {
+__tm_hard_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
@@ -551,7 +550,7 @@ _tm_hard_sync_dir() {
     rsync -arz --delete --no-times "$src/$d/" "$dst/$d/"
 }
 
-_tm_sync_utils() {
+__tm_sync_utils() {
     local src=$1
     local dst=$2
     mkdir -p "$dst/utils" 2>/dev/null
@@ -563,7 +562,7 @@ _tm_sync_utils() {
     done
 }
 
-_tm_sync() {
+__time_machine_sync() {
     local src=$1
     shift 1
     local dst=$1
@@ -597,39 +596,39 @@ _tm_sync() {
         esac
         shift 1
     done
-    if [ $UTILS = "yes" ] ; then _tm_sync_utils $src $dst; fi
-    if [ $M2 = "yes" ] ; then _tm_soft_sync_dir $src $dst ".m2" ; fi
-    if [ $KP = "yes" ] ; then _tm_hard_sync_dir $src $dst "KuaiPan"; fi
-    if [ $VM = "yes" ]; then _tm_soft_sync_dir $src $dst "VirtualBox VMs"; fi
+    if [ $UTILS = "yes" ] ; then __tm_sync_utils $src $dst; fi
+    if [ $M2 = "yes" ] ; then __tm_soft_sync_dir $src $dst ".m2" ; fi
+    if [ $KP = "yes" ] ; then __tm_hard_sync_dir $src $dst "KuaiPan"; fi
+    if [ $VM = "yes" ]; then __tm_soft_sync_dir $src $dst "VirtualBox VMs"; fi
     if [ $REPO = "yes" ]; then
-        _tm_hard_sync_dir $src $dst "repo/notes"
-        _tm_hard_sync_dir $src $dst "repo/dirtysalt.github.io"
-        _tm_hard_sync_dir $src $dst "repo/emacs.d"
-        _tm_hard_sync_dir $src $dst "repo/oh-my-zsh"
-        _tm_hard_sync_dir $src $dst "repo/itachi"
-        _tm_hard_sync_dir $src $dst "repo/tomb"
+        __tm_hard_sync_dir $src $dst "repo/notes"
+        __tm_hard_sync_dir $src $dst "repo/dirtysalt.github.io"
+        __tm_hard_sync_dir $src $dst "repo/emacs.d"
+        __tm_hard_sync_dir $src $dst "repo/oh-my-zsh"
+        __tm_hard_sync_dir $src $dst "repo/itachi"
+        __tm_hard_sync_dir $src $dst "repo/tomb"
     fi
 }
 
-export TM_DIR="/tmp/bak"
-_setup_tm_dir() {
-    if [ ! -h $TM_DIR ]; then
+export TIME_MACHINE_DIR="/tmp/time-machine"
+_setup_time_machine_dir() {
+    if [ ! -h $TIME_MACHINE_DIR ]; then
         echo "setup time-machine directory..."
-        ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup/" $TM_DIR
+        ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup/" $TIME_MACHINE_DIR
     fi
 }
-_setup_tm_dir
+_setup_time_machine_dir
 
-tm_backup() {
+time_machine_backup() {
     local home=$HOME
-    local backup=$TM_DIR/dirlt
-    _tm_sync $home $backup $@
+    local backup=$TIME_MACHINE_DIR/dirlt
+    __time_machine_sync $home $backup $@
 }
 
-tm_restore() {
+time_machine_restore() {
     local home=$HOME
-    local backup=$TM_DIR/dirlt
-    _tm_sync $backup $home $@
+    local backup=$TIME_MACHINE_DIR/dirlt
+    __time_machine_sync $backup $home $@
 }
 
 pp_proc_netstat() {
