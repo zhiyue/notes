@@ -26,11 +26,14 @@ If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
 #+END_VERSE
 
-*** basics
+*** basics or tricks
 - str vs. repr # str是字符串表示，repr是code-form.
 - a is b # 判断是否为同一对象
 - copy.copy/deepcopy # 来做对象拷贝/深拷贝
 - r'...' # raw-string. 对字符串不做任何转义
+- except (E1, E2, ...) as e # 捕获多种类型异常
+- PYTHONPATH环境变量可以控制模块搜索路径
+- \_\_init.py\_\_ 文件中变量\_\_all\_\_(列表)可以控制"from X import *"导入的名字
 
 *** encoding
 python字符串是unicode类型，二进制是str类型。
@@ -80,9 +83,9 @@ if(sys.getdefaultencoding() !='utf8'):
 #+END_SRC
 
 *** import and reload
-- import <module> # 模块只有首次import时候会被执行
-- from <module> import <name> # 将模块名字拷贝到本模块
-- reload(<module>) # reload是函数而不是语句。之前必须确保模块被import过，reload重新执行模块内容
+- import <module> # 模块只有首次import时候会被执行。模块名字<module>拷贝到本模块。
+- from <module> import <name> # 和import过程类似，但是仅仅将模块内部名字<name>拷贝到本模块。
+- reload(<module>) # reload是函数而不是语句。之前必须确保模块被import过，reload重新执行模块内容。
 
 #+BEGIN_SRC Python
 #!/usr/bin/env python
@@ -132,14 +135,6 @@ s = {x for x in s} # 集合作为迭代器
 - 前后有两个下划线的变量名( \_\_X\_\_ )是系统定义的变量名，对解释器有特殊意义
 - 以两下划线开头，但是结尾没有两个下划线的变量名(\_\_X)是类的私有变量
 - 通过交互模式运行，只有单个下划线的变量名(\_)会保存左后表达式的结果
-
-** ipython
-- <TAB> 可以提示补全信息
-- timeit <expr> # 测量<expr>执行时间
-- run <file> # 运行<file>
-- cd / ls / pwd / cat ... # shell commands.
-- <object>? / ?<object> # 显示<object>文档
-- pylab # for interactive matplotlib sessions with Matlab/Mathematica-like functionality.
 
 ** library
 *** simple WSGI
@@ -299,4 +294,12 @@ def ts2dt(ts):
     st = time.localtime(int(ts))
     return time.strftime('%Y-%m-%d %H:%M:%S',st)
 #+END_SRC
+
+** ipython
+- <TAB> 可以提示补全信息
+- timeit <expr> # 测量<expr>执行时间
+- run <file> # 运行<file>
+- cd / ls / pwd / cat ... # shell commands.
+- <object>? / ?<object> # 显示<object>文档
+- pylab # for interactive matplotlib sessions with Matlab/Mathematica-like functionality.
 
