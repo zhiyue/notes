@@ -80,7 +80,7 @@ operations
 - pl.gcf # get current figure. # 操作图像
 - pl.close(<fig-no>), or (), or ("all") # 关闭图像
 
-关于figure和subplot关系. A “figure” in matplotlib means the whole window in the user interface. Within this figure there can be “subplots”. If there is none it calls figure() to make one, strictly speaking, to make a subplot(1,1,1). 
+关于figure和subplot关系. A “figure” in matplotlib means the whole window in the user interface. Within this figure there can be “subplots”. If there is none it calls figure() to make one, strictly speaking, to make a subplot(1,1,1).
 
 file:./images/sklearn-subplot.png
 
@@ -88,6 +88,3 @@ file:./images/sklearn-subplot.png
 复杂数值处理运算能力
 
 The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc. scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
-
-
-
