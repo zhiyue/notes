@@ -14,7 +14,7 @@
 - dataset transformations # Feature extraction and normalization.
 - dataset loading utilities
 
-** blocks
+** building blocks
 http://scipy-lectures.github.io/ sklearn底层使用的三驾马车numpy, scipy, matplotlib.
 
 *** numpy
@@ -26,6 +26,8 @@ numpy provides:
 - designed for scientific computation (convenience)
 - also known as array oriented computing
 
+some notes
+#+BEGIN_VERSE
 -----
 array attributes
 
@@ -65,12 +67,19 @@ operations
 - ravel / reshape(<shape>) # flatten and reshape
 - z[:, np.newaxis] / z[np.newaxis, :] # add dimension
 - np.sort(argsort) / z.sort(argsort) # in-place sort.
+#+END_VERSE
 
 *** pylab
 绘图能力 # import pylab as plt
 
 这里有许多示例做参考 http://scipy-lectures.github.io/intro/matplotlib/matplotlib.html#other-types-of-plots-examples-and-exercises
 
+关于figure和subplot关系. A “figure” in matplotlib means the whole window in the user interface. Within this figure there can be “subplots”. If there is none it calls figure() to make one, strictly speaking, to make a subplot(1,1,1). # note(dirlt): 这个问题从我接触matlab时候就没有搞懂，现在总算是弄清楚了。
+
+file:./images/sklearn-subplot.png
+
+some notes
+#+BEGIN_VERSE
 - plt.show()
 - plt.figure() # create a figure.
 - plt.plot(x as <1D-array>, y as <1D-array>) # various options.
@@ -79,12 +88,200 @@ operations
 - pl.gca # get current axis. 操作边框
 - pl.gcf # get current figure. # 操作图像
 - pl.close(<fig-no>), or (), or ("all") # 关闭图像
-
-关于figure和subplot关系. A “figure” in matplotlib means the whole window in the user interface. Within this figure there can be “subplots”. If there is none it calls figure() to make one, strictly speaking, to make a subplot(1,1,1).
-
-file:./images/sklearn-subplot.png
+#+END_VERSE
 
 *** scipy
 复杂数值处理运算能力
 
 The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc. scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
+** supervised learning
+** unsupervised learning
+** model selection and evaluation
+*** Cross-validation: evaluating estimator performance
+http://scikit-learn.org/stable/modules/cross_validation.html
+
+- 使用train_test_split分开training_set和test_set.
+- 使用k-fold等方式从training_set中分出validation_set做cross_validation.
+- 使用cross_val_score来进行cross_validation并且计算cross_validation效果.
+
+#+BEGIN_SRC Python
+#!/usr/bin/env python
+#coding:utf-8
+#Copyright (C) dirlt
+
+import numpy as np
+from sklearn import cross_validation
+from sklearn import datasets
+from sklearn import svm
+
+# iris.data.shape = (150, 4); n_samples = 150, n_features = 4
+iris = datasets.load_iris()
+
+# 分出40%作为测试数据集合. random_state作为随机种子
+X_train, X_test, y_train, y_test = cross_validation.train_test_split(iris.data, iris.target, test_size = 0.4, random_state = 0)
+
+# 假设这里我们已经完成参数空间搜索
+clf = svm.SVC(gamma = 0.001, C = 100., kernel = 'linear')
+# 使用cross_validation查看参数效果
+scores = cross_validation.cross_val_score(clf, X_train, y_train, cv = 3)
+print("Accuracy on cv: %0.2f (+/- %0.2f)" % (scores.mean(), scores.std() * 2))
+
+# 如果效果不错的话，就是可以使用这个模型计算测试数据
+clf.fit(X_train, y_train)
+print(np.mean(clf.predict(X_test) == y_test))
+#+END_SRC
+
+*** Grid Search: searching for estimator parameters
+http://scikit-learn.org/stable/modules/grid_search.html
+
+参数空间搜索方式大致分为三类： 1.暴力 2.随机 3.adhoc. 其中23和特定算法相关。
+
+我们这里以暴力搜索为例。我们只需要以字典方式提供搜索参数的可选列表即可。因为搜索代码内部会使用cross_validation来做验证，所以我们只需提供cross_validatio参数即可。下面代码摘自这个 [[http://scikit-learn.org/stable/auto_examples/grid_search_digits.html][例子]] 。
+
+#+BEGIN_SRC Python
+#!/usr/bin/env python
+#coding:utf-8
+#Copyright (C) dirlt
+
+from __future__ import print_function
+
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.grid_search import GridSearchCV
+from sklearn.metrics import classification_report
+from sklearn.svm import SVC
+
+# Loading the Digits dataset
+digits = datasets.load_digits()
+
+# To apply an classifier on this data, we need to flatten the image, to
+# turn the data in a (samples, feature) matrix:
+(n_samples, h, w) = digits.images.shape
+# 这里也可以直接用digits.data和digits.target. digits.data已经是reshape之后结果.
+X = digits.images.reshape((n_samples, -1))
+y = digits.target
+
+# Split the dataset in two equal parts
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=0)
+
+# Set the parameters by cross-validation
+# 提供参数的可选列表
+tuned_parameters = [{'kernel': ['rbf'], 'gamma': [1e-3, 1e-4],
+                     'C': [1, 10, 100, 1000]},
+                    {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
+
+# 链接中给的代码还对cross_validation效果评价方式(scoring)进行了搜索
+clf = GridSearchCV(SVC(), tuned_parameters, cv=5) # 使用k-fold划分出validation_set. k = 5
+clf.fit(X_train, y_train)
+
+print("Best parameters set found on development set:")
+print(clf.best_estimator_)
+print("Grid scores on development set:")
+for params, mean_score, scores in clf.grid_scores_:
+    print("%0.3f (+/-%0.03f) for %r"
+        % (mean_score, scores.std() / 2, params))
+print("Detailed classification report:")
+print("The model is trained on the full development set.")
+print("The scores are computed on the full evaluation set.")
+y_true, y_pred = y_test, clf.predict(X_test)
+print(classification_report(y_true, y_pred))
+#+END_SRC
+
+代码最后使用最优模型作用在测试数据上，然后使用classification_report打印评分结果.
+#+BEGIN_EXAMPLE
+Best parameters set found on development set:
+SVC(C=10, cache_size=200, class_weight=None, coef0=0.0, degree=3, gamma=0.001,
+  kernel=rbf, max_iter=-1, probability=False, random_state=None,
+  shrinking=True, tol=0.001, verbose=False)
+Grid scores on development set:
+0.986 (+/-0.001) for {'kernel': 'rbf', 'C': 1, 'gamma': 0.001}
+0.963 (+/-0.004) for {'kernel': 'rbf', 'C': 1, 'gamma': 0.0001}
+0.989 (+/-0.003) for {'kernel': 'rbf', 'C': 10, 'gamma': 0.001}
+0.985 (+/-0.003) for {'kernel': 'rbf', 'C': 10, 'gamma': 0.0001}
+0.989 (+/-0.003) for {'kernel': 'rbf', 'C': 100, 'gamma': 0.001}
+0.983 (+/-0.003) for {'kernel': 'rbf', 'C': 100, 'gamma': 0.0001}
+0.989 (+/-0.003) for {'kernel': 'rbf', 'C': 1000, 'gamma': 0.001}
+0.983 (+/-0.003) for {'kernel': 'rbf', 'C': 1000, 'gamma': 0.0001}
+0.976 (+/-0.005) for {'kernel': 'linear', 'C': 1}
+0.976 (+/-0.005) for {'kernel': 'linear', 'C': 10}
+0.976 (+/-0.005) for {'kernel': 'linear', 'C': 100}
+0.976 (+/-0.005) for {'kernel': 'linear', 'C': 1000}
+Detailed classification report:
+The model is trained on the full development set.
+The scores are computed on the full evaluation set.
+             precision    recall  f1-score   support
+
+          0       1.00      1.00      1.00        60
+          1       0.95      1.00      0.97        73
+          2       1.00      0.97      0.99        71
+          3       1.00      1.00      1.00        70
+          4       1.00      1.00      1.00        63
+          5       0.99      0.97      0.98        89
+          6       0.99      1.00      0.99        76
+          7       0.98      1.00      0.99        65
+          8       1.00      0.96      0.98        78
+          9       0.97      0.99      0.98        74
+
+avg / total       0.99      0.99      0.99       719
+#+END_EXAMPLE
+
+*** Pipeline: chaining estimators
+http://scikit-learn.org/stable/modules/pipeline.html
+
+*** Model evaluation: quantifying the quality of predictions
+http://scikit-learn.org/stable/modules/model_evaluation.html
+
+There are 3 different approaches to evaluate the quality of predictions of a model: # 有3中不同方式来评价模型预测结果
+1. Estimator score method: Estimators have a score method providing a default evaluation criterion for the problem they are designed to solve. # 模型自身内部的评价
+2. Scoring parameter: Model-evaluation tools using cross-validation (such as cross_validation.cross_val_score and grid_search.GridSearchCV) rely on an internal scoring strategy. # cv的评价，通常是数值表示. 比如'f1'.
+3. Metric functions: The metrics module implements functions assessing prediction errors for specific purposes. # 作用在测试数据的评价，可以是数值表示，也可以是文本图像等表示. 比如'classification_report'.
+
+其中23是比较相关的。差别在于3作用在测试数据上是我们需要进一步分析的，所以相对来说评价方式会更多一些。而2还是在模型选择阶段所以我们更加倾向于单一数值表示。
+
+-----
+
+sklearn还提供了DummyEstimator. 它只有有限的几种比较dummy的策略，主要是用来给出baseline.
+
+DummyClassifier implements three such simple strategies for classification:
+- 'stratified' generates randomly predictions by respecting the training set’s class distribution,
+- 'most_frequent' always predicts the most frequent label in the training set,
+- 'uniform' generates predictions uniformly at random.
+- 'constant' always predicts a constant label that is provided by the user.
+
+DummyRegressor also implements three simple rules of thumb for regression:
+- 'mean' always predicts the mean of the training targets.
+- 'median' always predicts the median of the training targests.
+- 'constant' always predicts a constant value that is provided by the user.
+
+*** Model persistence
+http://scikit-learn.org/stable/modules/model_persistence.html
+
+可以使用python自带的pickle模块，或者是sklearn的joblib模块。joblib相对pickle能更有效地序列化到磁盘上，但缺点是不能够像pickle一样序列化到string上。
+
+*** Validation curves: plotting scores to evaluate models
+http://scikit-learn.org/stable/modules/learning_curve.html
+
+Every estimator has its advantages and drawbacks. Its generalization error can be decomposed in terms of bias, variance and noise. The bias of an estimator is its average error for different training sets. The variance of an estimator indicates how sensitive it is to varying training sets. Noise is a property of the data. # bias是指模型对不同训练数据的偏差，variance则是指模型对不同训练数据的敏感程度，噪音则是数据自身属性。这三个问题造成预测偏差。
+
+-----
+validation curve 
+
+观察模型某个参数变化对于training_set和validation_set结果影响，来确定是否underfitting或者overfitting. 参考这个 [[http://scikit-learn.org/stable/auto_examples/plot_validation_curve.html][例子]] 绘图
+
+If the training score and the validation score are both low, the estimator will be underfitting. If the training score is high and the validation score is low, the estimator is overfitting and otherwise it is working very well. A low training score and a high validation score is usually not possible. All three cases can be found in the plot below where we vary the parameter gamma on the digits dataset.
+
+可以看到gamma在5 * 10^{-4}附近cross-validation score开始下滑，但是training score还是不错的，说明overfitting.
+
+file:./images/sklearn-plot-validation-curve.png
+
+-----
+learning curve
+
+观察增加数据量是否能够改善效果。通常增加数据量会使得traning score和validation score不断收敛。如果两者收敛处score比较低的话(high-bias), 那么增加数据量是不能够改善效果的话，那么我们就需要更换模型。相反如果两者收敛位置score比较高的话，那么增加数据量就可以改善效果。参考这个 [[http://scikit-learn.org/stable/auto_examples/plot_learning_curve.html][例子]] 绘图
+
+第一幅图是是用朴素贝叶斯的learning curve. 可以看到high-bias情况。第二幅图是使用SVM(RBF kernel)的learning curve. 学习情况明显比朴素贝叶斯要好。
+
+file:./images/sklearn-plot-learning-curve-001.png file:./images/sklearn-plot-learning-curve-002.png
+
+** dataset transformations
+** data loading utilities
