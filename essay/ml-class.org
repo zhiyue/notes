@@ -79,11 +79,11 @@ T(task),E(experience),P(performance)
    - recent resurgence
    - "one learning algorithm" hypothesis = cortex.
 - [[file:images/ml-class-nn-representation.pdf][model representation]]
-   - neuron in the brain
-     - dendrite = input write
-     - axon = output write
-     - cell body / nucleus
-     - communicated by spike(pulse of electricity)
+   - neuron in the brain # 神经元
+     - dendrite = input write # 树突
+     - axon = output write # 轴突
+     - cell body / nucleus # 核
+     - communicated by spike(pulse of electricity) # 电信号传输
    - neuron model: logistic unit
      - sigmoid (logistic) activation function
      - hypothesis parameter = weight
