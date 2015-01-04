@@ -67,7 +67,7 @@ T(task),E(experience),P(performance)
        - if regularization parameter is very large -> underfitting.
 
 ** neural networks
-- motivation
+- motivation # 神经网络
   - complex non-linear classification / hypothesis # 针对复杂非线性分类
   - many features -> too many polynomial terms.
     - quantic x, then O(n^x).
@@ -93,7 +93,7 @@ T(task),E(experience),P(performance)
      - if network has s(j) units in layer j, and s(j+1) units in layer j+1, then theta(j) is M(s(j+1), s(j)+1)
    - forward propagation
    - backward propagation
-- [[file:images/ml-class-nn-learning.pdf][backpropagation algorithm]]
+- [[file:images/ml-class-nn-learning.pdf][backpropagation algorithm]] # 反向传播算法来计算参数导数
    - general cost function
    - delta(j,l) = "error" of node j in layer l
    - intuition # use backpropagation algorithm to compute derivatives.
@@ -125,8 +125,8 @@ T(task),E(experience),P(performance)
 - SVM cost function # replace sigmoid function with two simple functions (cost0 and cost1)
   - cost function = -y * cost1(tx) + (1-y) * cost0(tx)
   - hypothesis: y = 1 if tx >=0. y = 0 otherwise.
-- SVM decision boundary / large margin intuition (if C very large)
-- kernel / kernel function
+- SVM decision boundary / large margin intuition (if C very large) # SVM决策边界是找到完美划分的超平面
+- kernel / kernel function # 核函数
   - for more features
   - to compute similarity (with landmarks) as more complex, non-linear features.
   - gaussian kernel function.
@@ -171,16 +171,16 @@ T(task),E(experience),P(performance)
     - if suffers from high variance, more training data might help
 
 ** [[file:./images/ml-class-design-ml.pdf][advice for designing ML]]
-- numerical evaluation # a real number tells how well is your system.
-- error analysis # spot any systematic trend in what type of examples it is making errors on
+- numerical evaluation # a real number tells how well is your system. 使用一个数值来衡量系统
+- error analysis # spot any systematic trend in what type of examples it is making errors on. 误差分析
 - skewed classes.
-  - y = 1 in presence of rare class
-  - precision = true positive / [no. of predicted positive = (true pos + false pos)]
-  - recall = true positive / [no. of actual positive = (true pos + false neg)]
+  - y = 1 in presence of rare class # 如果y_pred=0的话没有任何预测性但是accuracy准确率超高
+  - precision = true positive / [no. of predicted positive = (true pos + false pos)] # 精确度
+  - recall = true positive / [no. of actual positive = (true pos + false neg)] # 召回率
   - good classifier: precision and recall are both high enough.
     - but there are tradeoffs between both
-    - F score = 2 * P * R / (P + R)
-    - note: see "anomaly detection select threshold" how to compute P,R, and F.
+    - F1 score = 2 * P * R / (P + R)
+    - note: see "anomaly detection select threshold" how to compute P,R, and F1.
 - large data rationale
   - assume features have sufficient information to predicate accurately
   - useful test: give the input x, can a human expert confidently predict y?
@@ -199,11 +199,11 @@ T(task),E(experience),P(performance)
     - multiple random initialization
 
 ** dimensionality reduction
-- motivation
+- motivation # 维度降解
   - data compression
   - data visualization
   - speed up learning algorithm
-- [[file:./images/ml-class-pca.pdf][PCA(principal component analysis)]]
+- [[file:./images/ml-class-pca.pdf][PCA(principal component analysis)]] # 主成分分析
   - find k vectors onto which to project the data
   - minimize the projection error(different to linear regression)
   - algorithm # reduce n dimensions to k dimensions
@@ -220,22 +220,22 @@ T(task),E(experience),P(performance)
   - use raw data first, then consider PCA
 
 ** [[file:./images/ml-class-anomaly-detection.pdf][anomaly detection]]
-- gaussian distribution
+- gaussian distribution # 高斯分布
   - X ~ N(u, e^2) # X distributed as N. where mean = u, variance = e^2
   - p(x, u, e^2) = 1 / ((sqrt(2 * pi) * e)) * exp ^ { - (x-u)^2 / (2 * e^2) } # probability
-  - multivariate version
+  - multivariate version # 多变量高斯分布
     - to capture anomalous combination of values. computationally expensive.
     - u~{n*1}, e~{n*n} (covariance matrix) # intuition. contour not axis aligned.
     - p(x, u, e) = 1 / ((2 * pi) ^ (n/2) * sqrt(det(e))) * exp ^ {-0.5 * (x-u)' * e^-1 * (x-u)}
     - u = 1/m * sum{x}, e = 1/m * sum{(x-u) * (x-u)'}
     - note: m > n, otherwise e is non-invertible.
-- how it works
+- how it works # 我们假设特征数据符合高斯分布，所以异常数据点对应概率会非常低
   - model p(x) from data
   - p(x) < epsilon to decide if anomalous
     - epsilon # p(x) is comparable for normal and anomalous examples.
     - features to distinguish normal and anomalous examples.
     - p(x) = p1(x1, u1, e1^2) * ... pj(xj, uj, ej^2).. # j = # of features.
-    - if xj is not gaussian feature, transform it to fit into gaussian distribution.
+    - if xj is not gaussian feature, transform it to fit into gaussian distribution. # 如果数据不满足高斯分布，那么要对数据做变换符合高斯分布
 - vs. supervised learning
   - anomaly detection
     - # of positive cases is very small, while # of negative cases is very large
@@ -254,11 +254,11 @@ T(task),E(experience),P(performance)
   - low rank matrix factorization
   - random initialization to break symmetry
   - content features to compute similarity between items
-  - mean normalization # assign mean value to null
+  - mean normalization # 对于空值使用属性平均值代替
 
 ** [[file:./images/ml-class-large-scale-ml.pdf][ML in large scale]]
-- stochastic gradient descent algorithm
-  - vs. batch gradient descent
+- stochastic gradient descent algorithm # 随机梯度下降算法
+  - vs. batch gradient descent # 可以增量使用训练数据
   - randomly shuffle dataset
   - repeat for i = 1..m { for j = 0..n  { update theta_j only use ith data } }
   - move to global minimum generally, but not always in one iteration.
