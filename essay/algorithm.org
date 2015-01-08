@@ -671,4 +671,4 @@ http://www.infoq.com/cn/news/2012/08/32-most-important-algorithms
    29. 求解线性方程组(Solving a system of linear equations)
    30. Strukturtensor算法
    31. 合并查找算法(Union-find)
-   32. 维特比算法
+   32. 维特比算法(Viterbi)
