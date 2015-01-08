@@ -85,8 +85,9 @@ T(task),E(experience),P(performance)
      - cell body / nucleus # 核
      - communicated by spike(pulse of electricity) # 电信号传输
    - neuron model: logistic unit
-     - sigmoid (logistic) activation function
+     - sigmoid (logistic) activation function # 激活函数
      - hypothesis parameter = weight
+     - 数学之美C30: 神经元函数只能对输入变量线性组合后的结果进行一次非线性变换.
    - layer: input/output/hidden
      - a(i,j) = "activation" of unit i in layer j
      - theta(j) = matrix of weights controlling function mapping from layer j to layer j+1

@@ -642,17 +642,17 @@ http://www.infoq.com/cn/news/2012/08/32-most-important-algorithms
 
    1. A* 搜索算法
    2. 集束搜索(又名定向搜索，Beam Search)
-   3. 二分查找
+   3. 二分查找(Binary Search)
    4. 分支界定算法(Branch and Bound)
    5. Buchberger算法
-   6. 数据压缩
+   6. 数据压缩(Data Compression)
    7. Diffie-Hellman密钥交换算法
    8. Dijkstra算法
    9. 离散微分算法(Discrete differentiation)
    10. 动态规划算法(Dynamic Programming)
    11. 欧几里得算法(Euclidean algorithm)
    12. 期望-最大算法(Expectation-maximization algorithm, EM-Training)
-   13. 快速傅里叶变换
+   13. 快速傅里叶变换(FFT, Fast Fourier Transform)
    14. 梯度下降(Gradient descent)
    15. 哈希算法(Hashing)
    16. 堆排序(Heaps)
@@ -667,7 +667,7 @@ http://www.infoq.com/cn/news/2012/08/32-most-important-algorithms
    25. RSA
    26. Schonhage-Strassen算法
    27. 单纯型算法(Simplex Algorithm)
-   28. 奇异值分解
+   28. 奇异值分解(SVD, Singular Value Decomsition)
    29. 求解线性方程组(Solving a system of linear equations)
    30. Strukturtensor算法
    31. 合并查找算法(Union-find)
