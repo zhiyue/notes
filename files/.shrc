@@ -118,7 +118,7 @@ configure_key() {
 }
 configure_key
 
-# source ~/.private/files/galera.shrc
+# source ~/.private/files/galera.rc
 
 # docker settings.
 # ---------- docker starts ----------#
