@@ -96,20 +96,20 @@ const char *str;
 #+END_SRC
 
 *** consistent hashing
-   - http://en.wikipedia.org/wiki/Consistent_hash
-   - Programmer’s Toolbox Part 3: Consistent Hashing http://www.tomkleinpeter.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/
-   - libketama - a consistent hashing algo for memcache clients http://cn.last.fm/user/RJ/journal/2007/04/10/rz_libketama_-_a_consistent_hashing_algo_for_memcache_clients
-   - Consistent Hash Ring http://www.martinbroadhurst.com/Consistent-Hash-Ring.html
-   - Tom White: Consistent Hashing http://www.tom-e-white.com/2007/11/consistent-hashing.html
-   - Consistent hashing - CodeProject http://www.codeproject.com/Articles/56138/Consistent-hashing
-   - 一致性hash算法 - consistent hashing http://blog.csdn.net/sparkliang/article/details/5279393
+- http://en.wikipedia.org/wiki/Consistent_hash
+- Programmer’s Toolbox Part 3: Consistent Hashing http://www.tomkleinpeter.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/
+- libketama - a consistent hashing algo for memcache clients http://cn.last.fm/user/RJ/journal/2007/04/10/rz_libketama_-_a_consistent_hashing_algo_for_memcache_clients
+- Consistent Hash Ring http://www.martinbroadhurst.com/Consistent-Hash-Ring.html
+- Tom White: Consistent Hashing http://www.tom-e-white.com/2007/11/consistent-hashing.html
+- Consistent hashing - CodeProject http://www.codeproject.com/Articles/56138/Consistent-hashing
+- 一致性hash算法 - consistent hashing http://blog.csdn.net/sparkliang/article/details/5279393
 
 The basic idea behind the consistent hashing algorithm is to hash both objects and caches using the same hash function.The reason to do this is to map the cache to an interval, which will contain a number of object hashes. If the cache is removed then its interval is taken over by a cache with an adjacent interval. All the other caches remain unchanged.
 
 一致性hash基本思想就是将所有对象都使用同样的hash函数进行hash(包括要被分布的对象，以及分布到的位置）。如果某个分布位置被移除的话，那么原本在这个位置上的对象就会分布在临近的分布位置上，而其他的对象却不用移动自己的位置。如果分布位置之间interval间隔过大的话那么可以制作virtual node来使得interval映射足够小，而这些virtual node映射到同一个node节点上面。实际上上述文章中也进行实验证明interval小的话那么standard deviations也变小了，每个node均摊的object基本均匀了：）。
 
 *** rsync core algorithm
-   - http://coolshell.cn/articles/7425.html
+- http://coolshell.cn/articles/7425.html
 
 首先针对dst文件按照block分别求得checksum和md5.其中checksum用来进行弱校验，md5用来进行强校验。所谓弱校验就是如果checksum不等的话那么文件内容必然不相同，强校验就是如果md5相同的话那么文件内容必然相同。但是checksum还有一个好处，就是可以根据[k,k+n)的checksum,很快地计算出[k+1,k+n+1)的checksum.（非常类似于滑动窗口的工作方式）这点对于在src文件中查找相同块非常重要。将每个块的(checksum,md5)传输到源端。
 
@@ -125,7 +125,7 @@ The basic idea behind the consistent hashing algorithm is to hash both objects a
 源端完成了上面这些操作之后，就可以知道那些块目的端是存在的（以及存在于什么地方），自己有那些块是目的端没有的，然后通过传输增量并且文件拼接来达到数据同步的目的。
 
 *** simhash core algorithm
-   - http://blog.csdn.net/lgnlgn/article/details/6008498
+- http://blog.csdn.net/lgnlgn/article/details/6008498
 
 simhash算法针对文档分析得到文档特征的一个向量表示，然后使用这个向量之间的差距就可以作为文档之间的差别大小，可以用来做文档近似判断。
 
@@ -143,16 +143,16 @@ simhash算法原理非常简单：
    1. 我们对S进行分段，每次取出2^m个元素，我们确保2^m个元素高位有m’相同。因为S排好序所以通常m'很高。
    2. 我们首先对于m'个位和d simhash高位判断有多少位存在差异，假设x存在差异.这样我们可以在2^m元素判断m-x差异的元素。
    3. 总体思想来说的话就是希望可以缩小搜索集。似乎在算法复杂度上面没有啥改进，可以在实现上改进。
-不过话说回来，文档近似判断应该k很小在{1,2}左右。C(64,k)={64,2016}应该并不算太大的值吧。
+不过话说回来，文档近似判断应该k很小在{1,2}左右, 对应的C(64,k)={64,2016}
 
 *** HyperLogLog
-   - http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf
-   - Fast, Cheap, and 98% Right: Cardinality Estimation for Big Data | Metamarkets http://metamarkets.com/2012/fast-cheap-and-98-right-cardinality-estimation-for-big-data/
-   - Damn Cool Algorithms: Cardinality Estimation - Nick's Blog http://blog.notdot.net/2012/09/Dam-Cool-Algorithms-Cardinality-Estimation
-   - Sketch of the Day: HyperLogLog — Cornerstone of a Big Data Infrastructure – AK Tech Blog http://blog.aggregateknowledge.com/2012/10/25/sketch-of-the-day-hyperloglog-cornerstone-of-a-big-data-infrastructure/
-   - http://stackoverflow.com/questions/12327004/how-does-the-hyperloglog-algorithm-work
-   - HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm : http://research.google.com/pubs/pub40671.html
-   - https://github.com/clearspring/stream-lib *note(dirlt):HyperLogLogPlus实现*
+- http://algo.inria.fr/flajolet/Publications/FlFuGaMe07.pdf
+- Fast, Cheap, and 98% Right: Cardinality Estimation for Big Data | Metamarkets http://metamarkets.com/2012/fast-cheap-and-98-right-cardinality-estimation-for-big-data/
+- Damn Cool Algorithms: Cardinality Estimation - Nick's Blog http://blog.notdot.net/2012/09/Dam-Cool-Algorithms-Cardinality-Estimation
+- Sketch of the Day: HyperLogLog — Cornerstone of a Big Data Infrastructure – AK Tech Blog http://blog.aggregateknowledge.com/2012/10/25/sketch-of-the-day-hyperloglog-cornerstone-of-a-big-data-infrastructure/
+- http://stackoverflow.com/questions/12327004/how-does-the-hyperloglog-algorithm-work
+- HyperLogLog in Practice: Algorithmic Engineering of a State of The Art Cardinality Estimation Algorithm : http://research.google.com/pubs/pub40671.html
+- https://github.com/clearspring/stream-lib *note(dirlt):HyperLogLogPlus实现*
 
 这个算法主要是来进行去重的，前提是在big data下面并且内存存在限制。算法的假设和原理如下：
 #+BEGIN_VERSE
@@ -208,8 +208,9 @@ def estimate_cardinality(values, k):
 这个算法可以很容易地并行化。可以让每个机器各自维护各自的bucket，最后每个机器上面属于相同的bucket index的bucket进行merge即可。
 
 *** CONCISE
-   - Maximum Performance with Minimum Storage: Data Compression in Druid | Metamarkets http://metamarkets.com/2012/druid-bitmap-compression/
-   - CONCISE(COpressed N Composable Integer Set)  http://ricerca.mat.uniroma3.it/users/colanton/docs/concise.pdf
+- Maximum Performance with Minimum Storage: Data Compression in Druid | Metamarkets http://metamarkets.com/2012/druid-bitmap-compression/
+- CONCISE(COpressed N Composable Integer Set)  http://ricerca.mat.uniroma3.it/users/colanton/docs/concise.pdf
+
 这个算法主要是解决如何压缩一个可组合的整数集合，或者可以是认为如何压缩一个稀疏的bitmap. 链接1主要是介绍了一下背景，在他们的系统里面需要保存一个稀疏bitmap。链接2是原始论文，想了解具体内容还是看看这个比较好。
 
 这个算法应该是在WAH（Word Aligned Hybrid）上改进的。下面是WAH的简单描述
@@ -543,8 +544,8 @@ note(dirlt)：2012.6.14
    - 现实生活中是先看到赔率然后再下手的，下手之后这笔钱对应的赔率应该是不变的。而我们设计的模型是假设钱都已经到位了之后，我们再来定义赔率。
 
 *** 流式计算均值和方差
-   - http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
-   - http://www.johndcook.com/standard_deviation.html
+- http://en.wikipedia.org/wiki/Algorithms_for_calculating_variance
+- http://www.johndcook.com/standard_deviation.html
 
 需要注意区分如下概念。可以参见wikipedia
    - http://en.wikipedia.org/wiki/Standard_deviation
