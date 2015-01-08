@@ -60,8 +60,8 @@ Building Machine Learning Systems with Python
 -----
 回归惩罚函数
 - Ordinary Least Squares(OLS) 普通最小二乘法，普通线性回归
-- L1惩罚则是在OLS上增加a * |w|. Lasso法
-- L2惩罚则是在OLS上则加a * |w|^2. Ridge regressin(岭回归)
+- L1惩罚(L1范数, L1 norm)则是在OLS上增加a * |w|. Lasso法
+- L2惩罚(L2范数, L2 norm)则是在OLS上则加a * |w|^2. Ridge regressin(岭回归)
 - L1 + L2则是在OLS上增加a * |w| + b * |w|^2. Elastic Net(弹性网)
 
 -----

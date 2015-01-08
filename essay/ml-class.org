@@ -57,6 +57,7 @@ T(task),E(experience),P(performance)
      - if underfit -> high bias
      - if overfit -> high variance
      - not generalize new examples
+     - generalization ability # 泛化能力
    - addressing
      - reduce number of features.
        - manually select which features to keep
@@ -65,6 +66,7 @@ T(task),E(experience),P(performance)
        - keep all features but reduce magnitude/values of parameters
        - works well when we have a lot of features
        - if regularization parameter is very large -> underfitting.
+       - L1 norm, L2 norm. L1范数和L2范数
 
 ** neural networks
 - motivation # 神经网络
