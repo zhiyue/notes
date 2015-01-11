@@ -2,10 +2,6 @@
 #+TITLE: marathon@dirlt.com
 #+OPTIONS: H:3
 
-** Ads
-   - [[file:jobs.org][Jobs]] at [[http://www.umeng.com/][友盟(Umeng)]] 可以找我推荐
-   - recomended tech [[file:link.org][Link]] and personal non-tech [[file:./note.org][Note]]
-
 ** Operating System
    - [[file:computer-system-reading.org][Computer System Reading]] 关于单机系统方面的一些文章以及阅读心得。
      - [[file:./the-secret-to-10-million-concurrent-connections.org][The Secret To 10 Million Concurrent Connections -The Kernel Is The Problem, Not The Solution]]
@@ -267,5 +263,7 @@ Here is my contact info. I think email is the easiest way to get me.
      - [[file:./images/um-arch.pdf][Umeng Analytical Architecture]] 2014.2
      - [[file:./images/SACC2014.pdf][如何在一天之内收集3.6亿移动设备的数据]] 2014.9
      - [[file:images/um-arch2.pdf][Umeng Architecture Architecture(2)]] 2014.10
+   - [[file:jobs.org][jobs]] at [[http://www.umeng.com/][友盟(Umeng)]] 可以找我推荐
+   - recomended tech [[file:link.org][links]] and personal non-tech [[file:note.org][notes]]
 
 [[file:note.org][Here]] are my some notes written casually to record my life footprint. I think it will be fun to read them when I became old. My favouritest words comes from the idea of [[http://www.valvesoftware.com/][Valve]] : "Open your mind, Open your eyes" (放眼未来，自由想象), with a [[file:images/valve-logo.jpg][image]] from its game "Half Life"

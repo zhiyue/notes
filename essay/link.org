@@ -10,9 +10,6 @@
    - Don Knuth. http://www-cs-faculty.stanford.edu/~uno/
    - Matei Zaharia. http://www.cs.berkeley.edu/~matei/
    - R. Kent Dybvig. http://www.cs.indiana.edu/~dyb/
-
------
-
    - 陈寅恪 http://en.wikipedia.org/wiki/Chen_Yinke
      - [[file:./reply-to-science-institution.org][对科学院的答复]]
      - http://www.tudou.com/listplay/y14UtaOL_To/fqsa-SxCecE.html 
