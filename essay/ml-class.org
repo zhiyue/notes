@@ -128,6 +128,7 @@ T(task),E(experience),P(performance)
 - SVM cost function # replace sigmoid function with two simple functions (cost0 and cost1)
   - cost function = -y * cost1(tx) + (1-y) * cost0(tx)
   - hypothesis: y = 1 if tx >=0. y = 0 otherwise.
+  - cost0和cost1实际上是合页损失函数(hinge loss function)
 - SVM decision boundary / large margin intuition (if C very large) # SVM决策边界是找到完美划分的超平面
 - kernel / kernel function # 核函数
   - for more features
