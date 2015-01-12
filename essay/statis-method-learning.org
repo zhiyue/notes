@@ -1,4 +1,4 @@
-* stats-method-learning
+* statis-method-learning
 #+TITLE: 统计学习方法
 
 -----
