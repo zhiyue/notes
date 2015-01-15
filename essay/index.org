@@ -102,7 +102,7 @@
    - [[file:galera.org][galera]] 基于MySQL的同步多主备份集群(synchronous multi-master replication cluster).
    - [[file:memcached.org][memcached]] an in-memory key-value store for small chunks of arbitrary data (strings, objects) 可以用来搭建分布式缓存服务，没有持久化存储。
    - [[file:rocksdb.org][rocksdb]] A persistent key-value store for fast storage environments. 基于 [[file:leveldb.org][leveldb]] 构建
-   - [[file:ssd.org][SSD]] solid state disk.固态硬盘
+   - [[file:ssd.org][SSD]] solid state disk. 固态硬盘
      - [[file:./solid-state-revolution-in-depth-on-how-ssd-really-work.org][Solid-state revolution: in-depth on how SSDs really work]] ssd发展演变，内部构造和工作方式
      - [[file:./ssd-gc-and-trim.org][固态硬盘技术解析之垃圾回收和TRIM指令]]
      - [[file:./ssd-and-distributed-data-systems.org][SSDs and Distributed Data Systems]] ssd对于设计分布式数据系统的影响
