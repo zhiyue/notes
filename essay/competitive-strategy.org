@@ -1,0 +1,53 @@
+* 竞争策略(Competive Strategy)
+https://www.coursera.org/learn/competitivestrategyzh/outline
+
+** 关注你的竞争对手 Take Care of Your Competitors
+在本模块中，我们将介绍博弈论的基本概念，并分析策略博弈中的竞争情况。我们将明确什么是策略并寻求不同的方式来确定最佳策略或优势策略。我们还将讨论纳什均衡和囚徒困境概念，分析为什么在决策时考量其他局中人的行动至关重要。最后，我们还将分析同时博弈（所有人同时行动）更改为序贯博弈（局中人按序行动）时会出现的情况。
+
+- 同时博弈 Simultaneous Games
+  - 博弈设定：Players, Actions, Payoffs, Rules. 博弈矩阵(Game Matrix).
+  - 消除劣势策略(Dominated Strategies): vs. 优势策略(Dominate Strategy)
+  - 纳什均衡(Nash Equilibrium): 一组策略，任意一方都不会单方面背离当前策略，所有参与方都达到一个稳定状态。博弈的自然静止点。
+    - NE就是优势策略吗？no, 优势策略是针对个人并且唯一，而NE针对群体并且会包含一组策略
+    - NE会包含劣势策略吗？no, 因为个人总可以找到一个更好策略脱离稳定状态
+    - 每个NE都会包含优势策略吗？no.
+    - 不是每个game(纯策略)都有NE；一个game可能有多个NE
+  - 囚徒困境(Prisoners' Dilemma)
+- 序贯博弈 Sequential Games
+   - 博弈设定：博弈树(Game Tree).
+   - 逆向归纳法(Backward Induction)
+   - 可信威胁(Credible Threats)
+
+** 企业为何要合作 Why Firms Work Together
+根据经济学理论，企业会在市场上相互竞争。实际上，他们也常常进行友好合作。在本模块中，我们将尝试了解为什么合作会给相关企业带来好处，借此评估促进或阻碍合作的因素并将其应用到不同示例中。
+
+- 合作的原因 Reasons for Cooperation
+  - 避免无效的解决方案. e.g. 囚徒困境.
+  - 重复博弈和承诺可以促成合作
+- 重复博弈 Repeated Games
+  - 有限次重复 Finite Repetition
+    - 结局效应(Endgame effect): 最后一轮博弈没有进一步报复性威胁
+    - 并不会比单次博弈更容易实现合作
+    - 可以通过逆向归纳法来进行分析
+  - 无限次重复 Infinite Repetition
+    - 触发策略(trigger strategy)
+    - 用p来表示进行合作的概率
+    - 如果合作带来的收益是x的话，那么持续合作带来的收益则是x * (p + p**2 + ...) = x / (1-p)
+    - 和有限次重复的差别在于长期回报
+    - 影响合作的因素: 
+      - 竞争者的数量（越少越利于合作），
+      - 未来收益比如利率(interest)（利率越低越利于合作），
+      - 惩罚力度（力度越大越利于合作）
+    - 相比单次博弈和有限次重复博弈更容易形成合作
+- 承诺 Commitment
+  - 积极承诺 Aggressive Commitment
+    - 优先采取行动
+    - 试图减少可能引发劣性均衡的行为
+    - 将同时博弈变为序贯博弈
+  - 合作承诺 Cooperative Commitment
+    - 试图消除会导致竞争均衡的行为，软承诺(soft commitment)
+    - 建立声誉，竞争对手可以很容易预测你的行为
+    - 自我束缚承诺(self-binding commitment)
+    - 补偿差价条款. 正阳降低价格不仅降低未来利润，还要补偿之前的差价
+
+** 互补产品和战略合作伙伴关系 Complementary Products and Strategic Partnerships
