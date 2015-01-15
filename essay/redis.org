@@ -38,7 +38,7 @@ redis本身是kv数据库，k来说的话支持string(not c-style string.可以�
 Commands. http://redis.io/commands official very comprehensive.
 
 命令包括下面几个部分：
-   - key的操作
+   - key操作
    - 数据结构操作
    - pub/sub
    - transaction
@@ -46,7 +46,8 @@ Commands. http://redis.io/commands official very comprehensive.
    - connection
    - server
 
-*** key
+-----
+key操作
    - DEL key. 删除key.
    - KEYS pattern. 返回匹配pattern的所有key.
    - PEXPIRE key millseconds. 设置key的毫秒超时时间。
@@ -74,10 +75,10 @@ Commands. http://redis.io/commands official very comprehensive.
 所以dump rdb是没有关系的。对应replication以及AOF应对expire的话，不管对于replication还是AOF
 本身并不会执行expire算法，而是等待master节点发出一个DEL并且确认返回(否则非常容易出现状态不一致).
 
-*** data-type
-关于数据类型方面的命令这里不打算详细分析，因为了解数据类型之后很多提供的命令都可以猜到了。
+-----
+了解数据类型之后, 数据结构操作就显而易见.
 
-*** pub/sub
+-----
 Pub/Sub. http://redis.io/topics/pubsub.
 
 redis提供了pub/sub机制可以使得应用很方便地做message queue工作。但是这种message queue是种在线方式的message queue.
@@ -89,7 +90,7 @@ redis提供了pub/sub机制可以使得应用很方便地做message queue工作�
    - PUBLISH channel message 向channel发布消息
    - SUBSCRIBE channel [channel...] 订阅某些channel.
 
-*** transaction
+-----
 Transaction. http://redis.io/topics/transactions.
 
 关于transaction主要是为了解决在client端发起多个操作的需求，而redis scripting功能现在也能够满足transaction功能并且实现得更加优雅。
@@ -101,7 +102,7 @@ Transaction. http://redis.io/topics/transactions.
    - EXEC. 执行之前发起的事务。
    - UNWATCH. 删除所有的监控键值。
 
-*** scripting
+-----
 Scripting. http://redis.io/commands/eval.
 
 有了scripting可以通过提交lua script到redis server上面然后在服务端进行计算。同时redis保证只有一个lua interpreter在执行lua script所以可以实现事务功能。
@@ -113,14 +114,16 @@ script可以在redis server进行缓存，用户也可以强制server将script�
    - SCRIPT EXISTS scriptc [script...] 检查多个sha1 script是否存在。
    - SCRIPT KILL. 终止当前执行的script.
 
-*** connection
+-----
+connection
    - AUTH password. 进行身份验证。
    - PING. 对server进行ping操作。
    - SELECT index. 其中index为数字，默认为0.使用DB index.
    - ECHO message. server做echo服务。
    - QUIT. 断开连接。断开连接之后server会将所有的pending replies都返回给client.
 
-*** server
+-----
+server
    - BGREWRITEAOF. background重写AOF，这样可以缩小日志部分。关于AOF会在磁盘存储部分说明。
    - DBSIZE. number of keys.
    - INFO. information about server.
