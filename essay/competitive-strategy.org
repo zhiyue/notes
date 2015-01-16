@@ -34,7 +34,7 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
     - 用p来表示进行合作的概率
     - 如果合作带来的收益是x的话，那么持续合作带来的收益则是x * (p + p**2 + ...) = x / (1-p)
     - 和有限次重复的差别在于长期回报
-    - 影响合作的因素: 
+    - 影响合作的因素:
       - 竞争者的数量（越少越利于合作），
       - 未来收益比如利率(interest)（利率越低越利于合作），
       - 惩罚力度（力度越大越利于合作）
@@ -51,3 +51,35 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
     - 补偿差价条款. 正阳降低价格不仅降低未来利润，还要补偿之前的差价
 
 ** 互补产品和战略合作伙伴关系 Complementary Products and Strategic Partnerships
+在本模块中，我们将介绍互补产品的概念，并运用经济学术语来探讨它们的意义。我们将研究企业为何想要将产品捆绑出售，以及互补性如何产生转换成本。我们还将讨论企业间的协调对互补产品的重要性。最后，我们将学习战略合作伙伴关系作为一强大工具如何在特定环境下为企业带来利益。
+
+- 互补产品：示例和定义 Complements: Examples and Definitions
+  - U=Utility. U(A+B) > U(A) + U(B). 则称A，B为互补产品
+  - 交叉弹性价格(Cross Price Elasticity)：产品B的销量取决于产品A的价格
+  - 如果A价格下降B的需求量则增加（也可以作为互补产品定义），那么CPE就是负数。反之则为正数。
+- 互补产品策略 Strategies for Complements
+  - 通用策略 Generic Strategies
+    - 支持互补品生产：帮助提升互补品质量和需求，甚至自己生产互补品
+    - 自己生产互补品风险：1. 可能市场不够大 2. 缺乏竞争力 3. 潜在消费者无法接受
+    - 自己生产互补品优势：1. 做定制化 2. 控制质量 3. 正外部性(*, 后面会说到)
+  - 正外部性(Positive Externalities)
+    - Internalisation of positive effects(externalities) that complements extert on each other.
+    - cross subsidies 交叉补贴 # 消费者可能不会购买，或者是从其他厂商购买。
+    - bundlig 捆绑销售 # 分开销售如何定价的问题
+    - increasing lock-in 增加联合套牢效果 # 用户更换到替代品需要额外成本
+- 互补产品和合作 Complements and Cooperation
+  - 进行完全整合比较困难，比如企业希望保持独立，或者只有很小部分的互补
+  - 那么可以选择战略合作伙伴关系(Strategic Partnerships)，下面是SP的几个特征
+  - 共同决策(Shared Decision Making)
+  - organisational linkages & coordination mechanisms 组织联系，合作机制 => organisational integration 组织集成
+  - joint equity ownership 股份所有制（交叉持股，利益相互联系） => economic integration 经济整合
+
+** 进入新市场 Entering a New Market
+本模块与市场进入有关。我们首先看一下用于评估市场吸引力的不同工具，再讨论已被证明有助于进入新市场的策略。我们也会从其他角度分析这一现象，了解现有企业为了阻挡新竞争者进入市场需要采取的措施。
+
+** 为何要关注研发？Why Worry About Research and Development
+在探讨研发的时候，一些重要的策略问题会反复出现。我们将通过本模块仔细研究这些问题。不少创新的诞生的确是源自好运气，但似乎毋庸置疑——大部分时候是因为创新者积极努力实现某个具体的发明。
+
+** 合理设计产品 Designing Products Wisely
+在本模块中，我们侧重于产品设计的策略问题。我们会分析企业如何通过调整自己的产品来减小市场竞争压力。稍后，我们会学习产品设计和定价方面的一些通用策略，并讨论在这些策略之间进退两难的相关问题。
+
