@@ -144,5 +144,7 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
 在本模块中，我们侧重于产品设计的策略问题。我们会分析企业如何通过调整自己的产品来减小市场竞争压力。稍后，我们会学习产品设计和定价方面的一些通用策略，并讨论在这些策略之间进退两难的相关问题。
 
 - 伯特兰德悖论(Bertrand Paradox)
+  - 理论模型 Theoretical Model # 双方都使用低价策略，最终价格低到边际成本，导致没有利润
+  - 调整模型假设 Adjusting Model Assumptions
 - 产品差异化 Product Differentiation
 - 定价和产品决策 Pricing and Product Decisions
