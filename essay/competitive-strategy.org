@@ -93,7 +93,7 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
 - 进入策略 Entry Strategies
   - 承诺战略 Commitment
     - 某个后来者为了留在市场中作出的可信承诺，以此来防止现有企业的报复
-    - 承诺：1. 高昂的沉没成本 2. 退出其他战略细分市场而只关注刚进入的市场 
+    - 承诺：1. 高昂的沉没成本 2. 退出其他战略细分市场而只关注刚进入的市场
     - note(dirlt): 视频中的例子显示这会影响到博弈树最终变换到另外一个均衡上。比较适合成型的大公司。
   - 价值链重构 Value Chain Reconfiguration # 以廉价但是质量略差的产品形态进入市场，然后不断改进产品质量来扩大份额，而原有者很难复制相同的劣质产品。
   - 柔道战略 Judo Economics # 同样是以低廉的价格(但是质量相同的产品)进入小部分市场(利基市场), 原有者担心价格战会影响到自己原有市场，所以没有办法进行报复。
@@ -118,5 +118,31 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
 ** 为何要关注研发？Why Worry About Research and Development
 在探讨研发的时候，一些重要的策略问题会反复出现。我们将通过本模块仔细研究这些问题。不少创新的诞生的确是源自好运气，但似乎毋庸置疑——大部分时候是因为创新者积极努力实现某个具体的发明。
 
+- 研发和创新 R&D and Innovation
+  - 研发的不同阶段 Stages of R&D
+    - 基础研究 Basic Research # 不容易保护产出，并且可能通过公开刊物会议等方式发生知识外溢(knowledge spilover)
+    - 应用研究 Applied Research # 可以通过专利保护产出，造成专利竞赛
+    - 产品开发 Production Development
+  - 创新的不同类型 Types of Innovation
+    - 产品创新(Product Innovation) # 创造新产品
+    - 过程创新(Process Innovation) # 改进现有产品生产
+    - 突破性创新(Drastic Innovattion) # 创造突破性产品垄断市场
+    - 渐进式创新(Incremental Innovation) # 改进现有产品提高而非垄断市场
+- 创新的激励 Incentives to Innovate
+  - 竞争性市场 Competitive Market
+  - 垄断者 Monopolist. # 在完全垄断市场中(没有进入威胁)，替代效应(Replacement Effect)表明垄断者的创新动机更小，相比于竞争者
+  - 垄断者对新入者的威胁 Monopolist with Threat of Entry # 效率效应(Efficienty Effect)存在进入威胁时，垄断企业相比潜在进入企业有更大的创新动力
+  - RE表明垄断企业创新性不够，因为新利润会取代老利润。EE表明垄断企业有更大创新性，致力于保持自己的垄断地位。trade-off取决于有进入威胁的概率。
+  - 进入市场的概率决定垄断企业是否需要创新。如果参与者进入市场困难的话，那么垄断企业更加倾向于不进行创新而保持固有利润。如果要鼓励创新的话，那么就必须降低进入的门槛。
+- 创新和竞争 Innovation & Competition
+  - 在竞争中创新 Innovation under Competition
+  - 沉睡专利(Sleeping Patents)
+    - 小专利且没有什么特别创新，公司注册它但是不打算将其商业化它。
+    - 这些专利主要是针对和自己产品特别类似的创新，阻止竞争对手使用这类创新，维持自身垄断地位。
+
 ** 合理设计产品 Designing Products Wisely
 在本模块中，我们侧重于产品设计的策略问题。我们会分析企业如何通过调整自己的产品来减小市场竞争压力。稍后，我们会学习产品设计和定价方面的一些通用策略，并讨论在这些策略之间进退两难的相关问题。
+
+- 伯特兰德悖论(Bertrand Paradox)
+- 产品差异化 Product Differentiation
+- 定价和产品决策 Pricing and Product Decisions
