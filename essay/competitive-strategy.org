@@ -145,6 +145,7 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
 
 - 伯特兰德悖论(Bertrand Paradox)
   - 理论模型 Theoretical Model # 双方都使用低价策略，最终价格低到边际成本，导致没有利润
-  - 调整模型假设 Adjusting Model Assumptions
+  - 调整模型假设 Adjusting Model Assumptions # 通过调整模型假设，比如生产差异化产品等方式，可以避开伯特兰德悖论
 - 产品差异化 Product Differentiation
+  - 水平 vs. 垂直差异化. # 相同价格，部分人会选择A部分人选择B，那么AB是水平差异。相同价格，所有人都选择A而不是B，那么AB是垂直差异(所以AB需要在价格上区分)
 - 定价和产品决策 Pricing and Product Decisions
