@@ -100,6 +100,7 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
   - 利基市场 Niche Market
     - 利基市场指的是后来者获取利润的市场, 后来者可以在利基市场上不断扩大份额而不用担心原有者报复。
     - 原有者触发报复有两个点：一个是利基市场变大，一个报复成本降低(比如可以针对特定区域降价)
+    - note(dirlt): or 缝隙市场 ?
 - 进入遏制 Entry Deterrence
   - 承诺战略 Commitment # 视频中的例子同样显示了如何影响决策以及变换到另外一个均衡上的
   - 限制性定价(Limit Pricing)
@@ -148,4 +149,13 @@ https://www.coursera.org/learn/competitivestrategyzh/outline
   - 调整模型假设 Adjusting Model Assumptions # 通过调整模型假设，比如生产差异化产品等方式，可以避开伯特兰德悖论
 - 产品差异化 Product Differentiation
   - 水平 vs. 垂直差异化. # 相同价格，部分人会选择A部分人选择B，那么AB是水平差异。相同价格，所有人都选择A而不是B，那么AB是垂直差异(所以AB需要在价格上区分)
+  - 水平差异化(Horizontal Differentiation)：# 产品AB之间的差异难以比较，比如衣服的颜色款式
+  - 垂直差异化(Vertical Differentiation): # 产品AB之间的差异可以比较，比如电脑的内存容量和CPU频率
 - 定价和产品决策 Pricing and Product Decisions
+  - 通用战略 Generic Strategies
+    - 成本领先战略(Cost Leadership): 努力使成本低于对手。边际消费者是利润空间非常低的群体，需要避开他们。
+    - 差异化模式(Differentiation)
+    - 集中化模式(Focus): 集合前面两种战略特征，重点关注一个特定的消费群体，产品线或者是地理市场，而忽略市场中其他部分。
+  - 进退两难 Stuck in the Middle
+    - 如果低价和差异化策略都没有做好的话，那么就处于进退两难境地。
+    - 二元化(Amibidexterity) # 同时实施低价以及差异化策略
