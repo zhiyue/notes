@@ -104,6 +104,8 @@
      - [[file:./note/animal-farm.org][动物庄园(Animal Farm)]] by George Orwell
      - [[file:./note/stairway-to-heaven.org][Stairway to Heaven]] by Led Zeppelin
      - [[file:./note/dont-go-gentle-into-that-good-night.org][Do not go gentle into that good night]] by Dylan Thomas
+     - [[file:./note/youtube-steve-chen-bio.org][YouTube创始人陈士骏自传]]
+     - [[file:./note/1984.org][1984]] by George Orwell
    - [[file:note/to-death.org][给离去的亲人们]]
    - [[file:note/pregnancy.org][怀孕]] | [[file:note/house.org][住房]]
    - [[file:note/cross-ocean.org][Cross Ocean]] 远渡重洋
