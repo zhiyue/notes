@@ -284,6 +284,8 @@ for i in range(0,book.nsheets):
 - 对单个socket可以通过设置connection.sock.settimeout完成，但是必须首先connect才能够获得sock对象.
 
 *** datetime
+日期时间和时间戳之间的转化
+
 #+BEGIN_SRC Python
 def dt2ts(s):
     st = time.strptime(s,'%Y-%m-%d %H:%M:%S')
