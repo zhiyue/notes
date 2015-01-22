@@ -160,6 +160,7 @@
    - sudo apt-get install guile-2.0
    - sudo apt-get install python-sklearn
    - sudo apt-get install python-sklearn-doc
+   - sudo apt-get install kdenlive
 
 ** 系统配置
 *** 察看ubuntu内部版本
