@@ -49,7 +49,6 @@
    - [[file:./note/photo-class.org][The Art of Photography]]
    - [[file:note/beginning-of-a-hard-journey.org][苦旅的起点]]
    - [[file:note/about-dna-sequencing.org][关于DNA测序]] thank you, FZH!
-   - [[file:./note/cipher.org][谜题闯关游戏]]
 
 ** 笔记
    - [[file:note/fun.org][挺搞笑的]]
