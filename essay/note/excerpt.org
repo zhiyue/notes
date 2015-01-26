@@ -1,7 +1,7 @@
 * excerpt
 #+TITLE: 网络摘抄
 #+META: ~/repo/sperm/essay -> ..
-   - updated @ 2014-12-24
+   - updated @ 2015-01-22
 
 -----
 人生有两出悲剧：一是万念俱灰，另一是踌躇满志。——萧伯纳

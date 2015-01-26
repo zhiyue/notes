@@ -118,7 +118,7 @@ print ls1, ss1 # [1,2,3,4], 'hello, world'
 
 *** list comprehension
 iterator可以是字符串，列表，元组，set/dict, 文件等各种迭代器
-- [(generate x) for x in iterator if (filter x)] # 列表 
+- [(generate x) for x in iterator if (filter x)] # 列表
 - {(generate x) for x in iterator if (filter x)} # 集合
 - {(gen-key x):(gen-value x) for x in iterator if (filter x)} # 字典
 
@@ -181,6 +181,18 @@ def run():
 2012-08-30 23:19:09 [16121] [INFO] Worker exiting (pid: 16121)
 2012-08-30 23:19:09 [16116] [INFO] Shutting down: Master
 #+END_EXAMPLE
+
+-----
+
+如果上面WSGI程序修改成为下面的话，那么在访问web页面的时候会出现如下错误 "Error code: ERR_INCOMPLETE_CHUNKED_ENCODING". 
+#+BEGIN_SRC Python
+def run(environ,start_response):
+    start_response('200 OK', # status code
+                   [('Content-type','text/plain')]) # header
+    s = "OK".decode('utf-8')
+    return (s,)
+#+END_SRC
+当时这个错误是以非常诡异的方式呈现的，而不是像我示例代码一样，当时s是从sqlite3读取的类型为TEXT的某个字段。WSGI要求返回对象必须是str类型而不能是unicode类型。
 
 *** nginx + WSGI
 python运行web大约有下面三种方式：
@@ -285,7 +297,6 @@ for i in range(0,book.nsheets):
 
 *** datetime
 日期时间和时间戳之间的转化
-
 #+BEGIN_SRC Python
 def dt2ts(s):
     st = time.strptime(s,'%Y-%m-%d %H:%M:%S')
@@ -297,11 +308,37 @@ def ts2dt(ts):
     return time.strftime('%Y-%m-%d %H:%M:%S',st)
 #+END_SRC
 
-** ipython
-- <TAB> 可以提示补全信息
-- timeit <expr> # 测量<expr>执行时间
-- run <file> # 运行<file>
-- cd / ls / pwd / cat ... # shell commands.
-- <object>? / ?<object> # 显示<object>文档
-- pylab # for interactive matplotlib sessions with Matlab/Mathematica-like functionality.
+其中strptime是非常耗时的（12.9us），所以应该尽量避免这种parse的方法。
+#+BEGIN_EXAMPLE
+In [8]: timeit time.strptime('2015-01-02 22:21:01', '%Y-%m-%d %H:%M:%S')
+100000 loops, best of 3: 12.9 µs per loop
+
+In [9]: mk = time.strptime('2015-01-02 22:21:01', '%Y-%m-%d %H:%M:%S')
+
+In [10]: timeit time.mktime(mk)
+1000000 loops, best of 3: 1.7 µs per loop
+
+In [11]: timeit time.localtime(1421974014)
+1000000 loops, best of 3: 1.71 µs per loop
+
+In [12]: st = time.localtime(1421974014)
+
+In [13]: timeit time.strftime('%Y-%m-%d %H:%M:%S', st)
+1000000 loops, best of 3: 631 ns per loop
+#+END_EXAMPLE
+
+为了加快速度，一个办法是可以自己解析字符串。使用下面这个方法来代替strptime，平均耗时在(4.16us)
+#+BEGIN_SRC Python
+def f(s):
+    (d,t) = s.split(' ')
+    # (yr, mon, dy) = map(lambda x: int(x), d.split('-'))
+    # (hr, min, sec) = map(lambda x: int(x), t.split(':'))
+    # dt = datetime.datetime(yr, mon, dy, hr, min, sec)
+    (yr, mon, dy) = d.split('-')
+    (hr, mn, sec) = t.split(':')
+    dt = datetime.datetime(int(yr), int(mon), int(dy), int(hr), int(mn), int(sec))
+    st = dt.timetuple()
+    return st
+#+END_SRC
+
 
