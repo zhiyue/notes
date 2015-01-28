@@ -1,5 +1,5 @@
-* machine-learnin-tom-mitchell
-#+TITLE: Machine Learning(机器学习)
+* ml-mitchell
+#+TITLE: 机器学习
 
 -----
 C1 引言

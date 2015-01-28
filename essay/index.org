@@ -71,7 +71,7 @@
      - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 关于推荐系统的介绍性文章
      - [[file:./beauty-of-math.org][数学之美]] wujun
      - [[file:statis-method-learning.org][统计学习方法]] 李航
-     - [[file:machine-learnin-tom-mitchell.org][Machine Learning(机器学习)]] by Tom M. Mitchell
+     - [[file:ml-mitchell.org][机器学习]] by Tom M. Mitchell
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学
    - [[file:rcfile.org][rcfile]] / [[file:orcfile.org][orcfile]] / [[file:parquet.org][parquet]] 几种列式存储(columnar storage)实现
    - [[file:./bitcoin.org][Bitcoin: A Peer-to-Peer Electronic Cash System]] 比特币论文
