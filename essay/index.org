@@ -25,7 +25,7 @@
    - [[file:rcfile.org][rcfile]] / [[file:orcfile.org][orcfile]] / [[file:parquet.org][parquet]] 几种列式存储(columnar storage)实现
    - [[file:./bitcoin.org][Bitcoin: A Peer-to-Peer Electronic Cash System]] 比特币论文
 
-** Tool and Desktop
+** Desktop and Tool
    - [[file:ubuntu.org][ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] . 主要记录自己使用出现的问题.
    - [[file:mac.org][macosx]] 如何更好地使用Mac. 以前使用Windows，后来转向Ubuntu，再后来买了个MBA. 熟悉它又需要一段时间了.
    - [[file:license.org][license]] 一些常见的开源协议。不知道自己以后是否可以用得上：）
