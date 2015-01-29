@@ -2,60 +2,7 @@
 #+TITLE: Yan's Home Page
 #+OPTIONS: H:3
 
-** Operating System
-   - [[file:computer-system-reading.org][Computer System Reading]] 关于单机系统方面的一些文章以及阅读心得。
-     - [[file:./the-secret-to-10-million-concurrent-connections.org][The Secret To 10 Million Concurrent Connections -The Kernel Is The Problem, Not The Solution]]
-     - [[file:./a-tour-inside-cloudflare-latest-generation-servers.org][A Tour Inside CloudFlare's Latest Generation Servers]]
-     - [[file:./busting-4-modern-hardware-myths-are-memory-hdds-and-ssds-really-random-access.org][Busting 4 Modern Hardware Myths - Are Memory, HDDs, And SSDs Really Random Access?]]
-     - [[file:how-long-does-it-take-to-make-context-switch.org][How long does it take to make a context switch?]]
-     - [[file:./the-c10m-problem.org][The C10M Problem]]
-   - [[file:apue.org][APUE]] Unix环境高级编程(Advanced Programming Unix Environment),W. Richard Stevens的神作。笔记里面没有包含书最后的几个部分，比如终端，打印机等，因为我觉得可能大家都不太需要这个东西了。我还尝试将一些跨章节的概念整合到一起，这样比较容易从总体把握Unix编程环境。
-   - [[file:unix-systems-for-modern-architectures.org][现代体系结构上的UNIX系统-内核程序员的SMP和Caching技术]]
-   - [[file:./is-parallel-programming-hard.org][Is Parallel Programming Hard, And, If So, What Can You Do About It?]]
-   - [[file:linux.org][Linux]] 主要是介绍Linux下面一些工具使用以及和内核相关的知识。（将原来[[file:./APUE.org][APUE]] 和 [[file:./UNP.org][UNP]] 中的一部分内容放在这里面来了，这样可以保持这两篇内容比较稳定）
-     - [[file:pic.org][pic-code]] 分析了一下PIC位置无关代码内部的原理以及和动态库之间的关系。通过阅读<深入理解计算机系统>并且结合实际的例子总结出来的。
-     - [[file:gcc-asm.org][gcc-assembly]] 如何编写GCC内嵌汇编，以及一些关于GCC内嵌汇编的文章，主要是参考了<GCC Manual>. 但是自己对这个依然不是很了解。
-     - [[file:encoding.org][encoding]] 介绍了GB2312/GBK/GB18030/Unicode/UTF16/UTF32/UTF8这几种字符编码格式。还是觉得UTF8在设计以及实现上都相对更加合理。
-   - [[file:cpu.org][CPU]] / [[file:simd.org][SIMD]] SIMD(Single Instruction Muitple Data)单指令多数据。这个笔记其实是Intel Reference Manual中关于SIMD指令的总结。里面包含了一些理解SIMD指令需要的知识，以及对SIMD指令进行了分类。遗憾的是里面没有什么过多的例子，毕竟这个是结合场景来使用的。
-   - [[file:concurrency.org][concurrency]] 并发
-     - [[file:coroutine.org][coroutine]] 协程，轻量级线程。
-     - [[file:lock.org][lock]] 锁的原理与不同实现
-     - [[file:akka.org][akka]] Akka is a toolkit and runtime for building highly concurrent, distributed, and fault tolerant event-driven applications on the JVM.
-   - [[file:memory.org][memory]] 内存相关
-     - [[file:./numa.org][NUMA]] Non-Uniform Memory Access. 非一致性内存访问
-     - [[file:numa-an-overview.org][NUMA An Overview]] 关于NUMA的介绍性文章
-     - [[file:memory-barrier.org][memory-barrier]] 内存屏障
-     - [[file:./memory-barriers-a-hardware-view-for-software-hackers.org][Memory Barriers: a Hardware View for Software Hackers]]
-     - [[file:./nonblocking-algorithms-and-scalable-multicore-programming.org][Nonblocking Algorithms and Scalable Multicore Programming]]
-     - [[file:tcmalloc.org][TCMalloc]] Google的开源线程缓存内存分配器，解决多线程下面内存分配效率问题。
-   - [[file:sysperf.org][system-performance]] 系统性能相关
-     - [[file:oprofile.org][oprofile]] oprofile(系统级profiler). note: obsolete!!!
-     - [[file:systemtap.org][systemtap]] 通过将观察语句编译成为内核驱动，和linux内核提供的接口匹配，来深度地观察linux操作系统。
-     - [[file:gperftools.org][gperftools]] Google的性能分析工具，[[file:tcmalloc.org][TCMalloc]] 实现也在里面。用来观察应用程序似乎是个不错的选择。
-     - [[file:perf.org][perf]] Linux系统自带的性能分析工具，支持硬件以及软件事件计数器，支持profile kernel以及user code.
-     - [[file:./optimizing-software-in-cpp.org][Optimizing software in C++]]
-     - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
-     - [[file:./linux-system-and-performance-monitoring.org][Linux System and Performance Monitoring]]
-     - [[http://www.brendangregg.com/linuxperf.html][Linux Performance Tools]] by Brendan Gregg. # 工具索引入口
-     - [[file:./thinking-clearly-about-performance.org][Thinking Clearly about Performance]] by Cary Millsap.
-   - [[file:continuation.org][continuation]] 延续，异步编程一种实现。
-
-** Tool and Desktop
-   - [[file:license.org][license]] 一些常见的开源协议。不知道自己以后是否可以用得上：）
-   - [[file:swig.org][swig]] C/C++多语言扩展接口生成器，使用起来非常方便(至于生成的代码没有看过效率如何). 个人觉得比较适合quick & dirty的方案.
-   - [[file:git.org][git]] 分布式版本控制系统(DCVS). 很多项目都在使用Git进行版本管理包括linux kernel.
-   - [[file:folly.org][folly]] folly is an open-source C++ library developed and used at Facebook.
-   - [[file:sanitizer.org][sanitizer]] Google的C++动态分析工具，可以检测内存泄漏，内存无效使用以及多线程数据竞争.
-   - [[file:build-system.org][build-system]] 在实现Baidu in-house的构建工具Comake2之前，做过构建系统的调研总结出来的.
-   - [[file:maven.org][maven]] 主要针对Java开发的基于工程对象模型(POM, Project Object Model)构建系统
-   - [[file:vagrant.org][vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持相对比较好的是VirtualBox)
-   - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
-   - [[file:octave.org][octave]] GNU 'Matlab' on Linux/Mac/Windows.
-   - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
-   - [[file:ubuntu.org][ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] . 主要记录自己使用出现的问题.
-   - [[file:mac.org][macosx]] 如何更好地使用Mac. 以前使用Windows，后来转向Ubuntu，再后来买了个MBA. 熟悉它又需要一段时间了.
-
-** Algorithm Related
+** About Algorithm
    - [[file:algorithm.org][Algorithm]] 算法还是非常重要的。记录的都是现实中使用到的算法或者是比较有趣的数学问题吧。
      - [[file:./cracking-the-coding-interview.org][Cracking The Coding Interview]] 据说算法分为三种：面试算法，ACM算法，算法=D
      - [[file:interview-problem.org][interview-problem]] 面试问题
@@ -77,6 +24,59 @@
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学
    - [[file:rcfile.org][rcfile]] / [[file:orcfile.org][orcfile]] / [[file:parquet.org][parquet]] 几种列式存储(columnar storage)实现
    - [[file:./bitcoin.org][Bitcoin: A Peer-to-Peer Electronic Cash System]] 比特币论文
+
+** Tool and Desktop
+   - [[file:ubuntu.org][ubuntu]] 如何更好地使用Ubuntu. [[file:note/struggle-with-ubuntu.org][之前有过痛苦的经历]] . 主要记录自己使用出现的问题.
+   - [[file:mac.org][macosx]] 如何更好地使用Mac. 以前使用Windows，后来转向Ubuntu，再后来买了个MBA. 熟悉它又需要一段时间了.
+   - [[file:license.org][license]] 一些常见的开源协议。不知道自己以后是否可以用得上：）
+   - [[file:swig.org][swig]] C/C++多语言扩展接口生成器，使用起来非常方便(至于生成的代码没有看过效率如何). 个人觉得比较适合quick & dirty的方案.
+   - [[file:build-system.org][build-system]] 在实现Baidu in-house的构建工具Comake2之前，做过构建系统的调研总结出来的.
+   - [[file:git.org][git]] 分布式版本控制系统(DCVS). 很多项目都在使用Git进行版本管理包括linux kernel.
+   - [[file:maven.org][maven]] 主要针对Java开发的基于工程对象模型(POM, Project Object Model)构建系统
+   - [[file:vagrant.org][vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持相对比较好的是VirtualBox)
+   - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
+   - [[file:octave.org][octave]] GNU 'Matlab' on Linux/Mac/Windows.
+   - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
+
+** Operating System
+   - [[file:computer-system-reading.org][Computer System Reading]] 关于单机系统方面的一些文章以及阅读心得。
+     - [[file:./the-secret-to-10-million-concurrent-connections.org][The Secret To 10 Million Concurrent Connections -The Kernel Is The Problem, Not The Solution]]
+     - [[file:./a-tour-inside-cloudflare-latest-generation-servers.org][A Tour Inside CloudFlare's Latest Generation Servers]]
+     - [[file:./busting-4-modern-hardware-myths-are-memory-hdds-and-ssds-really-random-access.org][Busting 4 Modern Hardware Myths - Are Memory, HDDs, And SSDs Really Random Access?]]
+     - [[file:how-long-does-it-take-to-make-context-switch.org][How long does it take to make a context switch?]]
+     - [[file:./the-c10m-problem.org][The C10M Problem]]
+   - [[file:apue.org][APUE]] Unix环境高级编程(Advanced Programming Unix Environment),W. Richard Stevens的神作。笔记里面没有包含书最后的几个部分，比如终端，打印机等，因为我觉得可能大家都不太需要这个东西了。我还尝试将一些跨章节的概念整合到一起，这样比较容易从总体把握Unix编程环境。
+   - [[file:unix-systems-for-modern-architectures.org][现代体系结构上的UNIX系统-内核程序员的SMP和Caching技术]]
+   - [[file:./is-parallel-programming-hard.org][Is Parallel Programming Hard, And, If So, What Can You Do About It?]]
+   - [[file:linux.org][Linux]] 主要是介绍Linux下面一些工具使用以及和内核相关的知识。（将原来[[file:./APUE.org][APUE]] 和 [[file:./UNP.org][UNP]] 中的一部分内容放在这里面来了，这样可以保持这两篇内容比较稳定）
+     - [[file:pic.org][pic-code]] 分析了一下PIC位置无关代码内部的原理以及和动态库之间的关系。通过阅读<深入理解计算机系统>并且结合实际的例子总结出来的。
+     - [[file:gcc-asm.org][gcc-assembly]] 如何编写GCC内嵌汇编，以及一些关于GCC内嵌汇编的文章，主要是参考了<GCC Manual>. 但是自己对这个依然不是很了解。
+     - [[file:encoding.org][encoding]] 介绍了GB2312/GBK/GB18030/Unicode/UTF16/UTF32/UTF8这几种字符编码格式。还是觉得UTF8在设计以及实现上都相对更加合理。
+     - [[file:folly.org][folly]] folly is an open-source C++ library developed and used at Facebook.
+   - [[file:cpu.org][CPU]] / [[file:simd.org][SIMD]] SIMD(Single Instruction Muitple Data)单指令多数据。这个笔记其实是Intel Reference Manual中关于SIMD指令的总结。里面包含了一些理解SIMD指令需要的知识，以及对SIMD指令进行了分类。遗憾的是里面没有什么过多的例子，毕竟这个是结合场景来使用的。
+   - [[file:concurrency.org][concurrency]] 并发
+     - [[file:coroutine.org][coroutine]] 协程，轻量级线程。
+     - [[file:lock.org][lock]] 锁的原理与不同实现
+     - [[file:akka.org][akka]] Akka is a toolkit and runtime for building highly concurrent, distributed, and fault tolerant event-driven applications on the JVM.
+   - [[file:memory.org][memory]] 内存相关
+     - [[file:./numa.org][NUMA]] Non-Uniform Memory Access. 非一致性内存访问
+     - [[file:numa-an-overview.org][NUMA An Overview]] 关于NUMA的介绍性文章
+     - [[file:memory-barrier.org][memory-barrier]] 内存屏障
+     - [[file:./memory-barriers-a-hardware-view-for-software-hackers.org][Memory Barriers: a Hardware View for Software Hackers]]
+     - [[file:./nonblocking-algorithms-and-scalable-multicore-programming.org][Nonblocking Algorithms and Scalable Multicore Programming]]
+     - [[file:tcmalloc.org][TCMalloc]] Google的开源线程缓存内存分配器，解决多线程下面内存分配效率问题。
+     - [[file:sanitizer.org][sanitizer]] Google的C++动态分析工具，可以检测内存泄漏，内存无效使用以及多线程数据竞争.
+   - [[file:sysperf.org][system-performance]] 系统性能相关
+     - [[file:oprofile.org][oprofile]] oprofile(系统级profiler). note: obsolete!!!
+     - [[file:systemtap.org][systemtap]] 通过将观察语句编译成为内核驱动，和linux内核提供的接口匹配，来深度地观察linux操作系统。
+     - [[file:gperftools.org][gperftools]] Google的性能分析工具，[[file:tcmalloc.org][TCMalloc]] 实现也在里面。用来观察应用程序似乎是个不错的选择。
+     - [[file:perf.org][perf]] Linux系统自带的性能分析工具，支持硬件以及软件事件计数器，支持profile kernel以及user code.
+     - [[file:./optimizing-software-in-cpp.org][Optimizing software in C++]]
+     - [[file:./tips-for-optimizing-c-cpp-code.org][Tips for Optimizing C/C++ Code]]
+     - [[file:./linux-system-and-performance-monitoring.org][Linux System and Performance Monitoring]]
+     - [[http://www.brendangregg.com/linuxperf.html][Linux Performance Tools]] by Brendan Gregg. # 工具索引入口
+     - [[file:./thinking-clearly-about-performance.org][Thinking Clearly about Performance]] by Cary Millsap.
+   - [[file:continuation.org][continuation]] 延续，异步编程一种实现。
 
 ** Network Programming
    - [[file:unp.org][UNP]] Unix网络编程(Unix Network Programming),W. Richard Stevens的又一神作。笔记里面只是对于TCP原理有比较详细讨论，这部分笔记也包含了TCP Illustrated v1里面和TCP相关的章节内容。对于编程方面也着重TCP socket使用，毕竟在大部分应用场景下面我们选用TCP模型更多，并且TCP里面有很多非常琐碎的知识。
