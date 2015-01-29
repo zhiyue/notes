@@ -69,9 +69,11 @@
      - Coursera: Machine Learning by Andrew Ng. [[file:ml-class.org][笔记和一些习题代码]] (仅供学习) 以及 [[file:images/coursera-ml-2014.pdf][证书]]
      - [[file:./ml-the-hard-way.org][Machine Learning the Hard Way]] 哥们用ml来赌马，虽然最后赚钱了，但是结果却特别悲惨:)
      - [[file:./deconstructing-recommender-systems.org][Deconstructing Recommender Systems]] 关于推荐系统的介绍性文章
+     - [[file:building-ml-sys-with-python.org][机器学习系统设计(Building Machine Learning Systems with Python)]]
      - [[file:./beauty-of-math.org][数学之美]] wujun
      - [[file:statis-method-learning.org][统计学习方法]] 李航
      - [[file:ml-mitchell.org][机器学习]] by Tom M. Mitchell
+     - [[file:./ml-foundations.org][机器学习基石 on Coursera]]
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学
    - [[file:rcfile.org][rcfile]] / [[file:orcfile.org][orcfile]] / [[file:parquet.org][parquet]] 几种列式存储(columnar storage)实现
    - [[file:./bitcoin.org][Bitcoin: A Peer-to-Peer Electronic Cash System]] 比特币论文

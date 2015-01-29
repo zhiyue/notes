@@ -1,9 +1,9 @@
 * machine-learning
-** links
+** 机器学习资源链接
 - http://guidetodatamining.com/ 偏向于实践的教程
 - Statistical Data Mining Tutorials http://www.autonlab.org/tutorials/index.html 
 
-** 机器学习常见算法分类汇总
+** 常见算法分类汇总
 http://www.kuqin.com/shuoit/20140925/342326.html
 
 -----
@@ -31,98 +31,14 @@ http://www.kuqin.com/shuoit/20140925/342326.html
 - 降低维度算法：像聚类算法一样，降低维度算法试图分析数据的内在结构，不过降低维度算法是以非监督学习的方式试图利用较少的信息来归纳或者解释数据。这类算法可以用于高维数据的可视化或者用来简化数据以便监督式学习使用。常见的算法包括：主成份分析（Principle Component Analysis， PCA），偏最小二乘回归（Partial Least Square Regression，PLS）， Sammon映射，多维尺度（Multi-Dimensional Scaling, MDS）, 投影追踪（Projection Pursuit）等。
 - 集成算法：集成算法用一些相对较弱的学习模型独立地就同样的样本进行训练，然后把结果整合起来进行整体预测。集成算法的主要难点在于究竟集成哪些独立的较弱的学习模型以及如何把学习结果整合起来。这是一类非常强大的算法，同时也非常流行。常见的算法包括：Boosting， Bootstrapped Aggregation（Bagging）， AdaBoost，堆叠泛化（Stacked Generalization Blending, SGB），梯度推进机（Gradient Boosting Machine, GBM），随机森林（Random Forest）。
 
-** <机器学习系统设计>
-Building Machine Learning Systems with Python
-
------
-然而根据亲身经验，我们知道做这些很“酷”的事--使用和调整机器学习算法比如SVM，NNS，或者同时支持两者--其实只需要耗费一位优秀机器学习专家的一点时间。看看下面这个典型的工作流程，你就会发现绝大部分时间花费在一些相当平凡的任务上：1）读取和清洗数据；2）探索和理解输入数据；3）分析如何最好地讲数据呈现给学习算法；4）选择正确的模型和学习算法；5）正确地评估性能。
-
-你通常不会直接将数据输入机器学习算法，而是在训练前对部分数据进行提炼。很多时候，使用机器学习算法会让你得到性能提升的回报。一个简单算法在提炼后数据上的表现，甚至能够超过一个非常复杂的算法在原始数据上的效果。这部分机器学习流程叫做特征工程(feature engineering)，通常是一个非常令人兴奋的挑战。你有创意和智慧，便会立即看到效果。
-
-好特征的目标是在重要的地方取不同值，而在不重要的地方不变。一个很自然就会想到的问题式，我们能否自动滴把好特征选取出来。这个问题叫做特征选择(feature selection). 人们已经提出了很多方法来解决这个问题，但是在实践中，极简单的想法可能已经可以做得很好。
-
-要提升效果，我们基本上有如下选择：1）增加更多的数据[learning_curve]；2）考虑模型复杂度[cross_validation and validation_curve]；3）修改特征空间；4）改变模型。
-
------
-逻辑回归中的逻辑函数引入是这样的：
-- 线性回归的回归函数式 y = w * x
-- 逻辑回归中我们使用 log(p / (1-p) 来代替 y.
-- 逻辑函数h(x) = p = 1 / (1 + e^{-w * x})
-
------
-朴素贝叶斯分类器要求所有特征之间相互独立。虽然在实际应用中很少有这种情况，但是在实践中它仍然能够达到非常好的正确率。
-- 我们要求解在已知特征F1,F2情况下样本属于某类别C的概率P(C|F1,F2). # 后验概率
-- 根据贝叶斯公式P(C|F1,F2) * P(F1,F2) = P(F1,F2|C) * P(C). # P(C)先验概率(prior) P(F1,F2|C)似然性(likehood)
-- 预测时因为P(F1,F2)都一样所以我们有时可以不用计算。
-- P(F1,F2|C) = P(F1|C) * P(F2|C) 这是因为F1,F2两个特征相互独立。
-- 实际过程中可能P(F1,F2) = 0. 那么可以通过加法平滑或是拉普拉斯平滑(laplacian smoothing), 又或是Lidstone平滑来处理。
-- 又因为在实际计算时多个p1 * p2...会出现精度问题，所以可以转为log(p1) + log(p2)...来处理。
-
------
-回归惩罚函数
-- Ordinary Least Squares(OLS) 普通最小二乘法，普通线性回归
-- L1惩罚(L1范数, L1 norm)则是在OLS上增加a * |w|. Lasso法
-- L2惩罚(L2范数, L2 norm)则是在OLS上则加a * |w|^2. Ridge regressin(岭回归)
-- L1 + L2则是在OLS上增加a * |w| + b * |w|^2. Elastic Net(弹性网)
-
------
-整个购物篮分析领域有时又叫做关联规则挖掘(association rule mining). 这些规则式：如果一个顾客购买了X的话，相对于基线，那么他更有可能购买Y。有一个指标来衡量每个规则的价值，称为提升度。提升度就是规则和基线所得到的概率之间的比值：life(X->Y) = P(Y|X) / P(Y). 其中P(Y|X)就是规则对应的概率，而P(Y)则是基线。Apriori是这方面问题的经典算法。
-
------
-下面这些理由会告诉你为什么在实践中应该尽可能消减维度：
-- 多余的特诊会影响或误导学习器。并不是所有机器学习方法都会有这种情况（SVM), 但是大多数模型在维度较小的情况下会比较安全。
-- 另一个反对高维特征空间的理由是，更多特征意味着更多参数需要调整，过你喝的风险也越大。
-- 我们用来解决问题的数据的维度可能只是虚高，真实维度可能比较小。
-- 维度越少意味着训练越快，更多东西可以尝试，能够得到更好的结果。
-- 如果我们想要可视化数据，就必须限制在两个或者三个维度上。
-
-** 机器学习基石 on Coursera
-https://class.coursera.org/ntumlone-002
-
-- L1 机器学习介绍
-- L2 PLA(Perceptron Learning Algorithm) # 算法变形pocket
-- L3 机器学习分类
-  - 输出类型分类：classification/regression/structured(结构化)
-  - 数据标签分类：supervised/unsupervised/semi-supervised(获得标签代价非常高)/reinforcement(强化，返回反馈满意度)
-  - 输入方式分类：batch/online/active. 其中online和active都是顺序处理数据，但是active能够主动提问
-  - 输入特征分类：concrete/raw/abstract. abstract相比raw特征更加隐蔽. 转换为concrete特征需要domain-knowledge来做辅助.
-- L4-L7 学习可行性分析
-  - 通常一个模型model会对应很多参数，给定一个参数就对应一个hypothesis. 因此model实际上给出的是一个假设集合hypothesis-set, 我们记为H.
-  - 从Hoeffding不等式，到H即hypothesis-set的effective-number/break-point，到更加正式的定义vc-dimension.
-  - vc-dimension只和H有关，或者说只和model有关。vc物理意义是：H处理二分类问题有多少自由度。vc越大说明H选择更多，能力越强，也说明越复杂。
-  - model/H进行训练效果满足不等式 P(|u-v| > e) <= 2 * (2N)^vc * exp(-2 * e^2 * N). 其中vc是H的vc-dimension.
-  - 从上面不等式可以看到，vc和N(数据集合大小)之间存在trade-off. vc越大H选择越多，但是需要更多的数据才能找到更好的假设。
-- L8 噪音和误差
-  - 引入噪音并不会改变H的vc-dimension. 因此即使训练数据里面包含噪音，我们依然能够进行训练和学习。
-  - 衡量误差的时候，我们可能会针对false-positive/false-negative给出不同的penalty或者是weight. 这种效果等价于我们对dataset这些错误输入进行virtual-copy.
-- L9-11 线性回归，逻辑回归，线性模型
-  - 线性回归中，使用最小二乘法作为代价函数的话，那么可以使用分析方法计算出w = ((x' * x) ^ -1 * x') * y. 前半部分我们可以称之为pseudo-inverse, 记为x*.
-  - 线性回归中，如果将w作用在x上的话就可以求解出预测向量y' = x * x* * y = (x * x*) * y. 我们将(x * x*)称为hat-matrix/H.
-  - OVA(one-versus-all)来求解K多分类问题：1. 需要跑K个二分类问题，每个二分类问题处理N条记录 2. 如果K太大容易造成数据倾斜.
-  - OVO(one-versus-one)来求解K多分类问题：1. 可以避免OVA出现的数据倾斜问题 2. 需要跑K*(K-1)*0.5个二分类问题，每个二分类问题只处理2*N/K个记录.
-- L12 非线性变换
-- L13-15 过拟合，正则化，验证
-  - 泛化能力不好表现loww Ein, high Eout. 过拟合表现是lower Ein, higher Eout.
-  - 出现过拟合的原因有这些： 1. vc过大 2. 夹杂噪音 3. 数据量不够
-  - 即使target-function是10th多项式，那么2th多项式H2给出的结果不一定会比10th多项式H10差。虽然可能Ein(H2) > Ein(H2), 但是更有可能是Eout(H2) < Eout(H10). # 可以看出部分原因我们还没有学习足够多的数据集合，而且对于vc越大的H需要学习数据量越大才能获得较好效果。
-  - file:./images/ntuml-overfitting-learning-curve.png
-  - 噪音可以分为两类：stochastic noise(随机噪音)表示数据集合本身偏差引入的，deterministic noise(确定噪音)表示target-function自身复杂性引入的。# 比如伪随机数(噪音多)就是使用复杂的(高阶)函数来模拟产生的.
-  - file:./images/ntuml-overfitting-noise-and-data-size.png
-  - 解决过拟合问题有下面几个手段 1. 先从简单模型入手 2. data cleaning/pruning 3. data hinting 4.regularization 5. validation
-  - note(dirlt): 视频中引入regularization非常有启发性：通过限制w'w <= C推导出weight-decay regularization(这个限制对应的是ridge regression).
-  - 如果需要使用多项式变换的话，应该选用Legendre多项式，可以认为这些多项式之间是相互"正交"的。因为如果我们只是用x^n来做多项式的话，那么高次方的x^n值通常很小，因此要求对应项的w很大。而这与regularization相悖，因为正规化项要求w应该尽可能小。
-- L16 学习三原则
-
------
-机器学习和各个学科之间的差别和关系
-
+** 机器学习和其他领域
 机器学习和数据挖掘
 
-file:./images/ntuml-ml-vs-dm.png 
+file:./images/ntuml-ml-vs-dm.png
 
 机器学习和人工智能
 
-file:./images/ntuml-ml-vs-ai.png 
+file:./images/ntuml-ml-vs-ai.png
 
 机器学习和统计学
 
