@@ -1,0 +1,49 @@
+* ml-techniques
+#+TITLE: 机器学习技法 on Coursera
+https://class.coursera.org/ntumltwo-001
+
+** 线性SVM（Linear Support Vector Machine）
+  - 将w0单独剥离出来，wx + w0. 那么w称为coefficient（系数），w0称为bias/intercept（截距)
+  - svm: learn fattest hyperplanes with help of support vectors. 利用支持向量来找到最胖的超平面
+  - margin: distance from support vectors to fattest hyperplanes. 间隔就是这些支持向量到超平面的距离
+  - svm策略函数 min(0.5 * w' * w), st. y(wx + b) >= 1. 二次规划(QP, Quadratic Programming)问题
+  - svm能够做到比较好的效果，直接上分析有几个：
+    - 和regularization公式非常类似
+    - 因为hypothesis的分类(dichotomies)更少，所以算法的"vc-dimension"也就越低，也就有更好的泛化能力。
+    - 结合non-linear transform, 既能选择出比较好的边界，又能保证复杂度比较低。
+
+** 对偶SVM（Dual Support Vector Machine）
+  - 使用在正则化中使用的Lagrange Multiplier技术，引入L(b,w,a) = 0.5 * w' * w + a * (1 - y(wz + b))，svm策略函数变为min{b,w} (max{a>=0} L(b, w, a)).
+  - 上面那个策略函数的Lagrange对偶问题（广义拉格朗日函数的极大极小问题）是将min和max调换位置：min{b,w}(max{a>=0} L(b,w,a)) >= max{a>=0}(min{b,w} L(b,w,a)).
+  - 上面不等式中的=如果满足的话（限制条件），那么称两个问题之间有强对偶关系。如果上面两个函数有强对偶关系的话，那么我们只需要求解后面一个函数即可。
+  - 将max{a>=0}(min{b,w} L(b,w,a))做推导简化就可以得到a的最优解，这个最优解a和b,w之间的关系称为KKT最优化条件。
+  - file:./images/ntuml-svm-kkt.png
+  - 如果将上面的式子展开并且将max转换称为min的话，就可以看到我们实际上得到了一个N个变量，N+1个约束条件的二次规划问题。
+  - file:./images/ntuml-svm-dual-form.png
+  - 下面是SVM的原始形式(Primal)和对偶形式(Dual)的比较。可以看到两个形式在意义和实现上都存在差别。
+  - file:./images/ntuml-svm-primal-dual.png
+  - 注意Dual形式里面并没有避开高维特征的计算，只不过将高维特征计算隐藏到了高维向量内积计算中。我们可以通过核方法来加速这个部分的计算。
+
+** 核SVM（Kernel Support Vector Machine）
+  - 高维向量内积部分是zn .* zm = p(xn) .*  p(xm). 引入核函数K(xn, xm) = p(xn) .* p(xm). 并且K的计算代价相对更小。
+  - file:./images/ntuml-kernel-svm-with-qp.png
+  - Polynomial Kernel. 多项式核函数
+    - Poly-2. p(x) = scale(sqrt(2*r)在1次多项式，r在2次多项式), 那么K(x,y) = (1 + rxy)^2. 称为K2.
+    - Poly-n. Kn = K(x,y) = (b + rxy) ^ n. 其中b控制常数项，n控制多项式项。
+    - Poly-1. K1 = K(x,y) = (b + rxy). b和r都不是特别有帮助，所以可以直接设置为0和1. 这也是Linear Kernel.（不过如果是LK的话，那么其实使用Primal形式也可以有效求解）
+    - 高维度对于数值计算稳定性是个挑战，另外考虑到过拟合问题，所以维度通常不会选择太高。如果是低维度的话，可能直接映射然后使用linear方式求解可能会更快。
+  - Gaussian Kernel. 高斯核函数
+    - 我们对高斯核函数进行分解，看到高斯核函数其实是无限多维度多项式映射函数。不过这样一来我们也比较难解释w的意义。
+    - file:./images/ntuml-gaussian-kernel-intuition0.png
+    - 但是如果我们判定函数来看这个高斯核函数的话，则是以# of SV个以xn为中心的高斯函数的线性组合。也叫做RBF(Radial Basis Function).
+    - file:./images/ntuml-gaussian-kernel-intuition1.png
+    - 如果r越大的话，说明方差越小。如果r很大的话：从RBF角度考虑的话，边界就是只是围绕那些SV的高维曲面；从多项式考虑的话，就是用了非常高维的多项式来做你和。最终结果就是泛化能力非常差。
+
+** 软间隔SVM(Soft-Margin Support Vector Machine)
+  - 因为硬间隔(Hard-Margin)必须要完美地分类数据，所以容易学习到复杂判定函数出现overfitting. 软间隔则放开这个条件允许部分数据错误分类。
+  - 引入e来放宽限制，但是同时将e加入到极小值部分，我们就得到下面的公式。其中C代表对错误的惩罚：C越大表示我们越不能容忍错误，C越小则表示我们希望容忍错误来达到margin更大。因为我们只是引入了e一次式，所以我们依然可以通过QP来求解。
+  - file:./images/ntuml-svm-soft-margin.png
+  - 参考Hard-Margin SVM中的推导方法，我们同样可以对上面不等式求解对偶形式，引入核函数。
+  - 下图是对a物理意义的解释，并且将点进行分类：对于violated的点还可以分为两类，一类是归类正确但是在margin里面，另外一类则是归类错误。
+  - file:./images/ntuml-svm-soft-points.png
+  - E{loocv} <= nSV / N. 所以利用nSV可以来估计错误上限。如果做CV比较花时间的话，那么可以参考nSV来做安全检查。如果nSV比较大的话那么就需要小心过拟合。

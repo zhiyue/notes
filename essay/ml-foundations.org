@@ -35,7 +35,7 @@ https://class.coursera.org/ntumlone-002
   - 噪音可以分为两类：stochastic noise(随机噪音)表示数据集合本身偏差引入的，deterministic noise(确定噪音)表示target-function自身复杂性引入的。# 比如伪随机数(噪音多)就是使用复杂的(高阶)函数来模拟产生的.
   - file:./images/ntuml-overfitting-noise-and-data-size.png
   - 解决过拟合问题有下面几个手段 1. 先从简单模型入手 2. data cleaning/pruning 3. data hinting 4.regularization 5. validation
-  - note(dirlt): 视频中引入regularization非常有启发性：通过限制w'w <= C推导出weight-decay regularization(这个限制对应的是ridge regression).
+  - 引入regularization非常有启发性：通过限制w'w <= C，使用Lagrange Multiplier(拉格朗日乘子法), 推导出weight-decay regularization也就是ridge regression
   - 如果需要使用多项式变换的话，应该选用Legendre多项式，可以认为这些多项式之间是相互"正交"的。因为如果我们只是用x^n来做多项式的话，那么高次方的x^n值通常很小，因此要求对应项的w很大。而这与regularization相悖，因为正规化项要求w应该尽可能小。
   - 通常使用5~10-Fold来做CV. 训练像是初赛，CV则像是复赛，只有最终测试才是决赛。所以我们要关注应该是测试效果，而不是验证效果。
 - L16 学习三原则
