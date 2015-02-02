@@ -53,5 +53,61 @@ https://class.coursera.org/ntumltwo-001
   - file:./images/ntuml-svm-as-reg.png
   - SVM的损失函数也是err0/1损失函数的上限，但是效果比逻辑回归损失函数要稍微好些。我们可以近似地认为，求解了一个正规化的逻辑回归，相当于求解了一个SVM.
   - 概率SVM(Probabilistic SVM): 先求解出w,b 然后将计算出z = w * p(x) + b（可以修改为使用核函数），之后将(z,y)作为逻辑回归训练数据给出概率。但是使用这个办法，我们需要费劲力气求解SVM，然后带入逻辑回归。我们观察，如果w可以表示称为p(x)的线性组合的话，那么在w * p(x)的时候就可以使用核技巧了。
-  - 有个数学特性是：对于任何L2正规化线性模型，w都可以表示称为b * z线性组合。我们利用这个特性将w带入的话，就可以引入核函数然后使用优化办法如梯度下降来求解。如果带入函数是逻辑回归的话，那么我们就可以得到KLR(Kernel Logistic Regression).
+  - 有个数学特性是：对于任何L2正规化线性模型，w都可以表示称为b * z线性组合。我们利用这个特性将w带入的话，就可以引入核函数然后使用优化办法如梯度下降来求解。如果带入函数是逻辑回归的话，那么我们就可以得到KLR(Kernel Logistic Regression). 也就是说任何L2正规化线性模型都可以使用核技巧（核函数）。但是相对KLR, 现实中我们使用Probabilistic SVM更多一些。
+  - 注意上面的b是非常稠密(dense)的，并且在预测时候需要计算b * K(x, x')，时间复杂度是O(N).
+
+** [[file:./images/206_handout.pdf][支持向量回归(Support Vector Regression)]]
+  - 使用上一节最后说的：“任何L2正规化线性模型都可以使用核技巧”，我们可以同样为ridge regression引入核技巧，叫做Kernel Ridge Regression(LSSVM, Least-Squares SVM)。不过引入核技巧之后在计算效率和灵活性上和原有的线性模型有点差别。
+  - file:./images/ntuml-linear-kernel-ridge-reg.png
+  - LSSVM和KLR一样，b也非常稠密，预测时复杂度也是O(N). 并且SVs数量也更多。那么我们是否有办法得到稀疏的b来加快回归预测。
+  - file:./images/ntuml-svm-and-lssvm.png
+  - 上面的问题可以通过引入Tube Regression来解决，这个模型糅合了Ridge Regression和Soft-Margin的特性，来得到最终的SVR. SVR的b相对更加稀疏，SVs数量也更少。
+
+** 线性模型和核模型总结(Map of Linear/Kernel Models)
+下图是线性模型的总结，包括使用的误差函数以及常用算法。其中linear-SVM(soft-margin), linear-ridge-regression(LRR), regularized LR算法实现在LIBLINEAR里面可以找到。通常来说我们不太可能使用PLA或者是linear-SVR，因为linear-SVM和LRR相对于它们性能更好。
+
+file:./images/ntuml-linear-models.png
+
+下图是线性模型和核模型的对比总结。其中SVM，SVR，Probabilistic SVM(P-SVM)是算法实现LIBSVM里面可以找到。通常来说我们不太可能使用KRR和KLR，因为SVR和P-SVM相对于它们可以得到更稀疏的空间系数（稳定性，效率以及泛化能力可能都会更好）。
+
+file:./images/ntuml-linear-kernel-models.png
+
+** [[file:./images/207_handout.pdf][混合和装袋(Blending and Bagging)]]
+   - 我们可以通过聚合(aggregation)方式，也就是混合(blending)各种假设来提高假设准确性。这个和selection有点不太一样：selection是从各种假设中挑选一个假设出来，而aggregation则是将各种假设做组合。
+   - 可以认为selection是aggregation一种具体方式，除此之外还包括：uniformaly mix(相同的常数权重), non-uniformaly mix(不同的常数权重), conditionally mix(权重是函数)
+   - 我们可以先从训练数据得到各种hypothesis, blending则可以在CV数据上完成：现将这些h作用在x上得到各种z, 然后利用(z, y)作为输入数据，求解出一个线性(linear-blending)/非线性(any-blending, 也称为stacking)系数。这个线性/非线性稀疏就是各个h的组合系数。注意any-blending方式容易过拟合。
+   - file:./images/ntuml-any-blending.png
+   - 为了设计出不同的h, 我们通常会使用下面这几种方法
+     - diversity by different models # 不同模型
+     - diversity by different parameters # 不同参数
+     - diversity by algorithmic randomness # 算法随机性
+     - diversity by data randomness # 数据随机性，这个分为两种：一种是随机进行划分训练和CV，另外一种则是从已有数据利用重新抽样的方式生成新的数据集合(bootstrapping).
+
+关于Bagging概念有点模糊，正好后面有一个分类图片，所以就把它贴过来。Bagging是利用bootstrapping重新生成一些新的数据集合，然后在这些新的数据集合上训练出H，然后使用这些h平均组合起来。
+
+file:./images/ntuml-blending-and-bagging.png
+
+** [[file:./images/208_handout.pdf][自适应提升(Adaptive Boosting)]]
+  - 为每个实例分配权值w进行训练得到假设h0（使用一个相对比较弱的学习算法）。对于错误的点我们加重权值，对于正确的点我们降低权值。然后如果往复得到h1, h2, h3...
+  - 错误点增加权重，正确点减少权重，这样我们的h0, h1, ...才能更加多样，这样组合起来才能够更有优势。这个过程称为re-weighting.
+  - 假设h的错误率是e, k = sqrt(e/(1-e)), 那么错误点权重w *= k, 正确点权重w /= k. 如果e<=0.5, k>=1，说明假设是有效的所以增加错误点权重。如果e>0.5, k<1, 那么说明这个假设实际上很烂所以需要多学习正确的内容。数学上可以证明这样的re-weighting是optimal的。
+  - 我们可以使用线性blending方式来组合所有的假设，线性系数a=ln(k).
+
+** [[file:./images/209_handout.pdf][决策树(Decision Tree)]]
+  - Disclaimers about Decision Tree # 决策树的优缺点
+    - Usefulness
+      - human-explainable: widely used in business/medical data analysis
+      - simple: even freshmen can implement one :-)
+      - efficient in prediction and training
+    - However......
+      - heuristic: mostly little theoretical explanations
+      - heuristics: ‘heuristics selection’ confusing to beginners
+      - arguably no single representative algorithm
+    - decision tree: mostly heuristic but useful on its own # 理论上比较难以解释但是却非常实用
+
+** [[file:./images/210_handout.pdf][随机森林(Random Forest)]]
+  - RF通过Bagging方式将多个DT组合在一起。这些DT都是没有经过剪枝，所以有比较大的偏差(variance). 但是这个问题可以通过Bagging来缓解，因为Bagging通过平均可以降低偏差。在学习DT的时候，可以随机选择部分features做decision. 更有甚者可以引入随机矩阵P：这个随机矩阵通过将features空间映射到新的空间，而这个新空间不仅仅是垂直的投影，可以是几个features的线性组合。
+  - RF在使用Bagging的时候有个附加的好处：就是在生成RF的时候可以同时做validation. 我们分析Out-Of-Bag的几率(经过bootstrapping重新生成数据集合没有取到的记录) = (1-1/N) ^ N ~= 1/e. 可以看到接近1/3的数据记录没有取出，而这个部分的数据我们正好做validation = Eoob. 这里做验证类似于leave-one-out验证：对于每个记录，看有哪些DT没有训练它，然后将这些DT组成RF验证这个记录。最后将所有的记录验证结果取平均。
+  - RF在做特征选择(feature selection)上也非常有效率。在进行特征选择上一种方法是为某个特征分配随机值，然后观察这个特征随机变化影响性能的程度：如果对性能影响比较小的话，那么就可以剔除这个特征。这种办法称为permutation-test. 因为RF可以在训练时候就完成OOB的验证，而我们可以在验证阶段用DT做预测的时候，从OOB数据集合中选择某个其他记录的feature。
+  - RF可以给出一个近似平滑的non-linear model，并且如果使用相对多一些树的时候具有比较好的抗噪声的特性。不过RF对于随机性非常敏感，所以在选择树的数目时候，需要确保树的数目能够得到比较稳定的性能。
 
