@@ -117,3 +117,26 @@ file:./images/ntuml-linear-kernel-models.png
   - 如果我们修改AdaBoost损失函数为最小二乘(for regression)的话，我们就可以得到GradientBoost方法。和AdaBoost方法类似，本质上我们都会通过梯度下降学习到h, 然后将这些h线性组合起来作为最终假设，而这个假设数学上可以证明损失函数(近似)最小。GB每次迭代实际上是在拟合残差。
 
 ** [[file:./images/212_handout.pdf][神经网络(Neural Network)]]
+  - 激活函数除了sigmoid之外，还可以是tanh(Hyperbolic Tangent, 双曲正切). tanh(x)=e^x-e^-x / e^x+e^-x. 两者之间还有一些联系tanh(x)=2*sigmoid(2x)-1.
+  - NN做梯度下降使用backprop算法，总体可以是GD, SGD, 或者是min-batch GD. 在选择初始权重时，应该多选择几组随机值，并且尽可能地小。如果w非常大的话，tanh/sigmoid变化会非常小，容易陷入局部最优。
+  - NN的dvc = O(VD). 其中V=# of neurons, D=# of weights. 降低dvc有几个办法：1. 使用scaled-L2(weight-elimination) = \sum(w^2/(1+w^2)). 2. Early Stopping.
+
+** [[file:./images/213_handout.pdf][深度学习(Deep Learning)]]
+  - Challenges and Key Techniques for Deep Learning
+    - difficult structural decisions: # 引入领域知识解决结构问题
+      - subjective with domain knowledge: like convolutional NNet for images
+    - high model complexity: # 大量数据以及正则化解决复杂模型
+      - no big worries if big enough data
+      - regularization towards noise-tolerant:
+        - dropout (tolerant when network corrupted)
+        - denoising (tolerant when input corrupted)
+    - hard optimization problem:
+      - careful initialization to avoid bad local minimum: called pre-training # 通过预训练选择初始化参数避免局部最优
+    - huge computational complexity (worsen with big data): # 计算复杂性通过硬件和分布式解决
+      - novel hardware/architecture: like mini-batch with GPU
+    - IMHO, careful regularization and initialization are key techniques
+  - Information-Preserving Encoding/Autoencoder 是三层网络，希望训练出一个identity-function. 因为中间隐藏层将原始信息全部保留，所以也叫做IP-Encoding. 增加正规化项wij(1) = wji(2) = wij.
+  - Autoencoder对于监督学习可以用来找到信息表示（实际上可以认为是特征选择），也可以做无监督学习(因为y=x)。无监督学习最终可以区分：一种是做identity比较好的数据，另外一种做得不太好。
+  - 我们可以用Autoencoder来做pre-training, 也就是训练出初始化参数。比如NN是d1-d2-d3-1, 那么d1-d2参数我们可以通过Autoencoder(d1,d2,d1)来求解。
+  - 前面的Autoencoder是三层网络，隐藏层有非线性变换。如果我们只做线性变换会怎么样呢？这就是linear autoencoder，也可以认为就是PCA. 如果是linear autoencoder的话，其实我们可以通过分析方法来求解这个最优化问题。PCA可以用来做特征选择，这点非常好理解：因为autoencoder在监督学习中就可以找到有效的信息表示。
+

@@ -453,6 +453,7 @@ grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 end
 #+END_SRC
+
 *** pca(principal compoenent analysis)
 #+BEGIN_SRC Octave
 function [U, S] = pca(X)
