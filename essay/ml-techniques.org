@@ -111,3 +111,4 @@ file:./images/ntuml-blending-and-bagging.png
   - RF在做特征选择(feature selection)上也非常有效率。在进行特征选择上一种方法是为某个特征分配随机值，然后观察这个特征随机变化影响性能的程度：如果对性能影响比较小的话，那么就可以剔除这个特征。这种办法称为permutation-test. 因为RF可以在训练时候就完成OOB的验证，而我们可以在验证阶段用DT做预测的时候，从OOB数据集合中选择某个其他记录的feature。
   - RF可以给出一个近似平滑的non-linear model，并且如果使用相对多一些树的时候具有比较好的抗噪声的特性。不过RF对于随机性非常敏感，所以在选择树的数目时候，需要确保树的数目能够得到比较稳定的性能。
 
+** [[file:images/201_handout.pdf][梯度增强决策树(Gradient Boosted Decision Tree)]]
