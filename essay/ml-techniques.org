@@ -139,4 +139,3 @@ file:./images/ntuml-linear-kernel-models.png
   - Autoencoder对于监督学习可以用来找到信息表示（实际上可以认为是特征选择），也可以做无监督学习(因为y=x)。无监督学习最终可以区分：一种是做identity比较好的数据，另外一种做得不太好。
   - 我们可以用Autoencoder来做pre-training, 也就是训练出初始化参数。比如NN是d1-d2-d3-1, 那么d1-d2参数我们可以通过Autoencoder(d1,d2,d1)来求解。
   - 前面的Autoencoder是三层网络，隐藏层有非线性变换。如果我们只做线性变换会怎么样呢？这就是linear autoencoder，也可以认为就是PCA. 如果是linear autoencoder的话，其实我们可以通过分析方法来求解这个最优化问题。PCA可以用来做特征选择，这点非常好理解：因为autoencoder在监督学习中就可以找到有效的信息表示。
-

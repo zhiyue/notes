@@ -493,11 +493,6 @@ file:../images/fuck-papa-where-are-we-going.jpg
 亲自买包子，亲自品尝…然后亲自上的厕所… （记习大大吃包子）
 
 -----
-菜鸟ops和资深ops在发生运营故障时的差异。
-
-file:../images/veteran-and-newbie-ops.gif
-
------
 哪里不会点哪里，so easy！ 妈妈再也不用担心我的学习~
 
 file:../images/diff-point-and-fire.jpg
@@ -1769,7 +1764,7 @@ file:../images/stone-lion.jpg
 -----
 祝贺张学友郭富城获得奥运会羽毛球男双金牌(蔡赟/傅海峰)
 
-file:../images/zhangxueyou-guofucheng-olympic-champion.jpg
+file:../images/badminton-olympic-champion.jpg
 
 -----
 有人喜欢牌子，所以选择了苹果，有人喜欢外观，所以选择了索爱，有人喜欢比硬件，所以选择了三星，有人喜欢性价比，所以选择了小米，有人喜欢从众，所以选择了htc，但有些人还是执迷不悟，所以选择了诺基亚。有人喜欢最炫民族风，所以选择了山寨机。。。

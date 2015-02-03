@@ -262,7 +262,7 @@ Here is my contact info. I think email is the easiest way to get me.
    - github https://github.com/dirtysalt
    - talks
      - [[file:./images/um-arch.pdf][Umeng Analytical Architecture]] 2014.2
-     - [[file:./images/SACC2014.pdf][如何在一天之内收集3.6亿移动设备的数据]] 2014.9 SACC2014
+     - [[file:images/sacc2014.pdf][如何在一天之内收集3.6亿移动设备的数据]] 2014.9 SACC2014
      - [[file:images/um-arch2.pdf][Umeng Architecture Architecture(2)]] 2014.10
      - [[file:images/um-talk.pdf][如何在一天之内收集3.6亿移动设备的数据(2)]] 2015.1 优才日分享
    - [[file:jobs.org][jobs]] at [[http://www.umeng.com/][友盟(Umeng)]] 可以找我推荐
