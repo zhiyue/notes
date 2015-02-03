@@ -410,6 +410,15 @@ install_files() {
     ln -s $HOME/.private/files/github $HOME/.ssh/github
     test -f $HOME/.ssh/github && chmod 0600 $HOME/.ssh/github
 
+    echo "installing sumcreate.pub..."
+    rm -rf $HOME/.ssh/sumcreate.pub
+    ln -s $HOME/.private/files/sumcreate.pub $HOME/.ssh/sumcreate.pub
+    test -f $HOME/.ssh/sumcreate.pub && chmod 0600 $HOME/.ssh/sumcreate.pub
+
+    rm -rf $HOME/.ssh/sumcreate
+    ln -s $HOME/.private/files/sumcreate $HOME/.ssh/sumcreate
+    test -f $HOME/.ssh/sumcreate && chmod 0600 $HOME/.ssh/sumcreate
+
     echo "installing ssh.config..."
     rm -rf $HOME/.ssh/config
     ln -s $HOME/.private/files/ssh.config $HOME/.ssh/config
