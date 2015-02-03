@@ -582,7 +582,6 @@ __time_machine_sync() {
     local UTILS="no"
     local M2="no"
     local KP="no"
-    local VM="no"
     local REPO="no"
     while test $# -gt 0
     do
@@ -596,9 +595,6 @@ __time_machine_sync() {
             --kp)
                 KP="yes"
                 ;;
-            --vm)
-                VM="yes"
-                ;;
             --repo)
                 REPO="yes"
                 ;;
@@ -608,7 +604,6 @@ __time_machine_sync() {
     if [ $UTILS = "yes" ] ; then __tm_sync_utils $src $dst; fi
     if [ $M2 = "yes" ] ; then __tm_soft_sync_dir $src $dst ".m2" ; fi
     if [ $KP = "yes" ] ; then __tm_hard_sync_dir $src $dst "KuaiPan"; fi
-    if [ $VM = "yes" ]; then __tm_soft_sync_dir $src $dst "VirtualBox VMs"; fi
     if [ $REPO = "yes" ]; then
         __tm_hard_sync_dir $src $dst "repo/notes"
         __tm_hard_sync_dir $src $dst "repo/dirtysalt.github.io"
