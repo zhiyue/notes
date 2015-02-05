@@ -36,7 +36,6 @@
    - [[file:maven.org][maven]] 主要针对Java开发的基于工程对象模型(POM, Project Object Model)构建系统
    - [[file:vagrant.org][vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持相对比较好的是VirtualBox)
    - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
-   - [[file:octave.org][octave]] GNU 'Matlab' on Linux/Mac/Windows.
    - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
 
 ** Operating System

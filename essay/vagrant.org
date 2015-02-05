@@ -41,7 +41,7 @@ http://docs.vagrantup.com/v2/multi-machine/index.html
 
 操作这台机器的话只需要在命令之后指定机器名称即可，比如vagrant ssh centos
 
-** troubleshooting
+*** troubleshooting
 -----
 
 添加box时候出现如下错误

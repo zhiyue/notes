@@ -309,7 +309,7 @@ nexus有下面几种repo：
    - Virtual Repo(???)
 另外如果自己将一些pom直接copy到某个repo下面的话，nexus不能够索引到，这个时候需要右击这个repo选择Update Index.(nexus依赖索引知道文件分布)
 
-** notes
+** some notes
 *** 安装maven
 如果使用的是ubuntu/debian的话，可以直接使用apt-get install maven来完成。
 

@@ -734,3 +734,54 @@ grad = [X_grad(:); Theta_grad(:)];
 
 end
 #+END_SRC
+** octave notes
+- basic syntax
+  - ==(equal), ~=(not equal), xor(a,b), PS1('new promot: ')
+   starts comment with %
+  - ; to supersede output
+  - m(:) expand m to a single column vector.
+  - m(i,j) could be used as left operand. And for i,j could be
+   - [a b] which means ath and bth elements.
+   - or s:i:e/s:e which is shorthand of [a,b] # end as a keyword.
+   - or : which means every elements.
+- output control
+  - disp(value) to print value
+  - sprintf to format string in C syntax.
+  - format long/short # change output format of numerical values.
+  - hist(matrix, [bucket]) to plot histogram of matrix.
+- generate matrix
+  - [a b ; c d; e f ]. 3 * 2 matrix.
+  - [start : interval : end] / [ start : end ] as interval = 1.
+  - ones/zeros(m,n) m * n matrix with elements are all 0/1.
+  - rand(m,n) m * n matrix with uniform distributed random elements in range [0,1]
+  - randn Gaussian distribution with mean = 0 and standard deviation = 1
+  - eye(n) n * n identity matrix
+- import/export data
+  - size, who/whos, clear [<value>],
+  - load <file>, save <file> <value> [-ascii % readable form]
+- compute command
+  - . means elements wise operation.
+  - A .* B , A .^ 2 , 1 ./ A , A .+ 1 , A .- 1
+  - log, exp, abs, -(neg), <
+  - A * B
+  - A' # tranpose
+  - max/find/magic/sum/prod/floor/ceil/flipud/pivn
+- drawing command
+  - plot(x,y)
+  - hold on # plot new figure on old one.
+  - xlabel / ylabel / legend / title / print # output to file / close / axis
+  - figure # create figure / clf # clear figure
+  - subplot(m,n,ind) # divides plot a m*n grid, and access ind th
+  - "imagesc(<matrix>) , colorbar , colormap gray;"
+- flow control
+  - for i=<range>[1:10], <stmt> end;
+  - if <cond>, <stmt> end; / elseif / else
+  - while <cond>, <stmt> end;
+  - break/continue
+  - function definition resides in function_name.m
+    - function y = <name>(x)
+    - function [y1,y2] = <name>(x)
+    - y = x * 2
+    - name(x) to call function.
+  - addpath to add path in order to find function file.
+
