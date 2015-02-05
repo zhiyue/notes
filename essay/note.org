@@ -109,6 +109,7 @@
      - [[file:note/civilizations-and-enlightenments.org][文明之光]] by wujun
      - [[file:./note/why-cn-people-anxious.org][中国人的焦虑从哪里来]] by 茅于轼
      - [[file:./note/wu-qing-yuan-bio.org][中的精神（吴清源自传）]]
+     - [[file:note/star-wars.org][星球大战(Star Wars)]]
    - [[file:note/to-death.org][给离去的亲人们]]
    - [[file:note/pregnancy.org][怀孕]] | [[file:note/house.org][住房]]
    - [[file:note/cross-ocean.org][Cross Ocean]] 远渡重洋
