@@ -3,7 +3,7 @@
 - docs http://scikit-learn.org/stable/documentation.html
 - [[file:images/scikit-learn-ml-map.png][一张图说明如何选择正确算法]]
 
-** overview
+** Overview
 - supervised learning
   - classification # Identifying to which set of categories a new observation belong to.
   - regression # Predicting a continuous value for a new example.
@@ -14,7 +14,7 @@
 - dataset transformations # Feature extraction and normalization.
 - dataset loading utilities
 
-** building blocks
+** Building Blocks
 http://scipy-lectures.github.io/ sklearn底层使用的三驾马车numpy, scipy, matplotlib.
 
 -----
@@ -49,9 +49,7 @@ scipy. 复杂数值处理运算能力.
 
 The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc. scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
 
-** supervised learning
-** unsupervised learning
-** model selection and evaluation
+** Model selection and evaluation
 *** Cross-validation: evaluating estimator performance
 http://scikit-learn.org/stable/modules/cross_validation.html
 
