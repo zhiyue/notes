@@ -139,3 +139,12 @@ file:./images/ntuml-linear-kernel-models.png
   - Autoencoder对于监督学习可以用来找到信息表示（实际上可以认为是特征选择），也可以做无监督学习(因为y=x)。无监督学习最终可以区分：一种是做identity比较好的数据，另外一种做得不太好。
   - 我们可以用Autoencoder来做pre-training, 也就是训练出初始化参数。比如NN是d1-d2-d3-1, 那么d1-d2参数我们可以通过Autoencoder(d1,d2,d1)来求解。
   - 前面的Autoencoder是三层网络，隐藏层有非线性变换。如果我们只做线性变换会怎么样呢？这就是linear autoencoder，也可以认为就是PCA. 如果是linear autoencoder的话，其实我们可以通过分析方法来求解这个最优化问题。PCA可以用来做特征选择，这点非常好理解：因为autoencoder在监督学习中就可以找到有效的信息表示。
+
+** [[file:images/214_handout.pdf][径向基函数网络(Radial Basis Function Network)]]
+  - RBF Network就是将多个径向函数假设进行线性组合。径向函数(Radial Function)是一种只和中心点距离相关的函数, 所以Gaussian函数是径向函数的一种(Gaussian SVM也是RBF Network的一种).
+  - file:./images/ntuml-nn-and-rbfn.png 
+  - RBF和Kernel Function都是衡量相似性的函数：RBF是在原始特征空间上的衡量，KernelF则是在非线性变换之后空间上的相似性。
+  - 我们如何选择这些RBF的中心点呢？Full RBF Network就是以每个实例点作为中心的RBF Network. 
+  - RBF Network可以很容易演化得到kNN. kNN一种办法是使用平均加权，另外一种办法可以通过根据最小二乘来求解线性系数a=(Z'Z)^-1 * Z * y. 其中Z是映射之后的矩阵，并且是方形对称矩阵。
+  - 如果所有中心点不同的话那么Z还是可逆的，推导一下的话可以得到a=Z^-1 * y. 如果继续化简的话那么g(xi) = yi. Ein(g) = 0. 这种方式成为exact interpolation, 用来做函数逼近(function approximation)。当然这是因为没有增加regularization，如果增加正则化的话那么和ridge regression得到的结果相同。另外一个办法则是选择相对少一些的中心点(也称为prototypes).
+  - 如何找到这些prototypes? 我们可以把它当做一个clustering问题，K-means是解决这个问题一个非常好的办法。K-means算法是通过alternating minimization(不断交替最小化项)来完成的。
