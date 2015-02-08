@@ -1,12 +1,6 @@
 * machine-learning
-** 机器学习资源链接
-- http://guidetodatamining.com/ 偏向于实践的教程
-- Statistical Data Mining Tutorials http://www.autonlab.org/tutorials/index.html
-
 ** 常见算法分类汇总
 http://www.kuqin.com/shuoit/20140925/342326.html
-
------
 
 按照学习方式划分
 - 监督式学习：在监督式学习下，输入数据被称为“训练数据”，每组训练数据有一个明确的标识或结果。在建立预测模型的时候，监督式学习建立一个学习过程，将预测结果与“训练数据”的实际结果进行比较，不断的调整预测模型，直到模型的预测结果达到一个预期的准确率。监督式学习的常见应用场景如分类问题和回归问题。常见算法有逻辑回归（Logistic Regression）和反向传递神经网络（Back Propagation Neural Network）。
@@ -14,8 +8,6 @@ http://www.kuqin.com/shuoit/20140925/342326.html
 - 半监督式学习：在此学习方式下，输入数据部分被标识，部分没有被标识，这种学习模型可以用来进行预测，但是模型首先需要学习数据的内在结构以便合理的组织数据来进行预测。应用场景包括分类和回归，算法包括一些对常用监督式学习算法的延伸，这些算法首先试图对未标识数据进行建模，在此基础上再对标识的数据进行预测。如图论推理算法（Graph Inference）或者拉普拉斯支持向量机（Laplacian SVM.）等。
 - 强化学习：在这种学习模式下，输入数据作为对模型的反馈，不像监督模型那样，输入数据仅仅是作为一个检查模型对错的方式，在强化学习下，输入数据直接反馈到模型，模型必须对此立刻作出调整。常见的应用场景包括动态系统以及机器人控制等。常见算法包括Q-Learning以及时间差学习（Temporal difference learning）。
 在企业数据应用的场景下， 人们最常用的可能就是监督式学习和非监督式学习的模型。 在图像识别等领域，由于存在大量的非标识的数据和少量的可标识数据， 目前半监督式学习是一个很热的话题。 而强化学习更多的应用在机器人控制及其他需要进行系统控制的领域。
-
------
 
 按照算法类似性划分
 - 回归算法：回归算法是试图采用对误差的衡量来探索变量之间的关系的一类算法。回归算法是统计机器学习的利器。在机器学习领域，人们说起回归，有时候是指一类问题，有时候是指一类算法，这一点常常会使初学者有所困惑。常见的回归算法包括：最小二乘法（Ordinary Least Square），逻辑回归（Logistic Regression），逐步式回归（Stepwise Regression），多元自适应回归样条（Multivariate Adaptive Regression Splines）以及本地散点平滑估计（Locally Estimated Scatterplot Smoothing）。
@@ -155,3 +147,11 @@ Ensemble Methods. Ensemble methods are models composed of multiple weaker models
 - Stacked Generalization (blending)
 - Gradient Boosting Machines (GBM)
 - Random Forest
+
+** How to Improve Machine Learning Results
+http://machinelearningmastery.com/how-to-improve-machine-learning-results/
+
+- Algorithm Tuning # 算法调优。假设我们已经选择好了基本算法之后通过gridsearch配合CV来寻找最佳参数。这个过程最好做成自动化形式并且搜索参数不要太细粒度（I strongly advise that the process is automated and reasonably coarse grained as you can quickly reach points of diminishing returns (fractional percentage performance increases) that may not translate to the production system.）我理解是如果这个参数搜索空间过于细粒度的话，会耗费训练资源但是改进比例却非常小。
+- Ensembles # 增强方法。Bagging是使用一个算法在不同数据集合上训练然后平均组合；Boosting是使用一个算法在一个训练数据集合上不断改进得到不同假设进行线性组合；Blending则是使用将不同假设得到的结果组合起来得到系数然后使用这个系数来组合假设。
+- Extreme Feature Engineering # 特征工程。This strategy is about exposing more structure in the problem for the algorithms to learn. 主要目的就是为了将问题中更多的结构信息暴露给算法。
+
