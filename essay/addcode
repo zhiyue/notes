@@ -87,6 +87,10 @@ dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
 
 import glob
 import string
+import re
+r1 = re.compile(r'^<meta name="generated" content="')
+r2 = re.compile(r'^<p class="date">Date: ')
+
 for f in glob.glob('../www/*.html')+glob.glob('../www/note/*.html'):
     xs = open(f,'r').readlines()
     id = f[len('../www/'):]
@@ -101,6 +105,8 @@ for f in glob.glob('../www/*.html')+glob.glob('../www/note/*.html'):
             ds.append(HEAD_END + '</head>')
         elif x.find('</body>') != -1 and not x == BODY_END%(locals()) + '</body>' + '\n':
             ds.append(BODY_END%(locals()) + '</body>')            
+        elif r1.match(x) or r2.match(x): # delete timestamp information
+            pass
         else:
             ds.append(x)
     print 'add code to \'%s\''%(f)
