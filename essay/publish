@@ -17,8 +17,8 @@ then
     exit 1
 fi
 
-# add some custom code.
-./addcode
+# post processing html.
+./post-html
 
 # rsync images and css files.
 rsync -avrz images/ ../../dirtysalt.github.io/images/
