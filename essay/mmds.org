@@ -13,4 +13,4 @@ PR也可以看做是random walk(p(t+1) = M*p(t), 一阶马尔科夫), 求解出�
 更准确地说矩阵M应该是stochastic, irreducible, aperiodic
 - stochastic: every column sums to 1. 在dead ends问题中teleport就是添加一些随机跳转链接满足这个条件。
 - aperiodic: 某个状态x到状态s, 如果两次之间跳转次数之差，始终是某个k>1的倍数的话，那么就认为这个graph是periodic的。可以通过在自身状态上增加跳转链接来使得graph是aperiodic的。
-- irreducible: 不要stuck在某一个状态上。 这个就是spider traps问题。
+- irreducible: 不要stuck在某一个状态上。spider traps问题就是可以通过归约SCC(strongly connected component)使得random walker一直在某个状态上。
