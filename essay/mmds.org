@@ -1,0 +1,16 @@
+* mmds
+#+TITLE: Mining Massive Datasets on Coursera
+
+** Page Rank
+PR的数学(矩阵)形式是Mx = x. 其中M表示链接权值系数矩阵，x则是我们希望求解页面权重矩阵。如果Ax = kx. 那么称x为A的eigenvector(特征向量), 而k则为eigenvalue(特征值).  如果A比较小的话那么可以使用高斯消元法求解，如果比较大的话则比较适合使用迭代方式(Power Iteration)求解：首先分配每个页面相同权重，然后不断迭代直到页面权重改变非常小。
+
+PR也可以看做是random walk(p(t+1) = M*p(t), 一阶马尔科夫), 求解出的x就是stationary distribution. 可以证明，如果graph满足一定条件的话，那么stationary distribution是唯一的并且和t=0时候的分布无关。 
+
+那么graph需要满足什么条件呢？有两个问题会导致r不收敛：
+- [[http://en.wikipedia.org/wiki/Wikipedia:Dead-end_pages][dead end pages]]. (have no out-links). 最终这些页面的权重会"leak out". dead ends问题可以通过teleport方式解决：我们认为这个页面有可能会跳转到所有可能页面。
+- [[http://en.wikipedia.org/wiki/Spider_trap][spider traps]]. (all out-links are within the group). 最终这个群组会吸收所有的权重。spier traps问题也可以通过teleport方式解决：我们分配概率p(0.8~0.9)会跳转到out-links，同时分配1-p会跳转到non-out-links.
+
+更准确地说矩阵M应该是stochastic, irreducible, aperiodic
+- stochastic: every column sums to 1. 在dead ends问题中teleport就是添加一些随机跳转链接满足这个条件。
+- aperiodic: 某个状态x到状态s, 如果两次之间跳转次数之差，始终是某个k>1的倍数的话，那么就认为这个graph是periodic的。可以通过在自身状态上增加跳转链接来使得graph是aperiodic的。
+- irreducible: 不要stuck在某一个状态上。 这个就是spider traps问题。
