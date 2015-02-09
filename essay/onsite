@@ -1,5 +1,6 @@
 #!/bin/bash
 # to github pages.
+
 cd ../../dirtysalt.github.io/
 git pull
 git add * 
