@@ -49,7 +49,8 @@ scipy. 复杂数值处理运算能力.
 
 The scipy package contains various toolboxes dedicated to common issues in scientific computing. Its different submodules correspond to different applications, such as interpolation, integration, optimization, image processing, statistics, special functions, etc. scipy can be compared to other standard scientific-computing libraries, such as the GSL (GNU Scientific Library for C and C++), or Matlab’s toolboxes. scipy is the core package for scientific routines in Python; it is meant to operate efficiently on numpy arrays, so that numpy and scipy work hand in hand.
 
-** Support Vector Machines
+** Supervised Learning
+*** Support Vector Machines
 http://scikit-learn.org/stable/modules/svm.html
 
 svm可以用来做classification, regression以及outliers detection(异常检测). 
@@ -84,7 +85,7 @@ y_true, y_pred = y_tt, clf.predict(X_tt)
 print(classification_report(y_true, y_pred))
 #+END_SRC
 
-** Ensemble methods
+*** Ensemble methods
 http://scikit-learn.org/stable/modules/ensemble.html
 
 emsemble方法通常分为两类：
