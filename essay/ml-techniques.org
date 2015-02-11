@@ -148,3 +148,12 @@ file:./images/ntuml-linear-kernel-models.png
   - RBF Network可以很容易演化得到kNN. kNN一种办法是使用平均加权，另外一种办法可以通过根据最小二乘来求解线性系数a=(Z'Z)^-1 * Z * y. 其中Z是映射之后的矩阵，并且是方形对称矩阵。
   - 如果所有中心点不同的话那么Z还是可逆的，推导一下的话可以得到a=Z^-1 * y. 如果继续化简的话那么g(xi) = yi. Ein(g) = 0. 这种方式成为exact interpolation, 用来做函数逼近(function approximation)。当然这是因为没有增加regularization，如果增加正则化的话那么和ridge regression得到的结果相同。另外一个办法则是选择相对少一些的中心点(也称为prototypes).
   - 如何找到这些prototypes? 我们可以把它当做一个clustering问题，K-means是解决这个问题一个非常好的办法。K-means算法是通过alternating minimization(不断交替最小化项)来完成的。
+
+** [[file:./images/215_handout.pdf][矩阵分解(Matrix Factorization)]]
+  - 回到推荐问题。其实推荐问题也可以表示成为类似AutoEncoder神经网络。因为输入相对比较稀疏，所以(todo: ???)我们可以考虑在隐藏层不使用非线性变换，类似使用linear-autoencoder. 说明一下X实际上是n*n的单位矩阵，y就是users-items矩阵。
+  - 这样最终我们将问题化简成为y = W * V' * X. 其中V是第一层系数矩阵，W是第二层系数矩阵。如果用户数量是n, 推荐物品数量是m, 我们使用隐藏特征数量为d, 那么矩阵大小是V={n*d}, W={m*d}. 因为X是I, 所以y = W * V'. 所以可以看到我们要做的问题其实就变成了矩阵分解。矩阵分解常用于抽取抽象特征。
+  - 这里的矩阵分解和linear autoencoder给出的矩阵分解不同，下图是两者之间的差别。这里矩阵分解我们只能用交替梯度下降方法来求解V和W。
+  - file:./images/ntuml-linear-autoencoder-and-matrix-factorization.png
+  - 矩阵分解可以使用SGD来做求解，并且SGD似乎是来做大规模矩阵分解最有效的方式。另外作者提到NTU在KDDCup上关于SGD的一个改进：在那次比赛的应用中，越接近现在的实例权重越大。因此他们修改矩阵分解算法，只是使用离现在最近的部分实例来做梯度下降。
+  - file:./images/ntuml-sgd-for-matrix-factorization.png
+
