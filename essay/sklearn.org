@@ -163,6 +163,38 @@ y_true, y_pred = y_tt, clf.predict(X_tt)
 print(classification_report(y_true, y_pred))
 #+END_SRC
 
+*** Naive Bayes
+http://scikit-learn.org/stable/modules/naive_bayes.html
+
+朴素贝叶斯用于分类问题，其中两项主要工作就是计算 1.P(X|y) 2.P(y). 两者都是通过MLE(maximum likehood estimation)来完成的。P(y)相对来说比较好计算，计算P(X|y)有下面三种办法：
+1. 如果Xi是连续量的话，Gaussian Naive Bayes. 取y=k的所有Xi数据点，假设这个分布服从高斯分布。计算出这个高斯分布的mean和std之后，就可以计算P(X|y=k)。这个模型系数有d * k个。
+2. 如果Xi是离散量的话，Multinomial Naive Bayes. 那么P(X=u|y=k) = P(X=u, y=k) / P(y=k). 这个模型系数有k * \sum {Xi}个。模型重还有一个平滑参数。
+3. 进一步如果Xi是(0,1)的话，Bernoulli Naive Bayes. 通常我们需要提供参数binarize，这个方法用来将X转换成为(0,1).
+
+#+BEGIN_SRC Python
+#!/usr/bin/env python
+#coding:utf-8
+#Copyright (C) dirlt
+
+from sklearn import datasets
+iris = datasets.load_iris()
+digits = datasets.load_digits()
+
+from sklearn.naive_bayes import MultinomialNB, GaussianNB
+from sklearn import cross_validation
+from sklearn.metrics import classification_report
+
+(data, target) = (iris.data, iris.target)
+clf = GaussianNB()
+# (data, target) = (digits.data, digits.target)
+# clf = MultinomialNB()
+X_tr, X_tt, y_tr, y_tt = cross_validation.train_test_split(data, target, test_size = 0.3, random_state = 0)
+
+clf.fit(X_tr, y_tr)
+y_true, y_pred = y_tt, clf.predict(X_tt)
+print(classification_report(y_true, y_pred))
+#+END_SRC
+
 ** Model selection and evaluation
 *** Cross-validation: evaluating estimator performance
 http://scikit-learn.org/stable/modules/cross_validation.html
