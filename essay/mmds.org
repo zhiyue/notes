@@ -43,3 +43,5 @@ file:./images/mmds-minhashing-impl.png
 这个问题的泛化问题，其实是finding associative rules(查找关联规则)：如果我们的购物篮里面包含了x1,x2..., 那么非常有可能包含y. 这个可能性是通过上面提到的support threshold来定义的。不过support threshold只是定义了包含数量而不是比例。所以跟更准确的说我们应该需要的是一个probability/confidence = support(itemset) / # of baskets.
 
 查找关联规则最常用的算法是A-Priori, 大致思想上是首先找到frequent 1-item set. 然后后在这个set上查找出frequent 2-item set(如果元素不在frequent 1-item set的话，那么肯定也不会出现在frequent 2-item set). 如果要查找到frequent k-item set的话那么需要经过k passes. 至于这个算法具体细节以及优化版本，从视频和ppt中我实在是没有看懂。不过这些算法以及优化途径，就是通过搭配使用hash和bitmap来减少memory footprint和减少下一轮所需要筛选元素个数。
+
+note(dirlt): 看了这门课程对应教材之后大致理解了。PCY算法是在第一轮的时候就对pair进行hash然后记录在hash-table中。第一遍完成之后将这个hash-table转换成为bitmap结构。然后在第二遍的时候统计pair之前，对pair进行hash查询bitmap判断是否为frequent, 这样又可以过滤一片。
