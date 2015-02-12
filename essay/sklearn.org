@@ -168,7 +168,7 @@ http://scikit-learn.org/stable/modules/naive_bayes.html
 
 朴素贝叶斯用于分类问题，其中两项主要工作就是计算 1.P(X|y) 2.P(y). 两者都是通过MLE(maximum likehood estimation)来完成的。P(y)相对来说比较好计算，计算P(X|y)有下面三种办法：
 1. 如果Xi是连续量的话，Gaussian Naive Bayes. 取y=k的所有Xi数据点，假设这个分布服从高斯分布。计算出这个高斯分布的mean和std之后，就可以计算P(X|y=k)。这个模型系数有d * k个。
-2. 如果Xi是离散量的话，Multinomial Naive Bayes. 那么P(X=u|y=k) = P(X=u, y=k) / P(y=k). 这个模型系数有k * \sum {Xi}个。模型重还有一个平滑参数。
+2. 如果Xi是离散量的话，Multinomial Naive Bayes. 那么P(X=u|y=k) = P(X=u, y=k) / P(y=k). 这个模型系数有k * \sum {Xi}个。模型里面还有一个平滑参数。
 3. 进一步如果Xi是(0,1)的话，Bernoulli Naive Bayes. 通常我们需要提供参数binarize，这个方法用来将X转换成为(0,1).
 
 #+BEGIN_SRC Python
