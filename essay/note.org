@@ -48,7 +48,8 @@
    - [[file:./note/guitar-class.org][吉他课程 on Coursera]] note(dirlt): 没有学完!
    - [[file:./note/photo-class.org][The Art of Photography]]
    - [[file:note/beginning-of-a-hard-journey.org][苦旅的起点]]
-   - [[file:note/about-dna-sequencing.org][关于DNA测序]] thank you, FZH!
+   - [[file:note/about-dna-sequencing.org][关于DNA测序]]
+   - [[file:./note/russian-underground.org][俄罗斯著名建筑下藏着什么]]
 
 ** 笔记
    - [[file:note/fun.org][挺搞笑的]]
