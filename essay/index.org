@@ -23,6 +23,7 @@
      - [[file:./ml-foundations.org][机器学习基石 on Coursera]]
      - [[file:./ml-techniques.org][机器学习技法 on Coursera]]
      - [[file:./mmds.org][Mining Massive Datasets on Coursera]]
+     - [[file:./neuralnets.org][Neural Networks for Machine Learning on Coursera]]
    - [[file:computational-advertising.org][Computational Advertising]] 计算广告学
    - [[file:rcfile.org][rcfile]] / [[file:orcfile.org][orcfile]] / [[file:parquet.org][parquet]] 几种列式存储(columnar storage)实现
    - [[file:./bitcoin.org][Bitcoin: A Peer-to-Peer Electronic Cash System]] 比特币论文

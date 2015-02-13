@@ -1,0 +1,75 @@
+* neuralnets
+#+TITLE: Neural Networks for Machine Learning on Coursera
+https://class.coursera.org/neuralnets-2012-001/lecture
+
+** Lecture1
+- 不同大脑皮层完成不同的工作，但是看上去却非常相似。这些大脑皮层都是由通用功能的东西组成的，但是在不断的学习中逐渐演变成为专用功能组件。
+
+- 为了对事物建模，我们需要理想化它们：
+  - 我们可以去除那些对于理解事物背后原理不相关的东西从而简化问题。
+  - 我们可以与我们已经熟悉的系统进行类比并且将数学应用在上面。
+  - 一旦我们了解背后原理我们就可以考虑增加复杂性来让模型更加符合事物。
+  - 但是我们同时需要注意因为理想化导致这些模型有可能是错误的。
+
+- neurons # 可能的神经元
+  - binary threshold neurons
+  - rectified linear neurons
+  - sigmoid neurons # nice derivatives
+  - stochastic binary neurons # use sigmoid value as probability to produce spike
+
+- Reinforcement learning # 强化学习
+  - In reinforcement learning, the output is an action or sequence of actions and the only supervisory signal is an occasional scalar reward. # 强化学习输出是一系列动作，偶尔会有监督信号以标量形式返回
+    - The goal in selecting each action is to maximize the expected sum of the future rewards. # 我们选择每个动作是为了最大化未来奖励总和
+    - We usually use a discount factor for delayed rewards so that we don’t have to look too far into the future. # 我们也会对延迟时间比较长的反馈给予discount，因为我们不想考虑得过于长远
+  - Reinforcement learning is difficult: # 可是强化学习非常困难
+    - The rewards are typically delayed so its hard to know where we went wrong (or right). # 反馈通常会延迟
+    - A scalar reward does not supply much information. # 并且反馈信息太少
+    - 强化学习相比监督/非监督学习，模型参数通常不会太多。强化学习在~1k左右，而监督/非监督在~1m左右。
+
+- Unsupervised learning # 非监督学习
+  - Discover a good internal representation of the input. # 从输入中发现内部特征/表示
+  - 在近40年里面非监督学习被排除在ML之外，是因为除了来做clustering之外大家都不清楚它能用来做什么。(其实clustering也是一种表示)
+  - It provides a compact, low-dimensional representation of the input.
+    - High-dimensional inputs typically live on or near a low-dimensional manifold (or several such manifolds).
+    - Principal Component Analysis is a widely used linear method for finding a low-dimensional representation.
+  - It provides an economical high-dimensional representation of the input in terms of learned features.
+
+** Lecture2
+- types of neural network arch # 神经网络架构类型
+  - feed-forward neural networks # 前向神经网络
+  - recurrent neural networks(RNN) # 循环神经网络。适合对序列进行建模（隐藏层可以长时间记忆信息）
+  - symmetrically connected networks # 对称连接网络(双向对称神经网络)。如果没有隐藏层的话则称为Hopfield nets.
+
+** Lecture3
+在出现backpropagation算法之前，我们通过随机扰动(pertube)一个或多个weights来训练神经网络(finite difference approximation)，可是实际效果非常差。我们也可以随机扰动隐藏层的激活函数，这样效果会稍好并且效率也更高(因为隐藏层单元数量远小于weights/突触(synapse)数量)。但是依然没有BP好，因为BP可以比较有效地调节所有weights.
+
+BP可以告诉我们dE/dw(error deriviate). 为了得到一个完整的训练神经网络的过程，我们还有两个问题需要考虑：
+- Optimization issues: How do we use the error derivatives on individual cases to discover a good set of weights? (lecture 6) # 优化细节
+  - How often to update the weights
+    - Online: after each training case.
+    - Full batch: after a full sweep through the training data.
+    - Mini-batch: after a small sample of training cases.
+  - How much to update (discussed further in lecture 6)
+    - Use a fixed learning rate?
+    - Adapt the global learning rate?
+    - Adapt the learning rate on each connection separately?
+    - Don’t use steepest descent?
+- Generalization issues: How do we ensure that the learned weights work well for cases we did not see during training? (lecture 7) # 泛化细节
+  - 关于出现overfitting的原因我觉得这里说的特别好
+  - The training data contains information about the regularities in the mapping from input to output. But it also contains two types of noise. # overfitting原因是因为数据中会出现噪音
+    - The target values may be unreliable (usually only a minor worry). # 结果不一定准确，这个我们没有必要太担心
+    - There is sampling error. There will be accidental regularities just because of the particular training cases that were chosen. # 我们需要担心的其实是采样错误。因为采样方式的错误造成我们看到数据呈现的规律，和本身规律不一致。
+  - When we fit the model, it cannot tell which regularities are real and which are caused by sampling error. # 如果我们使用有采样错误的数据来做模型训练的话，那么我们没有办法区分，这个规律性是数据本身的，还是因为采样错误造成的
+    - So it fits both kinds of regularity.
+    - If the model is very flexible it can model the sampling error really well. This is a disaster.
+  - 减小sampling error最直接有效的办法就是取更多的数据
+  - A large number of different methods have been developed.
+    - Weight-decay # 减小weight
+    - Weight-sharing # 共享weight, 这样相当于减少自由度
+    - Early stopping
+    - Model averaging
+    - Bayesian fitting of neural nets # 更加复杂的averaging方式
+    - Dropout # 随机地关闭隐藏层中的部分单元
+    - Generative pre-training
+
+** Lecture4
