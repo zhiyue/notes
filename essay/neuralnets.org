@@ -76,6 +76,7 @@ BP可以告诉我们dE/dw(error deriviate). 为了得到一个完整的训练神
 如果最后一层神经元函数是y = e(z) = sigmod(z)，且代价函数是C=(y-t)^2, 那么dC/dz = 2(y-t) * y * (1-y). 如果我们以此来做梯度下降的话会发现：如果t=1,y=0.000001的话，那么dy/dz是非常小的。这样会导致学习速度非常慢，因此我们需要更好的代价函数。我们试图通过将输出转换成为概率，然后使用交叉熵来作为代价函数C = \sum{ti * -log(yi)}(t = 0,1). 为了将输出转换成为概率，我们可以使用softmax function作为神经元函数: yi = e^zi / \sum(e^zj). 这个神经元函数输出不仅仅考虑单个神经突触触发强度，还考虑这层其他神经突触触发强度。使用softmax/cross-entropy之后，dC/dzi = yi - ti. 如果t=1, y = 0.000001的话，那么梯度变化依然会很大。
 
 我们可以使用3-gram(trigram)来做单词预测，通常效果会比较好，但是trigram缺陷是不能够分辨相似的结构。下图是解决这个问题的神经网络模型
+
 file:./images/nn-class-bengio-predicting-next-word.png
 
 这里稍微说明以下这个模型。假设我们统计出一共有n个词

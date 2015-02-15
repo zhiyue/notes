@@ -142,9 +142,9 @@ file:./images/ntuml-linear-kernel-models.png
 
 ** [[file:images/214_handout.pdf][径向基函数网络(Radial Basis Function Network)]]
   - RBF Network就是将多个径向函数假设进行线性组合。径向函数(Radial Function)是一种只和中心点距离相关的函数, 所以Gaussian函数是径向函数的一种(Gaussian SVM也是RBF Network的一种).
-  - file:./images/ntuml-nn-and-rbfn.png 
+  - file:./images/ntuml-nn-and-rbfn.png
   - RBF和Kernel Function都是衡量相似性的函数：RBF是在原始特征空间上的衡量，KernelF则是在非线性变换之后空间上的相似性。
-  - 我们如何选择这些RBF的中心点呢？Full RBF Network就是以每个实例点作为中心的RBF Network. 
+  - 我们如何选择这些RBF的中心点呢？Full RBF Network就是以每个实例点作为中心的RBF Network.
   - RBF Network可以很容易演化得到kNN. kNN一种办法是使用平均加权，另外一种办法可以通过根据最小二乘来求解线性系数a=(Z'Z)^-1 * Z * y. 其中Z是映射之后的矩阵，并且是方形对称矩阵。
   - 如果所有中心点不同的话那么Z还是可逆的，推导一下的话可以得到a=Z^-1 * y. 如果继续化简的话那么g(xi) = yi. Ein(g) = 0. 这种方式成为exact interpolation, 用来做函数逼近(function approximation)。当然这是因为没有增加regularization，如果增加正则化的话那么和ridge regression得到的结果相同。另外一个办法则是选择相对少一些的中心点(也称为prototypes).
   - 如何找到这些prototypes? 我们可以把它当做一个clustering问题，K-means是解决这个问题一个非常好的办法。K-means算法是通过alternating minimization(不断交替最小化项)来完成的。
@@ -157,3 +157,4 @@ file:./images/ntuml-linear-kernel-models.png
   - 矩阵分解可以使用SGD来做求解，并且SGD似乎是来做大规模矩阵分解最有效的方式。另外作者提到NTU在KDDCup上关于SGD的一个改进：在那次比赛的应用中，越接近现在的实例权重越大。因此他们修改矩阵分解算法，只是使用离现在最近的部分实例来做梯度下降。
   - file:./images/ntuml-sgd-for-matrix-factorization.png
 
+** [[file:images/216_handout.pdf][完结篇(Finalge)]]

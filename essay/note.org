@@ -50,6 +50,7 @@
    - [[file:note/beginning-of-a-hard-journey.org][苦旅的起点]]
    - [[file:note/about-dna-sequencing.org][关于DNA测序]]
    - [[file:./note/russian-underground.org][俄罗斯著名建筑下藏着什么]]
+   - [[file:./note/telstra-billboard-of-love.org][Telstra Billboard of Love]]
 
 ** 笔记
    - [[file:note/fun.org][挺搞笑的]]
