@@ -90,3 +90,6 @@ file:./images/nn-class-bengio-predicting-next-word.png
 1. 输入word{t-2}, word{t-1}以及candidate, 最后输出logit数值作为选择candidate权重。使用所有的candidates输出的logits再计算softmax，得到每个candidate的概率，然后做cross-entropy作为代价函数。这个方法可以配合n-gram，使用n-gram来做一些candidate的筛选。
 2. 将N个词组织成为binary-tree结构(每个tree节点上的向量OR {children}), 然后我们要预测的向量现在变成了v(大小为logN).
 3. 输入为word{t-2}..word{t+2}. 但是对于word{t}可以选择输入正确word以及随机word(错误word). 通过增加noise来强化神经网络的训练。
+
+** Lecture5
+这节介绍了为什么物体识别非常困难，其中一个原因是因为输入图像上平移，旋转，缩放等操作。可是如果这些操作是作用在手写数字图像上的话，那么使用卷积神经网络(convolutional neural network)可以非常好地解决这个问题。CNN大致思想是使用多个不同的feature detectors作用在输入图像上的不同区域，然后我们只需要简单地修改BP算法就可以适应CNN. 如果feature detector1(FD1)输入是9*9的patch的话，那么相当于这个FD1就有81个参数。这个FD1作用在20*20图像上的话，那么可以得到(20-9+1=12) * 12大小的特征向量。Hinton还给出了两类融入先验知识的方法，其中一类方法是比如修改连通性，修改weight限制，修改激活函数等，另外一类方法是通过先验知识模型模拟出更多的数据这样就可以使用更加复杂模型训练而不会overfitting.
