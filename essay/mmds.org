@@ -2,6 +2,8 @@
 #+TITLE: Mining Massive Datasets on Coursera
 https://class.coursera.org/mmds-002
 
+note(dirlt): 感觉课程安排有点问题：每周课程似乎没有什么特别强的重点；一周可能会讲好几个topics然而之间关系不大。
+
 ** Page Rank
 PR的数学(矩阵)形式是Mx = x. 其中M表示链接权值系数矩阵，x则是我们希望求解页面权重矩阵。如果Ax = kx. 那么称x为A的eigenvector(特征向量), 而k则为eigenvalue(特征值).  如果A比较小的话那么可以使用高斯消元法求解，如果比较大的话则比较适合使用迭代方式(Power Iteration)求解：首先分配每个页面相同权重，然后不断迭代直到页面权重改变非常小。
 
@@ -45,3 +47,12 @@ file:./images/mmds-minhashing-impl.png
 查找关联规则最常用的算法是A-Priori, 大致思想上是首先找到frequent 1-item set. 然后后在这个set上查找出frequent 2-item set(如果元素不在frequent 1-item set的话，那么肯定也不会出现在frequent 2-item set). 如果要查找到frequent k-item set的话那么需要经过k passes. 至于这个算法具体细节以及优化版本，从视频和ppt中我实在是没有看懂。不过这些算法以及优化途径，就是通过搭配使用hash和bitmap来减少memory footprint和减少下一轮所需要筛选元素个数。
 
 note(dirlt): 看了这门课程对应教材之后大致理解了。PCY算法是在第一轮的时候就对pair进行hash然后记录在hash-table中。第一遍完成之后将这个hash-table转换成为bitmap结构。然后在第二遍的时候统计pair之前，对pair进行hash查询bitmap判断是否为frequent, 这样又可以过滤一片。
+
+** Community Detection in Graph
+这个问题就是尝试从social graph中查找出来多个community, 这些community内部的membership比较密集。community之间可以overlap或者是相互包含。下面解决这个问题的方法是假设community是事先存在(or 虚构)的，然后我们通过G(V,E)来分解出member和community的关系(矩阵分解...)
+
+AGM(Affiliation Graph Model)用来表示member和community之间关系的，整个结构类似二部图：如果member和community之间有关系，那么w(m, c)就是1否则为0. 每个community自身还有一个概率p(c)（我猜想这个概率是这个community自身存在的强弱表示）。那么两个members(u,v)之间关系强度P(u,v) = 1 - \prod ({u,v分别属于cu和cv之间的交集c'} (1 - p(c')). 如果两者交集C'越大，那么P(u,v)越大。
+
+AGM模型可以稍作简化成为BIGCLAM. 我们不要为每个community定义p, 而是定义w(m,c)为某个概率.(AGM中这个值只有0,1). 我们定义这个矩阵叫做community membership strength matrix记为F. 两个mebers(u,v)之间关系强弱从某一个communityA上看，P(A, u, v) = 1 - exp(-F(u,A) * F(v, A)). 如果考虑所有的communities的话，那么就得到一个非常简单的形式P = 1 - exp(-F * F').
+
+那么问题就是如果我们给定G(V,E), 我们如何估计上面的F. 这里我们要做极大似然的是这个式子 \prod {如果u,v属于E} P(u,v) * \prod {如果u,v不属于E} (1-P(u,v)). 我们可以针对这个式子做log. 那么就是\sum {如果uv属于E} P(u,v)  + \sum {如果uv不属于E} (1-P(u,v)). 使用梯度下降来求解这个问题。因为这个G是稀疏矩阵，所以可以做一些形式上的变换来优化。(非常类似推荐系统中的矩阵分解).
