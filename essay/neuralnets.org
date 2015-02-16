@@ -93,3 +93,29 @@ file:./images/nn-class-bengio-predicting-next-word.png
 
 ** Lecture5
 这节介绍了为什么物体识别非常困难，其中一个原因是因为输入图像上平移，旋转，缩放等操作。可是如果这些操作是作用在手写数字图像上的话，那么使用卷积神经网络(convolutional neural network)可以非常好地解决这个问题。CNN大致思想是使用多个不同的feature detectors作用在输入图像上的不同区域，然后我们只需要简单地修改BP算法就可以适应CNN. 如果feature detector1(FD1)输入是9*9的patch的话，那么相当于这个FD1就有81个参数。这个FD1作用在20*20图像上的话，那么可以得到(20-9+1=12) * 12大小的特征向量。Hinton还给出了两类融入先验知识的方法，其中一类方法是比如修改连通性，修改weight限制，修改激活函数等，另外一类方法是通过先验知识模型模拟出更多的数据这样就可以使用更加复杂模型训练而不会overfitting.
+
+** [[file:./images/nn-class-lec6.pdf][Lecture6]]
+使用mini-batch的时候，我们需要确保每个batch里面的数据分布应该是尽可能典型的。如果数据集合比较大并且冗余度非常高的话，那么使用mini-batch相比full-batch是更加合适的。
+
+mini-batch梯度下降一些技巧
+  - initial weight.
+    1. 如果两个unit的weight(input/output weight)完全一致的话，那么它们学到的feature也是一致的。所以需要在weight增加随机性确保不完全一样。
+    2. 如果hidden unit fan-in 比较大的话，那么初始权值最好设置小点，不然会造成拥塞(saturation). 相反如果fan-in比较小的话，那么weight可以设置大一些。可以考虑和1/sqrt(fan-in)成比例。
+    3. 和2一样，我们也可以同样这样来scale learning rate. 这样 x * w 就和 1/fan-in成比例了。
+  - shift input. # 比如(100, 99) -> 0, (101, 100) -> 1的话，我们可以考虑平移100，这样变为(1, -1) -> 0, (1, 0) -> 1. 数据预处理
+  - scaling input. # 和shift input类似，也是数据预处理。比如(0.1, 100) -> 0, (-0.2, -100) -> 1的话变换成为(1, 1) -> 0, (-2, -1) -> 1.
+  - decorrelate input. # dimensionality reduction. PCA. 这样可以去除那些两者之间呈线性关系的feature，使得error surface看上去在各个方向上半径一致呈圆球状。
+
+多层网络常见错误：1. 初始learning rate过大，导致一些unit的输出值非常大或者是非常小。但是两种情况都会导致derivative非常小，使得error变化非常小。 2. todo(dirlt): 没有看懂。但是不要过早减小learning rate, 过早减小learning rate虽然可能马上有改善，但是之后改善幅度可能会非常小。
+
+下面是几种加速mini-batch学习方法，Hinton对于前三种方法都有比较细的说明： 1. momentum 2. adaptive learning rate 3. rmspop 4. curvature information.
+
+momentum: 假设有个小球在error surface上。梯度下降法是假设小球每次运动完成后都是静止的，所以此次梯度数值直接决定小球运动方向。而momentum方法则是假设小球运动完成后不会停止，所以小球运动方向是上次残留动量和本次动量(梯度数值)的线性组合。[[file:./images/nn-class-lec6.pdf][ppt]] 中可以看到对于error surface上有些方向斜长(diagonal ellipses)的问题特别适用，因为每次在这个斜长方向上更新之后，残留冲量会使得每次更新尽可能地沿着斜长(diagonal ellipses)方向。dw = v(t) = a * v(t-1) - x * dE/dw(t). 其中a是冲量系数(或者是粘滞系数viscotiy, 0.5~0.9), x则是learning rate. 初始时候a不要设置太大(0.5), 当梯度变小时在变大a(0.9~0.99). Nesterov改进方法是先进行冲量，然后计算梯度做修正，相当于分开a*v(t-1)和,-x*dE/dw(t)这两项。Hinton的解释是:"it's much better to gamble and then make a correction, than to make correction and then gamble".
+
+seperate adaptive learning rate for each parameter: 不同layer的gradient以及fan-in都不相同，所以为每一层甚至每一个weight搭配一个自适应的learning rate还是会比较有效的。实现上是假设我们有一个global weight(g), 然后每个参数上有一个local gain(x). dw = -dE/dw * g * x. x选择在[0.1,10/100]是比较合适的，初始可以设置为1. adaptive大致思想是：如果两次gradient是同方向的话，那么就增大x = x + k, 否则x = x * (1-k). 比如k=0.05的话，那么x=x+0.05 or x=x*.95. 这种方法比较其实比较适合full-batch, 也可以用于mini-batch, 但是必须确保mini-batch量足够大这样gradient方向变化和whole dataset是一致的。和momentum不同，adaptive learning rate只能处理axis-aligned effects, 而momentum则能处理diagonal ellipses effect, 所以如果两者结合使用的话效果会更好。
+
+rmsprop: 这个方式是rpop的扩展。rpop只能用于full-batch上，并且不考虑gradient magnitude而只考虑gradient sign变化. 这样做的原因是对于那些gradient小的weight可以逃离plateau. learning rate和上面类似但是只涉及乘法：如果两次gradient sign相同，那么x *= k1(1.2), 否则 x *= k2(0.5). 但是最好限制一下上下限[10^-6, 50]. 关于rpop不能用于在mini-batch上，是因为每次mini-batch给出的梯度magnitude可能是不同的：比如我们将full-batch变为10次mini-batch, 前面9次都是相同方向但是梯度magnitude只有0.1, 而第10次变为相反方向但是magnitude有100. stochastic gradient descent主要思想是每次梯度下降都近似于平均值，所以如果直接将rpop作用在mini-batch是不可行的。但是我们可以稍微一些修改，比如我们每次在做mini-batch时候step_size还要除上我们估计的"如果做full-batch对应的梯度magnitude". msq(w,t) = 0.9 * msq(w,t-1) + 0.1 * (dE/dw)^2., mag(w,t) = sqrt(msq(w,t)). 这个公式相当于动态地计算squared gradient的平均值。(note: 使用方式我觉得是，初始时step_size = 1, last_mag = mag(w,0). 而后step_size *= (k * last_msg) / mag(w,1)).
+
+下面是一张关于神经网络学习方法的总结图：1.什么时候选用full-batch或mini-batch 2. 为什么没有比较简单直接的办法
+
+file:./images/nn-class-summary-of-learning-methods-for-nn.png

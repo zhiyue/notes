@@ -56,3 +56,5 @@ AGM(Affiliation Graph Model)用来表示member和community之间关系的，整�
 AGM模型可以稍作简化成为BIGCLAM. 我们不要为每个community定义p, 而是定义w(m,c)为某个概率.(AGM中这个值只有0,1). 我们定义这个矩阵叫做community membership strength matrix记为F. 两个mebers(u,v)之间关系强弱从某一个communityA上看，P(A, u, v) = 1 - exp(-F(u,A) * F(v, A)). 如果考虑所有的communities的话，那么就得到一个非常简单的形式P = 1 - exp(-F * F').
 
 那么问题就是如果我们给定G(V,E), 我们如何估计上面的F. 这里我们要做极大似然的是这个式子 \prod {如果u,v属于E} P(u,v) * \prod {如果u,v不属于E} (1-P(u,v)). 我们可以针对这个式子做log. 那么就是\sum {如果uv属于E} P(u,v)  + \sum {如果uv不属于E} (1-P(u,v)). 使用梯度下降来求解这个问题。因为这个G是稀疏矩阵，所以可以做一些形式上的变换来优化。(非常类似推荐系统中的矩阵分解).
+
+pause at 
