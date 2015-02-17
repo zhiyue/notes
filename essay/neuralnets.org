@@ -119,3 +119,5 @@ rmsprop: 这个方式是rpop的扩展。rpop只能用于full-batch上，并且�
 下面是一张关于神经网络学习方法的总结图：1.什么时候选用full-batch或mini-batch 2. 为什么没有比较简单直接的办法
 
 file:./images/nn-class-summary-of-learning-methods-for-nn.png
+
+** Lecture7

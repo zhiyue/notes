@@ -1,5 +1,5 @@
 * about-dna-sequencing.org
-#+TITLE: 关于DNA测序
+  #+TITLE: 关于DNA测序
 
 @2014.12.25 晚上FZH和我仔细讲解了一下基因测序大致原理。
 
