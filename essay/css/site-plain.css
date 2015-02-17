@@ -1,3 +1,6 @@
+html {
+    font-family: Georgia, "Songti SC";
+}
 pre {
     background-color: #eee;
     box-shadow: 5px 5px 5px #888;
@@ -6,7 +9,7 @@ pre {
     margin-bottom: 14pt;
     color: black;
     padding: 12pt;
-    font-family: Courier New;
+    font-family: Consolas;
     font-size: 95%;
     overflow: auto;
 }
