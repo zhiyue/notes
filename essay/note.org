@@ -85,6 +85,7 @@
    - [[file:./note/happiness-is.org][幸福是...]]
    - [[file:note/the-golden-circle.org][The Golden Circle]]
    - [[file:note/manage-your-software.org][掌握好你的软件]]
+   - [[file:./note/retrospect-2014.org][回顾2014]]
 ** 书籍
    - 不太好分类的都放在 [[file:./note/book.org][这里]]
    - [[file:./note/steve-jobs.org][史蒂夫乔布斯传(Steve Jobs)]]
