@@ -66,4 +66,12 @@ AGM模型可以稍作简化成为BIGCLAM. 我们不要为每个community定义p,
 
 接着我们引入lapacian matrix(L)来作为G的矩阵表示：L = D-A. 其中D表示G的degree matrix表示，A表示G的adjacency matrix表示。L有下面这些性质：1. n*n的对称矩阵 2. 如果每个点属性相同的话，那么特征值k=0. 3. 特征值是non-negative real numbers 4. 特征向量是都是实数并且正交(orthogonal, x1 .* x2 = 0). 如果只是想求解分割称为2个部分的话，那么可以取k2以及x2来做划分。但是如果想扩展到k个部分的话，虽然我们可以递归地划分但是不稳定效率也不高，有效的办法是求解x2,x3,x4..多个这样的特征向量，这样每个点从一个属性值变为一个属性向量，然后使用clustering比如k-means方法来做聚合。# note(dirlt): 从这个角度上看的话，我们可以认为特征向量spectrum代表了每个点在空间聚合上的某种属性。
 
+** Dimensionality Reduction
+如果矩阵A可以通过n个线性无关的向量通过线性组合表示的话，那么秩rank(A) = n. 如果将数据集合表示称为矩阵的话，那么rank就是数据集合的维度(dimensionality). 维度降解则可以认为是，我们通过忍受数据上的一些误差(微小地变动矩阵上的一些值), 来将rank降低。做维度降解除了加快学习速度，更加适合可视化，以及方便数据压缩之外，还有一个好处就是可以去除数据中部分噪音。
+
+如果把文档/短语表示做成矩阵A(m*n)的话，通过SVD(singular value decomposition)我们可以发现一些有意思的事情：A(m*n) = U(m*r) * R(r*r) * V(r*n). 其中r是一个隐式属性比如topics. U(left sigular vectors)表示文章和topics之间的关系，V(right sigular vectors)表示topics和短语之间的关系，R(sigular values)是一个对角矩阵表示这些topics之间相对强弱关系，并且r就是rank(A). 下面这图给出了一些新的东西，整个矩阵实际上是被分为两个部分，取决于我们在R上选择多少个column. 然后这里还给出了SVD的一些特性，得到分解矩阵非常漂亮。
+
+file:./images/mmds-svd-intuition.png file:./images/mmds-svd-properties.png
+
+注意到上面R矩阵中越在右下角的值越小，又因为R表示某个隐式变量的强度，所以维度降解就是要忽略右下角的值：忽略的值越多，那么维度下降的越多。
 
