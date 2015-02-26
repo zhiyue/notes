@@ -83,7 +83,13 @@ SVD计算复杂度在O(n^2 * m) / O(m^2 * n). 如果输入矩阵是稀疏的话�
 
 file:./images/mmds-cur-approx-to-svd.png
 
-** Latent-Factor Models
-通常我们使用RMSE(root-mean-square-error, = 1.0/N * sqrt((r'-r)^2). 其中N表示测试集合大小，r'表示预测评分，r表示实际评分)来衡量推荐系统好坏。
+** [[file:./images/mmds-latent-factor-model.pdf][Latent-Factor Models]]
+通常我们使用RMSE(root-mean-square-error, = 1.0/N * sqrt((r'-r)^2). 其中N表示测试集合大小，r'表示预测评分，r表示实际评分)来衡量推荐系统好坏。实际的推荐系统还需要考虑 1. 多样性(diversity) 2. 用户环境(context) 3. 物品推荐顺序等。RMSE只能说这个模型可以很好地拟合当前rating情况，但是并不意味着是我们真正想要的。
 
-推荐系统通常在下面几个层面上建模：1. global 2. factorization 3. collaborative filtering(CF). 其中global从全局上考虑这个用户和平均用户的偏差，CF则使用NN(nearest neighbor)
+推荐系统通常在下面几个层面上建模：1. global 2. factorization 3. collaborative filtering(CF). 其中global从全局上考虑这个用户和平均用户的偏差，CF则使用NN(nearest neighbor)方法来预测评分：假设我们想知道u对i的评价，我们可以先找到k个和item i比较接近(kNN, 使用相似度做度量, sij)并且是u已经评价过的items, 然后使用这些ratings使用相似度做加权。如果综合考虑的话就可以给出一个工作得还不错的模型。
+
+file:./images/mmds-rec-sys-cf.png file:./images/mmds-rec-sys-rmse-comp.png
+
+Latent-Factor Model也就是factorization则是尝试做矩阵分解：将user和movie信息映射到一个超平面上，然后通过计算内积来计算user和movie之间的相似度也就是rating. 如果我们再把latent-factor model加入的话，那么整个模型应该就是这样的。使用这个模型相比没有增加latent-factor model效果要好很多。
+
+file:./images/mmds-rec-sys-all-0.png file:./images/mmds-rec-sys-all-1.png
