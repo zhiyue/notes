@@ -2,6 +2,8 @@
 #+TITLE: 金融市场 on Coursera
 https://class.coursera.org/financialmarketszh-002/lecture
 
+http://open.163.com/special/financialmarkets/
+
 -----
 财务和风险管理的基本原则
 
@@ -36,3 +38,4 @@ file:./images/fm-class-about-portfolio.png
   - 虽然是董事会决定是否应该发放红利，可是如果董事会不发放的话，那么股东可以重新选出新的董事会。
 - 摊薄效应 # dilution. 公司决定发行更多的股票（得到更多的资金）造成的效应。于此相对应的行为是回购股票(repurchase)
 - 优先股 # preferred stock. 相比于普通股 1. 没有投票权 2. 红利是固定，但是如果有红利的话优先满足。优先股有点类似债券
+
