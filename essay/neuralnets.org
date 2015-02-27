@@ -124,7 +124,7 @@ file:./images/nn-class-summary-of-learning-methods-for-nn.png
 todo(dirlt): RNN递归神经网络
 
 ** Lecture8
-todo(dirlt): Hessian-Free优化学习神经网络
+略过Hessian-Free优化方法
 
 ** Lecture9
 避免overfitting大致上有下面4中方法，这节只讨论Approach2. 后面一节讨论3,4

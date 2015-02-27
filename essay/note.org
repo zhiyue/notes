@@ -48,7 +48,6 @@
    - [[file:./note/running.org][跑步教学]]
    - [[file:note/best-sex.org][最佳体位]]
    - [[file:./note/my-iphone5s.org][我的iPhone5S]]
-   - [[file:./note/guitar-class.org][吉他课程 on Coursera]] note(dirlt): 没有学完!
    - [[file:./note/photo-class.org][The Art of Photography]]
    - [[file:note/beginning-of-a-hard-journey.org][苦旅的起点]]
    - [[file:note/about-dna-sequencing.org][关于DNA测序]]
