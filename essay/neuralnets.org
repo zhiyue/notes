@@ -121,10 +121,10 @@ rmsprop: 这个方式是rpop的扩展。rpop只能用于full-batch上，并且�
 file:./images/nn-class-summary-of-learning-methods-for-nn.png
 
 ** Lecture7
-todo(dirlt): RNN递归神经网络
+todo(dirlt): RNN递归神经网络.
 
 ** Lecture8
-略过Hessian-Free优化方法
+todo(dirlt): Hessian-Free来优化RNN.
 
 ** Lecture9
 避免overfitting大致上有下面4中方法，这节只讨论Approach2. 后面一节讨论3,4
