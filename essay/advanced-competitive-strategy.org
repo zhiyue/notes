@@ -1,0 +1,3 @@
+* advanced-competitive-strategy
+#+TITLE: 高阶竞争策略
+https://www.coursera.org/learn/advanced-competitive-strategy-zh

@@ -154,3 +154,6 @@ file:./images/nn-class-full-bayesian-about-overfitting.png
 file:./images/nn-class-sampling-weight-vectors.png file:./images/nn-class-property-of-mcmc.png
 
 介绍Dropout之前首先要融合两个模型的办法，假设A预测为[0.3,0.2,0.5], B预测为[0.1,0.8,0.1]的话，第一种是mixture则是求解平均值[0.2,0.5,0.3], 第二种是product(sqrt(a * b)然后归一化平均值是[sqrt(0.3 * 0.1), sqrt(0.2 * 0.8), sqrt(0.5 * 0.1)]的归一化。dropout一点比较神奇的地方是，在训练时候如果每次dropout一半的unit的话，然后在预测时对weight取半(*0.5)的话，那么效果相当于是product融合(？？？, hinton称之为mean-net). Dropout过程是每次训练一个数据的时候将每一层一半的units关闭(做BP的话也不更新对应的weight)，它有非常好的特性体现在：1. 假设有H个units的话，相当于我们从2^H个models里面进行抽样，并且只feed一条训练数据。这是bagging的一种极端情况。 2. 两次训练之间使用的model其实是有weight-sharing的，这就意味着模型同时做了正规化。在实践过程中我们也可以对部分input-unit做dropout, 但是比率应该相对比较低。Hinton谈到关于自己如何想到dropout也挺有意思的：如果我们使用全部的节点来拟合这些数据的话，那么需要依靠所有节点之间非常缜密的配合才能做到。但是依靠所有节点非常缜密的配合这点本身就不可靠，我们更希望部分节点之间就能够比较好地进行工作。
+
+** todo
+...
