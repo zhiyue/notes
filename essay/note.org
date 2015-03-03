@@ -145,3 +145,4 @@
    - [[file:./note/why-cn-people-anxious.org][中国人的焦虑从哪里来]] by 茅于轼
    - [[file:./note/wu-qing-yuan-bio.org][中的精神（吴清源自传）]]
    - [[file:note/star-wars.org][星球大战(Star Wars)]]
+   - [[file:./note/baby-sleep-training.org][有关宝宝睡眠的那些事儿(睡眠训练实战操作经验)]]
