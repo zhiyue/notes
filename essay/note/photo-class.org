@@ -33,10 +33,10 @@ https://www.open2study.com/courses/the-art-of-photography
     - luminance / brightness / colour
     - sharpness, acutance, contrast
     - shadows, mid-tone, highlight
-  - about light 
+  - about light
     - light meter 曝光表. # histogram
       - P programmed
-      - M manual 
+      - M manual
       - TV time-value # shutter
       - AV aperture-value # aperture
     - histogram # exposure information.
@@ -53,7 +53,7 @@ https://www.open2study.com/courses/the-art-of-photography
       - portrait lens => narrower lens 长焦，窄视野 (>70)
       - landscape lens => wider lens 短焦，宽视野 (24, 28, or 35)
     - distance to subject
-  - format 制式 
+  - format 制式
     - JPEG # compressed, exposure, ISO, white balance, picture style, color space
     - RAW # exposure, ISO
   - post-processing
@@ -70,4 +70,6 @@ https://www.open2study.com/courses/the-art-of-photography
    - module2 file:../images/tap-further-reading-m2.pdf
    - module3 file:../images/tap-further-reading-m3.pdf
    - module4 file:../images/tap-further-reading-m4.pdf
-   - Ansel Adams http://www.anseladams.com/
+   - Ansel Adams
+     - http://www.anseladams.com/
+     - https://www.artsy.net/artist/ansel-adams
