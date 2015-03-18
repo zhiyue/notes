@@ -27,3 +27,24 @@ https://www.coursera.org/learn/advanced-competitive-strategy-zh
   - 三级价格歧视 Third Degree Price Discrimination # 群体定价
 - 跨期定价 Intertemporal Pricing # 随着时间推移同样的产品价格下降
 
+** 保持业务符合竞争规则 Keep Your Business Clean
+** 提高收益 Increase your Returns
+- 网络商品和网络效应 Network Goods and Network Effects
+  - 网络商品 Network Goods # 通常有下面几个特性
+    - 正消费外部性(positive consumption externalities). 也就是说越多人使用，那么它的效用就越高
+    - 临界规模和网路规模(critical mass and network size). 如果没有超过这个规模的话，那么就没有任何效用
+    - 各种网络商品之间存在互补性，兼容性以及标准(complementarity, compatibility and standards).
+    - 网络商品之间存在转换成本所以用户通常被锁定；市场中通常只有有限的竞争者，并且都是规模化地经营
+  - 直接网络效应 Direct Network Effects 
+    - 扩散(diffusion)曲线随时间呈S状
+    - 效用函数(utility function)和用户数量(n)以及网络强度(a)有直接关系(n ^ a)
+    - 效用函数还要加上独立价值(standalone value)，同时考虑使用者偏好(early adopters会得到更高效用)
+  - 间接网络效应 Indirect Network Effects
+
+
+- 横向企业边界 Horizontal Firm Boundaries
+- 纵向企业边界 Vertical Firm Boundaries
+
+** 适用于网络市场的策略 Strategies in Network Markets
+** 借助合作伙伴实现增长 Achieve Growth with the Help of Partners
+** 有机增长 Grow Organically
