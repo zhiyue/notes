@@ -1,3 +1,29 @@
 * advanced-competitive-strategy
 #+TITLE: 高阶竞争策略
 https://www.coursera.org/learn/advanced-competitive-strategy-zh
+
+** 维护顾客群 Maintaining your Customer Base
+- 转换成本 Switching Costs
+  - 顾客忠诚度的重要性 Importance of Customer Loyalty 
+    - 相比新客户，老客户或是常客所带来的利润更多
+    - 通常企业使用转换成本来对用户进行锁定
+  - 转换成本的类型 Types of Switching Costs
+    - Direct Switching Costs 直接转换成本 # 即时当前就要付出的成本，比如使用新技术之前的调研
+    - Relation-Related Switching Costs 关系相关的转换成本 # 比如切换到新技术所做的迁移
+    - Product-Related Switching Costs 产品相关的转换成本 # 比如解决在使用新技术时出现的问题
+  - 顾客价值及转换 Customer Value and Switching
+- 锁定策略 Lock-in Strategies
+  - 旧供应商 Old Suppliers # 会员计划(Loyalty Programs), 长期合同(Long-term Contracts), 互补产品销售等
+  - 顾客 Customers # 选择支持标准的产品（通常由很多供应商支持），选择多个供应商，计算转换成本协商更低的价格
+  - 新供应商 New Suppliers # 降低转换成本，提高产品效用，提供优惠项目（但是这些项目对自己成本很低）
+
+** 明智地定价 Determine your Prices Wisely
+- 价格歧视 Price Discrimination
+  - 歧视的原因 Reasons to Discriminate
+  - 与产品差异化同步 Synchronization with Product Differentiation # 产品差异所造成成本偏差，并不等于价格上的偏差
+- 价格歧视的级别 Degrees of Price Discrimination
+  - 一级价格歧视 First Degree Price Discrimination # 根据每个消费者的支付意愿定价，个体定价
+  - 二级价格歧视 Second Degree Price Discrimination # 根据产品组合进行定价 a. non-linear pricing（单位产品价格不同，比如多买有折扣） b. versioning（不同版本） c. bundling（不同产品捆绑方式）
+  - 三级价格歧视 Third Degree Price Discrimination # 群体定价
+- 跨期定价 Intertemporal Pricing # 随着时间推移同样的产品价格下降
+
