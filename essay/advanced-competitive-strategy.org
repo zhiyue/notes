@@ -1,6 +1,6 @@
 * advanced-competitive-strategy
 #+TITLE: 高阶竞争策略
-https://www.coursera.org/learn/advanced-competitive-strategy-zh
+  https://www.coursera.org/learn/advanced-competitive-strategy-zh
 
 ** 维护顾客群 Maintaining your Customer Base
 - 转换成本 Switching Costs
@@ -34,16 +34,21 @@ https://www.coursera.org/learn/advanced-competitive-strategy-zh
     - 正消费外部性(positive consumption externalities). 也就是说越多人使用，那么它的效用就越高
     - 临界规模和网路规模(critical mass and network size). 如果没有超过这个规模的话，那么就没有任何效用
     - 各种网络商品之间存在互补性，兼容性以及标准(complementarity, compatibility and standards).
-    - 网络商品之间存在转换成本所以用户通常被锁定；市场中通常只有有限的竞争者，并且都是规模化地经营
-  - 直接网络效应 Direct Network Effects 
-    - 扩散(diffusion)曲线随时间呈S状
-    - 效用函数(utility function)和用户数量(n)以及网络强度(a)有直接关系(n ^ a)
+    - 网络商品之间存在转换成本所以用户通常被锁定；市场中通常只有有限的竞争者（高度不对称），并且都是规模化地经营
+  - 直接网络效应 Direct Network Effects
+    - 用户扩散(diffusion)曲线随时间呈S状.
+    - 效用函数(utility function)和用户数量(n)以及网络效应强度(a)有直接关系(n ^ a)
     - 效用函数还要加上独立价值(standalone value)，同时考虑使用者偏好(early adopters会得到更高效用)
-  - 间接网络效应 Indirect Network Effects
-
-
-- 横向企业边界 Horizontal Firm Boundaries
+  - 间接网络效应 Indirect Network Effects # 在这个网络中多个产品之间的相互影响，比如手机和应用程序，游戏机和游戏
+  - 网络行业中的市场结构 Market Structure in Network Industries # tipping market(引爆点市场)
+- 横向企业边界 Horizontal Firm Boundaries # 哪些因素影响企业横向边界(企业规模)
+  - 规模经济 Economies of Scale # 当前产量越多，成本越低，和历史产量无关。固定成本和库存费用可以通过产量来平摊
+  - 学习经济 Learning Economies # 累计产量越多，成本越低（因为积累新技术等原因）
+  - 范围经济 Economies of Scope # 同时生产多种不同产品和提供不同服务，成本越低。品牌保护伞（利用已有品牌优势），联合采购(combined purchasing).
+  - 规模和范围不经济 Diseconomies of Scale & Scope # 什么原因阻碍规模和范围经济： a. 劳动力(大公司费用更高) b. 激励和官僚问题(难以评估个人效用) c. 利益冲突(规模过大竞争对手更多，客户可能已经和竞争对手合作)
 - 纵向企业边界 Vertical Firm Boundaries
+  - 外购的原因 Reasons to Buy  # 供应商可以利用规模经济降低成本和提高质量以及创新，对于消费方来说我可以将固定成本转换为可变成本，分摊风险，减少官僚和影响(说服管理层以及管理层决策)成本
+  - 自制的原因 Reasons to Make # 避免交易成本(直接交易成本比如寻找供应商以及调研和谈判，间接交易成本比如和非高质量的供应商合作导致成本)；节约协调成本；事后调整更加容易；避免被敲竹竿
 
 ** 适用于网络市场的策略 Strategies in Network Markets
 ** 借助合作伙伴实现增长 Achieve Growth with the Help of Partners
