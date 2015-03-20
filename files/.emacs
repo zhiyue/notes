@@ -390,6 +390,9 @@
 (global-set-key "\C-cii" 'iimage-mode) ;; toggle image mode.
 
 
+;; nginx-mode
+(require 'nginx-mode)
+
 ;;; yasnippet.
 ;; http://capitaomorte.github.com/yasnippet/
 (require 'yasnippet)
