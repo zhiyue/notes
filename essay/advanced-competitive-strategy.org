@@ -1,6 +1,7 @@
-* advanced-competitive-strategy
-#+TITLE: 高阶竞争策略
-  https://www.coursera.org/learn/advanced-competitive-strategy-zh
+* advanced-competitive-strategy(高阶竞争策略)
+https://www.coursera.org/learn/advanced-competitive-strategy-zh
+
+note(dirlt): 感觉这课涉及到非常多的具体策略，以后可以再好好学习一遍
 
 ** 维护顾客群 Maintaining your Customer Base
 - 转换成本 Switching Costs
@@ -51,5 +52,9 @@
   - 自制的原因 Reasons to Make # 避免交易成本(直接交易成本比如寻找供应商以及调研和谈判，间接交易成本比如和非高质量的供应商合作导致成本)；节约协调成本；事后调整更加容易；避免被敲竹竿
 
 ** 适用于网络市场的策略 Strategies in Network Markets
+- 达到临界规模 Achieving Critical Mass # 如果有足够用户基数和网络效应强度，那么我们可以以足够低的价格使得市场扩散得以自我维持
+- 提高关注及降低感知风险 Raising Attention and Downsizing Perceived Risks # 提前宣布可以使得消费者转向竞争对手的产品，比如竞争对手发布A那么我们宣布半年之后发布一款更好产品。降低感知风险是传达给用户他们使用这个产品会有巨大效用，比如告知用户有很多人已经签约，让用户先租赁而不是购买等。
+- 标准化策略 Strategies in Standardization # 兼容性，
+
 ** 借助合作伙伴实现增长 Achieve Growth with the Help of Partners
 ** 有机增长 Grow Organically
