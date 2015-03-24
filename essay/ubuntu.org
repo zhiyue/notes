@@ -136,9 +136,13 @@
    - sudo apt-get install octave
    - sudo apt-get install audacity
    - sudo apt-get install ipython
+   - sudo apt-get install ipython-doc
    - sudo apt-get install python-numpy
+   - sudo apt-get install python-numpy-doc
    - sudo apt-get install python-matplotlib
+   - sudo apt-get install python-matplotlib-doc
    - sudo apt-get install python-scipy
+   - sudo apt-get install python-scipy-doc
    - #sudo apt-get install python-pygame
    - sudo apt-get install cython
    - sudo apt-get install alarm-clock-applet
