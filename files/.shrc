@@ -29,7 +29,7 @@ configure_cdh() {
     local CDH4_2_0=0
     local CDH4_3_0=0
 
-    # mac
+    # on mac
     if [ $(is_mac) = 1 ]; then
         HADOOP_CLASSPATH=.:$HADOOP_LZO/build/hadoop-lzo-0.4.17-SNAPSHOT.jar
         JAVA_LIBRARY_PATH=$HADOOP_LZO/build/native/Mac_OS_X-x86_64-64/lib/
@@ -118,6 +118,7 @@ configure_key() {
 }
 configure_key
 
+# galera settings.
 # source ~/.private/files/galera.rc
 
 # docker settings.
@@ -259,37 +260,37 @@ gdb_backtrace_process()
     # gdb -batch -ex "thread apply all bt full" -p $1
 }
 
-configure_clang() {
-    CCACHE_COMPILERCHECK=mtime
-    CC=$HOME/.private/files/_clang
-    CXX=$HOME/.private/files/_clang++
-    ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer-3.4
-    export CC
-    export CXX
-    export ASAN_SYMBOLIZER_PATH
-    export CCACHE_COMPILERCHECK
-}
+# configure_clang() {
+#     CCACHE_COMPILERCHECK=mtime
+#     CC=$HOME/.private/files/_clang
+#     CXX=$HOME/.private/files/_clang++
+#     ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer-3.4
+#     export CC
+#     export CXX
+#     export ASAN_SYMBOLIZER_PATH
+#     export CCACHE_COMPILERCHECK
+# }
 
 #export IDEA_HOME=$HOME/utils/idea-IC-123.72 # 12.0
 export IDEA_HOME=$HOME/utils/idea-IC-139.659.2 # 14.0.2
-# intellij IDEA !!!
 start_idea() {
     (sh $IDEA_HOME/bin/idea.sh >/tmp/idea.out 2>&1 &)
 }
 export PYC_HOME=$HOME/utils/pycharm-community-4.0.3/ # 4.0.3
-# intellij pycharm !!!
 start_pycharm() {
     (sh $PYC_HOME/bin/pycharm.sh > /tmp/pycharm.out 2>&1 &)
 }
 
-start_ibus() {
-    (ibus-daemon &)
-}
+# start_ibus() {
+#     (ibus-daemon &)
+# }
 
 run_mysql_on_docker() {
+    mkdir -p /tmp/mysql-data
     $HOME/repo/tomb/dockerfiles/mysql/start $@
 }
 run_redis_on_docker() {
+    mkdir -p /tmp/redis-data
     $HOME/repo/tomb/dockerfiles/redis/start $@
 }
 build_mysql_on_docker() {
@@ -662,4 +663,3 @@ configure_samba() {
     sudo cp $HOME/.private/files/smb.conf /etc/samba/smb.conf
     sudo service smbd restart
 }
-
