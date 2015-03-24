@@ -260,17 +260,6 @@ gdb_backtrace_process()
     # gdb -batch -ex "thread apply all bt full" -p $1
 }
 
-# configure_clang() {
-#     CCACHE_COMPILERCHECK=mtime
-#     CC=$HOME/.private/files/_clang
-#     CXX=$HOME/.private/files/_clang++
-#     ASAN_SYMBOLIZER_PATH=/usr/bin/llvm-symbolizer-3.4
-#     export CC
-#     export CXX
-#     export ASAN_SYMBOLIZER_PATH
-#     export CCACHE_COMPILERCHECK
-# }
-
 #export IDEA_HOME=$HOME/utils/idea-IC-123.72 # 12.0
 export IDEA_HOME=$HOME/utils/idea-IC-139.659.2 # 14.0.2
 start_idea() {
