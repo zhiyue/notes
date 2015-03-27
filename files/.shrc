@@ -149,6 +149,22 @@ kafka_delete_topc() {
     ./bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic $topic
     cd -
 }
+kafka_write_topic() {
+    topic=${1:-"test"}
+    cd $KAFKA_HOME
+    bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test <<EOF
+0. this is test message.
+1. this is test message.
+2. this is test message.
+EOF
+    cd -
+}
+kafka_read_topic() {
+    topic=${1:-"test"}
+    cd $KAFKA_HOME
+    bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+    cd -
+}
 
 # docker settings.
 # ---------- docker starts ----------#
