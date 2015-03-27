@@ -274,34 +274,34 @@ start_pycharm() {
 #     (ibus-daemon &)
 # }
 
-run_mysql_on_docker() {
-    mkdir -p /tmp/mysql-data
-    docker ps -a | grep mysql > /dev/null
-    if [ $? = 0 ]; then
-        docker start mysql
-    else
-        $HOME/repo/tomb/dockerfiles/mysql/start $@
-    fi
-}
-run_redis_on_docker() {
-    mkdir -p /tmp/redis-data
-    docker ps -a | grep redis > /dev/null
-    if [ $? = 0 ]; then
-        docker start redis
-    else
-        $HOME/repo/tomb/dockerfiles/redis/start $@
-    fi
-}
-build_mysql_on_docker() {
-    cd $HOME/repo/tomb/dockerfiles
-    ./build.sh mysql
-    cd -
-}
-build_redis_on_docker() {
-    cd $HOME/repo/tomb/dockerfiles
-    ./build.sh redis
-    cd -
-}
+# run_mysql_on_docker() {
+#     mkdir -p /tmp/mysql-data
+#     docker ps -a | grep mysql > /dev/null
+#     if [ $? = 0 ]; then
+#         docker start mysql
+#     else
+#         $HOME/repo/tomb/dockerfiles/mysql/start $@
+#     fi
+# }
+# run_redis_on_docker() {
+#     mkdir -p /tmp/redis-data
+#     docker ps -a | grep redis > /dev/null
+#     if [ $? = 0 ]; then
+#         docker start redis
+#     else
+#         $HOME/repo/tomb/dockerfiles/redis/start $@
+#     fi
+# }
+# build_mysql_on_docker() {
+#     cd $HOME/repo/tomb/dockerfiles
+#     ./build.sh mysql
+#     cd -
+# }
+# build_redis_on_docker() {
+#     cd $HOME/repo/tomb/dockerfiles
+#     ./build.sh redis
+#     cd -
+# }
 
 apt_update() {
     sudo rm -rf /etc/apt/sources.list
@@ -497,31 +497,31 @@ if [ $(is_vm) = 0 ]; then
     shadowsocks_once
 fi
 
-install_gnu_package() {
-    if [ $# -lt 2 ]; then
-        echo "install_gnu_package gnu-package(tar.gz or tar.bz2) configure-parameters"
-        exit 1
-    fi
-    local NAME=$1; shift
-    local PARAMS=$@
-    case $NAME in
-        *.tar.gz)
-            local SRC=`basename $NAME .tar.gz`
-            rm -rf $SRC
-            tar xzf $NAME
-            ;;
-        *.tar.bz2)
-            local SRC=`basename $NAME .tar.bz2`
-            rm -rf $SRC
-            tar xjf $NAME
-            ;;
-    esac
-    cd $SRC
-    local CONFIG="./configure $PARAMS --enable-shared=no --enable-static=yes"
-    CFLAGS="-fPIC" CXXFLAGS="-fPIC" $CONFIG
-    make -j 8;make install
-    cd -
-}
+# install_gnu_package() {
+#     if [ $# -lt 2 ]; then
+#         echo "install_gnu_package gnu-package(tar.gz or tar.bz2) configure-parameters"
+#         exit 1
+#     fi
+#     local NAME=$1; shift
+#     local PARAMS=$@
+#     case $NAME in
+#         *.tar.gz)
+#             local SRC=`basename $NAME .tar.gz`
+#             rm -rf $SRC
+#             tar xzf $NAME
+#             ;;
+#         *.tar.bz2)
+#             local SRC=`basename $NAME .tar.bz2`
+#             rm -rf $SRC
+#             tar xjf $NAME
+#             ;;
+#     esac
+#     cd $SRC
+#     local CONFIG="./configure $PARAMS --enable-shared=no --enable-static=yes"
+#     CFLAGS="-fPIC" CXXFLAGS="-fPIC" $CONFIG
+#     make -j 8;make install
+#     cd -
+# }
 
 set_core_dump_param() {
     ulimit -c unlimited
