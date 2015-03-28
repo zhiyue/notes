@@ -590,18 +590,22 @@ __tm_soft_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
-    mkdir -p "$dst/$d/" 2>/dev/null
-    echo "soft sync $d..."
-    rsync -arz --no-times "$src/$d/" "$dst/$d/"
+    if [ -e $src ]; then
+        mkdir -p "$dst/$d/" 2>/dev/null
+        echo "soft sync $d..."
+        rsync -arz --no-times "$src/$d/" "$dst/$d/"
+    fi
 }
 
 __tm_hard_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
-    mkdir -p "$dst/$d/" 2>/dev/null
-    echo "hard sync $d..."
-    rsync -arz --delete --no-times "$src/$d/" "$dst/$d/"
+    if [ -e $src ]; then
+        mkdir -p "$dst/$d/" 2>/dev/null
+        echo "hard sync $d..."
+        rsync -arz --delete --no-times "$src/$d/" "$dst/$d/"
+    fi
 }
 
 __tm_sync_utils() {
@@ -657,6 +661,7 @@ __time_machine_sync() {
         __tm_hard_sync_dir $src $dst "repo/tomb"
         __tm_hard_sync_dir $src $dst "repo/itachi"
         __tm_hard_sync_dir $src $dst "repo/hardseed"
+        __tm_hard_sync_dir $src $dst "repo/scikit-learn"
     fi
 }
 
