@@ -669,7 +669,14 @@ export TIME_MACHINE_DIR="/tmp/time-machine"
 _setup_time_machine_dir() {
     if [ ! -h $TIME_MACHINE_DIR ]; then
         echo "setup time-machine directory..."
-        ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup/" $TIME_MACHINE_DIR
+        if [ -e "/media/dirlt/LP250G/Ubuntu Backup" ]; then
+            ln -s "/media/dirlt/LP250G/Ubuntu Backup" $TIME_MACHINE_DIR
+        elif [ -e "/media/dirlt/Expansion Drive/Ubuntu Backup" ]; then
+            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup"$TIME_MACHINE_DIR
+        else
+            echo "failed. no backup driver!!!"
+            return
+        fi
     fi
 }
 _setup_time_machine_dir
