@@ -655,6 +655,7 @@ __time_machine_sync() {
         __tm_hard_sync_dir $src $dst "repo/emacs.d"
         __tm_hard_sync_dir $src $dst "repo/oh-my-zsh"
         __tm_hard_sync_dir $src $dst "repo/tomb"
+        __tm_hard_sync_dir $src $dst "repo/hardseed"
     fi
 }
 
