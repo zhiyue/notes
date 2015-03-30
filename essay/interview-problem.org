@@ -32,6 +32,8 @@ Resource:
 ** CareerCup
 ** Codility
 ** LeetCode
-https://github.com/dirtysalt/tomb/tree/master/leetcode
+https://github.com/dirtysalt/tomb/tree/master/ltcode
+
+
 
 
