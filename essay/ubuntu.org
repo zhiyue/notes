@@ -70,10 +70,10 @@
    - #sudo apt-get install google-chrome-stable # 稳定版本
    - #sudo apt-get install firefox
    - #sudo apt-get install thunderbird
-   - sudo apt-get install dkms
-   - sudo apt-get install virtualbox
-   - sudo apt-get install virtualbox-dkms
-   - # sudo apt-get install virtualbox-guest-additions # 设置windows虚拟机共享文件夹
+   - #sudo apt-get install dkms
+   - #sudo apt-get install virtualbox
+   - #sudo apt-get install virtualbox-dkms
+   - #sudo apt-get install virtualbox-guest-additions # 设置windows虚拟机共享文件夹
    - sudo apt-get install virtualbox-guest-dkms
    - sudo apt-get install ntp
    - sudo apt-get install systemtap
@@ -102,11 +102,11 @@
    - sudo pip install glances
    - #sudo apt-get install pigdin-skype
    - sudo apt-get install skype
-   - sudo apt-get install bzr
+   - #sudo apt-get install bzr
    - sudo apt-get install scons
    - sudo apt-get install cmake
    - sudo apt-get install libboost-all-dev
-   - sudo apt-get install check
+   - #sudo apt-get install check
    - #sudo apt-get install google-mock
    - #sudo apt-get install tsocks
    - sudo apt-get install mysql-server
@@ -134,7 +134,7 @@
    - sudo apt-get install python-mysqldb
    - sudo apt-get install samba
    - sudo apt-get install octave
-   - sudo apt-get install audacity
+   - #sudo apt-get install audacity
    - sudo apt-get install ipython
    - sudo apt-get install ipython-doc
    - sudo apt-get install python-numpy
@@ -153,17 +153,17 @@
    - sudo apt-get install python-redis
    - sudo apt-get install libssl-dev
    - sudo apt-get install libaio-dev
-   - sudo apt-get install percona-xtrabackup
+   - #sudo apt-get install percona-xtrabackup
    - # sudo apt-get install chkconfig
    - sudo apt-get install sysv-rc-conf
    - sudo apt-get install nginx
    - sudo apt-get install fcitx
    - sudo apt-get install im-config
    - sudo apt-get install fcitx-googlepinyin
-   - sudo apt-get install guile-2.0
+   - #sudo apt-get install guile-2.0
    - sudo apt-get install python-sklearn
    - sudo apt-get install python-sklearn-doc
-   - sudo apt-get install kdenlive # 视频编辑
+   - #sudo apt-get install kdenlive # 视频编辑
    - sudo apt-get install python-pandas
 
 ** 系统配置

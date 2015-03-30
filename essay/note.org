@@ -57,7 +57,6 @@
 ** 思考
    - [[file:note/to-death.org][给离去的亲人们]]
    - [[file:note/pregnancy.org][怀孕]] | [[file:note/house.org][住房]]
-   - [[file:note/cross-ocean.org][Cross Ocean]] 远渡重洋
    - [[file:note/new-era-carmack.org][新时代的卡马克]]
    - [[file:./note/cola-and-water.org][可乐和矿泉水]] 散文处女作
    - [[file:./note/retrospect-2009.org][回顾2009]]

@@ -231,6 +231,8 @@ max-requests = 128
    - module x:y 说明x.py里面的y对象是WSGI function对象
    - socket 必须指定是127.0.0.1:8001
 
+note(dirlt): uwsgi和其他WSGI容器如gunicorn工作原理是一样的
+
 *** read excel
 分析excel文件在实际生活中还是比较常见的，通常我们的问题就是卡在读取上面（主要原因是因为我对COM接口不太熟悉，不太了解windows编程）。使用xlrd可以通过python来访问excel文件。
 

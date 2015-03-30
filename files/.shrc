@@ -122,6 +122,8 @@ configure_key
 # source ~/.private/files/galera.rc
 
 KAFKA_HOME=$HOME/utils/kafka_2.10-0.8.2.1
+# KAFKA_HOME=$HOME/utils/kafka_2.10-0.8.1.1
+
 run_zookeeper() {
     cd $KAFKA_HOME
     (./bin/zookeeper-server-start.sh ./config/zookeeper.properties >/tmp/zookeeper.out 2>&1 &)
@@ -132,7 +134,7 @@ run_kafka() {
     (./bin/kafka-server-start.sh ./config/server.properties >/tmp/kafka.out 2>&1 &)
     cd -
 }
-kafka_create_topc() {
+kafka_create_topic() {
     topic=${1:-"test"}
     cd $KAFKA_HOME
     ./bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic $topic
@@ -143,7 +145,7 @@ kafka_list_topic() {
     bin/kafka-topics.sh --zookeeper localhost:2181 --describe
     cd -
 }
-kafka_delete_topc() {
+kafka_delete_topic() {
     topic=${1:-"test"}
     cd $KAFKA_HOME
     ./bin/kafka-topics.sh --delete --zookeeper localhost:2181 --topic $topic
@@ -152,7 +154,7 @@ kafka_delete_topc() {
 kafka_write_topic() {
     topic=${1:-"test"}
     cd $KAFKA_HOME
-    bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test <<EOF
+    bin/kafka-console-producer.sh --broker-list localhost:9092 --topic $topic <<EOF
 0. this is test message.
 1. this is test message.
 2. this is test message.
@@ -162,7 +164,7 @@ EOF
 kafka_read_topic() {
     topic=${1:-"test"}
     cd $KAFKA_HOME
-    bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic test --from-beginning
+    bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic $topic --from-beginning
     cd -
 }
 
@@ -668,14 +670,11 @@ __time_machine_sync() {
 export TIME_MACHINE_DIR="/tmp/time-machine"
 _setup_time_machine_dir() {
     if [ ! -h $TIME_MACHINE_DIR ]; then
-        echo "setup time-machine directory..."
+        # echo "setup time-machine directory..."
         if [ -e "/media/dirlt/LP250G/Ubuntu Backup" ]; then
             ln -s "/media/dirlt/LP250G/Ubuntu Backup" $TIME_MACHINE_DIR
         elif [ -e "/media/dirlt/Expansion Drive/Ubuntu Backup" ]; then
-            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup"$TIME_MACHINE_DIR
-        else
-            echo "failed. no backup driver!!!"
-            return
+            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup"$TIME_MACHINE_DIR            
         fi
     fi
 }
