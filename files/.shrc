@@ -571,7 +571,7 @@ fi
 # }
 
 set_core_dump_param() {
-    ulimit -c unlimited
+    ulimit -c 0
     sudo sysctl -q -w kernel.core_pattern="/tmp/core.%e.%t.%p"
 }
 

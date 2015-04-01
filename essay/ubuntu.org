@@ -137,6 +137,7 @@
    - #sudo apt-get install audacity
    - sudo apt-get install ipython
    - sudo apt-get install ipython-doc
+   - sudo apt-get install ipython-notebook
    - sudo apt-get install python-numpy
    - sudo apt-get install python-numpy-doc
    - sudo apt-get install python-matplotlib
