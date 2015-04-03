@@ -42,7 +42,7 @@ Blob是一个四维连续数组(4-D contiguous array, type = float32), 使用(n,
 Blob内部其实有两个字段data, diff. data表示流动数据(输出数据)，而diff则存储BP的梯度。data/diff可以存储于cpu, 也可以存储于gpu. 如果某个layer不支持gpu的话，那么就需要将gpu数据copy到cpu上，造成性能开销。对于python/numpy用户来说，可以用reshape函数来转换为blob: data = data.reshape((-1, c, h, w))
 
 *** Layer
-caffe提供了许多内置layer，比如convolution layer, pool layer, dropout layer, nonlinearity layer等。这些层说明以及具体参数都可以在 [[http://caffe.berkeleyvision.org/tutorial/layers.html][这里]] 查到（文档比代码有一些滞后，文档里面没有说支持了dropout但是实际已经提供）。每个layer有输入一些'bottom' blobs, 输出一些'top' blobs.
+caffe提供了许多内置layer，比如convolution layer, pool layer, dropout layer, nonlinearity layer等。这些层说明以及具体参数都可以在 [[http://caffe.berkeleyvision.org/tutorial/layers.html][这里]] 查到（文档比代码有一些滞后，文档里面没有说支持了dropout但是实际已经提供）。每个layer有输入一些'bottom' blobs, 输出一些'top' blobs. 输入层是"data"和"label" blobs.
 
 file:./images/caffe-layer.jpg
 
@@ -51,8 +51,12 @@ Each layer type defines three critical computations: setup, forward, and backwar
 - Forward: given input from bottom compute the output and send to the top. # 前向转播
 - Backward: given the gradient w.r.t. the top output compute the gradient w.r.t. to the input and send to the bottom. A layer with parameters computes the gradient w.r.t. to its parameters and stores it internally. # 反向转播/计算梯度
 
+caffe支持的layer完整在 http://caffe.berkeleyvision.org/tutorial/layers.html, 部分data layer还支持 [[http://caffe.berkeleyvision.org/tutorial/data.html][预处理]] 操作
+
+note(dirlt): 有可能文档上名字和实际代码对不上，如果是这样的话可以阅读src/caffe/layers/*_layer.cpp找到REGISTER_LAYER_CLASS(name). 其中name就是注册的字符串
+
 *** Net
-net是layers组成的DAG, 并且可以使用文本格式来描述(protocol-buffers TextFormat). 比如下面文本生成的是logistic regression. 
+net是layers组成的DAG, 并且可以使用文本格式来描述(protocol-buffers TextFormat). 比如下面文本生成的是logistic regression.
 
 #+BEGIN_EXAMPLE
 name: "LogReg"
@@ -127,7 +131,29 @@ I0902 22:52:17.941824 2079114000 net.cpp:220] Memory required for data: 201476
 
 -----
 
-todo(dirlt): deploy和train.prototxt差别.
+如果阅读caffe/models会发现，这些例子下面有train.prototxt，还有一个deploy.prototxt. 差别仅仅在于deploy.txt没有data-layer，而是在指定输入的shape.
+#+BEGIN_EXAMPLE
+input: "data"
+input_dim: 10
+input_dim: 1
+input_dim: 28
+input_dim: 28
+#+END_EXAMPLE
+
+从字面上来看train.prototxt是用来训练出model的，而deploy.prototxt则是用来进行预测的。下面是使用python进行预测的代码:
+
+note(dirlt): 我没有使用caffe自身提供的classifier.py, 因为我发现Classifier会对input做一些处理。在进行实验的时候我发现使用Classifier得到的结果比直接使用Net::forward_all接口要差很多。
+
+#+BEGIN_SRC Python
+caffe.set_mode_cpu()
+net = caffe.Net('caffe-conf/test.prototxt',
+                'uv_iter_10000.caffemodel',
+                caffe.TEST)
+data = data.reshape((-1, 1, 28, 28))
+out = net.forward_all(**{'data': data})
+rs = out['prob'] # 得到的是softmax.
+print_timer("predict")
+#+END_SRC
 
 *** Solver
 solver做了下面这些事情：
@@ -143,13 +169,65 @@ solver每轮迭代做了下面这些事情：
 - calls network forward to compute the output and loss
 - calls network backward to compute the gradients
   - Stochastic Gradient Descent (SGD),
-  - Adaptive Gradient (ADAGRAD), 
+  - Adaptive Gradient (ADAGRAD),
   - and Nesterov’s Accelerated Gradient (NESTEROV).
   - 如何选择和设置参数可以看 [[http://caffe.berkeleyvision.org/tutorial/solver.html][这里]]
 - incorporates the gradients into parameter updates according to the solver method
 - updates the solver state according to learning rate, history, and method
 
-note(dirlt): solver可以指定net, train_net和test_nets. 如果不想训练时候
+-----
 
-** layers
-http://caffe.berkeleyvision.org/tutorial/layers.html
+下面是solver.prototxt的一个示例（从examples/mnist/修改过来的）
+#+BEGIN_EXAMPLE
+# The train/test net protocol buffer definition
+net: "caffe-conf/train.prototxt"
+
+# 如果test数据量是10000，而bacth_size = 100的话，那么test_iter就应该设置100
+# 这样每次进行test就可以把所有的cases都使用上了
+test_iter: 90
+# Carry out testing every 500 training iterations.
+# 每进行500轮迭代进行一次测试
+test_interval: 500
+
+# 下面这些是训练使用参数
+# The base learning rate, momentum and the weight decay of the network.
+base_lr: 0.01
+momentum: 0.9
+weight_decay: 0.0005
+# The learning rate policy
+lr_policy: "inv"
+gamma: 0.0001
+power: 0.75
+
+# Display every 100 iterations
+display: 500
+# The maximum number of iterations
+max_iter: 10000
+# snapshot intermediate results
+# 每进行500轮做一次snapshot.
+# 每一轮使用的数据量大小为batch_size.
+snapshot: 500
+snapshot_prefix: "uv"
+snapshot_after_train: true
+# solver mode: CPU or GPU
+# 使用CPU训练
+solver_mode: CPU
+#+END_EXAMPLE
+
+"net"表示train和test使用同一个net. 在net.prototxt中可以使用include语法来声明说，某个layer是否需要包含在train/test阶段.
+
+如果你在训练时候不想进行test的话，那么可以指定上面的"net"为"train_net". 当然你也可以使用"test_nets"来指定多个test_net.
+
+** python
+http://caffe.berkeleyvision.org/tutorial/interfaces.html
+
+caffe interfaces有三种: 1. command line 2. python binding 3. matlab binding. 这里就只写python binding. caffe/examples下面有一些ipynb可以使用ipython-notebook查看。
+
+caffe的python binding功能还是非常完备的
+- caffe.Net is the central interface for loading, configuring, and running models. caffe.Classsifier and caffe.Detector provide convenience interfaces for common tasks.
+- caffe.SGDSolver exposes the solving interface.
+- caffe.io handles input / output with preprocessing and protocol buffers.
+- caffe.draw visualizes network architectures.
+- Caffe blobs are exposed as numpy ndarrays for ease-of-use and efficiency.
+
+我写了个 [[https://github.com/dirtysalt/tomb/tree/master/kaggle/digit-recognizer][示例]] 来解决Kaggle上 [[http://www.kaggle.com/c/digit-recognizer][手写数字识别]] 问题，prototxt是在examples/mnist基础上稍作修改的。
