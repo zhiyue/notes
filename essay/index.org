@@ -36,6 +36,7 @@
    - [[file:vagrant.org][vagrant]] 用来构件虚拟开发环境的工具，底层可以使用多种虚拟化技术(现在支持相对比较好的是VirtualBox)
    - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
    - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
+   - [[file:caffe.org][caffe]] C++实现的深度学习框架，有python和matlab的扩展接口
 
 ** Operating System
    - [[file:computer-system-reading.org][Computer System Reading]] 关于单机系统方面的一些文章以及阅读心得。
