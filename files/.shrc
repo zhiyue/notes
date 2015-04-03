@@ -69,47 +69,37 @@ configure_cdh() {
 configure_cdh
 
 # Java settings.
-configure_java() {
-    if [ $(is_mac) = 1 ]; then
-        JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
-    else
-        JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
-    fi
-    CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:$HADOOP_CLASSPATH:$CLASSPATH
-    CLASSPATH=.:./target/classes:./target/dependency:$CLASSPATH
-    LD_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$LD_LIBRARY_PATH
-    PATH=$JAVA_HOME/bin:$PATH
+if [ $(is_mac) = 1 ]; then
+    JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
+else
+    JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+fi
+CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:$HADOOP_CLASSPATH:$CLASSPATH
+CLASSPATH=.:./target/classes:./target/dependency:$CLASSPATH
+LD_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$LD_LIBRARY_PATH
+PATH=$JAVA_HOME/bin:$PATH
 
-    export JAVA_HOME
-    export CLASSPATH
-    export LD_LIBRARY_PATH
-    export PATH
-}
-configure_java
+export JAVA_HOME
+export CLASSPATH
+export LD_LIBRARY_PATH
 
-# utilities
-configure_utils() {
-    # texmacs.
-    PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
+# texmacs.
+PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
 
-    # maven
-    PATH=$HOME/utils/apache-maven-3.0.5/bin:$PATH
+# maven
+PATH=$HOME/utils/apache-maven-3.0.5/bin:$PATH
 
-    # protocol buffers.
-    PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
-    PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
-    PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
+# protocol buffers.
+PATH=$HOME/utils/protobuf-2.3.0/build/bin:$PATH
+PATH=$HOME/utils/protobuf-2.4.1/build/bin:$PATH
+PATH=$HOME/utils/protobuf-2.5.0/build/bin:$PATH
 
-    # scala and sbt
-    export SCALA_HOME=$HOME/utils/scala-2.10.2
-    PATH=$SCALA_HOME/bin:$PATH
-    export SBT_HOME=$HOME/utils/sbt
-    PATH=$SBT_HOME/bin:$PATH
-    export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt -Dsbt.ivy.home=$HOME/.ivy2"
-
-    export PATH
-}
-configure_utils
+# scala and sbt
+export SCALA_HOME=$HOME/utils/scala-2.10.2
+PATH=$SCALA_HOME/bin:$PATH
+export SBT_HOME=$HOME/utils/sbt
+PATH=$SBT_HOME/bin:$PATH
+export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt -Dsbt.ivy.home=$HOME/.ivy2"
 
 # private key
 configure_key() {
@@ -123,6 +113,7 @@ configure_key
 
 KAFKA_HOME=$HOME/utils/kafka_2.10-0.8.2.1
 # KAFKA_HOME=$HOME/utils/kafka_2.10-0.8.1.1
+PATH=$KAFKA_HOME/bin:$PATH
 
 run_zookeeper() {
     cd $KAFKA_HOME
@@ -167,6 +158,26 @@ kafka_read_topic() {
     bin/kafka-console-consumer.sh --zookeeper localhost:2181 --topic $topic --from-beginning
     cd -
 }
+
+STORM_HOME=$HOME/utils/apache-storm-0.9.4
+PATH=$STORM_HOME/bin:$PATH
+
+run_storm_nimbus() {
+    cd $STORM_HOME
+    (./bin/storm nimbus > /tmp/storm-nimbus.out 2>&1 &)
+    cd -
+}
+run_storm_supervisor() {
+    cd $STORM_HOME
+    (./bin/storm supervisor > /tmp/storm-supervisor.out 2>&1 &)
+    cd -
+}
+run_storm_ui() {
+    cd $STORM_HOME
+    (./bin/storm ui > /tmp/storm-ui.out 2>&1 &)
+    cd -
+}
+export PATH
 
 # docker settings.
 # ---------- docker starts ----------#
@@ -369,6 +380,7 @@ apt_update() {
     # # fcitx
     # sudo add-apt-repository -y ppa:fcitx-team/nightly
 
+    sudo add-apt-repository -y
     sudo apt-get update
 }
 
@@ -544,6 +556,17 @@ if [ $(is_vm) = 0 ]; then
     shadowsocks_once
 fi
 
+run_ipython_notebook() {
+    local port_info
+    port_info=$(lsof -i:8888 -Pn | grep "(LISTEN)")
+    if [ -z "$port_info" ]; then
+        echo "start ipython notebook..."
+        cd $HOME/repo/notes/files/
+        (ipython notebook >/tmp/ipython_notebook.out 2>&1 &)
+        cd -
+    fi
+}
+
 # install_gnu_package() {
 #     if [ $# -lt 2 ]; then
 #         echo "install_gnu_package gnu-package(tar.gz or tar.bz2) configure-parameters"
@@ -674,7 +697,7 @@ _setup_time_machine_dir() {
         if [ -e "/media/dirlt/LP250G/Ubuntu Backup" ]; then
             ln -s "/media/dirlt/LP250G/Ubuntu Backup" $TIME_MACHINE_DIR
         elif [ -e "/media/dirlt/Expansion Drive/Ubuntu Backup" ]; then
-            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup"$TIME_MACHINE_DIR            
+            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup"$TIME_MACHINE_DIR
         fi
     fi
 }
