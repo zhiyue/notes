@@ -201,7 +201,7 @@ C4 人工神经网络
 
 由于ANN(Artificial Neural Networks, ANN)只是在一定程度上受到生物神经系统的启发，所以ANN并未模拟生物神经系统中很多复杂特征，而且已经知道ANN很多特征也和生物系统也是不一致的。例如我们考虑的ANN每一个单元输出单一的不变值，然而生物神经元输出的是复杂的时序脉冲。
 
-ANN基本组成单元是感知器(perceptron)变种：因为感知器的输出函数是有阈值并且不可导的sign(w' * x)，为了方便计算所以ANN基本单元输出变成无阈值并且连续可导(w' * x). 这样可以通过梯度下降方法来求解。多层网络的每层之间输出加上sigmoid单元。sigmoid函数有个特性导数很容易求解，s'(x) = s(x) * (1 - s(x)). 
+ANN基本组成单元是感知器(perceptron)变种：因为感知器的输出函数是有阈值并且不可导的sign(w' * x)，为了方便计算所以ANN基本单元输出变成无阈值并且连续可导(w' * x). 这样可以通过梯度下降方法来求解。多层网络的每层之间输出加上sigmoid单元。sigmoid函数有个特性导数很容易求解，s'(x) = s(x) * (1 - s(x)).
 
 多层网络可以使用反向传播算法来求解。反向传播算法仅能保证收敛到误差E的某个局部极小值，不一定收敛到全局最小值。尽管缺乏对收敛到全局最小误差的保证，反向传播算法在实践中仍是非常有效的函数逼近算法。一个解释是可以考虑含有大量权值的网络，它对应着维度非常高的空间曲面。梯度下降中某个权陷入局部极小值时，其他权未必是局部极小值。网络的权越多，空间曲面越多，就越有可能为梯度下降提供更多的“逃逸曲线”，让梯度下降离开相对该单个权值的局部极小值。另外一个解释是，如果初始化权重为0时，sigmoid函数在0附近接近线性函数，不容易出现局部极小值；只有当权值增长一段时间之后，空间曲面才呈现高度非线性特征，这个时候才有比较多的局部极小值，而此时已经足够靠近全局最小值。为了缓解局部最小值情况，常见的启发式规则有：为梯度更新增加一个冲量项希望冲过狭窄的最小值；使用随机梯度下降而不是批量梯度下降；使用不同的随机权值来训练网络。
 
@@ -400,7 +400,7 @@ file:./images/sml-conclusion.png
 ** 关于CNN(卷积神经网络)
 http://blog.csdn.net/stdcoutzyx/article/details/41596663 是一篇非常好的关于CNN的入门文章
 
-CNN常用于处理图像和视频数据，在DNN的基础(前向反馈网络结构，使用BP来做参数训练）增加了一些扩展技术： 1. 局部感知（卷积核）. 2. 参数共享 3. 多卷积核 4. pooling/subsampling(下采样). 
+CNN常用于处理图像和视频数据，在DNN的基础(前向反馈网络结构，使用BP来做参数训练）增加了一些扩展技术： 1. 局部感知（卷积核）. 2. 参数共享 3. 多卷积核 4. pooling/subsampling(下采样).
 
 -----
 局部感知
@@ -429,7 +429,7 @@ note(dirlt): 完成前面两个操作之后，假设原始图像大小20 * 20, f
 -----
 多卷积核
 
-note(dirlt): 一个filter/卷积核对应这个图像的一种可能特征，实际上我们会想多尝试几种可能的特征，所以我们可以使用多卷积核(或称为feature maps). 
+note(dirlt): 一个filter/卷积核对应这个图像的一种可能特征，实际上我们会想多尝试几种可能的特征，所以我们可以使用多卷积核(或称为feature maps).
 
 上面所述只有100个参数时，表明只有1个10*10的卷积核，显然，特征提取是不充分的，我们可以添加多个卷积核，比如32个卷积核，可以学习32种特征。在有多个卷积核时，如下图所示：
 
@@ -450,7 +450,7 @@ file:./images/cnn-down-pooling.gif
 
 note(dirlt): 对pooling-layer在做BP时候需要单独处理，因为这个激活函数是不可导的。
 
-todo(dirlt): 据说pooling不仅仅能够减少计算量，还可以引入旋转不变性？
+todo(dirlt): 据说pooling不仅仅能够减少计算量，还可以引入旋转(rotate)不变性？ 我可以理解pooling可以引入平移(shift)以及扭曲(distortion)不变性。
 
 -----
 在实际应用中，往往使用多层卷积，然后再使用全连接层进行训练，多层卷积的目的是一层卷积学到的特征往往是局部的，层数越高，学到的特征就越全局化。下面这幅图就是 [[http://yann.lecun.com/exdb/lenet/index.html][LeNet-5]] 的结构
@@ -469,4 +469,13 @@ file:./images/cnn-lenet-5-cf.png
 另外在关于激活函数方面，[[http://www.tuicool.com/articles/MzMbEv2][这里]] 的建议是内部使用ReLu, 倒数第二层换成sigmoid, 最后使用softmax. [[http://www.codeproject.com/Articles/16650/Neural-Network-for-Recognition-of-Handwritten-Digi][这里]] （还给出了具体实现！）的建议则是使用tanh（作者不太建议使用sigmoid）, 最后使用softmax. 不知道能不能综合考虑，内部使用ReLu, 倒数两层换为tanh和softmax.
 
 
+-----
+粗略地看了一下"Gradient-Based Learning Applied to Document Recognition"的Section II.
+- 通常图像是具有局部相关性的，所以可以使用local receptive field以及weight sharing.
+- 个人理解：使用multiple feature maps可以用来引入旋转(rotate)不变形，可以使用多个卷积核来学习旋转
+- pooling可以引入平移(shift)以及扭曲(distortion)不变性
+- C5这层实际上是一个卷积层，只不过恰好conv kernel size = 5.
 
+没有太理解F6/Output. 不过在这两层里面值得一体的是，论文里面说如果classes太多的话（比如84种），那么最好不要采用native-bitv方式来定义输出（native-bitv是我随便取的名字，如果classes=84, 那么输出就是84长度的bit-vector，其中有一个bit为1其他全部为0），否则使用sigmoid簇函数作为loss function效果非常差（当然可以使用softmax). LeCun给的方式则是RBF/Euclidean作为loss function, 输出表示方式允许在多个bit上为1. 如果将定义输出表示称为灰度图像的话，就是下面这个样子
+
+file:./images/cnn-output-code.png
