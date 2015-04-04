@@ -83,6 +83,11 @@ export JAVA_HOME
 export CLASSPATH
 export LD_LIBRARY_PATH
 
+KAGGLE=$HOME/repo/tomb/kaggle
+to_kagge() {
+    cd $KAGGLE
+}
+
 # texmacs.
 PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
 
