@@ -89,7 +89,8 @@ to_kagge() {
 }
 
 # texmacs.
-PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux/bin:$PATH
+export TEXMACS_PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux
+PATH=$TEXMACS_PATH/bin:$PATH
 
 # maven
 PATH=$HOME/utils/apache-maven-3.0.5/bin:$PATH

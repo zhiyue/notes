@@ -1,6 +1,11 @@
 * resume
-** en
-*** Summary
+#+OPTIONS: H:2
+** Contact
+- Yan Zhang, dirtysalt1987 AT gmail.com
+- GitHub: https://github.com/dirtysalt/
+- LinkedIn: https://www.linkedin.com/in/dirlt
+
+** Summary
 Extensive experience in:
 - large-scale distributed system design and implementation.
 - network programming framework design and implementation.
@@ -8,6 +13,7 @@ Extensive experience in:
 - performance optimization and tuning for systems and applications.
 - system software development.
 - big data processing and analysis.
+- machine learning and data mining.
 
 Specialities:
 - proficient in C/C++, Python, Java, Scala.
@@ -15,27 +21,21 @@ Specialities:
 - extremely familiar with system development toolchain on linux.
 - good understanding of compiler technique and related tools.
 
-*** Experience
-**** 2013.11-now
-Senior Software Architect at Umeng
+** Experience
+Senior Software Architect, Data Platform, Umeng, 2013.11 - now
 
-Data Platform Team.
+- infrastructure on big data processing.
+- machine learning on moderate-sized data.
 
-- infrastructure.
-
-**** 2013.2-2013.11
-Software Architect at Umeng.
-
-Data Platform Team.
+-----
+Software Architect, Data Platform, Umeng, 2013.2 - 2013.11
 
 - data analytics and data mining on Hadoop.
 
 - KVProxy, an asynchronous high-performance HTTP server for easily accessing various database systems such as HBase, MySQL, Riak etc. It's written in Scala and Finagle, use Google Protocol-Buffers as data exchange format and Google Guava LRUCache as application-level cache. Since Finagle wraps asynchronous function in concept of 'Future' and encourages developer to take server as function(Your Server as a Function. http://monkey.org/~marius/funsrv.pdf) , so KVproxy could be used not only as server, but also as library that could be easily embedded into other applications.
 
-**** 2012.6-2013.2
-Senior Software Engineer at Umeng.
-
-Data Platform Team.
+-----
+Senior Software Engineer, Data Platform, Umeng, 2012.6 - 2013.2
 
 - design Umeng internal Realtime+Batch Architecture. (aka. Lambda Architecture http://nathanmarz.com/blog/how-to-beat-the-cap-theorem.html)
 
@@ -52,15 +52,15 @@ Data Platform Team.
 
 - USched, a internal job scheduler system written from scratch to arrange jobs which are codependent. It defines and implements a DSL called JDL(Job Description Language) which is used to describe dependencies between jobs and properties of jobs. It runs as a HTTP server and provides a web-console to manage jobs including submissions and running status dashboard etc. Thousand MapReduce jobs are scheduled by usched each day while the latency is below 5sec.
 
-**** 2011.8-2012.6
-[[file:./images/baidu-inf-com-2010q4.jpg][Senior Software Engineer at Baidu.]]
+-----
+[[file:images/baidu-inf-com-2010q4.jpg][Senior Software Engineer]], Baidu, 2011.8-2012.6
 
 INF(infrastructure) HPC(high performance computing) Team.
 
 - DStream, an in-house distributed realtime stream processing system in C++ like Twitter's Storm and Yahoo!'s S4. The alpha version of DStream with 10 nodes can process 1 million tuples per second while keep the latency less than 100ms.
 
-**** 2010.6-2011.8
-Software Engineer at Baidu.
+-----
+Software Engineer, Baidu, 2010.6 - 2011.8
 
 INF(infrastructure) COM(component) Team.
 
@@ -74,8 +74,8 @@ INF(infrastructure) COM(component) Team.
 
 - maintainer and developer of Baidu's common library including BSL(Baidu standard library), Ullib(wraps socket io, file io, and some linux syscalls etc.), ComDB(a embedded high-performance key value storage system), memory allocator, character encoding, regular expression, signature and hash algorithm, url handling, http client, lock-free data structures and algorithms etc.
 
-**** 2008.7-2010.6
-Software Engineering Intern at Baidu.
+-----
+Software Engineering Intern, Baidu, 2008.7 - 2010.6
 
 IBase COM(component) Team.
 
@@ -85,7 +85,7 @@ IBase COM(component) Team.
 
 - maintainer and developer of Baidu common libraries including Ullib(wraps socket io, file io, and some linux syscalls etc.), ComDB(a embedded high-performance key value storage system), memory allocator, character encoding, regular expression, signature and hash algorithm, url handling, http client etc.
 
-** cn
+** Chinese
 *** 职业技能
 - 大规模分布式系统设计和实现
 - 大数据分析和处理
@@ -96,7 +96,6 @@ IBase COM(component) Team.
 - 熟悉编译原理并且开发过编译器
 
 *** 工作经历
-**** 2012.6-now
 高级软件架构师, 友盟, 2012.6 - now
 
 - realtime+batch架构(lambda架构). 利用批量计算结果来对实时计算结果进行补充。因为批量计算能够以全量数据作为输入能够获得更准确的结果并且容错性强但是延迟在小时级别，而实时计算虽然在延迟上在秒级别但是因为没有全量数据所以不能够进行更加深入分析。通过向realtime+batch架构演变，使得友盟统计能够在延迟和分析深入程度上都获得优势。
@@ -111,7 +110,7 @@ IBase COM(component) Team.
 
 - 任务调度器usched. 通过调研一些业界已有的任务调度器比如oozie, azkaban等，然后结合友盟内部任务执行情况特点开发的任务调度器。系统定义了任务描述语言(JDL)允许指定任务之间的相互依赖关系，开始运行的时间以及一些触发条件，可以来对任务执行做精细化控制。usched通过HTTP请求提交任务和控制任务，有相对比较完善的web-console来管理，并且内置任务报警，命令运行输出重定向等功能。友盟每天运行的几百个Hadoop任务都是通过usched来进行调度的，调度延迟在5s以内。
 
-**** 2008.8-2012.6
+-----
 [[file:./images/baidu-inf-com-2010q4.jpg][高级软件工程师, 百度, 2008.8 - 2012.6]]
 
 - 分布式实时流式计算系统dstream, 针对需要实时处理流式数据的应用场景，解决hadoop批量处理模型不能够实时处理大数据的问题。经过调研和对比很多已有的分布式实时流式计算系统比streambase, storm等以及考虑百度自身应用需求，dstream可以在处理模型上保证数据不乱序不重复不丢失并且保持高吞吐和较低的延迟。众多产品线包括百度网页搜索检索实时反作弊，百度网页搜索点击实时反作弊，百度网盟等都正在基于dstream进行开发。现阶段发布的alpha版本单处理节点性能可以达到10K packets/s而处理延迟保证在100ms以内。
