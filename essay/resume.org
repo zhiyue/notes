@@ -1,11 +1,12 @@
-* resume
+#+TITLE: Yan Zhang's CV
+#+OPTIONS: toc:nil
 #+OPTIONS: H:2
-** Contact
+* Contact
 - Yan Zhang, dirtysalt1987 AT gmail.com
 - GitHub: https://github.com/dirtysalt/
 - LinkedIn: https://www.linkedin.com/in/dirlt
 
-** Summary
+* Summary
 Extensive experience in:
 - large-scale distributed system design and implementation.
 - network programming framework design and implementation.
@@ -21,7 +22,7 @@ Specialities:
 - extremely familiar with system development toolchain on linux.
 - good understanding of compiler technique and related tools.
 
-** Experience
+* Experience
 Senior Software Architect, Data Platform, Umeng, 2013.11 - now
 
 - infrastructure on big data processing.
@@ -85,7 +86,7 @@ IBase COM(component) Team.
 
 - maintainer and developer of Baidu common libraries including Ullib(wraps socket io, file io, and some linux syscalls etc.), ComDB(a embedded high-performance key value storage system), memory allocator, character encoding, regular expression, signature and hash algorithm, url handling, http client etc.
 
-** Chinese
+* Chinese
 *** 职业技能
 - 大规模分布式系统设计和实现
 - 大数据分析和处理
