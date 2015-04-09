@@ -143,7 +143,6 @@
    - sudo apt-get install python-matplotlib
    - sudo apt-get install python-matplotlib-doc
    - sudo apt-get install python-scipy
-   - #sudo apt-get install python-scipy-doc
    - #sudo apt-get install python-pygame
    - sudo apt-get install cython
    - sudo apt-get install alarm-clock-applet
@@ -166,6 +165,8 @@
    - sudo apt-get install python-sklearn-doc
    - #sudo apt-get install kdenlive # 视频编辑
    - sudo apt-get install python-pandas
+   - sudo apt-get install python-skimage
+   - sudo apt-get install python-skimage-doc
 
 ** 系统配置
 *** 察看ubuntu内部版本
