@@ -505,9 +505,9 @@ install_files() {
     ln -s $HOME/.private/files/plugins.sbt $HOME/.sbt/plugins/build.sbt
     ln -s $HOME/.private/files/build.sbt $HOME/.sbt/build.sbt
 
-    echo "installing tc-env..."
-    rm -rf $HOME/contestapplet.conf
-    ln -s $HOME/.private/tc-env/contestapplet.conf $HOME/contestapplet.conf
+    # echo "installing tc-env..."
+    # rm -rf $HOME/contestapplet.conf
+    # ln -s $HOME/.private/tc-env/contestapplet.conf $HOME/contestapplet.conf
 
     echo "installing .oh-my-zsh"
     rm -rf $HOME/.oh-my-zsh
@@ -524,6 +524,11 @@ vpn_umeng_dp() {
     cd -
 }
 
+install_tc_env() {
+    echo "installing tc-env..."
+    rm -rf $HOME/contestapplet.conf
+    ln -s $HOME/.private/tc-env/contestapplet.conf $HOME/contestapplet.conf
+}
 start_tc_env() {
     (javaws "$HOME/.private/tc-env/ContestAppletProd.jnlp" &)
 }
