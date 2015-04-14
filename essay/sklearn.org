@@ -195,12 +195,6 @@ y_true, y_pred = y_tt, clf.predict(X_tt)
 print(classification_report(y_true, y_pred))
 #+END_SRC
 
-*** Random Forest
-todo(dirlt):
-
-*** Gradient Boosting
-todo(dirlt):
-
 ** Model selection and evaluation
 *** Cross-validation: evaluating estimator performance
 http://scikit-learn.org/stable/modules/cross_validation.html
