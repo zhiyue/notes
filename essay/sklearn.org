@@ -90,11 +90,11 @@ http://scikit-learn.org/stable/modules/ensemble.html
 
 emsemble方法通常分为两类：
 - averaging methods. 平均方法，使用不同的算法构建出几个不同的假设然后取平均效果。算法得到的假设都比较好但是容易overfitting, 通过取平均效果降低variance. 通常算法只是作用在部分数据上。这类方法有Bagging, Random Forest等。sklearn提供了bagging meta-estimator允许传入base-estimator来自动做averaging. RF还提供了两个不同版本，另外一个版本在生成决策树选择threshold上也做了随机。
-- boosting methods. 增强方法，使用同一个算法不断地修正和迭代然后组合。算法得到的假设一般都比较弱，但是通过组合在一起得到效果比较好的假设。通常算法作用在全部数据上。这类方法有AdaBoost, Gradient Tree Boosting等。sklearn提供的AdaBoost内部base-estimator默认是DecisionTree, 而GTB内部base-estimator固定就是decision-tree但是允许自定义损失函数。
+- boosting methods. 增强方法，使用同一个算法不断地修正和迭代然后组合。算法得到的假设一般都比较弱，但是通过组合在一起得到效果比较好的假设。通常算法作用在全部数据上。这类方法有AdaBoost, Gradient Boosting等。sklearn提供的AdaBoost内部base-estimator默认是DecisionTree, 而GBDT内部base-estimator固定就是decision-tree但是允许自定义损失函数。
 
-使用Decision Tree来做分类和回归时另外一个好处是可以知道每个feature的重要性：位于DecisionTree越高的feature越重要。不过我理解的是这种feature重要性只能用在DecisionTree这种方式上。
+使用Decision Tree来做分类和回归时另外一个好处是可以知道每个feature的重要性：位于DecisionTree越高的feature越重要。不过我的理解是这种feature重要性只能用在DecisionTree这种训练方式上。
 
-note(dirlt): 从下面程序效果上看，GBT比RF稍微差一些，并且GBT运行时间要明显长于RF。用iris数据集合的话两者效果差不多。
+note(dirlt): 从下面程序效果上看，GBDT比RF稍微差一些，并且GBDT运行时间要明显长于RF。用iris数据集合的话两者效果差不多。
 
 #+BEGIN_SRC Python
 #!/usr/bin/env python
@@ -194,6 +194,12 @@ clf.fit(X_tr, y_tr)
 y_true, y_pred = y_tt, clf.predict(X_tt)
 print(classification_report(y_true, y_pred))
 #+END_SRC
+
+*** Random Forest
+todo(dirlt):
+
+*** Gradient Boosting
+todo(dirlt):
 
 ** Model selection and evaluation
 *** Cross-validation: evaluating estimator performance
