@@ -117,7 +117,8 @@ file:./images/ntuml-linear-kernel-models.png
     - 有趣的是我们最终发现，最小值依赖于演算法。只要演算法每一轮给出的h是最优的话，那么最终Eada也是最小的。从另外一个角度来看每轮寻找最优的h本身就是在做梯度下降。
     - GD里面有下降参数a, 通常是固定值. 如果我们每一轮得到h的话，实际上我们可以做一些事情来加快学习速度（称为steepest decent).
     - 如果根据根据正确和错误分类数量来修正a的话，那么a = ln(sqrt((1-e)/e)). 这就解释了为什么AdaBoost这节中通常选择这个值来作为系数。
-  - GradientBoosting和AdaBoost方法类似，本质上我们都会通过梯度下降学习到h, 然后将这些h线性组合起来作为最终假设，而这个假设数学上可以证明损失函数(近似)最小。和RF不同，两个模型内部每次训练到的小模型，都是具有比较强的泛化能力的。至于两者之间差别，我的理解是，以regression为例，每次迭代中，GradientBoosting是通过拟合残差来得到子模型，而AdaBoost则是根据修改数据点的权重来得到子模型。
+  - GradientBoosting和AdaBoost方法类似，本质上我们都会通过梯度下降学习到h, 然后将这些h线性组合起来作为最终假设，而这个假设数学上可以证明损失函数(近似)最小。和RF不同，两个模型内部每次训练到的小模型，都是具有比较强的泛化能力的。
+  - +至于两者之间差别，我的理解是，以regression为例，每次迭代中，GradientBoosting是通过拟合残差来得到子模型，而AdaBoost则是根据修改数据点的权重来得到子模型。+ 两者之间的差别在于，AdaBoost仅仅是GradientBoost的特例（因为GradientBoost允许指定loss function. "For loss ‘exponential’ gradient boosting recovers the AdaBoost algorithm." (scikit-learn)), GradientBoost每次迭代都会根据loss来为本轮生成的小模型指定权重。 [[http://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf][这里]] 有一篇tqchen对于GradientBoost的介绍，see his [[https://github.com/tqchen/xgboost][xgboost]].
 
 ** [[file:./images/212_handout.pdf][神经网络(Neural Network)]]
   - 激活函数除了sigmoid之外，还可以是tanh(Hyperbolic Tangent, 双曲正切). tanh(x)=e^x-e^-x / e^x+e^-x. 两者之间还有一些联系tanh(x)=2*sigmoid(2x)-1.
