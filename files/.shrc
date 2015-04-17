@@ -754,3 +754,5 @@ configure_samba() {
     sudo cp $HOME/.private/files/smb.conf /etc/samba/smb.conf
     sudo service smbd restart
 }
+
+source ~/.private/files/extra.rc
