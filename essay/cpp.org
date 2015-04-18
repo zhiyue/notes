@@ -128,7 +128,7 @@ main.cc:5: error: size of array `STATIC_ASSERT_FAILED_int_MUST_BE_8_BYTES’ is 
 
 当然错误信息并不是非常的优美，但是已经提供了足够多的信息了。不过这种编译断言可能只是比较适合用于简单断言比如sizeof等，对于复杂断言话可能还是需要依赖于configure这种工具比如系统是否有libunwind库。
 
-*note(dirlt)：c++0x开始在语言层面上支持static_assert. --std=c++0x*
+c++0x(--std=c++0x)在语言层面上支持static_assert.
 
 *** renew static_cast
 学习C的时候总是认为强转不过就是二进制层面的强转。开始学习C++之后就认为C语言的强转对应的就是reinterpret_cast.而static_cast和reinterpret_cast的差别不过就是static_cast可以做一些类型上面的检查，所以在大多数的时候都习惯使用reinterpret_cast而非static_cast.直到在编写itachi（一个异步网络编程框架）的时候，才发现并不是这么回事。下面的例子是我遇到问题的一个抽象。
@@ -214,9 +214,6 @@ c:0xbfff9a9c c.g:0xbfff9aa0
    2. reinterpret_cast只有在你确定只处理某两种final类型时候，两者之间的转换。比如在内存操作时候uint8_t*和char*之间的转换
    3. const_cast只有在消除const以及volatile这些标记时候有用。
    4. dynamic_cast得到父类型但是不确定子类型的时候，你需要逐个尝试转换可以使用。但是如果外部存在字符串比如type这样的字段表示类型的话，那么可以直接使用static_cast.
-
-*** keyword
-   - __thread 线程级别全局变量
 
 ** runtime
 *** local static object
@@ -331,6 +328,7 @@ extern "C" {
 #+END_SRC
 
 **** hook运行时函数
+
 可以使用dlopen截获函数入口，然后使用dlsym(RTLD_NEXT)来获得下一个入口.我们以截获malloc为例。
 #+BEGIN_SRC C++
 #include <unistd.h>
@@ -433,24 +431,6 @@ class B{
 对于action的话需要单独编写function object来完成，operator()是这个grammar对应的字符串。定义ParserState来构建语法树是一个好主意。对于里面更多的细节现在还是不太了解，关于入门使用可以查看代码中的链接或者documentation.
 
 具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_spirit.cc][tomb/cc/test_spirit.cc]]
-
-*** google::protobuf dynamic usage
-使用google::protobuf如果我们不知道生成消息schema的话，那么就需要依赖于google::protobuf动态编译的能力了。google::protobuf支持动态地读取某个proto文件并且进行动态编译。其实这里说编译有点不太恰当，因为内部并没有生成native code,不过确实使得我们有能力去动态构造一个消息。
-
-使用动态编译的话，首先需要了解google::protobuf的反射能力，这个网上有很多关于这方面的文章，这里就不赘述。为了更好地管理动态编译代码，我单独提取了一个类ProtoDynamic，关于里面使用的类可以去阅读protobuf官方网站的documentation，大致使用到了：
-   - SourceTree/DiskSourceTree（当然自己实现SourceTree接口从内存读取Source.MemorySourceTree)
-   - Importer
-   - DynamicMessageFactory
-然后就是一些涉及到反射的类（不完全）：
-   - FileDescriptor
-   - Descriptor
-   - DescriptorPool
-   - MessageFactory
-   - Message
-   - Reflection
-   - FieldDescriptor
-
-具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_proto_dynamic.cc][tomb/cc/test_proto_dynamic.cc]]
 
 ** misc
 *** 诡异的性能问题
