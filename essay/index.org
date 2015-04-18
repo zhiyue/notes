@@ -37,6 +37,7 @@
    - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
    - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
    - [[file:caffe.org][caffe]] C++实现的深度学习框架，有python和matlab的扩展接口
+   - [[file:nolearn.org][nolearn/lasagne]] scikit-learn compatibile wrapper for neural nets. 底层可以使用不同的NN实现比如lasagne.
 
 ** Operating System
    - [[file:computer-system-reading.org][Computer System Reading]] 关于单机系统方面的一些文章以及阅读心得。
