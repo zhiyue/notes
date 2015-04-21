@@ -24,49 +24,46 @@ is_vm() {
 }
 
 # CDH settings.
-configure_cdh() {
-    local CDH3=1
-    local CDH4_2_0=0
-    local CDH4_3_0=0
+CDH3=1
+CDH4_2_0=0
+CDH4_3_0=0
 
-    # on mac
-    if [ $(is_mac) = 1 ]; then
-        HADOOP_CLASSPATH=.:$HADOOP_LZO/build/hadoop-lzo-0.4.17-SNAPSHOT.jar
-        JAVA_LIBRARY_PATH=$HADOOP_LZO/build/native/Mac_OS_X-x86_64-64/lib/
-    fi
-    if [ $CDH3 = 1 ]; then
-	export HADOOP_HOME=$HOME/utils/hadoop-0.20.2-cdh3u3/
-	export HADOOP_CONF_DIR=$HADOOP_HOME/conf
-	export HBASE_HOME=$HOME/utils/hbase-0.90.4-cdh3u3/
-	export HBASE_CONF_DIR=$HBASE_HOME/conf
-	export HIVE_HOME=$HOME/utils/hive-0.7.1-cdh3u3/
-    fi
-    if [ $CDH4_2_0 = 1 ]; then
-	export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.2.0
-	export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
-	export HBASE_HOME=$HOME/utils/hbase-0.94.2-cdh4.2.0/
-	export HBASE_CONF_DIR=$HBASE_HOME/conf
-	export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.2.0/
-    fi
-    if [ $CDH4_3_0 = 1 ]; then
-	export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.3.0
-	export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
-	export HBASE_HOME=$HOME/utils/hbase-0.94.6-cdh4.3.0/
-	export HBASE_CONF_DIR=$HBASE_HOME/conf
-	export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.3.0/
-    fi
-    HADOOP_CLASSPATH=.:$HADOOP_HOME/lib/hadoop-lzo-0.4.15.jar
-    JAVA_LIBRARY_PATH=$HADOOP_HOME/lib/native/Linux-amd64-64:$HADOOP_HOME/lib/native
-    PATH=$HADOOP_HOME/bin:$PATH
-    PATH=$HADOOP_HOME/sbin:$PATH
-    PATH=$HBASE_HOME/bin:$PATH
-    PATH=$HIVE_HOME/bin:$PATH
+if [ $(is_mac) = 1 ]; then
+    HADOOP_CLASSPATH=.:$HADOOP_LZO/build/hadoop-lzo-0.4.17-SNAPSHOT.jar
+    JAVA_LIBRARY_PATH=$HADOOP_LZO/build/native/Mac_OS_X-x86_64-64/lib/
+fi
 
-    export HADOOP_CLASSPATH
-    export JAVA_LIBRARY_PATH
-    export PATH
-}
-configure_cdh
+if [ $CDH3 = 1 ]; then
+    export HADOOP_HOME=$HOME/utils/hadoop-0.20.2-cdh3u3/
+    export HADOOP_CONF_DIR=$HADOOP_HOME/conf
+    export HBASE_HOME=$HOME/utils/hbase-0.90.4-cdh3u3/
+    export HBASE_CONF_DIR=$HBASE_HOME/conf
+    export HIVE_HOME=$HOME/utils/hive-0.7.1-cdh3u3/
+fi
+if [ $CDH4_2_0 = 1 ]; then
+    export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.2.0
+    export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
+    export HBASE_HOME=$HOME/utils/hbase-0.94.2-cdh4.2.0/
+    export HBASE_CONF_DIR=$HBASE_HOME/conf
+    export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.2.0/
+fi
+if [ $CDH4_3_0 = 1 ]; then
+    export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.3.0
+    export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
+    export HBASE_HOME=$HOME/utils/hbase-0.94.6-cdh4.3.0/
+    export HBASE_CONF_DIR=$HBASE_HOME/conf
+    export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.3.0/
+fi
+HADOOP_CLASSPATH=.:$HADOOP_HOME/lib/hadoop-lzo-0.4.15.jar
+JAVA_LIBRARY_PATH=$HADOOP_HOME/lib/native/Linux-amd64-64:$HADOOP_HOME/lib/native
+PATH=$HADOOP_HOME/bin:$PATH
+PATH=$HADOOP_HOME/sbin:$PATH
+PATH=$HBASE_HOME/bin:$PATH
+PATH=$HIVE_HOME/bin:$PATH
+
+export HADOOP_CLASSPATH
+export JAVA_LIBRARY_PATH
+export PATH
 
 # Java settings.
 if [ $(is_mac) = 1 ]; then
@@ -107,12 +104,13 @@ export SBT_HOME=$HOME/utils/sbt
 PATH=$SBT_HOME/bin:$PATH
 export SBT_OPTS="-Dsbt.global.base=$HOME/.sbt -Dsbt.ivy.home=$HOME/.ivy2"
 
+# sphinx search
+export SPHINX_HOME=$HOME/utils/sphinx-2.2.9-release
+PATH=$SPHINX_HOME/build/bin:$PATH
+
 # private key
-configure_key() {
-    ssh-add $HOME/.ssh/id_rsa 2>/dev/null
-    ssh-add $HOME/.ssh/github 2>/dev/null
-}
-configure_key
+ssh-add $HOME/.ssh/id_rsa 2>/dev/null
+ssh-add $HOME/.ssh/github 2>/dev/null
 
 # galera settings.
 # source ~/.private/files/galera.rc

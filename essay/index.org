@@ -37,7 +37,8 @@
    - [[file:docker.org][docker]] 基于lxc(linux container)的分发应用平台
    - [[file:./sklearn.org][sklearn]] python scikit learn. 机器学习包.
    - [[file:caffe.org][caffe]] C++实现的深度学习框架，有python和matlab的扩展接口
-   - [[file:nolearn.org][nolearn/lasagne]] scikit-learn compatibile wrapper for neural nets. 底层可以使用不同的NN实现比如lasagne.
+   - [[file:nolearn.org][nolearn]] scikit-learn compatibile wrapper for neural nets. 底层可以使用不同的NN实现比如 [[file:./caffe.org][caffe]], [[https://github.com/Lasagne/Lasagne][lasagne]].
+   - [[file:./sphinx-search.org][sphinx]] C++实现的全文检索引擎，可以很容易地替换掉MySQL内置的全文检索(FTS)实现
 
 ** Operating System
    - [[file:computer-system-reading.org][Computer System Reading]] 关于单机系统方面的一些文章以及阅读心得。

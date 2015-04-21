@@ -1,9 +1,11 @@
 * cpp
+推荐材料
    - The C Programming Language(DMR & BWK)
-   - C and Pointers
    - The C++ Programming Language(BS)
+   - C and Pointers
    - Thinking in C++
    - http://www.cplusplus.com/doc/tutorial/
+   - https://isocpp.org/get-started
    - TCC : Tiny C Compiler http://bellard.org/tcc/
 
 ** language
