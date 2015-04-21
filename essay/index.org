@@ -129,7 +129,7 @@
      - [[file:./mapreduce-a-major-step-backwards-ii.org][MapReduce: A major step backwards-ii]] PDBMS阵营对MR阵营的第二轮批评
      - [[file:./a-comparison-of-approaches-to-large-scale-data-analysis.org][A Comparison of Approaches to Large-Scale Data Analysis]]
      - [[file:./mapreduce-a-flexible-data-processing-tool.org][MapReduce: A Flexible Data Processing Tool]] MR阵营对PDBMS阵营的回应
-     - [[file:./mapreduce-and-parellel-dbmss-friends-or-foes.org][MapReduce and Parallel DBMSs: Friends or Foes?]] PDBMS阵营和MR阵营达成和解
+     - [[file:mapreduce-and-parellel-dbms-friends-or-foes.org][MapReduce and Parallel DBMSs: Friends or Foes?]] PDBMS阵营和MR阵营达成和解
      - [[file:./mapreduce-versus-parellel-dbms.org][MapReduce Versus Parallel DBMS]]
      - [[file:./distributed-algorithms-in-nosql-databases.org][Distributed Algorithms in NoSQL Databases]]
      - [[file:./mapreduce-a-minor-step-forward.org][MapReduce: A Minor Step Forward]] James Hamilton对PDBMS和MR的看法
