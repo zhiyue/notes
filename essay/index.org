@@ -254,21 +254,11 @@
    - [[file:./google-io.org][Google I/O]]
 
 ** About Me
-My name is Zhang Yan(yan.zhang). I get MS. at [[http://www.sdu.edu.cn/][Shandong University]] on Computer Science and BEng. at [[http://www.sdu.edu.cn/][Shandong University]] on Electronic Engineering. I currently work as Software Architect in Data Platform Team at [[http://www.umeng.com/][Umeng]] which focus on mobile analytics since 2012.5 where I mainly work on building the infrastructure of big data processing. From 2010.6 to 2012.6, I have been a Senior Software Engineer at [[http://www.baidu.com/][Baidu]] Infrastructure Tream where I wrote libraries, tools, services and distributed systems. From 2008.7 to 2010.6, I have been a Software Engineering Intern at [[http://www.baidu.com/][Baidu]] Component Tream where I wrote libraries and tools. And here is my [[file:./resume.org][resume]].
-
-My code name is [[file:images/mysterious.gif][dirtysalt]] or dirlt. It's translated from my chinese name. The translation works as following: 1) 'zhang' in CN pronounce like 'dirty' in EN. 2) 'yan' in CN pronounce like in 'salt' in EN. 3) then my code name is the combination of 'dirty' and 'salt' as 'dirtysalt'. 4) 'dirtysalt' can be abbreviated to 'dirlt'.
-
-Here is my contact info. I think email is the easiest way to get me.
-   - mail dirtysalt1987@gmail.com
-   - linkedin http://www.linkedin.com/in/dirlt
-   - weibo http://weibo.com/dirlt
-   - twitter https://twitter.com/dirtysalt
-   - github https://github.com/dirtysalt
-   - 简书(随便写写) http://www.jianshu.com/users/8bd69eb6a57a/
-   - talks
-     - [[file:images/um-arch.pdf][Umeng Analytical Architecture]]
-     - [[file:images/um-talk.pdf][如何在一天之内收集3.6亿移动设备的数据]]
-   - [[file:jobs.org][jobs]] at [[http://www.umeng.com/][友盟(Umeng)]] 可以找我推荐
-   - recomended tech [[file:link.org][links]] and personal non-tech [[file:note.org][notes]]
-
-[[file:note.org][Here]] are my some notes written casually to record my life footprint. I think it will be fun to read them when I became old. My favouritest words comes from the idea of [[http://www.valvesoftware.com/][Valve]] : "Open your mind, Open your eyes" (放眼未来，自由想象), with a [[file:images/valve-logo.jpg][image]] from its game "Half Life".
+- dirtysalt1987 AT gmail.com, [[file:./resume.org][CV]]
+- [[http://www.linkedin.com/in/dirlt][LinkedIn]], [[http://weibo.com/dirlt][Weibo]], [[https://twitter.com/dirtysalt][Twitter]], [[https://github.com/dirtysalt][GitHub]]
+- 简书(随便写写) http://www.jianshu.com/users/8bd69eb6a57a/
+- recomended tech [[file:link.org][links]] and personal non-tech [[file:note.org][notes]]
+- talks
+   - [[file:images/um-arch.pdf][Umeng Analytical Architecture]]
+   - [[file:images/um-talk.pdf][如何在一天之内收集3.6亿移动设备的数据]]
+- motto: "[[file:images/valve-logo.jpg][Open your mind, Open your eyes]]" (放眼未来，自由想象) -- [[http://www.valvesoftware.com/][Valve]] 

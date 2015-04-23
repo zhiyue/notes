@@ -86,6 +86,10 @@ IBase COM(component) Team.
 
 - maintainer and developer of Baidu common libraries including Ullib(wraps socket io, file io, and some linux syscalls etc.), ComDB(a embedded high-performance key value storage system), memory allocator, character encoding, regular expression, signature and hash algorithm, url handling, http client etc.
 
+* Education
+- MS. Computer Science. [[http://www.sdu.edu.cn/][Shandong University]]
+- BE. Electronic Engineering. [[http://www.sdu.edu.cn/][Shandong University]]
+
 * Chinese
 *** 职业技能
 - 大规模分布式系统设计和实现
