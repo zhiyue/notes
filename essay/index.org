@@ -255,8 +255,7 @@
 
 ** About Me
 - dirtysalt1987 AT gmail.com, [[file:./resume.org][CV]]
-- [[http://www.linkedin.com/in/dirlt][LinkedIn]], [[http://weibo.com/dirlt][Weibo]], [[https://twitter.com/dirtysalt][Twitter]], [[https://github.com/dirtysalt][GitHub]]
-- 简书(随便写写) http://www.jianshu.com/users/8bd69eb6a57a/
+- [[http://www.linkedin.com/in/dirlt][LinkedIn]], [[http://weibo.com/dirlt][微博]], [[https://twitter.com/dirtysalt][Twitter]], [[https://github.com/dirtysalt][GitHub]], [[http://www.jianshu.com/users/8bd69eb6a57a/][简书]]
 - recomended tech [[file:link.org][links]] and personal non-tech [[file:note.org][notes]]
 - talks
    - [[file:images/um-arch.pdf][Umeng Analytical Architecture]]
