@@ -13,6 +13,7 @@ ZMQ (ZeroMQ, 0MQ, zmq) looks like an embeddable networking library but acts like
    - http://zguide.zeromq.org/page:all
    - http://api.zeromq.org/2-1:_start
    - http://www.zeromq.org/whitepapers:multithreading-magic
+   - python binding: http://zeromq.github.io/pyzmq/
 
 ZMQ总结了几种消息通信模型可以覆盖所有的应用程序，分别是下面这几种：
    - Exclusive-Pair
