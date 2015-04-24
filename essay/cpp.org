@@ -1,12 +1,11 @@
-* cpp
-推荐材料
+* cxx
    - The C Programming Language(DMR & BWK)
-   - The C++ Programming Language(BS)
    - C and Pointers
+   - TCC : Tiny C Compiler http://bellard.org/tcc/
+   - The C++ Programming Language(BS)
    - Thinking in C++
    - http://www.cplusplus.com/doc/tutorial/
    - https://isocpp.org/get-started
-   - TCC : Tiny C Compiler http://bellard.org/tcc/
 
 ** language
 *** new/delete
@@ -209,7 +208,7 @@ c:0xbfff9a9c c.g:0xbfff9aa0
 问题出来了，并不像我们想的那样，pb->g和c.g的地址是一样的。但是神奇的是，o和c的地址是不一样的。这是为什么呢？原因就在于static_cast.在传参的时候，根据形参和实参之间的类型信息来进行指针的转换。 *也就是说，static_cast能够正确处理类型系统。而这点reintrepret_cast是做不到的。*
 
 **** 应该怎么做
-*因为自己也缺乏C++对象模型方面的知识，所以也没有办法从底层解释原因。* 但是结论我想说的就是，尽量地执行static_cast而非reinterpret_cast.reinterpret_cast对于继承方面基本没有做任何事情，而使用static_cast的话则能够检测到类型系统，然后根据类型系统来进行正确的转换。 *要是想对于static_cast有更多认识的话，必须看看C++对象模型的实现。*
+*因为自己也缺乏C++对象模型方面的知识，所以也没有办法从底层解释原因。* 但是结论却非常简单，就是应该尽量地执行static_cast而非reinterpret_cast. reinterpret_cast对于继承方面基本没有做任何事情，而使用static_cast的话则能够检测到类型系统，然后根据类型系统来进行正确的转换。 要是想对于static_cast有更多认识的话，需要了解C++对象模型的实现。
 
 下面我总结了一下各种cast应该使用的场景：
    1. static_cast无论如何应该首先考虑使用，而且编译器在生成函数调用时候内部也是在用static_cast.
@@ -390,57 +389,12 @@ int main() {
 #+END_SRC
 这里(s1+s2)生成了一个临时对象但是却没有存放的内容，所以后续继续引用s是会出问题的。
 
-** library
-*** boost::bind
-之前看到陈硕同学在[[http://blog.csdn.net/solstice/][博客]] 给出的C++工程实践推荐，使用boost::function和boost::bind代替虚函数。之所以我们需要使用虚函数，无非就是希望统一执行接口。统一接口通过虚函数是一种方法，而使用boost::function和boost::bind也可以达到相同的目的。
+*** malloc warmup performance
+下面是我之前碰到的因为malloc warmup导致的性能差异巨大的问题。
 
-首先我们假设存在一个Executor类，里面有一个执行队列，所有的Task首先被push进来然后遍历执行。对于这个Task我们本身只需要一个执行接口void fun(Executor*).如果通过虚函数实现的话，我们需要定义一个abstract class含有virtual函数，然后在具体的类里面实现它。但是如果很不幸的话我们原本定义的类不是这样的，而是
-#+BEGIN_SRC C++
-class A{
- public:
-  void fun(Executor* x,std::string s){
-    std::cout << "executor=" << x << ", s=" << s << std::endl;
-  }
-}; // class A
-
-class B{
- public:
-  void fun(Executor* x,int s){
-    std::cout << "executor=" << x << ", s=" << s << std::endl;
-  }
-}; // class B
-#+END_SRC
-
-那我们必须重新定义AdapterA以及AdapterB封装一下。实现上可能非常简单，内部存下std::string以及int的内容，外加一个A,B的指针，在fun里面调用A,B的fun实现并且把内容传进去调用。
-
-这是一种蹩脚的方法，类的个数会急剧膨胀。但是如果我们使用boost::function和boost::bind的话，可以不用添加新的Adapter类来解决这个问题。
-#+BEGIN_SRC C++
-  x.push(boost::bind(&A::fun,&a,_1,"hello"));
-  x.push(boost::bind(&A::fun,&a,_1,"world"));
-  x.push(boost::bind(&B::fun,&b,_1,123));
-  x.push(boost::bind(&B::fun,&b,_1,456));
-#+END_SRC
-
-这里_1是boost::bind导出的符号表示占位符，这个参数表示接口中的第一个参数，这里不进行绑定。第一个参数表示函数地址，如果是成员函数的话那么需要传入对象地址（这里对于对象内存管理的话，可能需要智能指针的帮助。可以参考http://xuchaoqian.com/?p=797)。事实上稍微猜想一下boost::function和boost::bind实现，boost::function用于产生新的类型，boost::bind用于产生这个类型的对象，并且将指针以及所需要的closure context都绑定上去。我本来想实现的，但是发现基于模板的元编程，我确实不会:(
-
-之后我在想，虽然这个方式不错消除继承完全按照基于对象的方式编程，但是如果对于对象所需要的接口非常多的话，并且虚函数本身就是语言内置的特性，相对来说使用起来会更加方便。下面是可编译的示例代码之后我在想，虽然这个方式不错消除继承完全按照基于对象的方式编程，但是如果对于对象所需要的接口非常多的话，并且虚函数本身就是语言内置的特性，相对来说使用起来会更加方便。
-
-具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_bind.cc][tomb/cc/test_bind.cc]]
-
-*** boost::spirit
-今天被Dr. Yang推荐使用boost::spirit，模板编程实现的语法解析器。Dr. Yang推荐我看看hypertable里面实现的hql，里面就是使用spirit实现的hql(hypertable query language)，在src/cc/Hypertable/Lib/HqlParser.h里面。粗看一下功能还是非常强大的，对于很多使用flex/bison完成的工作都可以通过spirit来完成。看上去是LALR解析器，现在不太清楚就是如果出现shift/reduce或者是reduce/reduce冲突的话spirit是怎么解决的。note(dirlt):事实上是LL解析器，而且如果没有猜错应该是LL(1)解析器。
-
-对于action的话需要单独编写function object来完成，operator()是这个grammar对应的字符串。定义ParserState来构建语法树是一个好主意。对于里面更多的细节现在还是不太了解，关于入门使用可以查看代码中的链接或者documentation.
-
-具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_spirit.cc][tomb/cc/test_spirit.cc]]
-
-** misc
-*** 诡异的性能问题
-*note(dirlt)：现在我觉得可能是glibc的问题，而非编译器的问题*
-
-程序代码如下。程序非常简单，action是为了测试一下以string为key的map性能，action2是为了测试一下以int为key的map性能。然后我们分两组测试运行：
-   0. 运行action，然后运行action2
-   1. 只运行action2
+程序有两个函数，action是为了测试一下以string为key的map性能，action2是为了测试一下以int为key的map性能。然后我们分两组测试运行：
+- 运行action，然后运行action2
+- 只运行action2
 #+BEGIN_SRC C++
 /* coding:utf-8
  * Copyright (C) dirlt
@@ -500,7 +454,7 @@ int main() {
 }
 #+END_SRC
 
-*在自己的Ubuntu机器下面使用g++4.6编译* 运行结果如下。可以看到测试组1里面action2运行时间为2.9s左右，而测试组2里面action2运行时间为8.5s *时间差别很大*
+在自己的Ubuntu机器下面使用g++4.6编译运行结果如下。可以看到测试组1里面action2运行时间为2.9s左右，而测试组2里面action2运行时间为8.5s 时间差别很大
 #+BEGIN_EXAMPLE
 ➜  tomb git:(master) ✗ g++ map_perf_test.cc -O2
 ➜  tomb git:(master) ✗ ./a.out
@@ -511,7 +465,7 @@ int main() {
 8521.25
 #+END_EXAMPLE
 
-可能是编译器的原因？ *在自己的Ubuntu机器下面clang++来编译，时间差别同样很大*
+可能是编译器的原因？ 在自己的Ubuntu机器下面clang++来编译，时间差别同样很大
 #+BEGIN_EXAMPLE
 ➜  tomb git:(master) ✗ clang++ map_perf_test.cc -O2
 ➜  tomb git:(master) ✗ ./a.out
@@ -522,7 +476,7 @@ int main() {
 8495.00
 #+END_EXAMPLE
 
-*在自己的macbook air下面使用clang重新编译，时间是差不多的*
+在自己的macbook air下面使用clang重新编译，时间是差不多的
 #+BEGIN_EXAMPLE
 ➜  tomb git:(master) ✗ g++ map_perf_test.cc -O2
 ➜  tomb git:(master) ✗ ./a.out
@@ -533,12 +487,242 @@ tomb git:(master) ✗ g++ map_perf_test.cc -O2
 4214.48
 #+END_EXAMPLE
 
-*note(dirlt):另外我让同事在其他机器上使用g++3.4.5编译运行，时间差别也非常大*
+另外我让同事在其他机器上使用g++3.4.5编译运行，时间差别也非常大
 
------
-
-看来确实是glibc的内存分配问题，多谢微博 @Thomas 的指导。strace两个binary发现：
+多谢 @Thomas 的指导，通过strace发现确实是glibc的内存分配问题。strace两个binary发现：
    - action调用了很多brk（8288次）,mmap（17次）来分配内存，每次都是分配小内存.运行完成之后这些内存buffer起来了。
    - 在action调用之后的action2没有调用任何系统调用分配内存，都是在用户态完成。
    - 而如果没有action先调用的话，action2就需要自己调用brk（4737次）,mmap（17次），所以比较耗时。
 改用 [[file:tcmalloc.org][tcmalloc]] 之后没有这个问题了。tcmalloc调用brk（541次），mmap（500次）。
+** library
+*** boost::bind
+之前看到陈硕同学在[[http://blog.csdn.net/solstice/][博客]] 给出的C++工程实践推荐，使用boost::function和boost::bind代替虚函数。之所以我们需要使用虚函数，无非就是希望统一执行接口。统一接口通过虚函数是一种方法，而使用boost::function和boost::bind也可以达到相同的目的。
+
+首先我们假设存在一个Executor类，里面有一个执行队列，所有的Task首先被push进来然后遍历执行。对于这个Task我们本身只需要一个执行接口void fun(Executor*).如果通过虚函数实现的话，我们需要定义一个abstract class含有virtual函数，然后在具体的类里面实现它。但是如果很不幸的话我们原本定义的类不是这样的，而是
+#+BEGIN_SRC C++
+class A{
+ public:
+  void fun(Executor* x,std::string s){
+    std::cout << "executor=" << x << ", s=" << s << std::endl;
+  }
+}; // class A
+
+class B{
+ public:
+  void fun(Executor* x,int s){
+    std::cout << "executor=" << x << ", s=" << s << std::endl;
+  }
+}; // class B
+#+END_SRC
+
+那我们必须重新定义AdapterA以及AdapterB封装一下。实现上可能非常简单，内部存下std::string以及int的内容，外加一个A,B的指针，在fun里面调用A,B的fun实现并且把内容传进去调用。
+
+这是一种蹩脚的方法，类的个数会急剧膨胀。但是如果我们使用boost::function和boost::bind的话，可以不用添加新的Adapter类来解决这个问题。
+#+BEGIN_SRC C++
+  x.push(boost::bind(&A::fun,&a,_1,"hello"));
+  x.push(boost::bind(&A::fun,&a,_1,"world"));
+  x.push(boost::bind(&B::fun,&b,_1,123));
+  x.push(boost::bind(&B::fun,&b,_1,456));
+#+END_SRC
+
+这里_1是boost::bind导出的符号表示占位符，这个参数表示接口中的第一个参数，这里不进行绑定。第一个参数表示函数地址，如果是成员函数的话那么需要传入对象地址（这里对于对象内存管理的话，可能需要智能指针的帮助。可以参考http://xuchaoqian.com/?p=797)。事实上稍微猜想一下boost::function和boost::bind实现，boost::function用于产生新的类型，boost::bind用于产生这个类型的对象，并且将指针以及所需要的closure context都绑定上去。我本来想实现的，但是发现基于模板的元编程，我确实不会:(
+
+之后我在想，虽然这个方式不错消除继承完全按照基于对象的方式编程，但是如果对于对象所需要的接口非常多的话，并且虚函数本身就是语言内置的特性，相对来说使用起来会更加方便。下面是可编译的示例代码之后我在想，虽然这个方式不错消除继承完全按照基于对象的方式编程，但是如果对于对象所需要的接口非常多的话，并且虚函数本身就是语言内置的特性，相对来说使用起来会更加方便。
+
+具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_bind.cc][tomb/cc/test_bind.cc]]
+
+*** boost::spirit
+今天被Dr. Yang推荐使用boost::spirit，模板编程实现的语法解析器。Dr. Yang推荐我看看hypertable里面实现的hql，里面就是使用spirit实现的hql(hypertable query language)，在src/cc/Hypertable/Lib/HqlParser.h里面。粗看一下功能还是非常强大的，对于很多使用flex/bison完成的工作都可以通过spirit来完成。看上去是LALR解析器，现在不太清楚就是如果出现shift/reduce或者是reduce/reduce冲突的话spirit是怎么解决的。note(dirlt):事实上是LL解析器，而且如果没有猜错应该是LL(1)解析器。
+
+对于action的话需要单独编写function object来完成，operator()是这个grammar对应的字符串。定义ParserState来构建语法树是一个好主意。对于里面更多的细节现在还是不太了解，关于入门使用可以查看代码中的链接或者documentation.
+
+具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_spirit.cc][tomb/cc/test_spirit.cc]]
+
+** c++11
+C++11在C++03上做了许多改进，而且都是非常实用的改进。BS在自己的主页上列出了这些改进的 [[http://www.stroustrup.com/C++11FAQ.html][细节]], 有位国内开发者把它翻译成了 [[http://www.chenlq.net/cpp11-faq-chs][中文]] (非常感谢).
+
+下面这几篇文章介绍了其中一些对于大部分C++使用者来说会更加关心的改进
+- Continuous Learning : C++ 11 Tutorial : http://learnandexperiment.blogspot.com/2013/07/c-11-tutorial.html
+- Ten C++11 Features Every C++ Developer Should Use - CodeProject : http://www.codeproject.com/Articles/570638/Ten-Cplusplus-Features-Every-Cplusplus-Developer
+- The Biggest Changes in C++11 (and Why You Should Care) : http://blog.smartbear.com/c-plus-plus/the-biggest-changes-in-c11-and-why-you-should-care/
+
+这里我把文章里面所涉及的改进全部列了出来
+- auto. auto是C的关键字，表示变量空间是自动分配的（相对应的是regsiter），但是实际上几乎所有的编译器都忽略这个关键字。在C++11里面给这个关键字赋予了新的语义，就是做类型推导。
+- decltype. decltype(expression)可以返回expression的类型定义。在C++03的时候，如果想获得某个表达式的类型的话，只能使用g++扩展关键字typeof(expression).
+- nullptr. C++11引入的空指针关键字，类型是std::nullptr_t. nullptr可以隐式转换为任意指针类型以及bool类型，但是却不能够转换为int类型了(之前NULL本身就是#define NULL (0)).
+- strongly-typed enums. C++03会把enum class 1. 定义对象导出到外部作用域（可能会出现名字冲突）2. 隐式地将枚举对象转换为整数值 3. 不创建这个枚举类型。C++11取消了这些特殊处理。
+- override/final. 这两个关键字只有出现在成员函数声明最后如void foo() [...]才有用。override要解决的问题是，确保这个函数是重写(override)而不是重载(overload)子类中的某个虚函数. final则是希望某个虚函数不要被重写(override).
+- default/delete. 这两个关键字同样要出现在成员函数声明之后入void foo() = [...]. 通常作用在构造函数上。default告诉编译器为这个函数生成默认实现. delete则告诉编译器删除这个函数实现（禁止拷贝或赋值构造）
+- static_assert/type_traits. type_traits提供一系列template function来对类型做判断. 在C++03做静态断言static_assert需要使用workaround办法，但是在C++11就直接提供了。
+- delegating constructors. 代理构造函数.
+- range-based for statement. 可以使用for(auto& e: v)这种简洁的语法来编译容器
+- uniform initialization syntax. 统一的初始化语法，全部使用{}来包含参数。比如构造函数是A(int a, float b)的话，可以使用A a{1, 2.3};来构造对象
+- in-class member initializers. 类成员的内部初始化。类成员初始化可以不用在构造函数内完成，可以直接在类的内部完成初始化（必须是编译期可以确定的常量表达式）
+- inline namespace. 内联名字空间。如果一个名字空间是inline namespace XXX定义的，并且被包含在namespace YYY里面的话，那么XXX内部成员f可以使用YYY::f引用，也可以使用YYY::XXX::f引用（可以处理代码向后兼容问题）
+- initializer lists. 初始化列表。许多stl容器比如vector, map支持初始化列表，也就是说可以这样vector<int> a {1,2,3};来构造。初始化列表具体类型是std::initializer_list<E>.
+- right-angle brackets. 右角括号这个问题在C++03非常恼人，就是写嵌套容器时必须这样vector<vector<A> >. C++11解决了这个问题
+- 除此之外还有suffix return type syntax, rvalue reference and move semantics, lambda expression等一些改进放在后面单独说
+
+使用<thread>必须加上编译参数-pthread.
+
+-----
+
+*suffix return type syntax(返回值类型后置语法)* 一开始我以为这个语法，是为了解决编写模板函数的时候，auto不能自动推导函数返回类型而设计的。比如下面这段程序
+#+BEGIN_SRC C++
+template<typename T1, typename T2>
+auto bar(const T1 a, const T2 b) -> decltype(a + b) {
+    return a + b;
+}
+#+END_SRC
+如果我们不使用"-> decltype(a+b)"这个后置语法的话，那么编译器就不知道bar应该返回什么类型。但是事实却是，编译器已经足够强大到推测返回类型了，所以我们不告诉编译器返回值类型也可以（但是会有warning）
+
+实际按照BS的 [[http://www.stroustrup.com/C++11FAQ.html#suffix-return][想法]], 一开始这个语法的引入，却是为了解决作用域问题的。比如下面这段程序
+#+BEGIN_SRC C++
+class A {
+  public:
+    class B {};
+    B foo();
+};
+
+// A::B A::foo() { return B(); }
+auto A::foo() -> B { return B(); }
+#+END_SRC
+如果我们按照第一种写法编写foo的话，返回值必须写明A::B, 因为再此之前还没有进去A作用域所以要写全名。而使用第二种写法的话，因为我们已经限定了在A作用域下，所以返回类型可以直接写B
+
+-----
+
+*lambda expression(lambda表达式，匿名函数)*. 语法大致是这样的[capture](parameters) [suffix-return-type] { body }. 就像之前说的那样，C++11类型推导能力非常强大，所以suffix-return-type通常是可选的。
+- capture 是指我们需要捕获哪些外部变量
+- parameters 则是匿名函数的参数列表
+- body 则是匿名函数的函数体
+在capture这个部分中，&v表示使用变量v的引用，=v表示使用v的copy(read-only). 如果是[&]表示所有外部变量的使用都是引用方式，如果是[=]表示所有外部变量使用都是传值方式。
+
+匿名函数类型是std::function<[actual-type>].(defined in <functional>). 比如[](int a, int b) { return a + b; }的类型就是std::function<int(int,int)>. 虽然匿名函数可以捕获变量，但是并不意味着实现了闭包。下面这个程序中，lambda引用了count，但是在调用的时候count已经被销毁了，所以会出现运行错误。
+#+BEGIN_SRC C++
+#include <functional>
+#include <iostream>
+using namespace std;
+
+std::function<int()> foo() {
+    int count = 0;
+    auto f = [&count]() {
+        count += 1;
+        return count;
+    };
+    return f;
+}
+
+int main() {
+    auto f = foo();
+    auto x = f();
+    // cout << x << endl;
+}
+#+END_SRC
+
+这里还想说一下就是，C++11也把bind纳入stl了（smart pointers, atomic, thread这些原来都在boost的组件都纳入stl了）. 
+#+BEGIN_SRC C++
+#include <functional>
+#include <iostream>
+using namespace std;
+using std::placeholders::_1;
+using std::placeholders::_2;
+using std::placeholders::_3;
+int foo(int a, int b, int c) {
+    return a + b + c;
+}
+int main() {
+    auto f1 = bind(foo, 1, 2, _1);
+    auto f2 = bind(foo, _1, _2, 3);
+    cout << f1(10) << ", " << f2(2,4) << endl;
+    return 0;
+}
+#+END_SRC
+
+
+-----
+
+*rvalue references and move semantics(右值引用以及移动语义)*. 右值引用比较奇怪的一个地方是，你可以认为它是一个非常容易挥发的东西。因为一旦你使用A&& a = foo();获得右值引用的时候，其实你已经获得了左值a（并且发生了copy ctor或者是move ctor, 这个根据是否有move ctor决定的）. 只有在move ctor或者是move assignment时候我们才能够瞬间捕获到右值引用。想要把一个左值变为右值可以使用std::move函数。下面是我的实验代码，可以加深理解
+#+BEGIN_SRC C++
+#include <cstdio>
+#include <iostream>
+
+#if (__cplusplus > 199711L)
+#define cxx0x
+#endif
+
+#include <memory>
+using namespace std;
+
+
+class A {
+  public:
+    int v;
+    A(): v(123) {
+        cout << "ctor" << endl;
+    }
+    A(const A& x) {
+        cout << "copy ctor" << endl;
+        cout << &x << " -> " << this << endl;
+    }
+#ifdef cxx0x
+    A(A&& x) {
+        cout << "move ctor" << endl;
+        cout << &x << " -> " << this << endl;
+    }
+#endif
+};
+
+// 这里增加条件语句，可以使得编译器不会直接在返回地址上开辟对象A
+// 从而达到实验目的，否则只会调用一次ctor而不会调用copy ctor/move ctor.
+static int x = 0;
+A bar() {
+    if (x == 0) {
+        A a;
+        cout << "inside bar: " << &a << endl;
+        return a;
+    } else {
+        return A();
+    }
+    // return A();
+}
+
+#ifdef cxx0x
+int foo1() {
+    cout << "----- foo1(test c++0x) -----" << endl;
+    A&& pa = bar();
+    // 虽然这里写的是&&, 但是实际上效果等同于A pa = bar();
+    // 这个pa已经在stack上分配出来了. use move ctor.
+    cout << "pa = " << &pa << "/" << &(pa.v) << endl;
+
+    cout << "-----" << endl;
+    A pb = pa; // copy ctor.
+    cout << "pb = " << &pb << endl;
+
+    cout << "-----" << endl;
+    A pc = std::move(pb); // move ctor.
+    cout << "pc = " << &pc << endl;
+    return 0;
+}
+#endif
+
+int foo2() {
+    cout << "----- foo2(test c++03) ----" << endl;
+    // move ctor in c++0x.
+    // copy ctor in c++03.
+    A pa = bar();
+    cout << "pa = " << &pa << "/" << &(pa.v) << endl;
+
+    cout << "-----" << endl;
+    A pb = pa; // copy ctor.
+    cout << "pb = " << &pb << endl;
+    return 0;
+}
+
+int main() {
+#ifdef cxx0x
+    foo1();
+    cout << endl << endl;
+#endif
+    foo2();
+}
+#+END_SRC
