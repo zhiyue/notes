@@ -167,6 +167,7 @@
    - sudo apt-get install python-pandas
    - sudo apt-get install python-skimage
    - sudo apt-get install python-skimage-doc
+   - sudo apt-get install doxygen
 
 ** 系统配置
 *** 察看ubuntu内部版本

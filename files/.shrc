@@ -20,7 +20,8 @@ is_mac() {
 }
 # in virtual machine or not.
 is_vm() {
-    if [ "$USER" != "dirlt" ]; then echo "1"; else echo "0"; fi
+    # special file.
+    if [ -e "$HOME/.vmflag" ]; then echo "1"; else echo "0"; fi
 }
 
 # CDH settings.
@@ -111,9 +112,6 @@ PATH=$SPHINX_HOME/build/bin:$PATH
 # private key
 ssh-add $HOME/.ssh/id_rsa 2>/dev/null
 ssh-add $HOME/.ssh/github 2>/dev/null
-
-# galera settings.
-# source ~/.private/files/galera.rc
 
 KAFKA_HOME=$HOME/utils/kafka_2.10-0.8.2.1
 # KAFKA_HOME=$HOME/utils/kafka_2.10-0.8.1.1
