@@ -622,7 +622,7 @@ __tm_soft_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
-    if [ -e $src ]; then
+    if [ -e "$src/$d/" ]; then
         mkdir -p "$dst/$d/" 2>/dev/null
         echo "soft sync $d..."
         rsync -arz --no-times "$src/$d/" "$dst/$d/"
@@ -633,7 +633,7 @@ __tm_hard_sync_dir() {
     local src=$1
     local dst=$2
     local d=$3
-    if [ -e $src ]; then
+    if [ -e "$src/$d/" ]; then
         mkdir -p "$dst/$d/" 2>/dev/null
         echo "hard sync $d..."
         rsync -arz --delete --no-times "$src/$d/" "$dst/$d/"
@@ -692,8 +692,11 @@ __time_machine_sync() {
         __tm_hard_sync_dir $src $dst "repo/oh-my-zsh"
         __tm_hard_sync_dir $src $dst "repo/tomb"
         __tm_hard_sync_dir $src $dst "repo/itachi"
+        __tm_hard_sync_dir $src $dst "repo/common"
         __tm_hard_sync_dir $src $dst "repo/hardseed"
         __tm_hard_sync_dir $src $dst "repo/scikit-learn"
+        __tm_hard_sync_dir $src $dst "repo/scikit-nolearn"
+        __tm_hard_sync_dir $src $dst "repo/lasagne"
     fi
 }
 
@@ -704,7 +707,7 @@ _setup_time_machine_dir() {
         if [ -e "/media/dirlt/LP250G/Ubuntu Backup" ]; then
             ln -s "/media/dirlt/LP250G/Ubuntu Backup" $TIME_MACHINE_DIR
         elif [ -e "/media/dirlt/Expansion Drive/Ubuntu Backup" ]; then
-            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup"$TIME_MACHINE_DIR
+            ln -s "/media/dirlt/Expansion Drive/Ubuntu Backup" $TIME_MACHINE_DIR
         fi
     fi
 }
