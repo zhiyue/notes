@@ -33,10 +33,11 @@ sudo apt-get update
 sudo apt-get install lxc lxc-docker
 #+END_EXAMPLE
 
-*note(dirlt): 高版本docker不再使用lxc而是使用libcontainer作为默认容器格式*
+高版本docker不再使用lxc而是使用libcontainer作为默认容器格式
 #+BEGIN_VERSE
 Container format. Docker combines these components into a wrapper we call a container format. The default container format is called libcontainer. Docker also supports traditional Linux containers using LXC. In the future, Docker may support other container formats, for example, by integrating with BSD Jails or Solaris Zones.
 #+END_VERSE
+
 如果需要使用lxc作为container format的话必须修改配置文件/etc/default/docker.
 #+BEGIN_EXAMPLE
 DOCKER_OPTS="-e lxc"
@@ -47,7 +48,7 @@ DOCKER_OPTS="-e lxc"
 docker使用cs架构，所以即使在本地运行也需要启动一个daemon的docker server进程
    - sudo service docker [command]
    - sudo docker -d &
-默认server使用unix:///var/run/docker.sock做通信，因为这个文件owner是root，所以所有docker命令必须以sudo开头。所以修改这个文件的owner为普通用户的话就可以不用sudo开头。不过如果不使用默认值的话，那么所有docker命令都要添加-H来指定通讯方式，比较繁琐. 关于docker server命令可以man docker.  *note(dirlt): 可以通过修改配置文件/etc/default/docker来解决这个问题。也可以通过将自己加入到docker组这样不用每次都使用sudo.*
+默认server使用unix:///var/run/docker.sock做通信，因为这个文件owner是root，所以所有docker命令必须以sudo开头。所以修改这个文件的owner为普通用户的话就可以不用sudo开头。不过如果不使用默认值的话，那么所有docker命令都要添加-H来指定通讯方式，比较繁琐. 关于docker server命令可以man docker.  我们可以修改配置文件/etc/default/docker或者将自己加入到docker组，这样不用每次都使用sudo.
 
 docker大部分使用方式都是集中在client上. 每个命令都有非常多的参数可以使用，可以man docker-<command>比如man docker-run察看
 
