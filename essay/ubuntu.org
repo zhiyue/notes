@@ -12,7 +12,7 @@
    - #sudo apt-get install recordmydesktop # 录制桌面
    - sudo apt-get install kchmviewer # chm阅读
    - sudo apt-get install git
-   - sudo apt-get install subversion
+   - # sudo apt-get install subversion
    - sudo apt-get install htop
    - sudo apt-get install dstat
    - sudo apt-get install sysstat
@@ -54,9 +54,9 @@
    - sudo apt-get install linux-tools-common
    - sudo apt-get install linux-base
    - #sudo apt-get install mercurial
-   - sudo apt-get install golang-go
-   - sudo apt-get install golang-doc
-   - sudo apt-get install clisp
+   - #sudo apt-get install golang-go
+   - #sudo apt-get install golang-doc
+   - #sudo apt-get install clisp
    - sudo apt-get install flex
    - sudo apt-get install bison
    - sudo apt-get install iotop
@@ -71,17 +71,17 @@
    - #sudo apt-get install firefox
    - #sudo apt-get install thunderbird
    - #sudo apt-get install dkms
-   - #sudo apt-get install virtualbox
+   - sudo apt-get install virtualbox
    - #sudo apt-get install virtualbox-dkms
    - #sudo apt-get install virtualbox-guest-additions # 设置windows虚拟机共享文件夹
-   - sudo apt-get install virtualbox-guest-dkms
+   - #sudo apt-get install virtualbox-guest-dkms
    - sudo apt-get install ntp
    - sudo apt-get install systemtap
-   - sudo apt-get install clojure1.4
-   - sudo apt-get install clojure-contrib
-   - sudo apt-get install leiningen
+   - #sudo apt-get install clojure1.4
+   - #sudo apt-get install clojure-contrib
+   - #sudo apt-get install leiningen
    - sudo apt-get install zsh
-   - sudo apt-get install collectl
+   - #sudo apt-get install collectl
    - sudo apt-get install vim
    - #sudo apt-get install xbmc
    - #sudo apt-get install latex-cjk-all
@@ -97,9 +97,9 @@
    - sudo apt-get install liblzo2-dev
    - sudo apt-get install scala
    - sudo apt-get install scala-doc
-   - sudo apt-get install ubuntu-tweak
-   - sudo apt-get install cscope
-   - sudo pip install glances
+   - #sudo apt-get install ubuntu-tweak
+   - #sudo apt-get install cscope
+   - #sudo pip install glances
    - #sudo apt-get install pigdin-skype
    - sudo apt-get install skype
    - #sudo apt-get install bzr
@@ -113,27 +113,22 @@
    - sudo apt-get install graphviz
    - sudo apt-get install rar
    - sudo apt-get install ccache
-   - sudo apt-get install distcc
-   - sudo apt-get install tree
-   - sudo apt-get install swig
-   - sudo apt-get install tcpdump
+   - #sudo apt-get install distcc
+   - #sudo apt-get install swig
    - sudo apt-get install python-pip
    - sudo apt-get install python-sphinx
-   - # sudo apt-get install vagrant # 版本过低
+   - #sudo apt-get install vagrant # 版本过低
    - sudo apt-get install qt4-qtconfig
    - #sudo apt-get install fluxgui
    - sudo apt-get install iftop
-   - sudo apt-get install nmon
-   - sudo pip install glances
-   - sudo apt-get install collectl
+   - #sudo apt-get install nmon
    - #sudo apt-get install latencytop
    - #sudo apt-get install powertop
-   - sudo apt-get install lxc-docker
-   - sudo apt-get install lxc
-   - sudo apt-get install bridge-utils
+   - sudo apt-get install docker.io
+   - #sudo apt-get install bridge-utils
    - sudo apt-get install python-mysqldb
    - sudo apt-get install samba
-   - sudo apt-get install octave
+   - #sudo apt-get install octave
    - #sudo apt-get install audacity
    - sudo apt-get install ipython
    - sudo apt-get install ipython-doc
