@@ -379,7 +379,9 @@ pipework br1 -i eth2 <container> 192.168.1.1/24
 
 如果不使用pipework的话那么步骤如下
    - sudo brctl addbr br1 # apt-get install bridge-utils
+   - (sudo brctl delbr br1)
    - sudo ifconfig br1 inet 192.168.16.254 netmask 255.255.255.0
+   - (sudo ifconfig br1 down)
 然后在docker启动时候添加如下参数
 #+BEGIN_EXAMPLE
     --lxc-conf="lxc.network.type=veth" \
