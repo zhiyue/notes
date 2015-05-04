@@ -10,6 +10,7 @@ export EDITOR=vim # write commit message in a interactive way.
 export LANG="en_US.UTF-8"
 export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+
 # export LANG="zh_CN.UTF-8"
 # export LANGUAGE="zh_CN.UTF-8"
 # export LC_ALL="zh_CN.UTF-8"
@@ -25,67 +26,68 @@ is_vm() {
 }
 
 # CDH settings.
-CDH3=1
-CDH4_2_0=0
-CDH4_3_0=0
+configure_cdh() {
+    local CDH3_u_3=1
+    local CDH4_2_0=0
+    local CDH4_3_0=0
 
-if [ $(is_mac) = 1 ]; then
-    HADOOP_CLASSPATH=.:$HADOOP_LZO/build/hadoop-lzo-0.4.17-SNAPSHOT.jar
-    JAVA_LIBRARY_PATH=$HADOOP_LZO/build/native/Mac_OS_X-x86_64-64/lib/
-fi
+    if [ $(is_mac) = 1 ]; then
+        HADOOP_CLASSPATH=.:$HADOOP_LZO/build/hadoop-lzo-0.4.17-SNAPSHOT.jar
+        JAVA_LIBRARY_PATH=$HADOOP_LZO/build/native/Mac_OS_X-x86_64-64/lib/
+    fi
 
-if [ $CDH3 = 1 ]; then
-    export HADOOP_HOME=$HOME/utils/hadoop-0.20.2-cdh3u3/
-    export HADOOP_CONF_DIR=$HADOOP_HOME/conf
-    export HBASE_HOME=$HOME/utils/hbase-0.90.4-cdh3u3/
-    export HBASE_CONF_DIR=$HBASE_HOME/conf
-    export HIVE_HOME=$HOME/utils/hive-0.7.1-cdh3u3/
-fi
-if [ $CDH4_2_0 = 1 ]; then
-    export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.2.0
-    export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
-    export HBASE_HOME=$HOME/utils/hbase-0.94.2-cdh4.2.0/
-    export HBASE_CONF_DIR=$HBASE_HOME/conf
-    export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.2.0/
-fi
-if [ $CDH4_3_0 = 1 ]; then
-    export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.3.0
-    export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
-    export HBASE_HOME=$HOME/utils/hbase-0.94.6-cdh4.3.0/
-    export HBASE_CONF_DIR=$HBASE_HOME/conf
-    export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.3.0/
-fi
-HADOOP_CLASSPATH=.:$HADOOP_HOME/lib/hadoop-lzo-0.4.15.jar
-JAVA_LIBRARY_PATH=$HADOOP_HOME/lib/native/Linux-amd64-64:$HADOOP_HOME/lib/native
-PATH=$HADOOP_HOME/bin:$PATH
-PATH=$HADOOP_HOME/sbin:$PATH
-PATH=$HBASE_HOME/bin:$PATH
-PATH=$HIVE_HOME/bin:$PATH
+    if [ $CDH3_u_3 = 1 ]; then
+        export HADOOP_HOME=$HOME/utils/hadoop-0.20.2-cdh3u3/
+        export HADOOP_CONF_DIR=$HADOOP_HOME/conf
+        export HBASE_HOME=$HOME/utils/hbase-0.90.4-cdh3u3/
+        export HBASE_CONF_DIR=$HBASE_HOME/conf
+        export HIVE_HOME=$HOME/utils/hive-0.7.1-cdh3u3/
+    fi
+    if [ $CDH4_2_0 = 1 ]; then
+        export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.2.0
+        export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
+        export HBASE_HOME=$HOME/utils/hbase-0.94.2-cdh4.2.0/
+        export HBASE_CONF_DIR=$HBASE_HOME/conf
+        export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.2.0/
+    fi
+    if [ $CDH4_3_0 = 1 ]; then
+        export HADOOP_HOME=$HOME/utils/hadoop-2.0.0-cdh4.3.0
+        export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop/
+        export HBASE_HOME=$HOME/utils/hbase-0.94.6-cdh4.3.0/
+        export HBASE_CONF_DIR=$HBASE_HOME/conf
+        export HIVE_HOME=$HOME/utils/hive-0.10.0-cdh4.3.0/
+    fi
+    HADOOP_CLASSPATH=.:$HADOOP_HOME/lib/hadoop-lzo-0.4.15.jar
+    JAVA_LIBRARY_PATH=$HADOOP_HOME/lib/native/Linux-amd64-64:$HADOOP_HOME/lib/native
+    PATH=$HADOOP_HOME/bin:$PATH
+    PATH=$HADOOP_HOME/sbin:$PATH
+    PATH=$HBASE_HOME/bin:$PATH
+    PATH=$HIVE_HOME/bin:$PATH
 
-export HADOOP_CLASSPATH
-export JAVA_LIBRARY_PATH
-export PATH
-
-# Java settings.
-if [ $(is_mac) = 1 ]; then
-    JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
-else
-    JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
-fi
-CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:$HADOOP_CLASSPATH:$CLASSPATH
-CLASSPATH=.:./target/classes:./target/dependency:$CLASSPATH
-LD_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$LD_LIBRARY_PATH
-PATH=$JAVA_HOME/bin:$PATH
-
-export JAVA_HOME
-export CLASSPATH
-export LD_LIBRARY_PATH
-
-KAGGLE=$HOME/repo/tomb/kaggle
-to_kagge() {
-    cd $KAGGLE
+    export HADOOP_CLASSPATH
+    export JAVA_LIBRARY_PATH
+    export PATH
 }
 
+# Java settings.
+configure_java() {
+    if [ $(is_mac) = 1 ]; then
+        JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_17.jdk/Contents/Home/
+    else
+        JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64/
+    fi
+    CLASSPATH=$JAVA_HOME/lib/tools.jar:$JAVA_HOME/lib/dt.jar:$HADOOP_CLASSPATH:$CLASSPATH
+    CLASSPATH=.:./target/classes:./target/dependency:$CLASSPATH
+    LD_LIBRARY_PATH=$JAVA_LIBRARY_PATH:$LD_LIBRARY_PATH
+    PATH=$JAVA_HOME/bin:$PATH
+
+    export JAVA_HOME
+    export CLASSPATH
+    export LD_LIBRARY_PATH
+}
+configure_java
+
+# Utilities settings.
 # texmacs.
 export TEXMACS_PATH=$HOME/utils/TeXmacs-1.0.7-static-gnu-linux
 PATH=$TEXMACS_PATH/bin:$PATH
@@ -189,16 +191,8 @@ dk() {
         return
     fi
     case $1 in
-        create)
-            shift 1
-            __dk_create_node $@
-            ;;
-        connect)
-            shift 1
-            __dk_connect_node $@
-            ;;
         list)
-            __dk_list
+            dk_list
             ;;
         *)
             docker $@
@@ -206,81 +200,10 @@ dk() {
     esac
 }
 
-export DK_IMAGE="ubuntu:local"
-__dk_create_node() {
-    while test $# -gt 0
-    do
-        local ipd=$((103+$1))
-        local ip="192.168.101.$ipd"
-        docker run -d \
-            -v /home/dirlt/repo:/mnt/repo \
-            -v /home/dirlt/.private:/mnt/.private \
-            --name "u$1" --hostname "u$1" \
-            --lxc-conf="lxc.network.type=veth" \
-            --lxc-conf="lxc.network.name=eth1" \
-            --lxc-conf="lxc.network.flags=up" \
-            --lxc-conf="lxc.network.link=xbr1" \
-            --lxc-conf="lxc.network.ipv4=$ip/24" \
-            $DK_IMAGE \
-            /usr/sbin/sshd -D
-        shift 1
-    done
-}
-
-
-__dk_connect_node() {
-    local ip=$(docker inspect -f '{{.NetworkSettings.IPAddress}}' $1)
-    shift 1
-    local user="vagrant"
-    while test $# -gt 0
-    do
-        case $1 in
-            --user)
-                shift 1
-                user=$1
-                ;;
-            *)
-                ;;
-        esac
-        shift 1
-    done
-    echo "connect to $user@$ip"
-    ssh $user@$ip
-}
-
-__dk_list() {
+dk_list() {
     docker ps -a
     echo '----------'
     docker images | grep -v "<none>"
-}
-
-dk_build_image() {
-    cd $HOME/.private/files
-    docker build -t $DK_IMAGE .
-    cd -
-}
-
-dk_create_bridge() {
-    sudo brctl addbr br1
-    sudo brctl addbr br2
-    sudo ifconfig br1 inet 192.168.16.254 netmask 255.255.255.0
-    sudo ifconfig br2 inet 192.168.17.254 netmask 255.255.255.0
-    sudo brctl addbr xbr1
-    sudo ifconfig xbr1 inet 192.168.101.254 netmask 255.255.255.0
-}
-
-dk_remove_bridge() {
-    sudo ifconfig br1 down
-    sudo ifconfig br2 down
-    sudo ifconfig xbr1 down
-    sudo brctl delbr br1
-    sudo brctl delbr br2
-    sudo brctl delbr xbr1
-}
-
-dk_clean_sudo() {
-    # sudo usermod -G docker -a dirlt
-    sudo chown dirlt /var/run/docker.sock
 }
 
 dk_remove_containers() {
@@ -295,25 +218,6 @@ dk_remove_images() {
 pgrep() {
   ps aux | grep $1
 }
-alias ex_dstat='dstat -cdgmnpsy'
-alias ps_mysqld='pgrep mysqld'
-
-git_commit() {
-    local issue_id=$1
-    local message=$2
-    git commit -m "Refs #$issue_id: $message"
-}
-svn_commit() {
-    local ticket_id=$1
-    local message=$2
-    svn commit -m "Refs #$ticket_id: $message"
-}
-bzr_commit() {
-    local bug_id=$1
-    local message=$2
-    bzr commit --fixes lp:$bug_id -m "References lp:$bug_id $message"
-}
-
 gdb_backtrace_process()
 {
     gdb -batch -ex "thread apply all bt" -p $1
@@ -366,22 +270,6 @@ build_redis() {
 apt_update() {
     sudo rm -rf /etc/apt/sources.list
     sudo ln -s $HOME/.private/files/sources.list /etc/apt/sources.list
-
-    # # docker
-    # sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-
-    # # ubuntu tweak
-    # sudo add-apt-repository -y ppa:tualatrix/ppa
-
-    # # emacs24
-    # sudo add-apt-repository -y ppa:cassou/emacs
-
-    # # f.lux https://justgetflux.com/
-    # sudo add-apt-repository -y ppa:kilian/f.lux
-
-    # # fcitx
-    # sudo add-apt-repository -y ppa:fcitx-team/nightly
-
     sudo add-apt-repository -y
     sudo apt-get update
 }
@@ -532,15 +420,6 @@ start_tc_env() {
 install_hosts() {
     echo "installing hosts..."
     sudo cp $HOME/.private/files/hosts /etc/hosts
-}
-
-update_hosts() {
-    local url=${SMART_HOSTS_URL:-"http://smarthosts.googlecode.com/svn/trunk/hosts"}
-    local hosts="$HOME/.private/files/hosts"
-    cat $hosts | awk 'BEGIN {f=0;} /^#SmartHosts/ {f=1;} {if(f==0) print $0;}' > /tmp/hosts
-    curl -S $url 2>/dev/null >> /tmp/hosts
-    cp /tmp/hosts $hosts
-    install_hosts
 }
 
 shadowsocks() {
