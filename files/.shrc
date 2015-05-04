@@ -614,7 +614,7 @@ set_local_port_range() {
 }
 
 install_ubuntu_packages() {
-    cat $HOME/repo/notes/essay/ubuntu.org | grep "^   - sudo apt-get" | \
+    cat $HOME/repo/notes/essay/ubuntu.org | grep "^- sudo apt-get" | \
         awk '{print $5;}' | xargs sudo apt-get install -y
 }
 

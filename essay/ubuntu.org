@@ -4,166 +4,167 @@
 ** 写在前面
 千万不要抱有一朝一兮就可以搞定的想法。最好的话身边有一个群体，大家都使用Ubuntu这个东西。这样如果有什么问题的话，大家就比较容易找到解决办法，直到自己完全适应为止。推荐安装下面这些软件：
 
-   - sudo apt-get install vlc # 视频
-   - #sudo apt-get install pidgin # 聊天
-   - #sudo apt-get install stardict # 词典
-   - #sudo apt-get install amarok # 音乐
-   - sudo apt-get install okular # pdf阅读
-   - #sudo apt-get install recordmydesktop # 录制桌面
-   - sudo apt-get install kchmviewer # chm阅读
-   - sudo apt-get install git
-   - # sudo apt-get install subversion
-   - sudo apt-get install htop
-   - sudo apt-get install dstat
-   - sudo apt-get install sysstat
-   - #sudo apt-get install httperf
-   - sudo apt-get install rsync
-   - sudp apt-get install tree
-   - sudo apt-get install tcpdump
-   - #sudo apt-get install clusterssh
-   - sudo apt-get install openssh-server
-   - sudo apt-get install sqlite3
-   - #sudo apt-get install eclipse
-   - sudo apt-get install python-dev
-   - #sudo apt-get install libevent-dev
-   - sudo apt-get install python-gevent
-   - sudo apt-get install python-gevent-doc
-   - #sudo apt-get install gunicorn
-   - #sudo apt-get install maven2
-   - sudo apt-get install maven
-   - #sudo apt-get install ant
-   - #sudo apt-get install ttyload
-   - sudo apt-get install autoconf
-   - sudo apt-get install libtool
-   - sudo apt-get install automake
-   - sudo apt-get install autotools-dev
-   - sudo apt-get install m4
-   - #sudo apt-get install alien
-   - sudo apt-get install dos2unix
-   - sudo apt-get install astyle
-   - sudo apt-get install valgrind
-   - #sudo apt-get install mongodb
-   - #sudo apt-get install python-imaging
-   - #sudo apt-get install python-imaging-doc
-   - sudo apt-get install screen
-   - sudo apt-get install tmux
-   - #sudo apt-get install python-pychart
-   - #sudo apt-get install python-pychart-doc
-   - sudo apt-get install python-doc
-   - sudo apt-get install python-setuptools
-   - sudo apt-get install linux-tools-common
-   - sudo apt-get install linux-base
-   - #sudo apt-get install mercurial
-   - #sudo apt-get install golang-go
-   - #sudo apt-get install golang-doc
-   - #sudo apt-get install clisp
-   - sudo apt-get install flex
-   - sudo apt-get install bison
-   - sudo apt-get install iotop
-   - sudo apt-get install curl
-   - sudo apt-get install ibus
-   - sudo apt-get install ibus-sunpinyin
-   - sudo apt-get install ibus-googlepinyin
-   - sudo apt-get install xsunpinyin
-   - sudo apt-get install python-xlib # 需要在emacs下面调用ibus
-   - #sudo apt-get install chromium-browser # 实验性质版本
-   - #sudo apt-get install google-chrome-stable # 稳定版本
-   - #sudo apt-get install firefox
-   - #sudo apt-get install thunderbird
-   - #sudo apt-get install dkms
-   - sudo apt-get install virtualbox
-   - #sudo apt-get install virtualbox-dkms
-   - #sudo apt-get install virtualbox-guest-additions # 设置windows虚拟机共享文件夹
-   - #sudo apt-get install virtualbox-guest-dkms
-   - sudo apt-get install ntp
-   - sudo apt-get install systemtap
-   - #sudo apt-get install clojure1.4
-   - #sudo apt-get install clojure-contrib
-   - #sudo apt-get install leiningen
-   - sudo apt-get install zsh
-   - #sudo apt-get install collectl
-   - sudo apt-get install vim
-   - #sudo apt-get install xbmc
-   - #sudo apt-get install latex-cjk-all
-   - #sudo apt-get install texlive-fonts-recommended
-   - #sudo apt-get install texinfo
-   - #sudo apt-get install sun-java6-jdk
-   - #sudo apt-get install openjdk-6-jdk
-   - #sudo apt-get install openjdk-6-doc
-   - sudo apt-get install openjdk-7-jdk
-   - sudo apt-get install openjdk-7-doc
-   - sudo apt-get install openvpn
-   - sudo apt-get install lzop
-   - sudo apt-get install liblzo2-dev
-   - sudo apt-get install scala
-   - sudo apt-get install scala-doc
-   - #sudo apt-get install ubuntu-tweak
-   - #sudo apt-get install cscope
-   - #sudo pip install glances
-   - #sudo apt-get install pigdin-skype
-   - sudo apt-get install skype
-   - #sudo apt-get install bzr
-   - sudo apt-get install scons
-   - sudo apt-get install cmake
-   - sudo apt-get install libboost-all-dev
-   - #sudo apt-get install check
-   - #sudo apt-get install google-mock
-   - #sudo apt-get install tsocks
-   - sudo apt-get install mysql-server
-   - sudo apt-get install graphviz
-   - sudo apt-get install rar
-   - sudo apt-get install ccache
-   - #sudo apt-get install distcc
-   - #sudo apt-get install swig
-   - sudo apt-get install python-pip
-   - sudo apt-get install python-sphinx
-   - #sudo apt-get install vagrant # 版本过低
-   - sudo apt-get install qt4-qtconfig
-   - #sudo apt-get install fluxgui
-   - sudo apt-get install iftop
-   - #sudo apt-get install nmon
-   - #sudo apt-get install latencytop
-   - #sudo apt-get install powertop
-   - sudo apt-get install docker.io
-   - #sudo apt-get install bridge-utils
-   - sudo apt-get install python-mysqldb
-   - sudo apt-get install samba
-   - #sudo apt-get install octave
-   - #sudo apt-get install audacity
-   - sudo apt-get install ipython
-   - sudo apt-get install ipython-doc
-   - sudo apt-get install ipython-notebook
-   - sudo apt-get install python-numpy
-   - sudo apt-get install python-numpy-doc
-   - sudo apt-get install python-matplotlib
-   - sudo apt-get install python-matplotlib-doc
-   - sudo apt-get install python-scipy
-   - #sudo apt-get install python-pygame
-   - sudo apt-get install cython
-   - sudo apt-get install alarm-clock-applet
-   - sudo apt-get install pstack
-   - sudo apt-get install socat
-   - #sudo apt-get install bzr-fastimport
-   - sudo apt-get install redis-server
-   - sudo apt-get install python-redis
-   - sudo apt-get install libssl-dev
-   - sudo apt-get install libaio-dev
-   - #sudo apt-get install percona-xtrabackup
-   - # sudo apt-get install chkconfig
-   - sudo apt-get install sysv-rc-conf
-   - sudo apt-get install nginx
-   - sudo apt-get install fcitx
-   - sudo apt-get install im-config
-   - sudo apt-get install fcitx-googlepinyin
-   - #sudo apt-get install guile-2.0
-   - sudo apt-get install python-sklearn
-   - sudo apt-get install python-sklearn-doc
-   - #sudo apt-get install kdenlive # 视频编辑
-   - sudo apt-get install python-pandas
-   - sudo apt-get install python-skimage
-   - sudo apt-get install python-skimage-doc
-   - sudo apt-get install doxygen
-   - sudo apt-get install l2tp-ipsec-vpn
+- sudo apt-get install emacs24
+- sudo apt-get install vlc # 视频
+- #sudo apt-get install pidgin # 聊天
+- #sudo apt-get install stardict # 词典
+- #sudo apt-get install amarok # 音乐
+- sudo apt-get install okular # pdf阅读
+- #sudo apt-get install recordmydesktop # 录制桌面
+- sudo apt-get install kchmviewer # chm阅读
+- sudo apt-get install git
+- # sudo apt-get install subversion
+- sudo apt-get install htop
+- sudo apt-get install dstat
+- sudo apt-get install sysstat
+- #sudo apt-get install httperf
+- sudo apt-get install rsync
+- sudp apt-get install tree
+- sudo apt-get install tcpdump
+- #sudo apt-get install clusterssh
+- sudo apt-get install openssh-server
+- sudo apt-get install sqlite3
+- #sudo apt-get install eclipse
+- sudo apt-get install python-dev
+- #sudo apt-get install libevent-dev
+- sudo apt-get install python-gevent
+- sudo apt-get install python-gevent-doc
+- #sudo apt-get install gunicorn
+- #sudo apt-get install maven2
+- sudo apt-get install maven
+- #sudo apt-get install ant
+- #sudo apt-get install ttyload
+- sudo apt-get install autoconf
+- sudo apt-get install libtool
+- sudo apt-get install automake
+- sudo apt-get install autotools-dev
+- sudo apt-get install m4
+- #sudo apt-get install alien
+- sudo apt-get install dos2unix
+- sudo apt-get install astyle
+- sudo apt-get install valgrind
+- #sudo apt-get install mongodb
+- #sudo apt-get install python-imaging
+- #sudo apt-get install python-imaging-doc
+- sudo apt-get install screen
+- sudo apt-get install tmux
+- #sudo apt-get install python-pychart
+- #sudo apt-get install python-pychart-doc
+- sudo apt-get install python-doc
+- sudo apt-get install python-setuptools
+- sudo apt-get install linux-tools-common
+- sudo apt-get install linux-base
+- #sudo apt-get install mercurial
+- #sudo apt-get install golang-go
+- #sudo apt-get install golang-doc
+- #sudo apt-get install clisp
+- sudo apt-get install flex
+- sudo apt-get install bison
+- sudo apt-get install iotop
+- sudo apt-get install curl
+- sudo apt-get install ibus
+- sudo apt-get install ibus-sunpinyin
+- sudo apt-get install ibus-googlepinyin
+- sudo apt-get install xsunpinyin
+- sudo apt-get install python-xlib # 需要在emacs下面调用ibus
+- #sudo apt-get install chromium-browser # 实验性质版本
+- #sudo apt-get install google-chrome-stable # 稳定版本
+- #sudo apt-get install firefox
+- #sudo apt-get install thunderbird
+- #sudo apt-get install dkms
+- sudo apt-get install virtualbox
+- #sudo apt-get install virtualbox-dkms
+- #sudo apt-get install virtualbox-guest-additions # 设置windows虚拟机共享文件夹
+- #sudo apt-get install virtualbox-guest-dkms
+- sudo apt-get install ntp
+- sudo apt-get install systemtap
+- #sudo apt-get install clojure1.4
+- #sudo apt-get install clojure-contrib
+- #sudo apt-get install leiningen
+- sudo apt-get install zsh
+- #sudo apt-get install collectl
+- sudo apt-get install vim
+- #sudo apt-get install xbmc
+- #sudo apt-get install latex-cjk-all
+- #sudo apt-get install texlive-fonts-recommended
+- #sudo apt-get install texinfo
+- #sudo apt-get install sun-java6-jdk
+- #sudo apt-get install openjdk-6-jdk
+- #sudo apt-get install openjdk-6-doc
+- sudo apt-get install openjdk-7-jdk
+- sudo apt-get install openjdk-7-doc
+- sudo apt-get install openvpn
+- sudo apt-get install lzop
+- sudo apt-get install liblzo2-dev
+- sudo apt-get install scala
+- sudo apt-get install scala-doc
+- #sudo apt-get install ubuntu-tweak
+- #sudo apt-get install cscope
+- #sudo pip install glances
+- #sudo apt-get install pigdin-skype
+- sudo apt-get install skype
+- #sudo apt-get install bzr
+- sudo apt-get install scons
+- sudo apt-get install cmake
+- sudo apt-get install libboost-all-dev
+- #sudo apt-get install check
+- #sudo apt-get install google-mock
+- #sudo apt-get install tsocks
+- sudo apt-get install mysql-server
+- sudo apt-get install graphviz
+- sudo apt-get install rar
+- sudo apt-get install ccache
+- #sudo apt-get install distcc
+- #sudo apt-get install swig
+- sudo apt-get install python-pip
+- sudo apt-get install python-sphinx
+- #sudo apt-get install vagrant # 版本过低
+- sudo apt-get install qt4-qtconfig
+- #sudo apt-get install fluxgui
+- sudo apt-get install iftop
+- #sudo apt-get install nmon
+- #sudo apt-get install latencytop
+- #sudo apt-get install powertop
+- sudo apt-get install docker.io
+- #sudo apt-get install bridge-utils
+- sudo apt-get install python-mysqldb
+- sudo apt-get install samba
+- #sudo apt-get install octave
+- #sudo apt-get install audacity
+- sudo apt-get install ipython
+- sudo apt-get install ipython-doc
+- sudo apt-get install ipython-notebook
+- sudo apt-get install python-numpy
+- sudo apt-get install python-numpy-doc
+- sudo apt-get install python-matplotlib
+- sudo apt-get install python-matplotlib-doc
+- sudo apt-get install python-scipy
+- #sudo apt-get install python-pygame
+- sudo apt-get install cython
+- sudo apt-get install alarm-clock-applet
+- sudo apt-get install pstack
+- #sudo apt-get install socat
+- #sudo apt-get install bzr-fastimport
+- sudo apt-get install redis-server
+- sudo apt-get install python-redis
+- sudo apt-get install libssl-dev
+- sudo apt-get install libaio-dev
+- #sudo apt-get install percona-xtrabackup
+- # sudo apt-get install chkconfig
+- sudo apt-get install sysv-rc-conf
+- sudo apt-get install nginx
+- sudo apt-get install fcitx
+- sudo apt-get install im-config
+- sudo apt-get install fcitx-googlepinyin
+- #sudo apt-get install guile-2.0
+- sudo apt-get install python-sklearn
+- sudo apt-get install python-sklearn-doc
+- #sudo apt-get install kdenlive # 视频编辑
+- sudo apt-get install python-pandas
+- sudo apt-get install python-skimage
+- sudo apt-get install python-skimage-doc
+- sudo apt-get install doxygen
+- sudo apt-get install l2tp-ipsec-vpn
 
 ** 系统配置
 *** 察看ubuntu内部版本
@@ -201,9 +202,9 @@ unity restart &
 *note(dirlt)：这种方式可以work但是似乎问题比较多，如果unity出现问题还是重启比较方便*
 
 *** 设置字符界面启动
-  - 编辑文件/etc/default/grub
-  - GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"修改成GRUB_CMDLINE_LINUX_DEFAULT="quiet splash text"
-  - 运行sudo update-grub
+- 编辑文件/etc/default/grub
+- GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"修改成GRUB_CMDLINE_LINUX_DEFAULT="quiet splash text"
+- 运行sudo update-grub
 
 *** 绑定静态IP
 修改/etc/network/interfaces
@@ -244,14 +245,15 @@ sudo hostname <name>
 doc存放位置通常在/usr/share/doc/<package>/下面。
 
 使用alien在deb和rpm之间转换
-   - 安装alien
-   - rpm转deb sudo alien -d test.rpm
-   - deb转rpm sudo alien -r test.deb
+- 安装alien
+- rpm转deb sudo alien -d test.rpm
+- deb转rpm sudo alien -r test.deb
+
 看了一下alien的help还可和下面几个包格式互转
-   - slp
-   - lsb
-   - tgz
-   - pkg
+- slp
+- lsb
+- tgz
+- pkg
 甚至可以直接调用alien -i test.rpm直接安装而不需要转换。
 
 使用dpkg --listfiles可以查看安装了哪些文件
@@ -259,11 +261,11 @@ doc存放位置通常在/usr/share/doc/<package>/下面。
 *** The System Running In Low Graphics Mode
 http://simpledeveloper.com/system-running-in-low-graphics-mode/
 
-   - CTRL + ALT + F1 切换到terminal
-   - # sudo apt-get -d install --reinstall gdm
-   - # sudo apt-get remove --purge gdm
-   - # sudo apt-get install gdm
-   - # sudo reboot
+- CTRL + ALT + F1 切换到terminal
+- # sudo apt-get -d install --reinstall gdm
+- # sudo apt-get remove --purge gdm
+- # sudo apt-get install gdm
+- # sudo reboot
 
 *** apt-get: Waiting for headers
 http://askubuntu.com/questions/156650/apt-get-update-very-slow-stuck-at-waiting-for-headers
@@ -316,7 +318,7 @@ virtualbox-guest-utils   on
 virtualbox-guest-x11     on
 #+END_EXAMPLE
 
-note(dirlt@2014-11-30): 但是ubuntu后期版本移除了这个组件,使用sysv-rc-conf来代替. 使用--list可以列出所有当前服务
+note(dirlt@2014-11-30): ubuntu后期版本移除了这个组件,使用sysv-rc-conf来代替. 使用--list可以列出所有当前服务
 #+BEGIN_EXAMPLE
 ➜  .private  sudo sysv-rc-conf --list
 collectl     0:off1:off2:on3:on4:on5:on6:off
@@ -346,12 +348,15 @@ virtualbox-g 0:off1:off2:on3:on4:on5:on6:off
 
 *** 设置输入法切换
 在Preferences里面：
-   - Input Method 里面添加 SunPinyin
-   - 然后在General里面的Keyboard Shortcuts里面设置Enable or disable设置切换按键
-     - Release+Shift_L 左边的Shift键
-     - Constrol+space control和空格键
-     - 这些都和windows输入法的默认配置很像。
-todo(dirlt)：在Emacs里面需要安装ibus.el以及ibus-agent。但是现在不知道为什么左边的Shift键在Emacs里面一直不能使用。
+- Input Method 里面添加 SunPinyin
+- 然后在General里面的Keyboard Shortcuts里面设置Enable or disable设置切换按键
+  - Release+Shift_L 左边的Shift键
+  - Constrol+space control和空格键
+  - 这些都和windows输入法的默认配置很像。
+
+note(dirlt)：在Emacs里面需要安装ibus.el以及ibus-agent。但是现在不知道为什么左边的Shift键在Emacs里面一直不能使用。
+
+note(dirlt)：ibus.el只能支持到了ubuntu12.04, 升级到14.04之后就不能再使用了。所以现在只能使用emacs -nw在终端下工作：（
 
 *** 自动启动输入法
 另外系统默认是不会自动启动ibus的，可以在System Settings里面的Language Support里面设置Input method为ibus, 这样ibus就可以自动启动了。如果emacs需要使用ibus的话，那么ibus-daemon必须先于emacs启动。可能这样agent才能够工作。
@@ -367,37 +372,37 @@ System Settings =》 Details 里面可以设置默认浏览器。至于emacs里�
 #+END_SRC
 
 *** thunderbird配置gmail
-   - pop3 pop.gmail.com SSL/TLS 995 normal password
-   - smtp smtp.gmail.com SSL/TLS 465 normal password
-   - *note(dirlt):需要确认gmail允许pop3来访问*
-   - 不过似乎现在thunderbird已经非常智能了，只要输入username以及email的话就可以自动进行配置了。nice！！！（现在看起来选择iamp模式也没有什么问题）
-   - server settings =>
-     - 1) leave mesages on server until I delete them. （对于imap模式来说的话，就使用默认移动到Trash下面即可）
-     - 2) empty trash on exit.
-     - 3) check for new messages at startup.
-     - 4) check for new messages every 10 minutes.
-   - copies and folders => 1) cc these email addresses: dirtysalt1987@gmail.com（如果使用imap模式可以不使用）
-   - composition and addressing => 1) start my reply above the quote and place my signature below the quote.
-   - 设置签名
+- pop3 pop.gmail.com SSL/TLS 995 normal password
+- smtp smtp.gmail.com SSL/TLS 465 normal password
+- *note(dirlt):需要确认gmail允许pop3来访问*
+- 不过似乎现在thunderbird已经非常智能了，只要输入username以及email的话就可以自动进行配置了。nice！！！（现在看起来选择iamp模式也没有什么问题）
+- server settings =>
+  - 1) leave mesages on server until I delete them. （对于imap模式来说的话，就使用默认移动到Trash下面即可）
+  - 2) empty trash on exit.
+  - 3) check for new messages at startup.
+  - 4) check for new messages every 10 minutes.
+- copies and folders => 1) cc these email addresses: dirtysalt1987@gmail.com（如果使用imap模式可以不使用）
+- composition and addressing => 1) start my reply above the quote and place my signature below the quote.
+- 设置签名
 
 *** thunderbird的Inbox文件过大
-   - http://blog.tianya.cn/blogger/post_read.asp?BlogID=3802303&PostID=35373429
+- http://blog.tianya.cn/blogger/post_read.asp?BlogID=3802303&PostID=35373429
 
 在安装新的操作系统时候，可能需要将原来的邮件全部迁移过去。thunderbird迁移邮件非常方便。在C:\Documents and Settings\\Application Data\Thunderbird\Profiles\wkq5wydz.default\Mail\ 下面会有你这个pop-server对应的文件，比如Inbox(对应thunderbird的收件箱),Drafts(对应thunderbird的草稿箱）等。将这些文件直接copy过去就OK了。不得不说这点非常方便：）
 
 但是我们会遇到一个问题就是Inbox文件太大了。而且如果我们在thunderbird下面删除收件箱里面内容的话，会发现这个Inbox文件其实没有发生变化。原因是因为thunderbird采用标记删除，所以原来的邮件内容依然是保存的（也就是说如果我们通过修改Inbox里面的标记位是可以恢复的，而且这个工作不难，因为阅读Inbox的内容就会发现里面保存的文本格式。不过谨慎选用编辑器，不要将Inbox内容全部载入不然内存会爆掉的）。 *解决这个问题非常简单，就是在thunderbird下面针对这个文件夹右键点击压缩。对于草稿箱和其他的文件夹是一样的操作。而且在thunderbird下面有工具->选项->高级->网络&磁盘空间里面，可以选择如果超过过大的话就会进行压缩。*
 
 作为后端开发者，觉得thunderbird这样做是很正常的。有几种方式：
-   1. 一种是用小碎片文件来解决，每个小碎片文件对应一个邮件，但是这样邮件太多的话性能和碎片会成为问题，但是增加和删除都非常方便
-   2. 另外就是使用大文件来追加写，然后针对每封邮件进行索引。索引可以保存在内存里面并且定期dump出去，启动时候检查索引是否和文件对应，不对应的话那么可能需要增量做一部分索引。但是这样删除会成为问题，标记删除可能就是最好的办法了。所以需要用户手动或者是通过程序判断磁盘文件大小来触发压缩。
-   3. 使用数据库本质上和2是一样的，只不过可以在一定程度上简化代码。在删除方便可能还是使用压缩删除。如果是我自己做的话那么可能考虑使用sqlite来做。单机可以embed,并且通过SQL来进行检索或者是其他操作。
+1. 一种是用小碎片文件来解决，每个小碎片文件对应一个邮件，但是这样邮件太多的话性能和碎片会成为问题，但是增加和删除都非常方便
+2. 另外就是使用大文件来追加写，然后针对每封邮件进行索引。索引可以保存在内存里面并且定期dump出去，启动时候检查索引是否和文件对应，不对应的话那么可能需要增量做一部分索引。但是这样删除会成为问题，标记删除可能就是最好的办法了。所以需要用户手动或者是通过程序判断磁盘文件大小来触发压缩。
+3. 使用数据库本质上和2是一样的，只不过可以在一定程度上简化代码。在删除方便可能还是使用压缩删除。如果是我自己做的话那么可能考虑使用sqlite来做。单机可以embed,并且通过SQL来进行检索或者是其他操作。
 
 note(dirlt)：其实thunderbird超过一定大小就会自动提醒是否需要压缩
 
 *** 窗口常用快捷键
-  - Ctrl+Alt+T // 打开一个terminal。
-  - Ctrl+Alt+上下左右 // 在不同的workspace之间切换。
-  -
+- Ctrl+Alt+T // 打开一个terminal。
+- Ctrl+Alt+上下左右 // 在不同的workspace之间切换。
+
 *** 调整字体大小
 System Settings =》 Universal Access里面的Seeing部分可以用来调整字体大小。但是只有等级没有具体的数字可以进行调整。
 可以通过安装gnome-tweak-tool并且运行之来进行微调。
@@ -410,10 +415,10 @@ System Settings => Appearance => Launcher icon size.
 *** 调整skype字体大小
 http://www.mintos.org/network/modify-skype-font.html
 
-   - 安装qt4-config # sudo apt-get install qt4-qtconfig
-   - 修改字体(font size=12)和外观(Clearlooks)
-   - 点击qt4-config的菜单栏保存
-   - 重启skype即可观察到字体修改效果
+- 安装qt4-config # sudo apt-get install qt4-qtconfig
+- 修改字体(font size=12)和外观(Clearlooks)
+- 点击qt4-config的菜单栏保存
+- 重启skype即可观察到字体修改效果
 
 *** vlc字幕乱码
 Tools -> Preferences -> Subtitles & OSD
@@ -427,11 +432,11 @@ Tools -> Preferences -> Subtitles & OSD
 
 因为搜狗输入法是基于云的输入法，所以输入效果相比单机输入法比如sunpinyin会好很多。安装完成之后需要重启X.
 
-note(dirlt): 其实试试fcitx-googlepinyin应该也不错。
+note(dirlt): fcitx-googlepinyin也不错。
 
 ** 编程环境
 *** bash的tab自动补全
-   - sudo apt-get install bash-completion
+- sudo apt-get install bash-completion
 
 但是我觉得这个自动补全有点不太好的就是，比如我cd ~/.ssh/想自动补全的话，我不仅仅是希望能够补全目录(虽然cd参数只能够是目录),我还希望可以显示文件(比如我想知道这个目录下面是否有Makefile或者是pom.xml)，这样就可以快速判断某个文件是否在目录下面。不然我只能调回命令行开头，切换成为cat,然后跳回去使用两次tab进行自动补全(cat能够显示文件).
 
@@ -449,20 +454,18 @@ note(dirlt): 其实试试fcitx-googlepinyin应该也不错。
     GSSAPIDelegateCredentials no
 #+END_EXAMPLE
 
-*todo(dirlt):具体为什么? sorry I have no idea!!!*
-
 *** 建立ssh信任关系
 关于sshd机器之间的信任关系，很多文章都有介绍。大致方法就是：
-   1. 在自己机器上面ssh-keygen生成~/.ssh/id_rsa{.pub}.其中.pub文件是公钥
-   2. 然后将id_rsa.pub内容copy到另外机器下面的~/.ssh/authorized_keys里面(注意chmod 600)
-   3. 接着本地的.pub文件就可以删除
-*note(dirlt)：这个密钥是可以在不同机器上面使用的，也就是说你只需要生成一次即可*
+1. 在自己机器上面ssh-keygen生成~/.ssh/id_rsa{.pub}.其中.pub文件是公钥
+2. 然后将id_rsa.pub内容copy到另外机器下面的~/.ssh/authorized_keys里面(注意chmod 600)
+3. 接着本地的.pub文件就可以删除
+这个密钥是可以在不同机器上面使用的，也就是说你只需要生成一次即可
 
 我猜想大致工作过程应该是这样的：
-   1. 在ssh建立连接的时候，本地ssh-client会读取~/.ssh/id_rsa内容
-   2. 建立好连接之后会将rsa内容发给对端机器，对端机器针对authorized_keys进行验证
-   3. 如果验证OK的话那么就认为是信任对方的。
-但是具体这些文件都是可以配置的，关于这个配置可以man ssh_config(client) / man sshd_config(server). 今天遇到一个问题就出在/etc/sshd_config里面对于认证文件修改了，不是放在authorized_keys里面而是放在cloud_keys里面!!!
+1. 在ssh建立连接的时候，本地ssh-client会读取~/.ssh/id_rsa内容
+2. 建立好连接之后会将rsa内容发给对端机器，对端机器针对authorized_keys进行验证
+3. 如果验证OK的话那么就认为是信任对方的。
+具体这些文件放置位置都是可以配置的，关于如何配置可以看man ssh_config(client) / man sshd_config(server). 之前遇到问题就是，在/etc/sshd_config里面修改了认证文件的位置，不是放在authorized_keys里面而是放在cloud_keys里面!!!
 
 对于这种东西我觉得还是使用默认的比较好，convention over configuration!!!
 
@@ -486,8 +489,6 @@ ssh-add   ~/.ssh/id_rsa
 #+END_EXAMPLE
 这样之后通过ssh git的话就相当于ssh -l dirtysalt -p 16021 git.fm.非常方便。
 
-*note(dirlt)：实际上第二点这个对于scp也是很必要的，因为scp没有办法指定工作端口只能使用默认的22*
-
 *** 修改默认shell
 sudo chsh -s /bin/zsh dirlt
 
@@ -495,106 +496,101 @@ sudo chsh -s /bin/zsh dirlt
 
 *** 关闭ssh host key检查
 How to disable SSH host key checking http://linuxcommando.blogspot.com/2008/10/how-to-disable-ssh-host-key-checking.html
-   - UserKnownHostsFile /dev/null
-   - StrictHostKeyCheckin no
+- UserKnownHostsFile /dev/null
+- StrictHostKeyCheckin no
 
 ** 开发工具
 *** about 'screen'
-   - http://www.gnu.org/software/screen/
-   - [[https://github.com/dirtysalt/notes/blob/master/files/.screenrc][我的配置文件]]
+- http://www.gnu.org/software/screen/
+- [[https://github.com/dirtysalt/notes/blob/master/files/.screenrc][我的配置文件]]
 
 如何使用screen启动后台任务?
-   - screen -D -R <session-name>
-     - 如果会话存在那么会连上.
-     - 如果会话不存在那么创建.
-     - 如果会话被其他人attach, 可以强制attach.
-   - 在会话里面执行命令
-   - C-a d从这个会话里面detach出来
+- screen -D -R <session-name>
+  - 如果会话存在那么会连上.
+  - 如果会话不存在那么创建.
+  - 如果会话被其他人attach, 可以强制attach.
+- 在会话里面执行命令
+- C-a d从这个会话里面detach出来
 
 参考我的配置文件
 
 *** about 'tmux'
-   - http://tmux.sourceforge.net/
-   - [[https://github.com/dirtysalt/notes/blob/master/files/.tmux.conf][我的配置文件]]
+- http://tmux.sourceforge.net/
+- [[https://github.com/dirtysalt/notes/blob/master/files/.tmux.conf][我的配置文件]]
 
 *** about 'emacs'
-   - http://www.gnu.org/software/emacs/
-   - [[https://github.com/dirtysalt/notes/blob/master/files/.emacs][我的配置文件]]
+- http://www.gnu.org/software/emacs/
+- [[https://github.com/dirtysalt/notes/blob/master/files/.emacs][我的配置文件]]
 
 *** about 'eclipse'
 note(dirlt): 不要用eclipse, 用intellij吧!
 
 如何将maven项目导入eclipse?
-   - mvn eclipse:eclipse 建立eclipse工程文件
-     - mvn eclipse:clean 清除eclipse工程文件
-   - 在eclipse导入工程
-   - 在preferences=》Java=》Build Path=》Classpath Variables里面添加M2_REPO，通常为/home/${USER}/.m2/repository
+- mvn eclipse:eclipse 建立eclipse工程文件
+  - mvn eclipse:clean 清除eclipse工程文件
+- 在eclipse导入工程
+- 在preferences=》Java=》Build Path=》Classpath Variables里面添加M2_REPO，通常为/home/${USER}/.m2/repository
 
 -----
 
 常用快捷键
-   - 格式化 C+S+F
-   - 注释 C+S+C
-   - 切换声明 F3
-   - 跳回 Alt+(<-) 跳前Alt+(->)   
-   - 切换编辑Tab Ctrl+PageUp/Down
-   - 跳行 Ctrl+L
-   - 大纲 Ctrl+O
-   - 跳转编辑Tab Ctrl+E
-   - 定位错误 Ctrl+.
-   - 上个编辑位置 Ctrl+Q
-   - 类型浏览器 Ctrl+Shift+T
-   - 资源浏览器 Ctrl+Shift+R
+- 格式化 C+S+F
+- 注释 C+S+C
+- 切换声明 F3
+- 跳回 Alt+(<-) 跳前Alt+(->)   
+- 切换编辑Tab Ctrl+PageUp/Down
+- 跳行 Ctrl+L
+- 大纲 Ctrl+O
+- 跳转编辑Tab Ctrl+E
+- 定位错误 Ctrl+.
+- 上个编辑位置 Ctrl+Q
+- 类型浏览器 Ctrl+Shift+T
+- 资源浏览器 Ctrl+Shift+R
 
 *** about 'intellij'
 常用快捷键
-   - 查找方法 Ctrl+F12
-   - 查找类 Ctrl+N
-   - 页面跳转 Ctrl+E
-   - 查看声明 Ctrl+B
-   - 察看实现 Ctrl+Alt+B
-   - 跳回 Alt+(<-) 跳前Alt+(->)   
-   - 格式化 Ctrl+Alt+L （这个键和ubuntu的锁屏键冲突了，我修改到了Ctrl+Alt+\)
-   - 导入某个类（光标在这个类上） Alt+Enter
-   - 优化类的导入 Ctrl+Alt+O
+- 查找方法 Ctrl+F12
+- 查找类 Ctrl+N
+- 页面跳转 Ctrl+E
+- 查看声明 Ctrl+B
+- 察看实现 Ctrl+Alt+B
+- 跳回 Alt+(<-) 跳前Alt+(->)   
+- 格式化 Ctrl+Alt+L （这个键和ubuntu的锁屏键冲突了，我修改到了Ctrl+Alt+\)
+- 导入某个类（光标在这个类上） Alt+Enter
+- 优化类的导入 Ctrl+Alt+O
 
 -----
 
-   - 编辑区域右键"maven"这个选项
-     - Reimport 可以重新导入maven配置
-     - Generate Sources and Update Folders 重新生成sources并且更新文件夹
-   - 目录右键"Mark Directory As" -> "Source Root" 可以将某个目录指定为源代码目录
+- 编辑区域右键"maven"这个选项
+  - Reimport 可以重新导入maven配置
+  - Generate Sources and Update Folders 重新生成sources并且更新文件夹
+- 目录右键"Mark Directory As" -> "Source Root" 可以将某个目录指定为源代码目录
 
 *** about 'fvwm'
-   - http://docs.huihoo.com/homepage/shredderyin/fvwm_frame.html
+- http://docs.huihoo.com/homepage/shredderyin/fvwm_frame.html
 
 *** about 'bzr'
-   - http://bazaar.canonical.com/en/
-   - https://launchpad.net/
+- http://bazaar.canonical.com/en/
+- https://launchpad.net/
 
------
+- bzr branch <repo> # git clone.
+  - # 每个分支都会有自己单独的revno
+- bzr pull # git pull
+- bzr push <repo> # git push
+  - --create-prefix # create if not exist
+  - --overwrite -rREVNO # 强制将远端回滚到此revno.
+- bzr config [parent_location|push_location|submit_branch]=<URL>
 
-   - bzr branch <repo> # git clone.
-     - # 每个分支都会有自己单独的revno
-   - bzr pull # git pull
-   - bzr push <repo> # git push
-     - --create-prefix # create if not exist
-     - --overwrite -rREVNO # 强制将远端回滚到此revno.
-   - bzr config [parent_location|push_location|submit_branch]=<URL>
+- bzr commit -m 'message'
+- bzr uncommit # 撤销一个commit
+- bzr revert # git checkout
+- bzr merge -r[a]..[b] <URL> # 合并revno=[a+1,b]修改
 
------
 
-   - bzr commit -m 'message'
-   - bzr uncommit # 撤销一个commit
-   - bzr revert # git checkout
-   - bzr merge -r[a]..[b] <URL> # 合并revno=[a+1,b]修改
-
------
-
-   - bzr log/diff -r[a]..[b] # 察看revno=[a,b]修改信息
-   - bzr status/st # 当前仓库状态
-   - bzr revno # current revision number
-   - bzr info # 当前仓库情况
+- bzr log/diff -r[a]..[b] # 察看revno=[a,b]修改信息
+- bzr status/st # 当前仓库状态
+- bzr revno # current revision number
+- bzr info # 当前仓库情况
 
 ** 虚拟机
 *** vmware虚拟机增加磁盘空间
@@ -630,10 +626,10 @@ note(dirlt):这里对于0 0不太清楚是什么意思，只是知道分别是du
 设置共享文件夹主要是为了数据可以进行同步。通过windows虚拟机，安装同步软件比如GDrive。
 然后通过共享文件夹，将GDrive的同步目录隐射到Linux文件系统上面，完成数据同步。
 
-   - 首先挂载VBoxAdditions.iso,这个文件在/usr/share/virtualbox下面
-   - 之后就会在虚拟机里面提示安装相关的驱动程序。
-   - 完成之后在设置virtualbox的settings/share folder，创建本地share folder
-   - 然后进入虚拟机“我的电脑”右键选择映射网络驱动器，通过浏览可以找到对应的网络驱动器。
+- 首先挂载VBoxAdditions.iso,这个文件在/usr/share/virtualbox下面
+- 之后就会在虚拟机里面提示安装相关的驱动程序。
+- 完成之后在设置virtualbox的settings/share folder，创建本地share folder
+- 然后进入虚拟机“我的电脑”右键选择映射网络驱动器，通过浏览可以找到对应的网络驱动器。
 
 我是参考这篇图文并茂的文章的 http://hi.baidu.com/hifinan/item/79f22545a8400ed3c1a592f3
 
@@ -642,8 +638,8 @@ note(dirlt):这里对于0 0不太清楚是什么意思，只是知道分别是du
 在Settings =》 USB选项里面勾选 Enable USB Controller 和 Enable USB2.0（EHCI） Controller。
 
 然后我们需要添加vboxusers这个群组，同时将自己加入到这个群组内：
-   - sudo groupadd vboxusers
-   - sudo gpasswd -a dirlt vboxusers
+- sudo groupadd vboxusers
+- sudo gpasswd -a dirlt vboxusers
 接着重新启动ubuntu。
 
 接着Settings =》 USB里面添加那些已经识别的设备，接着启动windows虚拟机就可以使用U盾了。
