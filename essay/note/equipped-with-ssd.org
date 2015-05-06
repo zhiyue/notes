@@ -7,7 +7,7 @@
 
 file:../images/my-faulty-hdd.png
 
-想到了就买，也没有在太多品牌和价格上纠结，就从京东上买了这款：[[http://item.jd.com/1279827.html][三星（SAMSUNG）850 EVO系列 250G 2.5英寸 SATA-3固态硬盘(MZ-75E250B/CN)]]. 安装好系统之后，继续挂着原来的HDD，这样可以把原来硬盘上的文件copy过来。从安装到配置好，大约花了2个小时左右，主要还是SSD的读写速度快。现在启动时间大约在10s以内，打开浏览器2-3s左右，感觉好极了。
+想到了就买，也没有在太多品牌和价格上纠结，就从 [[http://item.jd.com/1279827.html][京东]] 上买了这款：[[http://www.samsung.com/global/business/semiconductor/minisite/SSD/global/html/ssd850evo/specifications.html][三星（SAMSUNG）850 EVO系列 250G 2.5英寸 SATA-3固态硬盘(MZ-75E250B/CN)]]. 安装好系统之后，继续挂着原来的HDD，这样可以把原来硬盘上的文件copy过来。从安装到配置好，大约花了2个小时左右，主要还是SSD的读写速度快。现在启动时间大约在10s以内，打开浏览器2-3s左右，感觉好极了。
 
 file:../images/my-ssd.png
 
