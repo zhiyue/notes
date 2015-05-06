@@ -53,6 +53,7 @@
    - [[file:note/about-dna-sequencing.org][关于DNA测序]]
    - [[file:./note/russian-underground.org][俄罗斯著名建筑下藏着什么]]
    - [[file:./note/telstra-billboard-of-love.org][Telstra Billboard of Love]]
+   - [[file:note/equipped-with-ssd.org][装配SSD]]
 
 ** 思考
    - [[file:note/to-death.org][给离去的亲人们]]

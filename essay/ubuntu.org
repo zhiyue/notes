@@ -342,6 +342,20 @@ virtualbox-g 0:off1:off2:on3:on4:on5:on6:off
 
 然后使用sudo sysv-rc-conf <service> on/off 来配置是否自动启动
 
+*** 修改分区
+可以使用Ubuntu Disk工具来修改分区。
+
+修改分区之后可能会在启动时候出现错误，显示这些分区不存在无法挂载。可能的原因是这些分区的UUID发生变化，但是在/etc/fstab里面却没有更新过来。
+
+我们可以手工编辑/etc/fstab来更正，可以使用blkid查看各个设备的UUID
+#+BEGIN_EXAMPLE
+➜  ~  blkid
+/dev/sda1: UUID="26971214-3b4d-455c-ab3d-cefae2d8cfd8" TYPE="ext4"
+/dev/sda5: LABEL="swap" UUID="cd6de3d9-6a98-46c2-9875-de12251fe82e" TYPE="swap"
+/dev/sda6: LABEL="extra" UUID="6ac0d95d-b2fc-426f-bf7b-4a3669442ea6" TYPE="ext4"
+/dev/sdb2: UUID="4ed192d5-884b-43a4-904b-fb9cb5f193b2" TYPE="ext4"
+#+END_EXAMPLE
+
 ** 桌面应用
 *** amarok循环播放
 在amarok的右下角有task progression的图标，选择repeat track即可。
@@ -537,7 +551,7 @@ note(dirlt): 不要用eclipse, 用intellij吧!
 - 格式化 C+S+F
 - 注释 C+S+C
 - 切换声明 F3
-- 跳回 Alt+(<-) 跳前Alt+(->)   
+- 跳回 Alt+(<-) 跳前Alt+(->)
 - 切换编辑Tab Ctrl+PageUp/Down
 - 跳行 Ctrl+L
 - 大纲 Ctrl+O
@@ -554,7 +568,7 @@ note(dirlt): 不要用eclipse, 用intellij吧!
 - 页面跳转 Ctrl+E
 - 查看声明 Ctrl+B
 - 察看实现 Ctrl+Alt+B
-- 跳回 Alt+(<-) 跳前Alt+(->)   
+- 跳回 Alt+(<-) 跳前Alt+(->)
 - 格式化 Ctrl+Alt+L （这个键和ubuntu的锁屏键冲突了，我修改到了Ctrl+Alt+\)
 - 导入某个类（光标在这个类上） Alt+Enter
 - 优化类的导入 Ctrl+Alt+O

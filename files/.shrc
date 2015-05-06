@@ -422,6 +422,10 @@ install_hosts() {
     echo "installing hosts..."
     sudo cp $HOME/.private/files/hosts /etc/hosts
 }
+install_rc_local() {
+    echo "install rc.local..."
+    sudo cp $HOME/.private/files/rc.local /etc/rc.local
+}
 
 shadowsocks() {
     cd $HOME/.private/shadowsocks

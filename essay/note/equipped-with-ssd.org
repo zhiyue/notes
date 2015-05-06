@@ -1,0 +1,134 @@
+* equipped-with-ssd
+#+TITLE: 装配SSD
+
+@2015-05-04
+
+大约在半年之前把，台式机的HDD就被SMART检查出有问题了，但是考虑到更换系统挺麻烦的，就一直拖着。直到最近觉得不太能忍受了，开机需要60s以上，打开浏览器什么的都需要等一段时间，最不能忍受的是编辑文件保存一下就需要等1-2s. 然后看了一下自己硬盘空间，虽然是1TB但是实际只使用了<50G，所以买个250G的SSD应该是足够了。
+
+file:../images/my-faulty-hdd.png
+
+想到了就买，也没有在太多品牌和价格上纠结，就从京东上买了这款：[[http://item.jd.com/1279827.html][三星（SAMSUNG）850 EVO系列 250G 2.5英寸 SATA-3固态硬盘(MZ-75E250B/CN)]]. 安装好系统之后，继续挂着原来的HDD，这样可以把原来硬盘上的文件copy过来。从安装到配置好，大约花了2个小时左右，主要还是SSD的读写速度快。现在启动时间大约在10s以内，打开浏览器2-3s左右，感觉好极了。
+
+file:../images/my-ssd.png
+
+之前看过SSD的 [[file:../ssd-gc-and-trim.org][科普文章]] 说TRIM指令可以让SSD利用率更高，所以最好确认自己的SSD支持TRIM指令。下面命令用来确认支持TRIM，grep "Data Set Management TRIM supported (limit 8 blocks)"
+#+BEGIN_EXAMPLE
+➜  ~  sudo hdparm -I /dev/sda
+[sudo] password for dirlt: 
+
+/dev/sda:
+
+ATA device, with non-removable media
+	Model Number:       Samsung SSD 850 EVO 250GB               
+	Serial Number:      S22SNXAG302833K     
+	Firmware Revision:  EMT01B6Q
+	Transport:          Serial, ATA8-AST, SATA 1.0a, SATA II Extensions, SATA Rev 2.5, SATA Rev 2.6, SATA Rev 3.0
+Standards:
+	Used: unknown (minor revision code 0x0039) 
+	Supported: 9 8 7 6 5 
+	Likely used: 9
+Configuration:
+	Logical		max	current
+	cylinders	16383	16383
+	heads		16	16
+	sectors/track	63	63
+	--
+	CHS current addressable sectors:   16514064
+	LBA    user addressable sectors:  268435455
+	LBA48  user addressable sectors:  488397168
+	Logical  Sector size:                   512 bytes
+	Physical Sector size:                   512 bytes
+	Logical Sector-0 offset:                  0 bytes
+	device size with M = 1024*1024:      238475 MBytes
+	device size with M = 1000*1000:      250059 MBytes (250 GB)
+	cache/buffer size  = unknown
+	Nominal Media Rotation Rate: Solid State Device
+Capabilities:
+	LBA, IORDY(can be disabled)
+	Queue depth: 32
+	Standby timer values: spec'd by Standard, no device specific minimum
+	R/W multiple sector transfer: Max = 1	Current = 1
+	DMA: mdma0 mdma1 mdma2 udma0 udma1 udma2 udma3 udma4 udma5 *udma6 
+	     Cycle time: min=120ns recommended=120ns
+	PIO: pio0 pio1 pio2 pio3 pio4 
+	     Cycle time: no flow control=120ns  IORDY flow control=120ns
+Commands/features:
+	Enabled	Supported:
+	   *	SMART feature set
+	    	Security Mode feature set
+	   *	Power Management feature set
+	   *	Write cache
+	   *	Look-ahead
+	   *	Host Protected Area feature set
+	   *	WRITE_BUFFER command
+	   *	READ_BUFFER command
+	   *	NOP cmd
+	   *	DOWNLOAD_MICROCODE
+	    	SET_MAX security extension
+	   *	48-bit Address feature set
+	   *	Device Configuration Overlay feature set
+	   *	Mandatory FLUSH_CACHE
+	   *	FLUSH_CACHE_EXT
+	   *	SMART error logging
+	   *	SMART self-test
+	   *	General Purpose Logging feature set
+	   *	WRITE_{DMA|MULTIPLE}_FUA_EXT
+	   *	64-bit World wide name
+	    	Write-Read-Verify feature set
+	   *	WRITE_UNCORRECTABLE_EXT command
+	   *	{READ,WRITE}_DMA_EXT_GPL commands
+	   *	Segmented DOWNLOAD_MICROCODE
+	   *	Gen1 signaling speed (1.5Gb/s)
+	   *	Gen2 signaling speed (3.0Gb/s)
+	   *	Gen3 signaling speed (6.0Gb/s)
+	   *	Native Command Queueing (NCQ)
+	   *	Phy event counters
+	   *	READ_LOG_DMA_EXT equivalent to READ_LOG_EXT
+	    	DMA Setup Auto-Activate optimization
+	    	Device-initiated interface power management
+	   *	Asynchronous notification (eg. media change)
+	   *	Software settings preservation
+	    	Device Sleep (DEVSLP)
+	   *	SMART Command Transport (SCT) feature set
+	   *	SCT Write Same (AC2)
+	   *	SCT Error Recovery Control (AC3)
+	   *	SCT Features Control (AC4)
+	   *	SCT Data Tables (AC5)
+	   *	reserved 69[4]
+	   *	DOWNLOAD MICROCODE DMA command
+	   *	SET MAX SETPASSWORD/UNLOCK DMA commands
+	   *	WRITE BUFFER DMA command
+	   *	READ BUFFER DMA command
+	   *	Data Set Management TRIM supported (limit 8 blocks)
+Security: 
+	Master password revision code = 65534
+		supported
+	not	enabled
+	not	locked
+		frozen
+	not	expired: security count
+		supported: enhanced erase
+	2min for SECURITY ERASE UNIT. 8min for ENHANCED SECURITY ERASE UNIT. 
+Logical Unit WWN Device Identifier: 5002538d4002292f
+	NAA		: 5
+	IEEE OUI	: 002538
+	Unique ID	: d4002292f
+Checksum: correct
+Device Sleep:
+	DEVSLP Exit Timeout (DETO): 50 ms (drive)
+	Minimum DEVSLP Assertion Time (MDAT): 30 ms (drive)
+#+END_EXAMPLE
+
+
+为了利用好这块SSD，我还在网上查了一下推荐设置，总结如下：（一些意见我没有采纳）
+- http://www.leaseweblabs.com/2013/07/5-crucial-optimizations-for-ssd-usage-in-ubuntu-linux/
+- http://www.howtogeek.com/176978/ubuntu-doesnt-trim-ssds-by-default-why-not-and-how-to-enable-it-yourself/
+- https://sites.google.com/site/easylinuxtipsproject/ssd
+
+0. SATA设备使用AHCI模式 # BIOS settings, Integrated Peripherals, SATA Configuration
+1. 减少swap操作 # echo -e "vm.swappiness=0" | sudo tee -a /etc/sysctl.conf
+2. 禁止记录atime # 编辑/etc/fstab, 修改"errors=remount-ro"为"noatime,errors=remount-ro"，然后重启
+3. 使用fstrim功能 # Ubuntu14.04默认有/etc/cron.weekly/fstrim每周执行trim，用来删除系统无用块
+4. 不使用SSD trim操作 # 虽然Linux也支持SSD trim(real-time trim), 但是会造成性能下降
+5. 可以考虑把fstrim功能添加到每次启动(/etc/rc.local)
+6. 可以考虑空出7%磁盘作为overprovisioning.

@@ -1988,7 +1988,7 @@ CLIENT SPECIFIC OPTIONS
 
 通常来说只需要使用简单的几个参数即可. 在服务器端iperf -s -p <port> -B <host>. 然后在客户端使用iperf -c <host> -p <port>
 #+BEGIN_EXAMPLE
-➜  notes git:(master) ✗ iperf -c localhost -i 1      
+➜  notes git:(master) ✗ iperf -c localhost -i 1
 ------------------------------------------------------------
 Client connecting to localhost, TCP port 5001
 TCP window size:  169 KByte (default)
