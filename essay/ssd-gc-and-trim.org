@@ -5,7 +5,7 @@ http://www.beareyes.com.cn/2/lib/201207/06/20120706203_0.htm
 
 这篇文章主要是解释了一下TRIM指令是为什么引入的，解决了什么问题。
 
-如果OS需要删除文件的话，spin disk只需要标记，然后下次在这个位置直接in-place update即可，而SSD不行。如果SSD不支持TRIM指令的话，那么只有当下次OS做in-place update时候，SSD才知道某些block是被删除的，而TRIM指令可以显式地做到这点。
+如果OS需要删除文件的话，spin disk只需要标记，然后下次在这个位置直接in-place update即可，而SSD不行。如果SSD不支持TRIM指令的话，那么只有当下次OS做in-place update时候，SSD才知道某些page是被删除的，而TRIM指令可以显式地做到这点。
 
 #+BEGIN_VERSE
 在机械硬盘系统中，系统可以直接请求新数据写入到旧数据存储的位置。机械硬盘可以直接覆盖旧数据。在固态硬盘中，境况有所不同。如果想让存储无用数据的块写入新数据，就需要先把整个块删除，才可以写入新的数据。固态硬盘并不具备直接覆盖旧数据的能力。
