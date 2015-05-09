@@ -165,6 +165,7 @@
 - sudo apt-get install python-skimage-doc
 - sudo apt-get install doxygen
 - sudo apt-get install l2tp-ipsec-vpn
+- sudo apt-get install libgoogle-perftools-dev
 
 ** 系统配置
 *** 察看ubuntu内部版本
