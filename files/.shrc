@@ -271,7 +271,7 @@ build_redis() {
 apt_update() {
     sudo rm -rf /etc/apt/sources.list
     sudo ln -s $HOME/.private/files/sources.list /etc/apt/sources.list
-    sudo add-apt-repository -y
+    # sudo add-apt-repository -y
     sudo apt-get update
 }
 
@@ -342,6 +342,7 @@ install_files() {
     rm -rf $HOME/index.html
     ln -s $HOME/.private/files/index.html $HOME/index.html
 
+    mkdir -p $HOME/.ssh
     echo "installing id_rsa.pub..."
     rm -rf $HOME/.ssh/id_rsa.pub
     ln -s $HOME/.private/files/id_rsa.pub $HOME/.ssh/id_rsa.pub
@@ -636,6 +637,10 @@ configure_samba() {
     # smbpasswd -a dirlt
     sudo cp $HOME/.private/files/smb.conf /etc/samba/smb.conf
     sudo service smbd restart
+}
+
+disable_vm_swappiness() {
+    sudo sysctl vm.swappiness=0
 }
 
 source ~/.private/files/extra.rc

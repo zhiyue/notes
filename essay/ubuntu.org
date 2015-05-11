@@ -126,6 +126,7 @@
 - #sudo apt-get install latencytop
 - #sudo apt-get install powertop
 - sudo apt-get install docker.io
+- sudo apt-get install docker
 - #sudo apt-get install bridge-utils
 - sudo apt-get install python-mysqldb
 - sudo apt-get install samba
@@ -164,7 +165,6 @@
 - sudo apt-get install python-skimage
 - sudo apt-get install python-skimage-doc
 - sudo apt-get install doxygen
-- sudo apt-get install l2tp-ipsec-vpn
 - sudo apt-get install libgoogle-perftools-dev
 
 ** 系统配置
