@@ -609,6 +609,10 @@ time_machine_restore() {
 
 remount_hdd1t() {
     HDD="$HOME/repo/hdd1t"
+    if [ ! -d $HDD ]; then
+        # dont have hdd.
+        return
+    fi
     if [ -L $HOME/utils ]; then
         rm -f $HOME/utils
         ln -s $HDD/utils $HOME/utils
@@ -616,10 +620,6 @@ remount_hdd1t() {
     if [ -L "$HOME/VirtualBox VMs" ]; then
         rm -f "$HOME/VirtualBox VMs"
         ln -s "$HDD/VirtualBox VMs" "$HOME/VirtualBox VMs"
-    fi
-    if [ -L $HOME/.ccache ]; then
-        rm -f $HOME/.ccache
-        ln -s $HDD/ccache $HOME/.ccache
     fi
     if [ -L $HOME/ws/vmshare ]; then
         rm -f $HOME/ws/vmshare
