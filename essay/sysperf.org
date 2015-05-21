@@ -84,3 +84,13 @@ iops(io per second)是我们在分析存储介质时抽象出的概念，表示�
 如果我们考虑磁盘的话，那么iops基本上和磁盘转速相关。比如转速是7200RPM的话，那么应该是120RPS.如果一个操作磁头需要转一圈的话，那么延迟大概在8ms左右。另外考虑向某个磁道移动时间的话，我们可以大概可以认为延迟在15ms左右。 +这样折合计算iops大概在66-67+. (没有意义因为不可能每次读取都需要转动磁头以及移动磁道)
 
 存储系统一方便受限于iops，一方便受限于磁盘带宽。通常磁盘带宽大约在80MB/s一下，50~60MB/s是比较典型的值。
+
+-----
+
+note(dirlt @ 2015-05-21)
+
+iops的测算非常复杂，主要是涉及到的环境配置参数非常多，比如read/write buffer size, 多少个线程来做读写，以及随机和顺序读写等。前段时间想要测量一下磁盘的iops，所以就在网上搜索了一下这方面的工具和文章：
+- http://code.google.com/p/ioping/ # ioping. C, 使用方便，可测读写，但是不支持多线程
+- Measuring Disk Usage In Linux (%iowait vs IOPS) - Everything is a Ghetto : http://www.thattommyhall.com/2011/02/18/iops-linux-iostat/ # 使用iostat -dx 1来查看iops
+- Measuring Disk IO Performance « Benjamin Schweizer. : http://benjamin-schweizer.de/measuring-disk-io-performance.html # iops. Python, 使用方便，只能测读，支持多线程
+- http://www.ee.pw.edu.pl/~pileckip/aix/iowait.htm # 只看iowait比例是没有意义的

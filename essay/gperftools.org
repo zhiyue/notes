@@ -7,16 +7,7 @@ see [[file:./tcmalloc.org][TCMalloc]]
 ** heap checker
 http://gperftools.googlecode.com/svn/trunk/doc/heap_checker.html
 
-这个组件是用来检查内存泄漏的，[[file:./sanitizer.org][这里]] 还有一个google的组件也是做类似事情。
-
-note(dirlt): 没有继续研究下去. 因为没有成功运行测试程序。并且程序最后还一直hang着不退出。
-#+BEGIN_EXAMPLE
-➜  ~  g++ main.cc -ltcmalloc_and_profiler
-➜  ~  HEAPCHECK=normal ./a.out
-WARNING: Perftools heap leak checker is active -- Performance may suffer
-(nil), -1243309312
-Check failed: !do_main_heap_check: should have done it
-#+END_EXAMPLE
+用来检查内存泄漏的，[[file:./sanitizer.org][这里]] 还有一个google的组件也是做类似事情。
 
 ** heap profiler
 http://gperftools.googlecode.com/svn/trunk/doc/heapprofile.html
@@ -30,7 +21,7 @@ The profiling system instruments all allocations and frees. It keeps track of va
 有两种调用方式：
    - 环境变量 HEAPPROFILE=<profile-path> ./a.out
    - 函数API functions in <gperftools/heap-profiler.h> (HeapProfilerStart, HeapProfilerStop etc)
-下面是一些控制行为的环境变量. 分配量超过某个阈值/使用量超过某个阈值/定时器都会触发dump. 
+下面是一些控制行为的环境变量. 分配量超过某个阈值/使用量超过某个阈值/定时器都会触发dump.
 | env                              | default                     | comment                                                                                                               |
 |----------------------------------+-----------------------------+-----------------------------------------------------------------------------------------------------------------------|
 | HEAP_PROFILE_ALLOCATION_INTERVAL | default: 1073741824 (1 Gb)  | Dump heap profiling information each time the specified number of bytes has been allocated by the program.            |
@@ -48,7 +39,7 @@ HEAP_PROFILE_MMAP = NOTE: this causes the profiler to profile calls internal to 
 ...
 /tmp/profile.0100.heap
 #+END_EXAMPLE
-可以挑选其中一个来看.也可以挑选其中两个比如A,B, 将B作为base(--base=), 然后从A中减去B得到的profile. 
+可以挑选其中一个来看.也可以挑选其中两个比如A,B, 将B作为base(--base=), 然后从A中减去B得到的profile.
 
 下面是一个图形输出样例
 
@@ -81,8 +72,6 @@ A few explanations:
 ** cpu profiler
 http://gperftools.googlecode.com/svn/trunk/doc/cpuprofile.html
 
-note(dirlt): 这个组件值得好好研究一下. 这里有profile文件输出格式 http://gperftools.googlecode.com/svn/trunk/doc/cpuprofile-fileformat.html heap-profiler用的应该也是这个格式
-
 有三种调用方式：
    - CPUPROFILE=<profile-path> ./a.out
    - CPUPROFILE=<profile-path> CPUPROFILESIGNAL=12 ./a.out & 然后使用kill -12 <pid>来启动profiler, 之后使用kill -12 <pid>来关闭profiler
@@ -94,11 +83,11 @@ note(dirlt): 这个组件值得好好研究一下. 这里有profile文件输出�
 14   2.1%  17.2%       58   8.7% std::_Rb_tree::find
 #+END_EXAMPLE
 每个字段含义分别是：（其中第三个字段含义和heap-profiler文本输出中第三个字段含义是相同的）
-   - Number of profiling samples in this function
-   - Percentage of profiling samples in this function
-   - Percentage of profiling samples in the functions printed so far
-   - Number of profiling samples in this function and its callees
-   - Percentage of profiling samples in this function and its callees
+   - Number of profiling samples in this function # 当前函数采样次数
+   - Percentage of profiling samples in this function # 采样百分比
+   - Percentage of profiling samples in the functions printed so far # note(dirlt): 看heapprofiler中的解释，第k行值是前面k行的采样百分比总和
+   - Number of profiling samples in this function and its callees # 当前函数（包括子调用）累积采样次数
+   - Percentage of profiling samples in this function and its callees # 累积采样百分比
    - Function name
 
 下面是图形输出例子
@@ -110,7 +99,7 @@ file:./images/gperftools-cpu-profier-0.gif
    - Method Name
    - local (percentage)
    - of cumulative (percentage)
-local/cum中数值是指采样到的次数。如果采样率是100的话，那么每次采样可以认为是0.01s. 这里有必要也看看header信息
+local/cum中数值是指采样到的次数。如果采样率是100的话，那么每次采样可以认为是0.01s. header信息中
 #+BEGIN_EXAMPLE
  /tmp/profiler2_unittest
       Total samples: 202
@@ -118,7 +107,7 @@ local/cum中数值是指采样到的次数。如果采样率是100的话，那�
       Dropped nodes with <= 1 abs(samples)
       Dropped edges with <= 0 samples
 #+END_EXAMPLE
-说明采样202次，并且也全部展示出来(focus).丢弃采样<=1的节点
+说明采样202次，并且全部展示出来(focus = 202)，同时丢弃采样<=1的节点
 
 最后一种是输出为callgrind格式，可以使用kcallgrind工具来查看
 #+BEGIN_EXAMPLE
@@ -133,7 +122,7 @@ The cost is specified in 'hits', i.e. how many times a function appears in the r
    - If the program linked in a library that was not compiled with enough symbolic information, all samples associated with the library may be charged to the last symbol found in the program before the library. This will artificially inflate the count for that symbol.
 
 ** google pprof
-heap-profiler以及cpu-profiler输出文件都需要pprof来查看.
+heap-profiler以及cpu-profiler输出文件都需要pprof来查看. profile文件输出格式 http://gperftools.googlecode.com/svn/trunk/doc/cpuprofile-fileformat.html
 
 pprof requires perl5 to be installed to run. It also requires dot to be installed for any of the graphical output routines, and gv to be installed for --gv mode (described below). Here are some ways to call pprof. These are described in more detail below.
 #+BEGIN_EXAMPLE
@@ -157,65 +146,31 @@ pprof requires perl5 to be installed to run. It also requires dot to be installe
                        Outputs the call information in callgrind format
 #+END_EXAMPLE
 
-输出格式选项 Output type:
-   0. --text	 Produces a textual listing. (Note: If you have an X display, and dot and gv installed, you will probably be happier with the --gv output.)
-   0. --gv	 Generates annotated call-graph, converts to postscript, and displays via gv (requres dot and gv be installed).
-   0. --dot	 Generates the annotated call-graph in dot format and emits to stdout (requres dot be installed).
-   0. --ps	 Generates the annotated call-graph in Postscript format and emits to stdout (requres dot be installed).
-   0. --pdf	 Generates the annotated call-graph in PDF format and emits to stdout (requires dot and ps2pdf be installed).
-   0. --gif	 Generates the annotated call-graph in GIF format and emits to stdout (requres dot be installed).
-   0. --list=<regexp>    Outputs source-code listing of routines whose name matches <regexp>. Each line in the listing is annotated with flat and cumulative sample counts. In the presence of inlined calls, the samples associated with inlined code tend to get assigned to a line that follows the location of the inlined call. A more precise accounting can be obtained by disassembling the routine using the --disasm flag.
-   0. --disasm=<regexp>   Generates disassembly of routines that match <regexp>, annotated with flat and cumulative sample counts and emits to stdout.
-#+BEGIN_EXAMPLE
-Output type:
-   --text              Generate text report
-   --callgrind         Generate callgrind format to stdout
-   --gv                Generate Postscript and display
-   --evince            Generate PDF and display
-   --web               Generate SVG and display
-   --list=<regexp>     Generate source listing of matching routines
-   --disasm=<regexp>   Generate disassembly of matching routines
-   --symbols           Print demangled symbol names found at given addresses
-   --dot               Generate DOT file to stdout
-   --ps                Generate Postcript to stdout
-   --pdf               Generate PDF to stdout
-   --svg               Generate SVG to stdout
-   --gif               Generate GIF to stdout
-   --raw               Generate symbolized pprof data (useful with remote fetch)
-#+END_EXAMPLE
+输出格式选项(Output type):
+- --text # Produces a textual listing. (Note: If you have an X display, and dot and gv installed, you will probably be happier with the --gv output.)
+- --gv # Generates annotated call-graph, converts to postscript, and displays via gv (requres dot and gv be installed).
+- --dot # Generates the annotated call-graph in dot format and emits to stdout (requres dot be installed).
+- --ps # Generates the annotated call-graph in Postscript format and emits to stdout (requres dot be installed).
+- --pdf # Generates the annotated call-graph in PDF format and emits to stdout (requires dot and ps2pdf be installed).
+- --gif # Generates the annotated call-graph in GIF format and emits to stdout (requres dot be installed).
+- --list=<regexp> # Outputs source-code listing of routines whose name matches <regexp>. Each line in the listing is annotated with flat and cumulative sample counts. In the presence of inlined calls, the samples associated with inlined code tend to get assigned to a line that follows the location of the inlined call. A more precise accounting can be obtained by disassembling the routine using the --disasm flag.
+- --disasm=<regexp> # Generates disassembly of routines that match <regexp>, annotated with flat and cumulative sample counts and emits to stdout.
 
-展现粒度选项 Reporting Granularity [函数级别粒度正好]
-   0. --addresses	 Produce one node per program address.
-   0. --lines	 Produce one node per source line.
-   0. --functions	 Produce one node per function (this is the default).
-   0. --files	 Produce one node per source file.
+展现粒度选项(Reporting Granularity) # 函数级别粒度恰好
+- --addresses # Produce one node per program address.
+- --lines # Produce one node per source line.
+- --functions # Produce one node per function (this is the default).
+- --files # Produce one node per source file.
 
-调用关系图选项. 可以选择只展示部分图. 其中focus/ignore可以选择只展示涉及到某个regexp的调用路径。
-   0. --nodecount=<n>	 This option controls the number of displayed nodes. The nodes are first sorted by decreasing cumulative count, and then only the top N nodes are kept. The default value is 80.
-   0. --nodefraction=<f>	 This option provides another mechanism for discarding nodes from the display. If the cumulative count for a node is less than this option's value multiplied by the total count for the profile, the node is dropped. The default value is 0.005; i.e. nodes that account for less than half a percent of the total time are dropped. A node is dropped if either this condition is satisfied, or the --nodecount condition is satisfied.
-   0. --edgefraction=<f>	 This option controls the number of displayed edges. First of all, an edge is dropped if either its source or destination node is dropped. Otherwise, the edge is dropped if the sample count along the edge is less than this option's value multiplied by the total count for the profile. The default value is 0.001; i.e., edges that account for less than 0.1% of the total time are dropped.
-   0. --focus=<re>	 This option controls what region of the graph is displayed based on the regular expression supplied with the option. For any path in the callgraph, we check all nodes in the path against the supplied regular expression. If none of the nodes match, the path is dropped from the output.
-   0. --ignore=<re>	 This option controls what region of the graph is displayed based on the regular expression supplied with the option. For any path in the callgraph, we check all nodes in the path against the supplied regular expression. If any of the nodes match, the path is dropped from the output.
-#+BEGIN_EXAMPLE
-Call-graph Options:
-   --nodecount=<n>     Show at most so many nodes [default=80]
-   --nodefraction=<f>  Hide nodes below <f>*total [default=.005]
-   --edgefraction=<f>  Hide edges below <f>*total [default=.001]
-   --maxdegree=<n>     Max incoming/outgoing edges per node [default=8]
-   --focus=<regexp>    Focus on nodes matching <regexp>
-   --ignore=<regexp>   Ignore nodes matching <regexp>
-   --scale=<n>         Set GV scaling [default=0]
-   --heapcheck         Make nodes with non-0 object counts
-                       (i.e. direct leak generators) more visible
-#+END_EXAMPLE
+调用关系图选项(Call-graph Options). 可以选择只展示部分图. focus/ignore可以选择只展示涉及到某个regexp的调用路径。
+- --nodecount=<n> # This option controls the number of displayed nodes. The nodes are first sorted by decreasing cumulative count, and then only the top N nodes are kept. The default value is 80.
+- --nodefraction=<f> # This option provides another mechanism for discarding nodes from the display. If the cumulative count for a node is less than this option's value multiplied by the total count for the profile, the node is dropped. The default value is 0.005; i.e. nodes that account for less than half a percent of the total time are dropped. A node is dropped if either this condition is satisfied, or the --nodecount condition is satisfied.
+- --edgefraction=<f> # This option controls the number of displayed edges. First of all, an edge is dropped if either its source or destination node is dropped. Otherwise, the edge is dropped if the sample count along the edge is less than this option's value multiplied by the total count for the profile. The default value is 0.001; i.e., edges that account for less than 0.1% of the total time are dropped.
+- --focus=<re> # This option controls what region of the graph is displayed based on the regular expression supplied with the option. For any path in the callgraph, we check all nodes in the path against the supplied regular expression. If none of the nodes match, the path is dropped from the output.
+- --ignore=<re> # This option controls what region of the graph is displayed based on the regular expression supplied with the option. For any path in the callgraph, we check all nodes in the path against the supplied regular expression. If any of the nodes match, the path is dropped from the output.
 
-heap-profiler选项. 可以显示开辟/使用空间大小，也可以显示开辟/使用对象数量
-#+BEGIN_EXAMPLE
-Heap-Profile Options:
-   --inuse_space       Display in-use (mega)bytes [default]
-   --inuse_objects     Display in-use objects
-   --alloc_space       Display allocated (mega)bytes
-   --alloc_objects     Display allocated objects
-   --show_bytes        Display space in bytes
-   --drop_negative     Ignore negative differences
-#+END_EXAMPLE
+heap-profiler选项(Heap-Profile Options). 可以显示开辟/使用空间大小，也可以显示开辟/使用对象数量
+- --inuse_space # Display the number of in-use megabytes (i.e. space that has been allocated but not freed). This is the default.
+- --inuse_objects # Display the number of in-use objects (i.e. number of objects that have been allocated but not freed).
+- --alloc_space # Display the number of allocated megabytes. This includes the space that has since been de-allocated. Use this if you want to find the main allocation sites in the program.
+- --alloc_objects # Display the number of allocated objects. This includes the objects that have since been de-allocated. Use this if you want to find the main allocation sites in the program.

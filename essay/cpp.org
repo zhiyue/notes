@@ -538,6 +538,12 @@ class B{
 
 具体代码可以参考 [[https://github.com/dirtysalt/tomb/blob/master/cc/test_spirit.cc][tomb/cc/test_spirit.cc]]
 
+*** boost::property_tree
+http://www.boost.org/doc/libs/1_58_0/doc/html/property_tree.html 用作配置文件不错
+
+*** boost::python
+http://www.boost.org/doc/libs/1_58_0/libs/python/doc/index.html 编写Python Extension
+
 ** c++11
 C++11在C++03上做了许多改进，而且都是非常实用的改进。BS在自己的主页上列出了这些改进的 [[http://www.stroustrup.com/C++11FAQ.html][细节]], 有位国内开发者把它翻译成了 [[http://www.chenlq.net/cpp11-faq-chs][中文]] (非常感谢).
 

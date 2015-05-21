@@ -167,6 +167,7 @@
 - sudo apt-get install doxygen
 - sudo apt-get install libgoogle-perftools-dev
 - sudo apt-get install google-perftools
+- sudo apt-get install libgflags-dev
 
 ** 系统配置
 *** 察看ubuntu内部版本
